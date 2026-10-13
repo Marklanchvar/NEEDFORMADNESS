@@ -1453,7 +1453,7 @@ public class xtGraphics extends Panel implements Runnable
     
     public void stopallnow() {
         if (this.runner != null) {
-            this.runner.stop();
+            this.runner.interrupt();
             this.runner = null;
         }
         this.runtyp = 0;
@@ -2953,7 +2953,7 @@ public class xtGraphics extends Panel implements Runnable
         }
         this.loadstrack(runtyp, s, n);
         if (b) {
-            this.runner.stop();
+            this.runner.interrupt();
             this.runner = null;
             this.runtyp = 0;
         }

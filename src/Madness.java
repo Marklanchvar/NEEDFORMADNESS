@@ -41,14 +41,13 @@ public class Madness extends Panel
     static int testdrive;
     static String testcar;
     static int textid;
-    static int updateon;
     static String upfile;
     static boolean inisetup;
     static int endadv;
     static long advtime;
     
     public static void main(final String[] array) {
-        System.runFinalizersOnExit(true);
+        //System.runFinalizersOnExit(true);
         (Madness.frame = new Frame("Need for Madness")).setBackground(new Color(0, 0, 0));
         Madness.frame.setIgnoreRepaint(true);
         Madness.fpath = "";
@@ -97,7 +96,6 @@ public class Madness extends Panel
         Madness.applet.start();
         Madness.myDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         Madness.defdisp = Madness.myDevice.getDisplayMode();
-        checknupdate(36);
     }
     
     public static void gofullscreen() {
@@ -236,13 +234,10 @@ public class Madness extends Panel
     }
     
     public static void exitsequance() {
-        if (Madness.updateon == 0 || Madness.updateon == 3) {
             if (Madness.endadv == 1) {
                 Madness.endadv = 2;
             }
-            if (Madness.updateon != 3) {
                 Madness.applet.stop();
-            }
             Madness.frame.removeAll();
             try {
                 Thread.sleep(200L);
@@ -251,141 +246,7 @@ public class Madness extends Panel
             Madness.applet.destroy();
             Madness.applet = null;
             System.exit(0);
-        }
-    }
-    
-    public static void checknupdate(int i) {
-        int j = 1;
-        boolean b = false;
-        String getfuncSvalue = "";
-        int n = 0;
-        final String[] array = new String[100];
-        final String[] array2 = new String[100];
-        while (j != 0) {
-            j = 0;
-            try {
-                final URL url = new URL("http://multiplayer.needformadness.com/update/" + i + ".txt");
-                url.openConnection().setConnectTimeout(5000);
-                if (url.openConnection().getContentType().equals("text/plain")) {
-                    String line;
-                    while ((line = new DataInputStream(url.openStream()).readLine()) != null) {
-                        final String trim = line.trim();
-                        if (trim.startsWith("maddapp")) {
-                            getfuncSvalue = getfuncSvalue("maddapp", trim, 0);
-                            b = true;
-                            j = 1;
-                        }
-                        if (trim.startsWith("file") && n < 100) {
-                            array[n] = getfuncSvalue("file", trim, 0);
-                            array2[n] = getfuncSvalue("file", trim, 1);
-                            ++n;
-                            j = 1;
-                        }
-                    }
-                }
-                ++i;
-            }
-            catch (final Exception ex) {}
-        }
-        if (b || n != 0) {
-            Madness.updateon = 1;
-            Madness.frame.dispose();
-            while (Madness.inisetup) {}
-            Madness.applet.stop();
-            Madness.applet.destroy();
-            if (Madness.fullscreen && Madness.myDevice.isFullScreenSupported()) {
-                try {
-                    Madness.myDevice.setDisplayMode(Madness.defdisp);
-                }
-                catch (final Exception ex2) {}
-                if (Madness.myDevice.isDisplayChangeSupported()) {
-                    try {
-                        Madness.myDevice.setFullScreenWindow(null);
-                    }
-                    catch (final Exception ex3) {}
-                }
-            }
-            (Madness.frame = new Frame("Updating Need for Madness...")).setBackground(new Color(234, 240, 247));
-            Madness.frame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(final WindowEvent windowEvent) {
-                    Madness.exitsequance();
-                }
-            });
-            Madness.applet = new update();
-            Madness.frame.add("Center", Madness.applet);
-            Madness.frame.show();
-            Madness.frame.setSize(800, 300);
-            Madness.frame.setResizable(false);
-            Madness.frame.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 800.0) / 2.0), (int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 300.0) / 2.0));
-            Madness.applet.init();
-            Madness.applet.start();
-            if (n != 0) {
-                for (int k = 0; k < n; ++k) {
-                    try {
-                        Madness.upfile = "Downloading and updating file: " + array2[k] + "";
-                        Madness.updateon = 2;
-                        final URL url2 = new URL(array[k]);
-                        final int contentLength = url2.openConnection().getContentLength();
-                        final DataInputStream dataInputStream = new DataInputStream(url2.openStream());
-                        final byte[] array3 = new byte[contentLength];
-                        dataInputStream.readFully(array3);
-                        final FileOutputStream fileOutputStream = new FileOutputStream(new File("" + Madness.fpath + "" + array2[k] + ""));
-                        fileOutputStream.write(array3);
-                        fileOutputStream.close();
-                        dataInputStream.close();
-                    }
-                    catch (final Exception ex4) {}
-                }
-            }
-            if (b) {
-                try {
-                    Madness.upfile = "Downloading and updating game's code";
-                    Madness.updateon = 2;
-                    final URL url3 = new URL(getfuncSvalue);
-                    final int contentLength2 = url3.openConnection().getContentLength();
-                    final DataInputStream dataInputStream2 = new DataInputStream(url3.openStream());
-                    final byte[] b2 = new byte[contentLength2];
-                    dataInputStream2.readFully(b2);
-                    final File file = new File("" + Madness.fpath + "madapp.jar");
-                    if (file.exists()) {
-                        final FileOutputStream fileOutputStream2 = new FileOutputStream(file);
-                        fileOutputStream2.write(b2);
-                        fileOutputStream2.close();
-                    }
-                    final File file2 = new File("" + Madness.fpath + "madapps.jar");
-                    if (file2.exists()) {
-                        final FileOutputStream fileOutputStream3 = new FileOutputStream(file2);
-                        fileOutputStream3.write(b2);
-                        fileOutputStream3.close();
-                    }
-                    final File file3 = new File("" + Madness.fpath + "data/madapp.jar");
-                    if (file3.exists()) {
-                        final FileOutputStream fileOutputStream4 = new FileOutputStream(file3);
-                        fileOutputStream4.write(b2);
-                        fileOutputStream4.close();
-                    }
-                    final File file4 = new File("" + Madness.fpath + "data/madapps.jar");
-                    if (file4.exists()) {
-                        final FileOutputStream fileOutputStream5 = new FileOutputStream(file4);
-                        fileOutputStream5.write(b2);
-                        fileOutputStream5.close();
-                    }
-                    final File file5 = new File("" + Madness.fpath + "Madness.app/Contents/Java/madapp.jar");
-                    if (file5.exists()) {
-                        final FileOutputStream fileOutputStream6 = new FileOutputStream(file5);
-                        fileOutputStream6.write(b2);
-                        fileOutputStream6.close();
-                    }
-                    final FileOutputStream fileOutputStream7 = new FileOutputStream(new File("" + Madness.fpath + "Game.jar"));
-                    fileOutputStream7.write(b2);
-                    fileOutputStream7.close();
-                    dataInputStream2.close();
-                }
-                catch (final Exception ex5) {}
-            }
-            Madness.updateon = 3;
-        }
+        
     }
     
     public static void carmaker() {
@@ -537,7 +398,6 @@ public class Madness extends Panel
         Madness.testdrive = 0;
         Madness.testcar = "";
         Madness.textid = 0;
-        Madness.updateon = 0;
         Madness.upfile = "";
         Madness.inisetup = false;
         Madness.endadv = 0;
