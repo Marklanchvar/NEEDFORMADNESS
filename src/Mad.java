@@ -7,8 +7,8 @@ public class Mad
     xtGraphics xt;
     int cn;
     int im;
-    int mxz;
-    int cxz;
+    float mxz;
+    float cxz;
     CarDefine cd;
     boolean[] dominate;
     boolean[] caught;
@@ -543,15 +543,15 @@ public class Mad
             }
         }
         float n11 = this.speed / contO.wrad;
-        if (contO.shadow) {
             contO.wzy -= n11;
-            if (contO.wzy < -360) {
-                contO.wxz += 360;
+            if (n11 > 20) n11 = 20;
+            if (n11 < -20) n11 = -20;
+            if (contO.wzy < -30) {
+                contO.wxz += 30;
             }
-            if (contO.wzy > 360) {
-                contO.wxz -= 360;
+            if (contO.wzy > 30) {
+                contO.wxz -= 30;
             }
-        }
         
         if (control.right) {
             contO.wxz -= this.cd.turn[this.cn];
@@ -850,7 +850,7 @@ public class Mad
             else {
                 n39 = 1;
             }
-            this.mxz = (int)(Math.acos(n30 / Math.sqrt(n29 * n29 + n30 * n30)) / 0.017453292519943295 * n39);
+            this.mxz = (float) (Math.acos(n30 / Math.sqrt(n29 * n29 + n30 * n30)) / 0.017453292519943295 * n39);
             if (this.skid == 2) {
                 if (!this.capsized) {
                     n29 /= 4.0f;

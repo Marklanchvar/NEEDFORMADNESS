@@ -266,11 +266,11 @@ public class Medium
         return this.rand[this.trn] / 10.0f;
     }
     
-    public void watch(final ContO contO, final int n) {
+    public void watch(final ContO contO, final float mxz) {
         if (this.td) {
             this.y = (int)(contO.y - 300 - 1100.0f * this.random());
-            this.x = contO.x + (int)((contO.x + 400 - contO.x) * this.cos(n) - (contO.z + 5000 - contO.z) * this.sin(n));
-            this.z = contO.z + (int)((contO.x + 400 - contO.x) * this.sin(n) + (contO.z + 5000 - contO.z) * this.cos(n));
+            this.x = contO.x + (int)((contO.x + 400 - contO.x) * this.cos(mxz) - (contO.z + 5000 - contO.z) * this.sin(mxz));
+            this.z = contO.z + (int)((contO.x + 400 - contO.x) * this.sin(mxz) + (contO.z + 5000 - contO.z) * this.cos(mxz));
             this.td = false;
         }
         int n2 = 0;
@@ -614,7 +614,7 @@ public class Medium
         this.zy += (n7 - this.zy) / 10;
     }
     
-    public void follow(final ContO contO, int n, final int n2) {
+    public void follow(final ContO contO, float cxz, final int n2) {
         this.zy = 10;
         int n3 = 2 + Math.abs(this.bcxz) / 4;
         if (n3 > 20) {
@@ -649,14 +649,14 @@ public class Medium
         else if (this.bcxz != 0) {
             this.bcxz = 0;
         }
-        n += this.bcxz;
-        this.xz = -n;
-        this.x = contO.x - this.cx + (int)(-(contO.z - 800 - contO.z) * this.sin(n));
-        this.z = contO.z - this.cz + (int)((contO.z - 800 - contO.z) * this.cos(n));
+        cxz += this.bcxz;
+        this.xz = -cxz;
+        this.x = contO.x - this.cx + (int)(-(contO.z - 800 - contO.z) * this.sin(cxz));
+        this.z = contO.z - this.cz + (int)((contO.z - 800 - contO.z) * this.cos(cxz));
         this.y = contO.y - 250 - this.cy;
     }
     
-    public void getfollow(final ContO contO, int n, final int n2) {
+    public void getfollow(final ContO contO, float cxz, final int n2) {
         this.zy = 10;
         int n3 = 2 + Math.abs(this.bcxz) / 4;
         if (n3 > 20) {
@@ -691,10 +691,10 @@ public class Medium
         else if (this.bcxz != 0) {
             this.bcxz = 0;
         }
-        n += this.bcxz;
-        this.xz = -n;
-        final float x = contO.x - this.cx + (int)(-(contO.z - 800 - contO.z) * this.sin(n));
-        final float z = contO.z - this.cz + (int)((contO.z - 800 - contO.z) * this.cos(n));
+        cxz += this.bcxz;
+        this.xz = -cxz;
+        final float x = contO.x - this.cx + (int)(-(contO.z - 800 - contO.z) * this.sin(cxz));
+        final float z = contO.z - this.cz + (int)((contO.z - 800 - contO.z) * this.cos(cxz));
         final float y = contO.y - 250 - this.cy;
         int n4 = 0;
         if (Math.abs(y - this.y) > this.fvect) {

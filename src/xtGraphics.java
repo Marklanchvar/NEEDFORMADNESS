@@ -9422,13 +9422,13 @@ public class xtGraphics extends Panel implements Runnable
         }
     }
     
-    public void rot(final int[] array, final int[] array2, final int n, final int n2, final int n3, final int n4) {
-        if (n3 != 0) {
+    public void rot(final int[] array, final int[] array2, final float n, final float n2, final float cxz, final int n4) {
+        if (cxz != 0) {
             for (int i = 0; i < n4; ++i) {
                 final int n5 = array[i];
                 final int n6 = array2[i];
-                array[i] = n + (int)((n5 - n) * this.m.cos(n3) - (n6 - n2) * this.m.sin(n3));
-                array2[i] = n2 + (int)((n5 - n) * this.m.sin(n3) + (n6 - n2) * this.m.cos(n3));
+                array[i] = (int) (n + ((n5 - n) * this.m.cos(cxz) - (n6 - n2) * this.m.sin(cxz)));
+                array2[i] = (int) (n2 + ((n5 - n) * this.m.sin(cxz) + (n6 - n2) * this.m.cos(cxz)));
             }
         }
     }
