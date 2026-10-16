@@ -663,7 +663,7 @@ public class GameSparker extends Applet implements Runnable
                     if (lobby.fase == 3) {
                         xtGraphics.trackbg(false);
                         medium.trk = false;
-                        medium.focus_point = 400;
+                        medium.focus_point = 640;
                         medium.crs = true;
                         medium.x = -335;
                         medium.y = 0;
@@ -1791,12 +1791,12 @@ public class GameSparker extends Applet implements Runnable
             this.lastw = this.getWidth();
             this.lasth = this.getHeight();
             this.showsize = 100;
-            if (this.lastw <= 800 || this.lasth <= 550) {
+            if (this.lastw <= 1280 || this.lasth <= 880) {
                 this.reqmult = 0.0f;
             }
             if (Madness.fullscreen) {
-                this.apx = (int)(this.getWidth() / 2 - 400.0f * this.apmult);
-                this.apy = (int)(this.getHeight() / 2 - 225.0f * this.apmult);
+                this.apx = (int)(this.getWidth() / 2 - 640 * this.apmult);
+                this.apy = (int)(this.getHeight() / 2 - 360 * this.apmult);
             }
         }
         int n = 0;
@@ -1811,9 +1811,9 @@ public class GameSparker extends Applet implements Runnable
                 if (this.showsize == 100 || this.showsize == 70) {
                     graphics2D.clearRect(0, 0, this.getWidth(), this.getHeight());
                 }
-                float n3 = (this.getWidth() - 40) / 800.0f - 1.0f;
-                if (n3 > (this.getHeight() - 70) / 450.0f - 1.0f) {
-                    n3 = (this.getHeight() - 70) / 450.0f - 1.0f;
+                float n3 = (this.getWidth() - 40) / 1280.0f - 1.0f;
+                if (n3 > (this.getHeight() - 70) / 720.0f - 1.0f) {
+                    n3 = (this.getHeight() - 70) / 720.0f - 1.0f;
                 }
                 if (n3 > 1.0f) {
                     n3 = 1.0f;
@@ -1869,8 +1869,8 @@ public class GameSparker extends Applet implements Runnable
                     graphics2D.fillRect(this.getWidth() - 208, 14, 158, 23);
                 }
             }
-            this.apx = (int)(this.getWidth() / 2 - 400.0f * this.apmult);
-            this.apy = (int)(this.getHeight() / 2 - 225.0f * this.apmult - 50.0f);
+            this.apx = (int)(this.getWidth() / 2 - 640.0f * this.apmult);
+            this.apy = (int)(this.getHeight() / 2 - 360.0f * this.apmult - 50.0f);
             if (this.apy < 50) {
                 this.apy = 50;
             }
@@ -1880,21 +1880,21 @@ public class GameSparker extends Applet implements Runnable
                     if (this.moto == 1) {
                         graphics2D.setComposite(AlphaComposite.getInstance(3, this.mvect / 100.0f));
                         this.rd.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
-                        graphics2D.drawImage(this.offImage, this.apx + n, this.apy + n2, (int)(800.0f * this.apmult), (int)(450.0f * this.apmult), this);
+                        graphics2D.drawImage(this.offImage, this.apx + n, this.apy + n2, (int)(1280.0f * this.apmult), (int)(720.0f * this.apmult), this);
                         this.cropit(graphics2D, n, n2);
                     }
                     else {
-                        graphics2D.drawImage(this.offImage, this.apx, this.apy, (int)(800.0f * this.apmult), (int)(450.0f * this.apmult), this);
+                        graphics2D.drawImage(this.offImage, this.apx, this.apy, (int)(1280.0f * this.apmult), (int)(720.0f * this.apmult), this);
                     }
                 }
                 else if (this.moto == 1) {
                     graphics2D.setComposite(AlphaComposite.getInstance(3, this.mvect / 100.0f));
                     this.rd.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
-                    graphics2D.drawImage(this.offImage, this.apx + n, this.apy + n2, (int)(800.0f * this.apmult), (int)(450.0f * this.apmult), this);
+                    graphics2D.drawImage(this.offImage, this.apx + n, this.apy + n2, (int)(1280.0f * this.apmult), (int)(720.0f * this.apmult), this);
                     this.cropit(graphics2D, n, n2);
                 }
                 else {
-                    graphics2D.drawImage(this.offImage, this.apx, this.apy, (int)(800.0f * this.apmult), (int)(450.0f * this.apmult), this);
+                    graphics2D.drawImage(this.offImage, this.apx, this.apy, (int)(1280.0f * this.apmult), (int)(720.0f * this.apmult), this);
                 }
             }
             else if (this.moto == 1) {
@@ -1928,15 +1928,15 @@ public class GameSparker extends Applet implements Runnable
                 graphics2D.fillRect(this.apx + a, this.apy - (int)(25.0f * this.apmult), Math.abs(a), (int)(500.0f * this.apmult));
             }
             else {
-                graphics2D.fillRect(this.apx + (int)(800.0f * this.apmult), this.apy - (int)(25.0f * this.apmult), a, (int)(500.0f * this.apmult));
+                graphics2D.fillRect(this.apx + (int)(1280.0f * this.apmult), this.apy - (int)(25.0f * this.apmult), a, (int)(800.0f * this.apmult));
             }
         }
         if (a2 != 0) {
             if (a2 < 0) {
-                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + a2, (int)(850.0f * this.apmult), Math.abs(a2));
+                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + a2, (int)(1360.0f * this.apmult), Math.abs(a2));
             }
             else {
-                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + (int)(450.0f * this.apmult), (int)(850.0f * this.apmult), a2);
+                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + (int)(720.0f * this.apmult), (int)(1360.0f * this.apmult), a2);
             }
         }
     }
@@ -1949,7 +1949,7 @@ public class GameSparker extends Applet implements Runnable
     @Override
     public void init() {
         this.setBackground(new Color(0, 0, 0));
-        this.offImage = this.createImage(800, 450);
+        this.offImage = this.createImage(1280, 720);
         if (this.offImage != null) {
             this.rd = (Graphics2D)this.offImage.getGraphics();
         }

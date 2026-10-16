@@ -16,7 +16,7 @@ public class Wheels
         this.size = 2.0f;
         this.depth = 3.0f;
         this.sparkat = 0;
-        this.radius = 0;
+        this.radius = 1;
     }
     
     public void setrims(final int n, final int n2, final int n3, final int n4, final int n5) {
@@ -50,7 +50,8 @@ public class Wheels
         this.sparkat = (int)(n11 * 24.0f);
         this.ground = (n3 + 13.0f * n11);
         this.radius = (13.0f * n11);
-        int n12 = (n2 < 0) ? 1 : -1;
+        int n12 = -1;
+        if (n2 < 0) n12 = 1;
         for (int i = 0; i < 20; ++i) {
             array2[i] = (n2 - 4.0f * n10);
         }

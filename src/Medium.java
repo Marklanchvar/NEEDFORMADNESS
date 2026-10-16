@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Medium
 {
-    int focus_point;
+    float focus_point;
     float ground;
     int skyline;
     int[] fade;
@@ -112,7 +112,7 @@ public class Medium
     int rescnt;
     
     public Medium() {
-        this.focus_point = 400;
+        this.focus_point = 640;
         this.ground = 250;
         this.skyline = -300;
         this.fade = new int[] { 3000, 4500, 6000, 7500, 9000, 10500, 12000, 13500, 15000, 16500, 18000, 19500, 21000, 22500, 24000, 25500 };
@@ -137,9 +137,9 @@ public class Medium
         this.noelec = 0;
         this.trk = false;
         this.crs = false;
-        this.cx = 400;
-        this.cy = 225;
-        this.cz = 50;
+        this.cx = 640;
+        this.cy = 360;
+        this.cz = 100;
         this.xz = 0;
         this.zy = 0;
         this.x = 0;
@@ -147,8 +147,8 @@ public class Medium
         this.z = 0;
         this.iw = 0;
         this.ih = 0;
-        this.w = 800;
-        this.h = 450;
+        this.w = 1280;
+        this.h = 720;
         this.nsp = 0;
         this.spx = new float[7];
         this.spz = new float[7];
@@ -306,7 +306,7 @@ public class Medium
                 this.zy = 67;
                 this.atrx = (checkPoints.x[0] - this.trx) / 116L;
                 this.atrz = (checkPoints.z[0] - this.trz) / 116L;
-                this.focus_point = 400;
+                this.focus_point = 640;
             }
             if (this.hit == 20000) {
                 this.fallen = 500;
@@ -314,7 +314,7 @@ public class Medium
                 this.zy = 67;
                 this.atrx = (checkPoints.x[0] - this.trx) / 116L;
                 this.atrz = (checkPoints.z[0] - this.trz) / 116L;
-                this.focus_point = 400;
+                this.focus_point = 640;
             }
             this.hit -= this.fallen;
             this.fallen += 7;
@@ -333,7 +333,7 @@ public class Medium
             this.vxz += 3;
         }
         else {
-            this.focus_point = (int)(400.0f * this.fo);
+            this.focus_point = 640 * this.fo;
             if (Math.abs(this.fo - this.gofo) > 0.005) {
                 if (this.fo < this.gofo) {
                     this.fo += 0.005f;

@@ -109,7 +109,7 @@ public class ContO
         this.decor = false;
         this.grounded = 1.0f;
         this.grat = 0;
-        this.wrad = 0;
+        this.wrad = 1;
         this.keyx = new float[4];
         this.keyz = new float[4];
         this.sprkat = 0;

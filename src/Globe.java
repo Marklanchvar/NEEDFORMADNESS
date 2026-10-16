@@ -4863,7 +4863,7 @@ public class Globe implements Runnable
                                     this.loadedcars = 10;
                                 }
                                 this.m.crs = true;
-                                this.m.focus_point = 400;
+                                this.m.focus_point = 640;
                                 this.m.x = -335;
                                 this.m.y = 0;
                                 this.m.z = -50;
@@ -12828,7 +12828,7 @@ public class Globe implements Runnable
             }
         }
         this.m.crs = true;
-        this.m.focus_point = 400;
+        this.m.focus_point = 640;
         this.m.x = -335;
         this.m.y = 0;
         this.m.z = -50;

@@ -1404,8 +1404,8 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void loading() {
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.fillRect(0, 0, 800, 450);
+        this.rd.setColor(Color.BLACK);
+        this.rd.fillRect(0, 0, 1280, 720);
         this.rd.drawImage(this.sign, 362, 35, this);
         this.rd.drawImage(this.hello, 125, 105, this);
         this.rd.setColor(new Color(198, 214, 255));
@@ -1416,7 +1416,7 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.setFont(new Font("Arial", 1, 11));
         this.ftm = this.rd.getFontMetrics();
         this.drawcs(358, "Loading game, please wait.", 0, 0, 0, 3);
-        this.rd.setColor(new Color(255, 255, 255));
+        this.rd.setColor(Color.WHITE);
         this.rd.fillRect(295, 398, 210, 17);
         this.shload += (this.dnload + 10.0f - this.shload) / 100.0f;
         if (this.shload > this.kbload) {
@@ -1575,8 +1575,8 @@ public class xtGraphics extends Panel implements Runnable
             this.pin = 0;
         }
         this.trackbg(false);
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.fillRect(65, 135, 670, 59);
+        this.rd.setColor(Color.BLACK);
+        this.rd.fillRect(0, 135, 1280, 59);
         if (this.pin != 0) {
             this.rd.drawImage(this.radicalplay, this.radpx + (int)(8.0 * Math.random() - 4.0), 135, null);
         }
@@ -1612,11 +1612,7 @@ public class xtGraphics extends Panel implements Runnable
             this.aflk = true;
         }
         this.rd.drawImage(this.rpro, 275, 265, null);
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.fillRect(0, 0, 65, 450);
-        this.rd.fillRect(735, 0, 65, 450);
-        this.rd.fillRect(65, 0, 670, 25);
-        this.rd.fillRect(65, 425, 670, 25);
+        this.rd.setColor(Color.BLACK);
     }
     
     public void credits(final Control control, final int n, final int n2, final int n3) {
@@ -1720,11 +1716,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.trkx[i] = 735;
             }
         }
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.fillRect(0, 0, 65, 450);
-        this.rd.fillRect(735, 0, 65, 450);
-        this.rd.fillRect(65, 0, 670, 25);
-        this.rd.fillRect(65, 425, 670, 25);
+        this.rd.setColor(Color.BLACK);
     }
     
     public void mainbg(final int n) {
@@ -1829,10 +1821,10 @@ public class xtGraphics extends Panel implements Runnable
         if (n != -101) {
             if (n == 4) {
                 this.rd.setColor(new Color(216, 177, 100));
-                this.rd.fillRect(65, 0, 670, 425);
+                this.rd.fillRect(0, 40, 1280, 680);
             }
             else {
-                this.rd.fillRect(65, 25, 670, 400);
+                this.rd.fillRect(0, 0, 1280, 720);
             }
         }
         if (n == 4) {
@@ -1878,13 +1870,7 @@ public class xtGraphics extends Panel implements Runnable
                 }
             }
         }
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.fillRect(0, 0, 65, 450);
-        this.rd.fillRect(735, 0, 65, 450);
-        if (n != 4) {
-            this.rd.fillRect(65, 0, 670, 25);
-        }
-        this.rd.fillRect(65, 425, 670, 25);
+        this.rd.setColor(Color.BLACK);
     }
     
     public void inishstageselect(final CheckPoints checkPoints) {
@@ -1925,13 +1911,13 @@ public class xtGraphics extends Panel implements Runnable
                 checkPoints.stage = (int)(Math.random() * 17.0) + 11;
             }
         }
-        this.app.sgame.setBackground(new Color(0, 0, 0));
+        this.app.sgame.setBackground(Color.BLACK);
         this.app.sgame.setForeground(new Color(47, 179, 255));
-        this.app.snfm1.setBackground(new Color(0, 0, 0));
+        this.app.snfm1.setBackground(Color.BLACK);
         this.app.snfm1.setForeground(new Color(47, 179, 255));
-        this.app.snfm2.setBackground(new Color(0, 0, 0));
+        this.app.snfm2.setBackground(Color.BLACK);
         this.app.snfm2.setForeground(new Color(47, 179, 255));
-        this.app.mstgs.setBackground(new Color(0, 0, 0));
+        this.app.mstgs.setBackground(Color.BLACK);
         this.app.mstgs.setForeground(new Color(47, 179, 255));
         this.app.gmode.setBackground(new Color(49, 49, 0));
         this.app.gmode.setForeground(new Color(148, 167, 0));
@@ -2302,7 +2288,7 @@ public class xtGraphics extends Panel implements Runnable
                             if (this.cd.reco != 2) {
                                 this.app.tnick.setText(this.nickname);
                             }
-                            this.app.tnick.setForeground(new Color(0, 0, 0));
+                            this.app.tnick.setForeground(Color.BLACK);
                         }
                         else {
                             this.app.tnick.setForeground(new Color(255, 0, 0));
@@ -2313,7 +2299,7 @@ public class xtGraphics extends Panel implements Runnable
                             if (!this.autolog) {
                                 this.app.tpass.setText("");
                             }
-                            this.app.tpass.setForeground(new Color(0, 0, 0));
+                            this.app.tpass.setForeground(Color.BLACK);
                         }
                         else {
                             this.app.tpass.setForeground(new Color(255, 0, 0));
@@ -2333,8 +2319,8 @@ public class xtGraphics extends Panel implements Runnable
                             if (this.cd.reco == 2) {
                                 this.app.tpass.setText("");
                             }
-                            this.app.tnick.setForeground(new Color(0, 0, 0));
-                            this.app.tpass.setForeground(new Color(0, 0, 0));
+                            this.app.tnick.setForeground(Color.BLACK);
+                            this.app.tpass.setForeground(Color.BLACK);
                         }
                     }
                     if (this.cd.reco != -177) {
@@ -2711,15 +2697,10 @@ public class xtGraphics extends Panel implements Runnable
             b2 = 0;
         }
         this.rd.setColor(new Color(r, g, b2));
-        this.rd.fillRect(65, 25, 670, 400);
+        this.rd.fillRect(0, 0, 1280, 720);
         this.rd.setComposite(AlphaComposite.getInstance(3, 0.3f));
         this.rd.drawImage(this.bggo, 0, -25, null);
         this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.fillRect(0, 0, 65, 450);
-        this.rd.fillRect(735, 0, 65, 450);
-        this.rd.fillRect(65, 0, 670, 25);
-        this.rd.fillRect(65, 425, 670, 25);
         this.rd.setFont(new Font("Arial", 1, 13));
         this.ftm = this.rd.getFontMetrics();
         this.drawcs(50, this.asay, 0, 0, 0, 3);
@@ -3112,12 +3093,12 @@ public class xtGraphics extends Panel implements Runnable
             this.m.crs = false;
             this.m.ih = 0;
             this.m.iw = 0;
-            this.m.h = 450;
-            this.m.w = 800;
-            this.m.focus_point = 400;
-            this.m.cx = 400;
-            this.m.cy = 225;
-            this.m.cz = 50;
+            this.m.h = 720;
+            this.m.w = 1280;
+            this.m.focus_point = 640;
+            this.m.cx = 640;
+            this.m.cy = 360;
+            this.m.cz = 100;
             this.rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
             this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
             if (this.multion == 0) {
@@ -3240,7 +3221,7 @@ public class xtGraphics extends Panel implements Runnable
                         this.rd.setColor(new Color(this.m.csky[0], this.m.csky[1], this.m.csky[2]));
                         this.rd.fillRect(403, 162, 39, 17);
                     }
-                    this.rd.setColor(new Color(0, 0, 0));
+                    this.rd.setColor(Color.BLACK);
                     this.rd.drawString("Yes", 366, 175);
                     this.rd.drawString("No", 416, 175);
                     this.rd.setColor(new Color(this.m.csky[0] / 2, this.m.csky[1] / 2, this.m.csky[2] / 2));
@@ -3315,7 +3296,7 @@ public class xtGraphics extends Panel implements Runnable
                 if (!this.lan || this.im != 0) {
                     this.rd.fillRect(403, 362, 39, 7);
                 }
-                this.rd.setColor(new Color(0, 0, 0));
+                this.rd.setColor(Color.BLACK);
                 this.rd.setFont(new Font("Arial", 1, 13));
                 this.ftm = this.rd.getFontMetrics();
                 if (this.lan && this.im == 0) {
@@ -3332,7 +3313,7 @@ public class xtGraphics extends Panel implements Runnable
                 }
                 this.rd.setFont(new Font("Arial", 1, 11));
                 this.ftm = this.rd.getFontMetrics();
-                this.rd.setColor(new Color(0, 0, 0));
+                this.rd.setColor(Color.BLACK);
                 this.rd.drawString("Yes", 366, 375);
                 if (!this.lan || this.im != 0) {
                     this.rd.drawString("No", 416, 375);
@@ -3528,7 +3509,7 @@ public class xtGraphics extends Panel implements Runnable
                                         this.ftm = this.rd.getFontMetrics();
                                         this.rd.drawString(this.cnames[i][l] + ": ", 39 + n18 + this.movepos[i], 439 + n12);
                                         final int n22 = n18 + this.ftm.stringWidth(this.cnames[i][l] + ": ");
-                                        this.rd.setColor(new Color(0, 0, 0));
+                                        this.rd.setColor(Color.BLACK);
                                         this.rd.setFont(new Font("Tahoma", 0, 11));
                                         this.ftm = this.rd.getFontMetrics();
                                         this.rd.drawString(this.sentn[i][l] + "   ", 39 + n22 + this.movepos[i], 439 + n12);
@@ -3538,7 +3519,7 @@ public class xtGraphics extends Panel implements Runnable
                                         n18 = n18 + this.ftm.stringWidth(this.cnames[i][l] + ": ") + this.ftm.stringWidth(this.sentn[i][l] + "   ");
                                     }
                                 }
-                                this.rd.setColor(new Color(0, 0, 0));
+                                this.rd.setColor(Color.BLACK);
                                 this.rd.fillRect(0, 423 + n12, 5, 24);
                                 this.rd.fillRect(794, 423 + n12, 6, 24);
                             }
@@ -3558,7 +3539,7 @@ public class xtGraphics extends Panel implements Runnable
                                             this.rd.drawString(this.cnames[i][n23] + ": ", 39 + n18, 439 + n12);
                                         }
                                         final int n25 = n18 + this.ftm.stringWidth(this.cnames[i][n23] + ": ");
-                                        this.rd.setColor(new Color(0, 0, 0));
+                                        this.rd.setColor(Color.BLACK);
                                         this.rd.setFont(new Font("Tahoma", 0, 11));
                                         this.ftm = this.rd.getFontMetrics();
                                         if (this.ftm.stringWidth(this.sentn[i][n23]) + 39 + n25 < 775) {
@@ -3615,14 +3596,14 @@ public class xtGraphics extends Panel implements Runnable
                             this.rd.fillRect(5, 423 + n12, 28, 23);
                         }
                         if (b2) {
-                            this.rd.setColor(new Color(0, 0, 0));
+                            this.rd.setColor(Color.BLACK);
                         }
                         else {
                             this.rd.setColor(new Color((int)(this.m.cgrnd[0] / 2.0f), (int)(this.m.cgrnd[1] / 2.0f), (int)(this.m.cgrnd[2] / 2.0f)));
                         }
                         this.rd.setFont(new Font("Tahoma", 1, 11));
                         this.rd.drawString("<<", 10, 439 + n12);
-                        this.rd.setColor(new Color(0, 0, 0));
+                        this.rd.setColor(Color.BLACK);
                         this.rd.drawRect(5, 423 + n12, 789, 23);
                         this.rd.drawLine(33, 423 + n12, 33, 446 + n12);
                         n12 += 23;
@@ -3781,7 +3762,7 @@ public class xtGraphics extends Panel implements Runnable
                                 this.rd.setColor(new Color(r, g, b6));
                                 this.rd.drawString(this.plnames[n32], 731 - this.ftm.stringWidth(this.plnames[n32]) / 2, 70 + 30 * n30);
                             }
-                            this.rd.setColor(new Color(0, 0, 0));
+                            this.rd.setColor(Color.BLACK);
                             this.rd.drawString(this.plnames[n32], 730 - this.ftm.stringWidth(this.plnames[n32]) / 2, 70 + 30 * n30);
                             final int n36 = (int)(60.0f * checkPoints.magperc[n32]);
                             final int n37 = 244;
@@ -3813,7 +3794,7 @@ public class xtGraphics extends Panel implements Runnable
                             }
                             this.rd.setColor(new Color(r2, g2, b7));
                             this.rd.fillRect(700, 74 + 30 * n30, n36, 5);
-                            this.rd.setColor(new Color(0, 0, 0));
+                            this.rd.setColor(Color.BLACK);
                             this.rd.drawRect(700, 74 + 30 * n30, 60, 5);
                             boolean b8 = false;
                             if ((this.im != n32 || this.multion >= 2) && lxm > 661 && lxm < 775 && lym > 58 + 30 * n30 && lym < 83 + 30 * n30) {
@@ -3963,7 +3944,7 @@ public class xtGraphics extends Panel implements Runnable
             final Color hsbColor = Color.getHSBColor(hsbvals5[0], hsbvals5[1], hsbvals5[2]);
             this.rd.setColor(hsbColor);
             this.rd.fillRect(676, 426 - n * 23, 109, 7);
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.setFont(new Font("Tahoma", 1, 11));
             this.rd.drawString("Send Message  >", 684, 439 - n * 23);
             this.rd.setColor(new Color((int)(this.m.cgrnd[0] / 1.2f), (int)(this.m.cgrnd[1] / 1.2f), (int)(this.m.cgrnd[2] / 1.2f)));
@@ -4077,9 +4058,6 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.setComposite(AlphaComposite.getInstance(3, 0.3f));
         this.rd.drawImage(this.bggo, 65, 25, null);
         this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.fillRect(735, 0, 65, 450);
-        this.rd.fillRect(65, 425, 670, 25);
         if (this.aflk) {
             this.aflk = false;
         }
@@ -4125,7 +4103,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.rd.drawString("While wasting, you will just need to chase the other cars and", 262, 127);
                 this.rd.drawString("crash into them (without worrying about track and checkpoints).", 262, 147);
             }
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawImage(this.racing, 165, 185, null);
             this.rd.drawImage(this.ory, 429, 235, null);
             this.rd.drawImage(this.wasting, 492, 185, null);
@@ -4163,7 +4141,7 @@ public class xtGraphics extends Panel implements Runnable
                     this.rd.drawImage(this.chil, 167, 295, null);
                 }
             }
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawImage(this.stunts, 105, 175, null);
             this.rd.drawImage(this.opwr, 540, 253, null);
             this.rd.setFont(new Font("Arial", 1, 13));
@@ -4173,7 +4151,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawImage(this.plus, 405, 358, null);
             this.rd.drawImage(this.arrows, 491, 323, null);
             this.rd.setFont(new Font("Arial", 1, 11));
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawString("Forward Loop", 492, 319);
             this.rd.drawString("Backward Loop", 490, 397);
             this.rd.drawString("Left Roll", 443, 375);
@@ -4198,7 +4176,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.rd.drawString("And remember, 'Power' is an important factor in the game. You", 262, 127);
                 this.rd.drawString("will need it whether you are racing or wasting!", 262, 147);
             }
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawImage(this.fixhoop, 185, 218, null);
             this.rd.drawImage(this.sarrow, 385, 228, null);
             this.rd.setFont(new Font("Arial", 1, 11));
@@ -4211,7 +4189,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawString("I am Coach Insano, I am the coach and narrator of this game!", 262, 87);
             this.rd.drawString("I recommended starting with NFM 1 if it\u2019s your first time to play.", 262, 127);
             this.rd.drawString("Good Luck & Have Fun!", 262, 147);
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawString("Other Controls :", 155, 205);
             this.rd.setFont(new Font("Arial", 1, 11));
             this.rd.drawImage(this.kz, 169, 229, null);
@@ -4232,7 +4210,7 @@ public class xtGraphics extends Panel implements Runnable
         if (this.flipo == 1 || this.flipo == 16) {
             this.rd.setFont(new Font("Arial", 1, 13));
             this.ftm = this.rd.getFontMetrics();
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             if (this.flipo == 16) {
                 this.rd.drawString("M A I N    C O N T R O L S   -   once again!", 400 - this.ftm.stringWidth("M A I N    C O N T R O L S   -   once again!") / 2, 49);
             }
@@ -4251,7 +4229,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawString("Turn right", 590, 135);
             this.rd.drawString("Handbrake", 247, 134);
             this.drawcs(175, "----------------------------------------------------------------------------------------------------------------------------------------------------", 0, 64, 128, 3);
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.setFont(new Font("Arial", 1, 13));
             this.ftm = this.rd.getFontMetrics();
             this.rd.drawString("To perform STUNTS:", 125, 200);
@@ -4261,7 +4239,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawImage(this.arrows, 491, 213, null);
             this.rd.setFont(new Font("Arial", 1, 11));
             this.ftm = this.rd.getFontMetrics();
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawString("Forward Loop", 492, 209);
             this.rd.drawString("Backward Loop", 490, 287);
             this.rd.drawString("Left Roll", 443, 265);
@@ -4378,7 +4356,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawRoundRect(343, 261, 110, 22, 7, 20);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawRoundRect(343, 261, 110, 22, 7, 20);
         }
         if (this.opselect == 1) {
@@ -4398,7 +4376,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawRoundRect(288, 291, 221, 22, 7, 20);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawRoundRect(288, 291, 221, 22, 7, 20);
         }
         if (this.opselect == 2) {
@@ -4418,7 +4396,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawRoundRect(301, 321, 196, 22, 7, 20);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawRoundRect(301, 321, 196, 22, 7, 20);
         }
         if (this.opselect == 3) {
@@ -4438,7 +4416,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawRoundRect(357, 351, 85, 22, 7, 20);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawRoundRect(357, 351, 85, 22, 7, 20);
         }
         this.rd.drawImage(this.opti, 294, 265, null);
@@ -4561,7 +4539,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawRoundRect(358, 262 + this.dropf, 82, 22, 7, 20);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawRoundRect(358, 262 + this.dropf, 82, 22, 7, 20);
         }
         if (this.opselect == 1) {
@@ -4581,7 +4559,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawRoundRect(358, 290 + this.dropf, 82, 22, 7, 20);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawRoundRect(358, 290 + this.dropf, 82, 22, 7, 20);
         }
         if (this.opselect == 2) {
@@ -4601,7 +4579,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawRoundRect(333, 318 + this.dropf, 132, 22, 7, 20);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawRoundRect(333, 318 + this.dropf, 132, 22, 7, 20);
         }
         if (this.dropf == 0) {
@@ -4622,7 +4600,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.rd.drawRoundRect(348, 346, 102, 22, 7, 20);
             }
             else {
-                this.rd.setColor(new Color(0, 0, 0));
+                this.rd.setColor(Color.BLACK);
                 this.rd.drawRoundRect(348, 346, 102, 22, 7, 20);
             }
         }
@@ -4822,19 +4800,19 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void nofocus() {
-        this.rd.setColor(new Color(255, 255, 255));
-        this.rd.fillRect(0, 0, 800, 20);
-        this.rd.fillRect(0, 0, 20, 450);
-        this.rd.fillRect(0, 430, 800, 20);
-        this.rd.fillRect(780, 0, 20, 450);
+        this.rd.setColor(Color.WHITE);
+        this.rd.fillRect(0, 0, 1280, 20);
+        this.rd.fillRect(0, 0, 20, 720);
+        this.rd.fillRect(0, 700, 1280, 20);
+        this.rd.fillRect(1260, 0, 20, 720);
         this.rd.setColor(new Color(192, 192, 192));
-        this.rd.drawRect(20, 20, 760, 410);
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.drawRect(22, 22, 756, 406);
+        this.rd.drawRect(20, 20, 1240, 680);
+        this.rd.setColor(Color.BLACK);
+        this.rd.drawRect(22, 22, 1236, 676);
         this.rd.setFont(new Font("Arial", 1, 11));
         this.ftm = this.rd.getFontMetrics();
         this.drawcs(14, "Game lost its focus.   Click screen with mouse to continue.", 100, 100, 100, 3);
-        this.drawcs(445, "Game lost its focus.   Click screen with mouse to continue.", 100, 100, 100, 3);
+        this.drawcs(715, "Game lost its focus.   Click screen with mouse to continue.", 100, 100, 100, 3);
     }
     
     public void inishcarselect(final ContO[] array) {
@@ -5002,7 +4980,7 @@ public class xtGraphics extends Panel implements Runnable
             this.minsl = this.sc[0];
             this.maxsl = this.sc[0];
         }
-        this.app.mcars.setBackground(new Color(0, 0, 0));
+        this.app.mcars.setBackground(Color.BLACK);
         this.app.mcars.setForeground(new Color(47, 179, 255));
         this.app.mcars.alphad = true;
         this.app.mcars.carsel = true;
@@ -5016,7 +4994,7 @@ public class xtGraphics extends Panel implements Runnable
         if (this.multion == 0) {
             this.app.mycar.setLabel(" Include in this game.");
             this.app.mycar.setBackground(new Color(198, 179, 129));
-            this.app.mycar.setForeground(new Color(0, 0, 0));
+            this.app.mycar.setForeground(Color.BLACK);
             int nlocars = 16;
             if (this.cd.lastload == 2) {
                 nlocars = this.cd.nlocars;
@@ -5053,20 +5031,20 @@ public class xtGraphics extends Panel implements Runnable
         }
         this.m.trk = false;
         this.m.crs = true;
-        this.m.x = -400;
-        this.m.y = -525;
+        this.m.x = -640;
+        this.m.y = -570;
         this.m.z = -50;
         this.m.xz = 0;
         this.m.zy = 10;
         this.m.ground = 495;
         this.m.ih = 0;
         this.m.iw = 0;
-        this.m.h = 450;
-        this.m.w = 800;
-        this.m.focus_point = 400;
-        this.m.cx = 400;
-        this.m.cy = 225;
-        this.m.cz = 50;
+        this.m.h = 720;
+        this.m.w = 1280;
+        this.m.focus_point = 640;
+        this.m.cx = 640;
+        this.m.cy = 360;
+        this.m.cz = 100;
         if (this.multion == 0) {
             this.intertrack.loadimod(false);
             this.intertrack.play();
@@ -5074,11 +5052,7 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void carselect(final Control control, final ContO[] array, final Mad mad, final int n, final int n2, final boolean b) {
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.fillRect(0, 0, 65, 450);
-        this.rd.fillRect(735, 0, 65, 450);
-        this.rd.fillRect(65, 0, 670, 25);
-        this.rd.fillRect(65, 425, 670, 25);
+        this.rd.setColor(Color.BLACK);
         if (this.flatrstart == 6) {
             if (this.multion != 0 || this.testdrive == 1 || this.testdrive == 2) {
                 this.rd.drawImage(this.carsbgc, 65, 25, null);
@@ -5091,8 +5065,8 @@ public class xtGraphics extends Panel implements Runnable
             this.drawSmokeCarsbg();
         }
         else {
-            this.rd.setColor(new Color(255, 255, 255));
-            this.rd.fillRect(65, 25, 670, 400);
+            this.rd.setColor(Color.WHITE);
+            this.rd.fillRect(0, 0, 1280, 720);
             this.carsbginflex();
             this.flatrstart = 6;
         }
@@ -5696,7 +5670,7 @@ public class xtGraphics extends Panel implements Runnable
                             }
                             this.rd.setColor(new Color(198, 179, 129));
                             this.rd.fillRoundRect(305, 302, 190, 24, 7, 20);
-                            this.rd.setColor(new Color(0, 0, 0));
+                            this.rd.setColor(Color.BLACK);
                             this.rd.drawRoundRect(305, 302, 190, 24, 7, 20);
                             this.app.movefield(this.app.mycar, 334, 306, 150, 17);
                             if (this.app.mycar.getState() != this.cd.include[this.sc[0] - 16]) {
@@ -5717,7 +5691,7 @@ public class xtGraphics extends Panel implements Runnable
                             }
                             this.rd.setFont(new Font("Arial", 1, 12));
                             this.ftm = this.rd.getFontMetrics();
-                            this.rd.setColor(new Color(0, 0, 0));
+                            this.rd.setColor(Color.BLACK);
                             if (!this.cd.createdby[this.sc[0] - 16].equals(this.nickname)) {
                                 b2 = this.clink(this.cd.createdby[this.sc[0] - 16], n, n2, b);
                             }
@@ -5841,7 +5815,7 @@ public class xtGraphics extends Panel implements Runnable
                         if (this.cd.action == 0) {
                             this.rd.setFont(new Font("Arial", 1, 12));
                             this.ftm = this.rd.getFontMetrics();
-                            this.rd.setColor(new Color(0, 0, 0));
+                            this.rd.setColor(Color.BLACK);
                             if (!this.cd.createdby[this.sc[0] - 16].equals(this.nickname)) {
                                 b2 = this.clink(this.cd.createdby[this.sc[0] - 16], n, n2, b);
                             }
@@ -5970,7 +5944,7 @@ public class xtGraphics extends Panel implements Runnable
                                     if (this.cd.reco != 2) {
                                         this.app.tnick.setText(this.nickname);
                                     }
-                                    this.app.tnick.setForeground(new Color(0, 0, 0));
+                                    this.app.tnick.setForeground(Color.BLACK);
                                 }
                                 else {
                                     this.app.tnick.setForeground(new Color(255, 0, 0));
@@ -5982,7 +5956,7 @@ public class xtGraphics extends Panel implements Runnable
                                     if (!this.autolog) {
                                         this.app.tpass.setText("");
                                     }
-                                    this.app.tpass.setForeground(new Color(0, 0, 0));
+                                    this.app.tpass.setForeground(Color.BLACK);
                                 }
                                 else {
                                     this.app.tpass.setForeground(new Color(255, 0, 0));
@@ -6002,8 +5976,8 @@ public class xtGraphics extends Panel implements Runnable
                                     if (this.cd.reco == 2) {
                                         this.app.tpass.setText("");
                                     }
-                                    this.app.tnick.setForeground(new Color(0, 0, 0));
-                                    this.app.tpass.setForeground(new Color(0, 0, 0));
+                                    this.app.tnick.setForeground(Color.BLACK);
+                                    this.app.tpass.setForeground(Color.BLACK);
                                 }
                             }
                             if (this.cd.reco != -177) {
@@ -6050,7 +6024,7 @@ public class xtGraphics extends Panel implements Runnable
                     }
                     if (this.cfase == 4) {
                         this.drawprom(145, 150);
-                        this.rd.setColor(new Color(0, 0, 0));
+                        this.rd.setColor(Color.BLACK);
                         this.rd.drawString("Failed to find any ready car in your \u2018mycars\u2019 folder!", 215, 175);
                         this.rd.drawString("Please \u2018Test Drive\u2019 your cars in the Car Maker to make", 215, 215);
                         this.rd.drawString("sure they are ready.", 215, 235);
@@ -6075,7 +6049,7 @@ public class xtGraphics extends Panel implements Runnable
                     }
                     if (this.cfase == 1) {
                         this.drawprom(145, 170);
-                        this.rd.setColor(new Color(0, 0, 0));
+                        this.rd.setColor(Color.BLACK);
                         this.rd.drawString("The game will now load all the cars that can be loaded", 215, 170);
                         this.rd.drawString("from your \u2018mycars\u2019 folder.", 215, 190);
                         this.rd.drawString("If a car is not loaded, then it is not ready (not finished).", 215, 210);
@@ -6100,7 +6074,7 @@ public class xtGraphics extends Panel implements Runnable
                     this.rd.drawImage(this.statb, 536, 352, null);
                     this.rd.drawString("Endurance:", 473, 373);
                     this.rd.drawImage(this.statb, 536, 367, null);
-                    this.rd.setColor(new Color(0, 0, 0));
+                    this.rd.setColor(Color.BLACK);
                     float n19 = (this.cd.swits[this.sc[0]][2] - 220) / 90.0f;
                     if (n19 < 0.2) {
                         n19 = 0.2f;
@@ -6148,7 +6122,7 @@ public class xtGraphics extends Panel implements Runnable
                             str3 = "Class A";
                         }
                         if (this.kbload < 7) {
-                            this.rd.setColor(new Color(0, 0, 0));
+                            this.rd.setColor(Color.BLACK);
                             ++this.kbload;
                         }
                         else {
@@ -6160,7 +6134,7 @@ public class xtGraphics extends Panel implements Runnable
                         }
                         this.rd.setFont(new Font("Arial", 1, 12));
                         this.ftm = this.rd.getFontMetrics();
-                        this.rd.setColor(new Color(0, 0, 0));
+                        this.rd.setColor(Color.BLACK);
                         this.rd.drawString("1st Color", 100, 55);
                         this.rd.drawString("2nd Color", 649, 55);
                         this.rd.setFont(new Font("Arial", 1, 10));
@@ -6197,7 +6171,7 @@ public class xtGraphics extends Panel implements Runnable
                         this.rd.drawImage(this.arn, 145, 71 + (int)(this.arnp[2] * 160.0f), null);
                         this.rd.drawImage(this.arn, 660, 71 + (int)(this.arnp[3] * 160.0f), null);
                         this.rd.drawImage(this.arn, 695, 71 + (int)(this.arnp[5] * 160.0f), null);
-                        this.rd.setColor(new Color(0, 0, 0));
+                        this.rd.setColor(Color.BLACK);
                         this.rd.fillRect(120 + (int)(this.arnp[1] * 40.0f), 222, 3, 3);
                         this.rd.drawLine(121 + (int)(this.arnp[1] * 40.0f), 224, 121 + (int)(this.arnp[1] * 40.0f), 230);
                         this.rd.fillRect(120 + (int)(this.arnp[1] * 40.0f), 230, 3, 3);
@@ -6613,7 +6587,7 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.setComposite(AlphaComposite.getInstance(3, 0.76f));
         this.rd.setColor(new Color(129, 203, 237));
         this.rd.fillRoundRect(205, n, 390, n2, 30, 30);
-        this.rd.setColor(new Color(0, 0, 0));
+        this.rd.setColor(Color.BLACK);
         this.rd.drawRoundRect(205, n, 390, n2, 30, 30);
         this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
     }
@@ -6622,7 +6596,7 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.setComposite(AlphaComposite.getInstance(3, 0.9f));
         this.rd.setColor(new Color(129, 203, 237));
         this.rd.fillRoundRect(205, n, 390, n2, 30, 30);
-        this.rd.setColor(new Color(0, 0, 0));
+        this.rd.setColor(Color.BLACK);
         this.rd.drawRoundRect(205, n, 390, n2, 30, 30);
         this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
     }
@@ -6631,7 +6605,7 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.setComposite(AlphaComposite.getInstance(3, 0.5f));
         this.rd.setColor(new Color(129, 203, 237));
         this.rd.fillRoundRect(277, n, 390, n2, 30, 30);
-        this.rd.setColor(new Color(0, 0, 0));
+        this.rd.setColor(Color.BLACK);
         this.rd.drawRoundRect(277, n, 390, n2, 30, 30);
         this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
     }
@@ -6641,9 +6615,9 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawImage(this.fleximg, 0, 0, null);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.setComposite(AlphaComposite.getInstance(3, 0.1f));
-            this.rd.fillRect(0, 0, 800, 450);
+            this.rd.fillRect(0, 0, 1280, 720);
             this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
         }
         this.rd.setFont(new Font("Arial", 1, 11));
@@ -6791,7 +6765,7 @@ public class xtGraphics extends Panel implements Runnable
                         this.rd.fillRect(226, 211, 344, 125);
                         this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
                     }
-                    this.rd.setColor(new Color(0, 0, 0));
+                    this.rd.setColor(Color.BLACK);
                     this.rd.fillRect(226, 211, 348, 4);
                     this.rd.fillRect(226, 211, 4, 125);
                     this.rd.fillRect(226, 332, 348, 4);
@@ -6867,7 +6841,7 @@ public class xtGraphics extends Panel implements Runnable
                 else {
                     this.drawcs(240, "You're truly a RADICAL GAMER!", 255, 100, 100, 3);
                 }
-                this.rd.setColor(new Color(0, 0, 0));
+                this.rd.setColor(Color.BLACK);
                 this.rd.fillRect(0, 255, 800, 62);
                 this.rd.drawImage(this.radicalplay, this.radpx + (int)(8.0 * Math.random() - 4.0), 255, null);
                 if (this.radpx != 212) {
@@ -8570,7 +8544,7 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         if (n2 == 1) {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.drawString(str, 400 - this.ftm.stringWidth(str) / 2 + 1, n + 1);
         }
         if (n2 == 2) {
@@ -9568,9 +9542,9 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawImage(this.fleximg, 0, 0, null);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.setComposite(AlphaComposite.getInstance(3, 0.1f));
-            this.rd.fillRect(0, 0, 800, 450);
+            this.rd.fillRect(0, 0, 1280, 720);
             this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
         }
     }
@@ -9793,9 +9767,9 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawImage(this.fleximg, 0, 0, null);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.setComposite(AlphaComposite.getInstance(3, 0.5f));
-            this.rd.fillRect(0, 0, 800, 450);
+            this.rd.fillRect(0, 0, 1280, 720);
             this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
         }
     }
@@ -9835,9 +9809,9 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawImage(this.createImage(new MemoryImageSource(800, 450, array, 0, 800)), 0, 0, null);
         }
         else {
-            this.rd.setColor(new Color(0, 0, 0));
+            this.rd.setColor(Color.BLACK);
             this.rd.setComposite(AlphaComposite.getInstance(3, 0.5f));
-            this.rd.fillRect(0, 0, 800, 450);
+            this.rd.fillRect(0, 0, 1280, 720);
             this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
         }
     }
@@ -10401,7 +10375,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.rd.setColor(new Color(255, 0, 0));
             }
             else {
-                this.rd.setColor(new Color(0, 0, 0));
+                this.rd.setColor(Color.BLACK);
             }
             if (s.startsWith("Class")) {
                 this.rd.drawString(s, 400 - this.ftm.stringWidth(s) / 2, n2 + 19);
@@ -10417,8 +10391,8 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void drawWarning() {
-        this.rd.setColor(new Color(0, 0, 0));
-        this.rd.fillRect(0, 0, 800, 450);
+        this.rd.setColor(Color.BLACK);
+        this.rd.fillRect(0, 0, 1280, 720);
         this.rd.setFont(new Font("Arial", 1, 22));
         this.ftm = this.rd.getFontMetrics();
         this.drawcs(100, "Warning!", 255, 0, 0, 3);

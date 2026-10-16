@@ -543,8 +543,16 @@ public class Mad
             }
         }
         float n11 = this.speed / contO.wrad;
-        contO.wzy -= n11;
-        contO.wzy = (contO.wzy + 360) % 360;
+        if (contO.shadow) {
+            contO.wzy -= n11;
+            if (contO.wzy < -360) {
+                contO.wxz += 360;
+            }
+            if (contO.wzy > 360) {
+                contO.wxz -= 360;
+            }
+        }
+        
         if (control.right) {
             contO.wxz -= this.cd.turn[this.cn];
             if (contO.wxz < -36) {
