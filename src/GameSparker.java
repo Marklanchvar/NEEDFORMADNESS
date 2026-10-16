@@ -41,6 +41,7 @@ public class GameSparker extends Applet implements Runnable
     Graphics2D rd;
     Image offImage;
     Thread gamer;
+    Thread physics;
     int mload;
     boolean exwist;
     int apx;
@@ -73,8 +74,8 @@ public class GameSparker extends Applet implements Runnable
     int nob;
     int notb;
     int view;
-    int mvect;
-    int lmxz;
+    float mvect;
+    float lmxz;
     int shaka;
     boolean applejava;
     TextField tnick;
@@ -114,6 +115,8 @@ public class GameSparker extends Applet implements Runnable
     Smenu ilaps;
     Smenu icars;
     Smenu proitem;
+	static int[] minMillis = {15, 30};
+    static int[] millis = {47, 30};
     
     public GameSparker() {
         this.mload = 1;
@@ -218,7 +221,7 @@ public class GameSparker extends Applet implements Runnable
             array3[i] = new Mad(carDefine, medium, record, xtGraphics, i);
             this.u[i] = new Control(medium);
         }
-        float n2 = 47.0f;
+        float n2 = millis[0];
         this.readcookies(xtGraphics, carDefine, array);
         xtGraphics.testdrive = Madness.testdrive;
         if (xtGraphics.testdrive != 0) {
@@ -244,9 +247,9 @@ public class GameSparker extends Applet implements Runnable
         }
         System.gc();
         long time = new Date().getTime();
-        float a = 30.0f;
+        float a = millis[1];
         int n3 = 0;
-        int n4 = 30;
+        int n4 = minMillis [1];
         final int n5 = 530;
         int n6 = 0;
         int n7 = 0;
@@ -403,7 +406,7 @@ public class GameSparker extends Applet implements Runnable
                     this.mouses = 2;
                 }
             }
-            if (xtGraphics.fase == 7) {
+            if (xtGraphics.fase == 7) { //car select
                 xtGraphics.carselect(this.u[0], array, array3[0], this.xm, this.ym, this.moused);
                 xtGraphics.ctachm(this.xm, this.ym, this.mouses, this.u[0]);
                 if (this.mouses == 2) {
@@ -454,7 +457,7 @@ public class GameSparker extends Applet implements Runnable
                 udpMistro.freg = 0.0f;
                 this.mvect = 20;
             }
-            if (xtGraphics.fase == 1) {
+            if (xtGraphics.fase == 1) { //stage select
                 xtGraphics.trackbg(false);
                 this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                 if (checkPoints.stage != -3) {
@@ -659,7 +662,7 @@ public class GameSparker extends Applet implements Runnable
                     }
                     if (lobby.fase == 3) {
                         xtGraphics.trackbg(false);
-                        medium.trk = 0;
+                        medium.trk = false;
                         medium.focus_point = 400;
                         medium.crs = true;
                         medium.x = -335;
@@ -695,25 +698,17 @@ public class GameSparker extends Applet implements Runnable
                             for (int n24 = n23 + 1; n24 < n20; ++n24) {
                                 if (array2[array10[n23]].dist != array2[array10[n24]].dist) {
                                     if (array2[array10[n23]].dist < array2[array10[n24]].dist) {
-                                        final int[] array12 = array11;
-                                        final int n25 = n23;
-                                        ++array12[n25];
+                                        ++array11[n23];
                                     }
                                     else {
-                                        final int[] array13 = array11;
-                                        final int n26 = n24;
-                                        ++array13[n26];
+                                        ++array11[n24];
                                     }
                                 }
                                 else if (n24 > n23) {
-                                    final int[] array14 = array11;
-                                    final int n27 = n23;
-                                    ++array14[n27];
+                                    ++array11[n23];
                                 }
                                 else {
-                                    final int[] array15 = array11;
-                                    final int n28 = n24;
-                                    ++array15[n28];
+                                    ++array11[n24];
                                 }
                             }
                         }
@@ -884,12 +879,12 @@ public class GameSparker extends Applet implements Runnable
                 System.runFinalization();
                 xtGraphics.fase = 22;
             }
-            if (xtGraphics.fase == 0) {
+            if (xtGraphics.fase == 0) { // in-game
                 for (int n33 = 0; n33 < xtGraphics.nplayers; ++n33) {
                     if (array3[n33].newcar) {
-                        final int xz = array2[n33].xz;
-                        final int xy = array2[n33].xy;
-                        final int zy = array2[n33].zy;
+                        final float xz = array2[n33].xz;
+                        final float xy = array2[n33].xy;
+                        final float zy = array2[n33].zy;
                         array2[n33] = new ContO(array[array3[n33].cn], array2[n33].x, array2[n33].y, array2[n33].z, 0);
                         array2[n33].xz = xz;
                         array2[n33].xy = xy;
@@ -1027,9 +1022,9 @@ public class GameSparker extends Applet implements Runnable
             if (xtGraphics.fase == 7001) {
                 for (int n48 = 0; n48 < xtGraphics.nplayers; ++n48) {
                     if (array3[n48].newedcar == 0 && array3[n48].newcar) {
-                        final int xz2 = array2[n48].xz;
-                        final int xy2 = array2[n48].xy;
-                        final int zy2 = array2[n48].zy;
+                        final float xz2 = array2[n48].xz;
+                        final float xy2 = array2[n48].xy;
+                        final float zy2 = array2[n48].zy;
                         xtGraphics.colorCar(array[array3[n48].cn], n48);
                         array2[n48] = new ContO(array[array3[n48].cn], array2[n48].x, array2[n48].y, array2[n48].z, 0);
                         array2[n48].xz = xz2;
@@ -1703,7 +1698,7 @@ public class GameSparker extends Applet implements Runnable
             final long time3 = new Date().getTime();
             if (xtGraphics.fase == 0 || xtGraphics.fase == -1 || xtGraphics.fase == -3 || xtGraphics.fase == 7001) {
                 if (n3 == 0) {
-                    n4 = 15;
+                    n4 = minMillis[0];
                     a = n2;
                     if (a < 30.0f) {
                         a = 30.0f;
@@ -1733,7 +1728,7 @@ public class GameSparker extends Applet implements Runnable
             }
             else {
                 if (n3 != 0) {
-                    n4 = 30;
+                    n4 = minMillis[1];
                     n2 = a;
                     n3 = 0;
                     n6 = 0;
@@ -1769,7 +1764,7 @@ public class GameSparker extends Applet implements Runnable
                 if (Madness.endadv == 2) {
                     Madness.advopen();
                 }
-                this.gamer.stop();
+                this.gamer.interrupt();
                 this.gamer = null;
             }
             long millis = Math.round(a) - (time3 - time2);
@@ -1777,7 +1772,6 @@ public class GameSparker extends Applet implements Runnable
                 millis = n4;
             }
             try {
-                final Thread gamer = this.gamer;
                 Thread.sleep(millis);
             }
             catch (final InterruptedException ex) {}
@@ -2365,7 +2359,7 @@ public class GameSparker extends Applet implements Runnable
         medium.lightson = false;
         medium.noelec = 0;
         medium.ground = 250;
-        medium.trk = 0;
+        medium.trk = false;
         this.view = 0;
         int getint = 0;
         int getint2 = 100;
@@ -2479,9 +2473,6 @@ public class GameSparker extends Applet implements Runnable
                         if (getint5 == 49 || getint5 == 64 || (getint5 >= 56 && getint5 <= 61)) {
                             xtGraphics.newparts = true;
                         }
-                        if ((checkPoints.stage < 0 || checkPoints.stage >= 28) && getint5 >= 10 && getint5 <= 25) {
-                            medium.loadnew = true;
-                        }
                         getint5 += 46;
                         array[this.nob] = new ContO(array2[getint5], this.getint("set", string, 1), medium.ground - array2[getint5].grat, this.getint("set", string, 2), this.getint("set", string, 3));
                         if (string.indexOf(")p") != -1) {
@@ -2508,15 +2499,12 @@ public class GameSparker extends Applet implements Runnable
                             this.notb = this.nob + 1;
                         }
                         ++this.nob;
-                        if (medium.loadnew) {
-                            medium.loadnew = false;
-                        }
                     }
                 }
                 if (string.startsWith("chk")) {
                     int getint6 = this.getint("chk", string, 0);
                     getint6 += 46;
-                    int getint7 = medium.ground - array2[getint6].grat;
+                    float getint7 = medium.ground - array2[getint6].grat;
                     if (getint6 == 110) {
                         getint7 = this.getint("chk", string, 4);
                     }
@@ -2587,12 +2575,7 @@ public class GameSparker extends Applet implements Runnable
                 if (string.startsWith("soundtrack")) {
                     checkPoints.trackname = this.getstring("soundtrack", string, 0);
                     checkPoints.trackvol = this.getint("soundtrack", string, 1);
-                    if (checkPoints.trackvol < 50) {
-                        checkPoints.trackvol = 50;
-                    }
-                    if (checkPoints.trackvol > 300) {
-                        checkPoints.trackvol = 300;
-                    }
+                    checkPoints.trackvol = checkPoints.trackvol > 50 ? (checkPoints.trackvol < 300 ? checkPoints.trackvol : 300) : 50;
                     xtGraphics.sndsize[32] = this.getint("soundtrack", string, 2);
                 }
                 if (string.startsWith("maxr")) {
@@ -2733,7 +2716,7 @@ public class GameSparker extends Applet implements Runnable
                 medium.hit = 45000;
                 medium.fallen = 0;
                 medium.nrnd = 0;
-                medium.trk = 1;
+                medium.trk = true;
                 medium.ih = 25;
                 medium.iw = 65;
                 medium.h = 425;
@@ -2885,12 +2868,7 @@ public class GameSparker extends Applet implements Runnable
                 if (string.startsWith("soundtrack")) {
                     checkPoints.trackname = this.getstring("soundtrack", string, 0);
                     checkPoints.trackvol = this.getint("soundtrack", string, 1);
-                    if (checkPoints.trackvol < 50) {
-                        checkPoints.trackvol = 50;
-                    }
-                    if (checkPoints.trackvol > 300) {
-                        checkPoints.trackvol = 300;
-                    }
+                    checkPoints.trackvol = checkPoints.trackvol > 50 ? (checkPoints.trackvol < 300 ? checkPoints.trackvol : 300) : 50;
                 }
                 if (string.startsWith("set")) {
                     int getint5 = this.getint("set", string, 0);
@@ -2924,7 +2902,7 @@ public class GameSparker extends Applet implements Runnable
                 if (string.startsWith("chk")) {
                     int getint6 = this.getint("chk", string, 0);
                     getint6 += 46;
-                    int getint7 = medium.ground - array2[getint6].grat;
+                    float getint7 = medium.ground - array2[getint6].grat;
                     if (getint6 == 110) {
                         getint7 = this.getint("chk", string, 4);
                     }
@@ -3115,7 +3093,7 @@ public class GameSparker extends Applet implements Runnable
     public void stop() {
         if (this.exwist && this.gamer != null) {
             System.gc();
-            this.gamer.stop();
+            this.gamer.interrupt();
             this.gamer = null;
         }
         this.exwist = true;

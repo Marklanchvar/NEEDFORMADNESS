@@ -63,8 +63,8 @@ public class Control
     int uddirect;
     int lrstart;
     int udstart;
-    int oxy;
-    int ozy;
+    float oxy;
+    float ozy;
     int flycnt;
     boolean lrswt;
     boolean udswt;
@@ -249,7 +249,7 @@ public class Control
         }
         if (checkPoints.stage != 19 && checkPoints.stage != 26) {
             for (int i = 0; i < checkPoints.fn; ++i) {
-                int py = -10;
+                float py = -10;
                 for (int j = 0; j < checkPoints.n; ++j) {
                     if (this.py(checkPoints.fx[i] / 100, checkPoints.x[j] / 100, checkPoints.fz[i] / 100, checkPoints.z[j] / 100) < py || py == -10) {
                         py = this.py(checkPoints.fx[i] / 100, checkPoints.x[j] / 100, checkPoints.fz[i] / 100, checkPoints.z[j] / 100);
@@ -746,7 +746,7 @@ public class Control
                         }
                         for (int i = 0; i < 7; ++i) {
                             if (i != mad.im && checkPoints.clear[i] != -1) {
-                                int j = contO.xz;
+                                float j = contO.xz;
                                 if (this.zyinv) {
                                     j += 180;
                                 }
@@ -765,7 +765,7 @@ public class Control
                                 while (k > 180) {
                                     k -= 360;
                                 }
-                                int n6 = Math.abs(j - k);
+                                float n6 = Math.abs(j - k);
                                 if (n6 > 180) {
                                     n6 = Math.abs(n6 - 360);
                                 }
@@ -1449,7 +1449,7 @@ public class Control
                                 }
                             }
                             if (checkPoints.clear[mad.im] - checkPoints.clear[0] >= 2 && this.py(contO.x / 100, checkPoints.opx[0] / 100, contO.z / 100, checkPoints.opz[0] / 100) < 1000 + this.avoidnlev) {
-                                int xz = contO.xz;
+                                float xz = contO.xz;
                                 if (this.zyinv) {
                                     xz += 180;
                                 }
@@ -1468,7 +1468,7 @@ public class Control
                                 while (n22 > 180) {
                                     n22 -= 360;
                                 }
-                                int n23 = Math.abs(xz - n22);
+                                float n23 = Math.abs(xz - n22);
                                 if (n23 > 180) {
                                     n23 = Math.abs(n23 - 360);
                                 }
@@ -1600,7 +1600,7 @@ public class Control
                         }
                         if (checkPoints.stage == 25) {
                             if (this.oupnt == -1) {
-                                int py = -10;
+                                float py = -10;
                                 for (int oupnt = 0; oupnt < checkPoints.n; ++oupnt) {
                                     if ((checkPoints.typ[oupnt] == -2 || checkPoints.typ[oupnt] == -4) && (oupnt < 50 || oupnt > 54) && (this.py(contO.x / 100, checkPoints.x[oupnt] / 100, contO.z / 100, checkPoints.z[oupnt] / 100) < py || py == -10)) {
                                         py = this.py(contO.x / 100, checkPoints.x[oupnt] / 100, contO.z / 100, checkPoints.z[oupnt] / 100);
@@ -1730,7 +1730,7 @@ public class Control
                             }
                             if (b4) {
                                 if (this.oupnt == -1) {
-                                    int py2 = -10;
+                                    float py2 = -10;
                                     for (int oupnt2 = 0; oupnt2 < checkPoints.n; ++oupnt2) {
                                         if (checkPoints.typ[oupnt2] == -4 && ((this.py(contO.x / 100, checkPoints.x[oupnt2] / 100, contO.z / 100, checkPoints.z[oupnt2] / 100) < py2 && this.m.random() > 0.6) || py2 == -10)) {
                                             py2 = this.py(contO.x / 100, checkPoints.x[oupnt2] / 100, contO.z / 100, checkPoints.z[oupnt2] / 100);
@@ -1769,7 +1769,7 @@ public class Control
                                 n25 = 3;
                             }
                             if (this.trfix == 2) {
-                                int py3 = -10;
+                                float py3 = -10;
                                 int n26 = 0;
                                 for (int n27 = n25; n27 < checkPoints.fn; ++n27) {
                                     if (this.py(contO.x / 100, checkPoints.x[this.fpnt[n27]] / 100, contO.z / 100, checkPoints.z[this.fpnt[n27]] / 100) < py3 || py3 == -10) {
@@ -1854,7 +1854,7 @@ public class Control
                         this.attack = 0;
                     }
                 }
-                int xz2 = contO.xz;
+                float xz2 = contO.xz;
                 if (this.zyinv) {
                     xz2 += 180;
                 }
@@ -2194,12 +2194,12 @@ public class Control
                         this.swat = 3;
                     }
                     if (this.udbare) {
-                        int a;
+                        float a;
                         for (a = mad.pzy + 90; a < 0; a += 360) {}
                         while (a > 180) {
                             a -= 360;
                         }
-                        final int abs = Math.abs(a);
+                        final float abs = Math.abs(a);
                         if (mad.lcomp - mad.rcomp < 5.0f && (this.onced || this.onceu)) {
                             this.udcomp = true;
                         }
@@ -2265,7 +2265,7 @@ public class Control
                         }
                     }
                     if (this.lrbare) {
-                        int a2 = mad.pxy + 90;
+                        float a2 = mad.pxy + 90;
                         if (this.zyinv) {
                             a2 += 180;
                         }
@@ -2275,7 +2275,7 @@ public class Control
                         while (a2 > 180) {
                             a2 -= 360;
                         }
-                        final int abs2 = Math.abs(a2);
+                        final float abs2 = Math.abs(a2);
                         if (mad.lcomp - mad.rcomp < 10.0f && (this.oncel || this.oncer)) {
                             this.lrcomp = true;
                         }
@@ -2345,11 +2345,11 @@ public class Control
         }
     }
     
-    public int py(final int n, final int n2, final int n3, final int n4) {
-        return (n - n2) * (n - n2) + (n3 - n4) * (n3 - n4);
+    public float py(final float f, final float g, final float h, final float i) {
+        return (f - g) * (f - g) + (h - i) * (h - i);
     }
     
-    public int pys(final int n, final int n2, final int n3, final int n4) {
-        return (int)Math.sqrt((n - n2) * (n - n2) + (n3 - n4) * (n3 - n4));
+    public float pys(final float x, final float opx, final float z, final float opz) {
+        return (float)Math.sqrt((x - opx) * (x - opx) + (z - opz) * (z - opz));
     }
 }

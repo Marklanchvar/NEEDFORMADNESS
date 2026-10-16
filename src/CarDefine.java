@@ -37,7 +37,7 @@ public class CarDefine implements Runnable
     int[] lift;
     int[] revlift;
     int[] powerloss;
-    int[] flipy;
+    float[] flipy;
     int[] msquash;
     int[] clrad;
     float[] dammult;
@@ -96,7 +96,7 @@ public class CarDefine implements Runnable
         this.lift = new int[] { 0, 30, 0, 20, 0, 30, 0, 0, 20, 0, 0, 0, 10, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         this.revlift = new int[] { 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         this.powerloss = new int[] { 2500000, 2500000, 3500000, 2500000, 4000000, 2500000, 3200000, 3200000, 2750000, 5500000, 2750000, 4500000, 3500000, 16700000, 3000000, 5500000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        this.flipy = new int[] { -50, -60, -92, -44, -60, -57, -54, -60, -77, -57, -82, -85, -28, -100, -63, -127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        this.flipy = new float[] { -50, -60, -92, -44, -60, -57, -54, -60, -77, -57, -82, -85, -28, -100, -63, -127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         this.msquash = new int[] { 7, 4, 7, 2, 8, 4, 6, 4, 3, 8, 4, 10, 3, 20, 3, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         this.clrad = new int[] { 3300, 1700, 4700, 3000, 2000, 4500, 3500, 5000, 10000, 15000, 4000, 7000, 10000, 15000, 5500, 5000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         this.dammult = new float[] { 0.75f, 0.8f, 0.45f, 0.8f, 0.42f, 0.7f, 0.72f, 0.6f, 0.58f, 0.41f, 0.67f, 0.45f, 0.61f, 0.25f, 0.38f, 0.52f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
@@ -143,7 +143,7 @@ public class CarDefine implements Runnable
         this.gs = gs;
     }
     
-    public void loadstat(final byte[] buf, final String s, final int n, final int n2, final int n3, final int n4) {
+    public void loadstat(final byte[] buf, final String s, final float maxR, final float roofat, final int n3, final int n4) {
         this.names[n4] = s;
         boolean b = false;
         boolean b2 = false;
@@ -516,7 +516,7 @@ public class CarDefine implements Runnable
             }
             this.dammult[n4] = 0.3f + array3[1] * 0.005f;
             this.msquash[n4] = (int)(2.0 + (float)array3[2] / 7.6);
-            this.flipy[n4] = n2;
+            this.flipy[n4] = roofat;
             this.handb[n4] = (int)(7.0f + array2[0] / 100.0f * 8.0f);
             this.turn[n4] = (int)(4.0f + array2[1] / 100.0f * 6.0f);
             this.grip[n4] = 16.0f + array2[2] / 100.0f * 14.0f;
@@ -539,7 +539,7 @@ public class CarDefine implements Runnable
             this.revlift[n4] = (int)(array2[6] / 100.0f * 32.0f);
             this.push[n4] = (int)(2.0f + array2[7] / 100.0f * 2.0f * ((30 - this.lift[n4]) / 30));
             this.revpush[n4] = (int)(1.0f + array2[8] / 100.0f * 2.0f);
-            this.comprad[n4] = n / 400.0f + (array[3] - 16) / 184.0f * 0.2f;
+            this.comprad[n4] = maxR / 400.0f + (array[3] - 16) / 184.0f * 0.2f;
             if (this.comprad[n4] < 0.4) {
                 this.comprad[n4] = 0.4f;
             }
@@ -1282,7 +1282,6 @@ public class CarDefine implements Runnable
                     off += read;
                     j -= read;
                 }
-                this.m.loadnew = true;
                 this.bco[n] = new ContO(b, this.m, this.t);
                 if (this.bco[n].errd || this.bco[n].npl <= 60 || this.bco[n].maxR < 120) {
                     n = -1;
@@ -1318,7 +1317,6 @@ public class CarDefine implements Runnable
                         n = -1;
                     }
                 }
-                this.m.loadnew = false;
                 dataInputStream.close();
                 zipInputStream.close();
             }
@@ -1597,7 +1595,6 @@ public class CarDefine implements Runnable
                     string = string + "" + line + "\n";
                 }
                 bufferedReader.close();
-                this.m.loadnew = true;
                 this.bco[n] = new ContO(string.getBytes(), this.m, this.t);
                 if (this.bco[n].errd || this.bco[n].npl <= 60) {
                     n = -1;
@@ -1633,7 +1630,6 @@ public class CarDefine implements Runnable
                         n = -1;
                     }
                 }
-                this.m.loadnew = false;
             }
             else {
                 n = -1;

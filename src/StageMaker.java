@@ -99,7 +99,7 @@ public class StageMaker extends Applet implements Runnable
     int arrcnt;
     int chi;
     boolean seqn;
-    int rot;
+    float rot;
     int adrot;
     Image[] su;
     Image[] sl;
@@ -123,17 +123,17 @@ public class StageMaker extends Applet implements Runnable
     int[] ocheckp;
     boolean onoff;
     boolean onfly;
-    int flyh;
+    float flyh;
     int[] csky;
     int[] cgrnd;
     int[] cfade;
     int[] texture;
     int[] cldd;
     TextField mgen;
-    int vxz;
-    int vx;
-    int vz;
-    int vy;
+    float vxz;
+    float vx;
+    float vz;
+    float vy;
     int dtab;
     int dtabed;
     int mouseon;
@@ -171,8 +171,8 @@ public class StageMaker extends Applet implements Runnable
     int mouses;
     int xm;
     int ym;
-    int lxm;
-    int lym;
+    float lxm;
+    float lym;
     int cntout;
     boolean preop;
     boolean mousdr;
@@ -589,7 +589,7 @@ public class StageMaker extends Applet implements Runnable
             }
             if (this.tab == 1) {
                 if (this.tabed != this.tab) {
-                    this.m.trk = 2;
+                    this.m.trk = true;
                     this.readstage(0);
                     if (this.sptyp == 0) {
                         this.partroads();
@@ -879,7 +879,7 @@ public class StageMaker extends Applet implements Runnable
                 }
                 this.rd.setColor(new Color(200, 200, 200));
                 this.rd.fillRect(248, 63, 514, 454);
-                this.m.trk = 2;
+                this.m.trk = true;
                 this.m.zy = 90;
                 this.m.xz = 0;
                 this.m.iw = 248;
@@ -936,14 +936,14 @@ public class StageMaker extends Applet implements Runnable
                     for (int n12 = 0; n12 < n4; ++n12) {
                         if (array2[n12] == n11) {
                             if (array[n12] == this.hi) {
-                                this.m.trk = 3;
+                                this.m.trk = true;
                             }
                             if (array[n12] == this.chi) {
                                 if (!this.co[array[n12]].errd) {
-                                    final int n13 = this.m.cx + (int)((this.co[array[n12]].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[array[n12]].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
-                                    final int n14 = this.m.cz + (int)((this.co[array[n12]].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[array[n12]].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
-                                    final int n15 = this.m.cy + (int)((this.co[array[n12]].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n14 - this.m.cz) * this.m.sin(this.m.zy));
-                                    final int n16 = this.m.cz + (int)((this.co[array[n12]].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n14 - this.m.cz) * this.m.cos(this.m.zy));
+                                    final float n13 = this.m.cx + (int)((this.co[array[n12]].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[array[n12]].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
+                                    final float n14 = this.m.cz + (int)((this.co[array[n12]].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[array[n12]].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
+                                    final float n15 = this.m.cy + (int)((this.co[array[n12]].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n14 - this.m.cz) * this.m.sin(this.m.zy));
+                                    final float n16 = this.m.cz + (int)((this.co[array[n12]].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n14 - this.m.cz) * this.m.cos(this.m.zy));
                                     final int n17 = 1000000 / Math.abs(this.sy);
                                     final Graphics2D rd = this.rd;
                                     rd.setComposite(AlphaComposite.getInstance(3, 0.7f));
@@ -966,10 +966,10 @@ public class StageMaker extends Applet implements Runnable
                                         }
                                     }
                                     if (this.co[array[n12]].errd) {
-                                        final int n18 = this.m.cx + (int)((this.co[array[n12]].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[array[n12]].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
-                                        final int n19 = this.m.cz + (int)((this.co[array[n12]].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[array[n12]].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
-                                        final int n20 = this.m.cy + (int)((this.co[array[n12]].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n19 - this.m.cz) * this.m.sin(this.m.zy));
-                                        final int n21 = this.m.cz + (int)((this.co[array[n12]].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n19 - this.m.cz) * this.m.cos(this.m.zy));
+                                        final float n18 = this.m.cx + (int)((this.co[array[n12]].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[array[n12]].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
+                                        final float n19 = this.m.cz + (int)((this.co[array[n12]].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[array[n12]].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
+                                        final float n20 = this.m.cy + (int)((this.co[array[n12]].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n19 - this.m.cz) * this.m.sin(this.m.zy));
+                                        final float n21 = this.m.cz + (int)((this.co[array[n12]].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n19 - this.m.cz) * this.m.cos(this.m.zy));
                                         final int n22 = 1000000 / Math.abs(this.sy);
                                         final Graphics2D rd2 = this.rd;
                                         rd2.setComposite(AlphaComposite.getInstance(3, 0.5f));
@@ -984,9 +984,6 @@ public class StageMaker extends Applet implements Runnable
                                 }
                             }
                             this.co[array[n12]].d(this.rd);
-                            if (this.m.trk == 3) {
-                                this.m.trk = 2;
-                            }
                         }
                     }
                 }
@@ -1001,19 +998,19 @@ public class StageMaker extends Applet implements Runnable
                                             this.bco[this.sp].z = (290 - this.ym) * (Math.abs(this.sy) / this.m.focus_point) + this.sz;
                                             this.bco[this.sp].y = this.m.ground - this.bco[this.sp].grat;
                                             this.bco[this.sp].xz = this.rot + this.adrot;
-                                            int n23 = 200;
-                                            int n24 = 0;
-                                            int n25 = 0;
-                                            final int[] array7 = { this.bco[this.sp].x + this.atp[this.sp][0], this.bco[this.sp].x + this.atp[this.sp][2] };
-                                            final int[] array8 = { this.bco[this.sp].z + this.atp[this.sp][1], this.bco[this.sp].z + this.atp[this.sp][3] };
+                                            float n23 = 200;
+                                            float n24 = 0;
+                                            float n25 = 0;
+                                            final float[] array7 = { this.bco[this.sp].x + this.atp[this.sp][0], this.bco[this.sp].x + this.atp[this.sp][2] };
+                                            final float[] array8 = { this.bco[this.sp].z + this.atp[this.sp][1], this.bco[this.sp].z + this.atp[this.sp][3] };
                                             this.rot(array7, array8, this.bco[this.sp].x, this.bco[this.sp].z, this.rot, 2);
-                                            int n26 = 0;
+                                            float n26 = 0;
                                             this.onfly = false;
-                                            int n27 = 500;
+                                            float n27 = 500;
                                             for (int n28 = 0; n28 < this.nob; ++n28) {
-                                                final int[] array9 = { this.co[n28].x + this.atp[this.co[n28].colok][0], this.co[n28].x + this.atp[this.co[n28].colok][2] };
-                                                final int[] array10 = { this.co[n28].z + this.atp[this.co[n28].colok][1], this.co[n28].z + this.atp[this.co[n28].colok][3] };
-                                                int roofat = this.co[n28].roofat;
+                                                final float[] array9 = { this.co[n28].x + this.atp[this.co[n28].colok][0], this.co[n28].x + this.atp[this.co[n28].colok][2] };
+                                                final float[] array10 = { this.co[n28].z + this.atp[this.co[n28].colok][1], this.co[n28].z + this.atp[this.co[n28].colok][3] };
+                                                float roofat = this.co[n28].roofat;
                                                 if (this.co[n28].colok == 2) {
                                                     roofat += 30;
                                                 }
@@ -1031,7 +1028,7 @@ public class StageMaker extends Applet implements Runnable
                                                 }
                                                 this.rot(array9, array10, this.co[n28].x, this.co[n28].z, roofat, 2);
                                                 if (this.sp <= 54) {
-                                                    final int py = this.py(array9[0], array7[0], array10[0], array8[0]);
+                                                    final float py = this.py(array9[0], array7[0], array10[0], array8[0]);
                                                     if (py < n23) {
                                                         if (py != 0) {
                                                             n23 = py;
@@ -1039,7 +1036,7 @@ public class StageMaker extends Applet implements Runnable
                                                             n25 = array10[0] - array8[0];
                                                         }
                                                     }
-                                                    final int py2 = this.py(array9[1], array7[0], array10[1], array8[0]);
+                                                    final float py2 = this.py(array9[1], array7[0], array10[1], array8[0]);
                                                     if (py2 < n23) {
                                                         if (py2 != 0) {
                                                             n23 = py2;
@@ -1047,7 +1044,7 @@ public class StageMaker extends Applet implements Runnable
                                                             n25 = array10[1] - array8[0];
                                                         }
                                                     }
-                                                    final int py3 = this.py(array9[1], array7[1], array10[1], array8[1]);
+                                                    final float py3 = this.py(array9[1], array7[1], array10[1], array8[1]);
                                                     if (py3 < n23) {
                                                         if (py3 != 0) {
                                                             n23 = py3;
@@ -1055,7 +1052,7 @@ public class StageMaker extends Applet implements Runnable
                                                             n25 = array10[1] - array8[1];
                                                         }
                                                     }
-                                                    final int py4 = this.py(array9[0], array7[1], array10[0], array8[1]);
+                                                    final float py4 = this.py(array9[0], array7[1], array10[0], array8[1]);
                                                     if (py4 < n23) {
                                                         if (py4 != 0) {
                                                             n23 = py4;
@@ -1240,8 +1237,8 @@ public class StageMaker extends Applet implements Runnable
                                             contO.x += n24;
                                             final ContO contO2 = this.bco[this.sp];
                                             contO2.z += n25;
-                                            final int xy = this.bco[this.sp].xy;
-                                            final int zy = this.bco[this.sp].zy;
+                                            final float xy = this.bco[this.sp].xy;
+                                            final float zy = this.bco[this.sp].zy;
                                             if (this.sp != 31) {
                                                 this.bco[this.sp].xy = 0;
                                             }
@@ -1406,12 +1403,12 @@ public class StageMaker extends Applet implements Runnable
                                             if (this.esp == -1) {
                                                 if (!this.overcan) {
                                                     this.hi = -1;
-                                                    int n36 = 0;
+                                                    float n36 = 0;
                                                     for (int n37 = 0; n37 < this.nob; ++n37) {
-                                                        final int n38 = this.m.cx + (int)((this.co[n37].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[n37].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
-                                                        final int n39 = this.m.cz + (int)((this.co[n37].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[n37].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
-                                                        final int n40 = this.m.cy + (int)((this.co[n37].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n39 - this.m.cz) * this.m.sin(this.m.zy));
-                                                        final int n41 = this.m.cz + (int)((this.co[n37].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n39 - this.m.cz) * this.m.cos(this.m.zy));
+                                                        final float n38 = this.m.cx + (int)((this.co[n37].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[n37].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
+                                                        final float n39 = this.m.cz + (int)((this.co[n37].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[n37].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
+                                                        final float n40 = this.m.cy + (int)((this.co[n37].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n39 - this.m.cz) * this.m.sin(this.m.zy));
+                                                        final float n41 = this.m.cz + (int)((this.co[n37].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n39 - this.m.cz) * this.m.cos(this.m.zy));
                                                         if (this.xm > this.xs(n38 - this.co[n37].maxR, n41)) {
                                                             if (this.xm < this.xs(n38 + this.co[n37].maxR, n41)) {
                                                                 if (this.ym > this.ys(n40 - this.co[n37].maxR, n41)) {
@@ -1464,7 +1461,7 @@ public class StageMaker extends Applet implements Runnable
                                         break Label_12860;
                                     }
                                     this.chi = -1;
-                                    int py5 = 5000;
+                                    float py5 = 5000;
                                     for (int chi = 0; chi < this.nob; ++chi) {
                                         if (this.co[chi].colok != 30) {
                                             if (this.co[chi].colok != 32) {
@@ -1474,10 +1471,10 @@ public class StageMaker extends Applet implements Runnable
                                             }
                                         }
                                         if (!this.co[chi].errd) {
-                                            final int n42 = this.m.cx + (int)((this.co[chi].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[chi].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
-                                            final int n43 = this.m.cz + (int)((this.co[chi].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[chi].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
-                                            final int n44 = this.m.cy + (int)((this.co[chi].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n43 - this.m.cz) * this.m.sin(this.m.zy));
-                                            final int n45 = this.m.cz + (int)((this.co[chi].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n43 - this.m.cz) * this.m.cos(this.m.zy));
+                                            final float n42 = this.m.cx + (int)((this.co[chi].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[chi].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
+                                            final float n43 = this.m.cz + (int)((this.co[chi].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[chi].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
+                                            final float n44 = this.m.cy + (int)((this.co[chi].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n43 - this.m.cz) * this.m.sin(this.m.zy));
+                                            final float n45 = this.m.cz + (int)((this.co[chi].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n43 - this.m.cz) * this.m.cos(this.m.zy));
                                             if (this.xm > this.xs(n42 - this.co[chi].maxR, n45)) {
                                                 if (this.xm < this.xs(n42 + this.co[chi].maxR, n45)) {
                                                     if (this.ym > this.ys(n44 - this.co[chi].maxR, n45)) {
@@ -1531,10 +1528,10 @@ public class StageMaker extends Applet implements Runnable
                             this.m.x = this.sx - this.m.cx;
                             this.m.z = this.sz - this.m.cz;
                             this.m.y = this.sy;
-                            final int n46 = this.m.cx + (int)((this.co[this.esp].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[this.esp].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
-                            final int n47 = this.m.cz + (int)((this.co[this.esp].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[this.esp].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
-                            final int n48 = this.m.cy + (int)((this.co[this.esp].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n47 - this.m.cz) * this.m.sin(this.m.zy));
-                            final int n49 = this.m.cz + (int)((this.co[this.esp].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n47 - this.m.cz) * this.m.cos(this.m.zy));
+                            final float n46 = this.m.cx + (int)((this.co[this.esp].x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.co[this.esp].z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
+                            final float n47 = this.m.cz + (int)((this.co[this.esp].x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.co[this.esp].z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
+                            final float n48 = this.m.cy + (int)((this.co[this.esp].y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n47 - this.m.cz) * this.m.sin(this.m.zy));
+                            final float n49 = this.m.cz + (int)((this.co[this.esp].y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n47 - this.m.cz) * this.m.cos(this.m.zy));
                             final int xs = this.xs(n46, n49);
                             final int ys = this.ys(n48, n49);
                             this.rd.setColor(new Color(225, 225, 225));
@@ -2070,7 +2067,7 @@ public class StageMaker extends Applet implements Runnable
                         this.fixh.setText("2000");
                     }
                 }
-                this.m.trk = 2;
+                this.m.trk = true;
                 this.m.zy = 90;
                 this.m.xz = 0;
                 this.m.iw = 10;
@@ -2490,7 +2487,7 @@ public class StageMaker extends Applet implements Runnable
             }
             if (this.tab == 2) {
                 if (this.tabed != this.tab) {
-                    this.m.trk = 0;
+                    this.m.trk = false;
                     this.readstage(1);
                     this.setCursor(new Cursor(0));
                     this.setcur = false;
@@ -2500,7 +2497,7 @@ public class StageMaker extends Applet implements Runnable
                     this.vy = -1500;
                     this.dtabed = -1;
                 }
-                this.m.trk = 0;
+                this.m.trk = false;
                 this.m.zy = 6;
                 this.m.iw = 10;
                 this.m.w = 790;
@@ -2558,12 +2555,9 @@ public class StageMaker extends Applet implements Runnable
                     for (int n76 = 0; n76 < n66; ++n76) {
                         if (array14[n76] == n75) {
                             if (array13[n76] == this.hi) {
-                                this.m.trk = 3;
+                                this.m.trk = true;
                             }
                             this.co[array13[n76]].d(this.rd);
-                            if (this.m.trk == 3) {
-                                this.m.trk = 2;
-                            }
                         }
                     }
                 }
@@ -4675,7 +4669,7 @@ public class StageMaker extends Applet implements Runnable
         }
         if (this.sp == 66) {
             if (b) {
-                this.fgen = this.co[this.esp].srz;
+                this.fgen = (int) this.co[this.esp].srz;
             }
             else {
                 this.fgen = 0;
@@ -5253,9 +5247,6 @@ public class StageMaker extends Applet implements Runnable
                 }
                 if (string.startsWith("set")) {
                     int getint5 = this.getint("set", string, 0);
-                    if (getint5 >= 10 && getint5 <= 25) {
-                        this.m.loadnew = true;
-                    }
                     getint5 -= 10;
                     this.co[this.nob] = new ContO(this.bco[getint5], this.getint("set", string, 1), this.m.ground - this.bco[getint5].grat, this.getint("set", string, 2), this.getint("set", string, 3));
                     this.co[this.nob].roofat = this.getint("set", string, 3);
@@ -5289,14 +5280,11 @@ public class StageMaker extends Applet implements Runnable
                         }
                         this.bstage = this.bstage + "" + string + "\r\n";
                     }
-                    if (this.m.loadnew) {
-                        this.m.loadnew = false;
-                    }
                 }
                 if (string.startsWith("chk")) {
                     int getint6 = this.getint("chk", string, 0);
                     getint6 -= 10;
-                    int getint7 = this.m.ground - this.bco[getint6].grat;
+                    float getint7 = this.m.ground - this.bco[getint6].grat;
                     if (getint6 == 54) {
                         getint7 = this.getint("chk", string, 4);
                     }
@@ -5557,9 +5545,9 @@ public class StageMaker extends Applet implements Runnable
         int j = 0;
         int n3 = 0;
         while (j == 0) {
-            final int[] array3 = { this.co[n].x + this.atp[this.co[n].colok][0], this.co[n].x + this.atp[this.co[n].colok][2] };
-            final int[] array4 = { this.co[n].z + this.atp[this.co[n].colok][1], this.co[n].z + this.atp[this.co[n].colok][3] };
-            int roofat = this.co[n].roofat;
+            final float[] array3 = { this.co[n].x + this.atp[this.co[n].colok][0], this.co[n].x + this.atp[this.co[n].colok][2] };
+            final float[] array4 = { this.co[n].z + this.atp[this.co[n].colok][1], this.co[n].z + this.atp[this.co[n].colok][3] };
+            float roofat = this.co[n].roofat;
             if (this.co[n].colok == 2) {
                 roofat += 30;
             }
@@ -5576,7 +5564,7 @@ public class StageMaker extends Applet implements Runnable
                 roofat -= 90;
             }
             this.rot(array3, array4, this.co[n].x, this.co[n].z, roofat, 2);
-            int n4 = -1;
+            float n4 = -1;
             int n5 = -1;
             if (n3 != 0) {
                 for (int k = 0; k < this.nob; ++k) {
@@ -5604,9 +5592,9 @@ public class StageMaker extends Applet implements Runnable
                             n6 = 2;
                         }
                         if (n6 != 0) {
-                            final int[] array5 = { this.co[k].x + this.atp[this.co[k].colok][0], this.co[k].x + this.atp[this.co[k].colok][2] };
-                            final int[] array6 = { this.co[k].z + this.atp[this.co[k].colok][1], this.co[k].z + this.atp[this.co[k].colok][3] };
-                            int roofat2 = this.co[k].roofat;
+                            final float[] array5 = { this.co[k].x + this.atp[this.co[k].colok][0], this.co[k].x + this.atp[this.co[k].colok][2] };
+                            final float[] array6 = { this.co[k].z + this.atp[this.co[k].colok][1], this.co[k].z + this.atp[this.co[k].colok][3] };
+                            float roofat2 = this.co[k].roofat;
                             if (this.co[k].colok == 2) {
                                 roofat2 += 30;
                             }
@@ -5624,26 +5612,26 @@ public class StageMaker extends Applet implements Runnable
                             }
                             this.rot(array5, array6, this.co[k].x, this.co[k].z, roofat2, 2);
                             if (k != 0) {
-                                final int pyn = this.pyn(array5[0], array3[0], array6[0], array4[0]);
+                                final float pyn = this.pyn(array5[0], array3[0], array6[0], array4[0]);
                                 if (pyn >= 0 && (pyn < 100 || n6 != 2) && (pyn < n4 || n4 == -1)) {
                                     n4 = pyn;
                                     n5 = k;
                                 }
                             }
-                            final int pyn2 = this.pyn(array5[1], array3[0], array6[1], array4[0]);
+                            final float pyn2 = this.pyn(array5[1], array3[0], array6[1], array4[0]);
                             if (pyn2 >= 0 && (pyn2 < 100 || n6 != 2) && (pyn2 < n4 || n4 == -1)) {
                                 n4 = pyn2;
                                 n5 = k;
                             }
                             if (n != 0) {
                                 if (k != 0) {
-                                    final int pyn3 = this.pyn(array5[0], array3[1], array6[0], array4[1]);
+                                    final float pyn3 = this.pyn(array5[0], array3[1], array6[0], array4[1]);
                                     if (pyn3 >= 0 && (pyn3 < 100 || n6 != 2) && pyn3 < n4) {
                                         n4 = pyn3;
                                         n5 = k;
                                     }
                                 }
-                                final int pyn4 = this.pyn(array5[1], array3[1], array6[1], array4[1]);
+                                final float pyn4 = this.pyn(array5[1], array3[1], array6[1], array4[1]);
                                 if (pyn4 >= 0 && (pyn4 < 100 || n6 != 2) && pyn4 < n4) {
                                     n4 = pyn4;
                                     n5 = k;
@@ -5660,9 +5648,9 @@ public class StageMaker extends Applet implements Runnable
                         b2 = true;
                     }
                     if (n != l && !b2 && array[l] == 0 && (this.co[l].colok <= 14 || this.co[l].colok >= 33) && (this.co[l].colok < 39 || this.co[l].colok >= 46) && this.co[l].colok < 52) {
-                        final int[] array7 = { this.co[l].x + this.atp[this.co[l].colok][0], this.co[l].x + this.atp[this.co[l].colok][2] };
-                        final int[] array8 = { this.co[l].z + this.atp[this.co[l].colok][1], this.co[l].z + this.atp[this.co[l].colok][3] };
-                        int roofat3 = this.co[l].roofat;
+                        final float[] array7 = { this.co[l].x + this.atp[this.co[l].colok][0], this.co[l].x + this.atp[this.co[l].colok][2] };
+                        final float[] array8 = { this.co[l].z + this.atp[this.co[l].colok][1], this.co[l].z + this.atp[this.co[l].colok][3] };
+                        float roofat3 = this.co[l].roofat;
                         if (this.co[l].colok == 2) {
                             roofat3 += 30;
                         }
@@ -5680,26 +5668,26 @@ public class StageMaker extends Applet implements Runnable
                         }
                         this.rot(array7, array8, this.co[l].x, this.co[l].z, roofat3, 2);
                         if (l != 0) {
-                            final int pyn5 = this.pyn(array7[0], array3[0], array8[0], array4[0]);
+                            final float pyn5 = this.pyn(array7[0], array3[0], array8[0], array4[0]);
                             if (pyn5 >= 0 && (pyn5 < n4 || n4 == -1)) {
                                 n4 = pyn5;
                                 n5 = l;
                             }
                         }
-                        final int pyn6 = this.pyn(array7[1], array3[0], array8[1], array4[0]);
+                        final float pyn6 = this.pyn(array7[1], array3[0], array8[1], array4[0]);
                         if (pyn6 >= 0 && (pyn6 < n4 || n4 == -1)) {
                             n4 = pyn6;
                             n5 = l;
                         }
                         if (n != 0) {
                             if (l != 0) {
-                                final int pyn7 = this.pyn(array7[0], array3[1], array8[0], array4[1]);
+                                final float pyn7 = this.pyn(array7[0], array3[1], array8[0], array4[1]);
                                 if (pyn7 >= 0 && pyn7 < n4) {
                                     n4 = pyn7;
                                     n5 = l;
                                 }
                             }
-                            final int pyn8 = this.pyn(array7[1], array3[1], array8[1], array4[1]);
+                            final float pyn8 = this.pyn(array7[1], array3[1], array8[1], array4[1]);
                             if (pyn8 >= 0 && pyn8 < n4) {
                                 n4 = pyn8;
                                 n5 = l;
@@ -5756,7 +5744,7 @@ public class StageMaker extends Applet implements Runnable
         for (int n8 = 0; n8 < n2; ++n8) {
             if (this.co[array2[n8]].colok >= 46 && this.co[array2[n8]].colok <= 51) {
                 for (int n9 = n8 + 1; n9 < n2; ++n9) {
-                    final int pyn9 = this.pyn(this.co[array2[n8]].x, this.co[array2[n9]].x, this.co[array2[n8]].z, this.co[array2[n9]].z);
+                    final float pyn9 = this.pyn(this.co[array2[n8]].x, this.co[array2[n9]].x, this.co[array2[n8]].z, this.co[array2[n9]].z);
                     if (pyn9 >= 0 && (this.co[array2[n9]].colok < 46 || this.co[array2[n8]].colok > 51) && pyn9 < (this.co[array2[n8]].maxR + this.co[array2[n9]].maxR) / 100 * ((this.co[array2[n8]].maxR + this.co[array2[n9]].maxR) / 100)) {
                         final int n10 = array2[n9];
                         for (int n11 = n9; n11 > n8; --n11) {
@@ -5772,11 +5760,11 @@ public class StageMaker extends Applet implements Runnable
         for (int n13 = 0; n13 < this.cp.nsp; ++n13) {
             for (int n14 = 0; n14 < this.nob; ++n14) {
                 if (this.co[n14].wh == n13 + 1 && (this.co[n14].colok == 30 || this.co[n14].colok == 32 || this.co[n14].colok == 54)) {
-                    int n15 = -1;
+                    float n15 = -1;
                     int n16 = -1;
                     for (int n17 = n12; n17 < n2; ++n17) {
                         if (this.co[array2[n17]].colok != 30 && this.co[array2[n17]].colok != 32 && this.co[array2[n17]].colok != 54) {
-                            final int pyn10 = this.pyn(this.co[n14].x, this.co[array2[n17]].x, this.co[n14].z, this.co[array2[n17]].z);
+                            final float pyn10 = this.pyn(this.co[n14].x, this.co[array2[n17]].x, this.co[n14].z, this.co[array2[n17]].z);
                             if (pyn10 >= 0 && (pyn10 < n15 || n15 == -1)) {
                                 n15 = pyn10;
                                 n16 = n17;
@@ -5802,11 +5790,11 @@ public class StageMaker extends Applet implements Runnable
         }
         for (int n19 = 0; n19 < this.nob; ++n19) {
             if (this.co[n19].wh == 0 && (this.co[n19].colok == 30 || this.co[n19].colok == 32 || this.co[n19].colok == 54)) {
-                int n20 = -1;
+                float n20 = -1;
                 int n21 = -1;
                 for (int n22 = n12; n22 < n2; ++n22) {
                     if (this.co[array2[n22]].colok != 30 && this.co[array2[n22]].colok != 32 && this.co[array2[n22]].colok != 54) {
-                        final int pyn11 = this.pyn(this.co[n19].x, this.co[array2[n22]].x, this.co[n19].z, this.co[array2[n22]].z);
+                        final float pyn11 = this.pyn(this.co[n19].x, this.co[array2[n22]].x, this.co[n19].z, this.co[array2[n22]].z);
                         if (pyn11 >= 0 && (pyn11 < n20 || n20 == -1)) {
                             n20 = pyn11;
                             n21 = n22;
@@ -5829,10 +5817,10 @@ public class StageMaker extends Applet implements Runnable
         }
         for (int n24 = 0; n24 < this.nob; ++n24) {
             if (this.co[n24].colok == 31) {
-                int n25 = -1;
+                float n25 = -1;
                 int n26 = -1;
                 for (int n27 = 0; n27 < n2; ++n27) {
-                    final int pyn12 = this.pyn(this.co[n24].x, this.co[array2[n27]].x, this.co[n24].z, this.co[array2[n27]].z);
+                    final float pyn12 = this.pyn(this.co[n24].x, this.co[array2[n27]].x, this.co[n24].z, this.co[array2[n27]].z);
                     if (pyn12 >= 0 && (pyn12 < n25 || n25 == -1)) {
                         n25 = pyn12;
                         n26 = n27;
@@ -5856,7 +5844,7 @@ public class StageMaker extends Applet implements Runnable
                 int n30 = -1;
                 for (int n31 = 0; n31 < n2; ++n31) {
                     if ((this.co[array2[n31]].colok <= 14 || this.co[array2[n31]].colok >= 33) && this.co[array2[n31]].colok < 39) {
-                        final int pyn13 = this.pyn(this.co[n29].x, this.co[array2[n31]].x, this.co[n29].z, this.co[array2[n31]].z);
+                        final float pyn13 = this.pyn(this.co[n29].x, this.co[array2[n31]].x, this.co[n29].z, this.co[array2[n31]].z);
                         if (pyn13 >= 0 && pyn13 < (this.co[n29].maxR + this.co[array2[n31]].maxR) / 100 * ((this.co[n29].maxR + this.co[array2[n31]].maxR) / 100)) {
                             n30 = n31;
                         }
@@ -5880,7 +5868,7 @@ public class StageMaker extends Applet implements Runnable
                 int n34 = -1;
                 for (int n35 = 0; n35 < n2; ++n35) {
                     if ((this.co[array2[n35]].colok <= 14 || this.co[array2[n35]].colok >= 33) && this.co[array2[n35]].colok < 39) {
-                        final int pyn14 = this.pyn(this.co[n33].x, this.co[array2[n35]].x, this.co[n33].z, this.co[array2[n35]].z);
+                        final float pyn14 = this.pyn(this.co[n33].x, this.co[array2[n35]].x, this.co[n33].z, this.co[array2[n35]].z);
                         if (pyn14 >= 0 && pyn14 < (this.co[n33].maxR + this.co[array2[n35]].maxR) / 100 * ((this.co[n33].maxR + this.co[array2[n35]].maxR) / 100)) {
                             if (array[array2[n35]] != 0) {
                                 array[array2[n35]] = 0;
@@ -5926,7 +5914,7 @@ public class StageMaker extends Applet implements Runnable
                 int n38 = -1;
                 for (int n39 = 0; n39 < n2; ++n39) {
                     if ((this.co[array2[n39]].colok <= 14 || this.co[array2[n39]].colok >= 33) && this.co[array2[n39]].colok < 39) {
-                        final int pyn15 = this.pyn(this.co[n37].x, this.co[array2[n39]].x, this.co[n37].z, this.co[array2[n39]].z);
+                        final float pyn15 = this.pyn(this.co[n37].x, this.co[array2[n39]].x, this.co[n37].z, this.co[array2[n39]].z);
                         if (pyn15 >= 0 && pyn15 < (this.co[n37].maxR + this.co[array2[n39]].maxR) / 100 * ((this.co[n37].maxR + this.co[array2[n39]].maxR) / 100)) {
                             boolean b4 = false;
                             if (this.co[n37].colok == 26) {
@@ -5986,10 +5974,10 @@ public class StageMaker extends Applet implements Runnable
                 ++n2;
             }
         }
-        int n42 = 0;
-        int n43 = 0;
-        int n44 = 0;
-        int n45 = 0;
+        float n42 = 0;
+        float n43 = 0;
+        float n44 = 0;
+        float n45 = 0;
         this.bstage = "";
         for (int n46 = 0; n46 < n2; ++n46) {
             if (this.co[array2[n46]].colok != 30 && this.co[array2[n46]].colok != 31 && this.co[array2[n46]].colok != 32 && this.co[array2[n46]].colok != 54 && this.co[array2[n46]].colok != 66) {
@@ -6053,20 +6041,20 @@ public class StageMaker extends Applet implements Runnable
                 n45 = this.co[array2[n46]].z - this.co[array2[n46]].maxR;
             }
         }
-        final int n47 = n44 - 0;
-        final int n48 = n42 + 0;
-        final int n49 = (int)((n48 - n47) / 4800.0f) + 1;
-        final int n50 = (n49 * 4800 - (n48 - n47)) / 2;
-        final int m = n47 - n50;
-        final int i2 = n48 + n50;
-        final int n51 = m + 2400;
-        final int n52 = n45 - 0;
-        final int n53 = n43 + 0;
-        final int n54 = (int)((n53 - n52) / 4800.0f) + 1;
-        final int n55 = (n54 * 4800 - (n53 - n52)) / 2;
-        final int i3 = n52 - n55;
-        final int i4 = n53 + n55;
-        final int n56 = i3 + 2400;
+        final float n47 = n44 - 0;
+        final float n48 = n42 + 0;
+        final float n49 = ((n48 - n47) / 4800.0f) + 1;
+        final float n50 = (n49 * 4800 - (n48 - n47)) / 2;
+        final float m = n47 - n50;
+        final float i2 = n48 + n50;
+        final float n51 = m + 2400;
+        final float n52 = n45 - 0;
+        final float n53 = n43 + 0;
+        final float n54 = ((n53 - n52) / 4800.0f) + 1;
+        final float n55 = (n54 * 4800 - (n53 - n52)) / 2;
+        final float i3 = n52 - n55;
+        final float i4 = n53 + n55;
+        final float n56 = i3 + 2400;
         this.bstage = this.bstage + "\r\nmaxl(" + n54 + "," + m + "," + n56 + ")\r\nmaxb(" + n49 + "," + i3 + "," + n51 + ")\r\nmaxr(" + n54 + "," + i2 + "," + n56 + ")\r\nmaxt(" + n49 + "," + i4 + "," + n51 + ")\r\n";
     }
     
@@ -6201,37 +6189,37 @@ public class StageMaker extends Applet implements Runnable
         }
     }
     
-    public void rot(final int[] array, final int[] array2, final int n, final int n2, final int n3, final int n4) {
-        if (n3 != 0) {
+    public void rot(final float[] array7, final float[] array8, final float x, final float z, final float roofat3, final int n4) {
+        if (roofat3 != 0) {
             for (int i = 0; i < n4; ++i) {
-                final int n5 = array[i];
-                final int n6 = array2[i];
-                array[i] = n + (int)((n5 - n) * this.m.cos(n3) - (n6 - n2) * this.m.sin(n3));
-                array2[i] = n2 + (int)((n5 - n) * this.m.sin(n3) + (n6 - n2) * this.m.cos(n3));
+                final float n5 = array7[i];
+                final float n6 = array8[i];
+                array7[i] = x + ((n5 - x) * this.m.cos(roofat3) - (n6 - z) * this.m.sin(roofat3));
+                array8[i] = z + ((n5 - x) * this.m.sin(roofat3) + (n6 - z) * this.m.cos(roofat3));
             }
         }
     }
     
-    public int xs(final int n, int cz) {
+    public int xs(final float n13, float n16) {
+        if (n16 < this.m.cz) {
+            n16 = this.m.cz;
+        }
+        return (int) ((n16 - this.m.focus_point) * (this.m.cx - n13) / n16 + n13);
+    }
+    
+    public int ys(final float n, float cz) {
         if (cz < this.m.cz) {
             cz = this.m.cz;
         }
-        return (cz - this.m.focus_point) * (this.m.cx - n) / cz + n;
+        return (int) ((cz - this.m.focus_point) * (this.m.cy - n) / cz + n);
     }
     
-    public int ys(final int n, int cz) {
-        if (cz < this.m.cz) {
-            cz = this.m.cz;
-        }
-        return (cz - this.m.focus_point) * (this.m.cy - n) / cz + n;
+    public float py(final float array9, final float array7, final float array10, final float array8) {
+        return (float)Math.sqrt((array9 - array7) * (array9 - array7) + (array10 - array8) * (array10 - array8));
     }
     
-    public int py(final int n, final int n2, final int n3, final int n4) {
-        return (int)Math.sqrt((n - n2) * (n - n2) + (n3 - n4) * (n3 - n4));
-    }
-    
-    public int pyn(final int n, final int n2, final int n3, final int n4) {
-        return (n - n2) / 100 * ((n - n2) / 100) + (n3 - n4) / 100 * ((n3 - n4) / 100);
+    public float pyn(final float array5, final float array3, final float array6, final float array4) {
+        return (array5 - array3) / 100 * ((array5 - array3) / 100) + (array6 - array4) / 100 * ((array6 - array4) / 100);
     }
     
     public String getstring(final String s, final String s2, final int n) {

@@ -96,9 +96,9 @@ public class xtGraphics extends Panel implements Runnable
     boolean clanchat;
     String[] pclan;
     String gaclan;
-    int lcarx;
-    int lcary;
-    int lcarz;
+    float lcarx;
+    float lcary;
+    float lcarz;
     int[] dcrashes;
     int beststunt;
     int laptime;
@@ -3108,7 +3108,7 @@ public class xtGraphics extends Panel implements Runnable
         }
         if (control.handb || control.enter || this.forstart == 0) {
             System.gc();
-            this.m.trk = 0;
+            this.m.trk = false;
             this.m.crs = false;
             this.m.ih = 0;
             this.m.iw = 0;
@@ -5051,7 +5051,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.arnp[n2] = -1.0f;
             }
         }
-        this.m.trk = 0;
+        this.m.trk = false;
         this.m.crs = true;
         this.m.x = -400;
         this.m.y = -525;
@@ -5285,11 +5285,9 @@ public class xtGraphics extends Panel implements Runnable
                 contO3.xz -= 360;
             }
             array[this.sc[0]].zy = 0;
-            final ContO contO4 = array[this.sc[0]];
-            contO4.wzy -= 10;
-            if (array[this.sc[0]].wzy < -30) {
-                final ContO contO5 = array[this.sc[0]];
-                contO5.wzy += 30;
+            array[this.sc[0]].wzy -= 10;
+            if (array[this.sc[0]].wzy < -180) {
+            	array[this.sc[0]].wzy += 360;
             }
             if (!this.remi) {
                 if (this.sc[0] != this.minsl) {
@@ -6811,8 +6809,10 @@ public class xtGraphics extends Panel implements Runnable
                     final ContO contO = array[n4];
                     contO.xz += 5;
                     array[n4].zy = 0;
-                    final ContO contO2 = array[n4];
-                    contO2.wzy -= 10;
+                    array[this.sc[0]].wzy -= 10;
+                    if (array[this.sc[0]].wzy < -180) {
+                    	array[this.sc[0]].wzy += 360;
+                    }
                     this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                     array[n4].d(this.rd);
                     this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -8400,14 +8400,7 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         if (this.m.lightn != -1) {
-            final int available = this.strack.sClip.stream.available();
-            this.m.lton = false;
-            if (available <= 6380001 && available > 5368001) {
-                this.m.lton = true;
-            }
-            if (available <= 2992001 && available > 1320001) {
-                this.m.lton = true;
-            }
+            this.m.lton = true;
         }
     }
     
@@ -8646,7 +8639,7 @@ public class xtGraphics extends Panel implements Runnable
         else {
             int alocked = 0;
             if (this.multion == 0 || this.alocked == -1) {
-                int py = -1;
+                float py = -1;
                 int n8 = 0;
                 for (int j = 0; j < this.nplayers; ++j) {
                     if (j != this.im && (this.py(checkPoints.opx[this.im] / 100, checkPoints.opx[j] / 100, checkPoints.opz[this.im] / 100, checkPoints.opz[j] / 100) < py || py == -1) && (n8 == 0 || checkPoints.onscreen[j] != 0) && checkPoints.dested[j] == 0) {
@@ -8682,7 +8675,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.ftm = this.rd.getFontMetrics();
             }
         }
-        int k;
+        float k;
         for (k = n7 + this.m.xz; k < 0; k += 360) {}
         while (k > 180) {
             k -= 360;
@@ -8705,7 +8698,7 @@ public class xtGraphics extends Panel implements Runnable
         }
         if (Math.abs(this.ana - k) < 180) {
             if (Math.abs(this.ana - k) < 10) {
-                this.ana = k;
+                this.ana = (int) k;
             }
             else if (this.ana < k) {
                 this.ana += 10;
@@ -8729,7 +8722,7 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         this.rot(array, array3, n3, n5, this.ana, 7);
-        final int abs = Math.abs(this.ana);
+        final int abs = (int) Math.abs(this.ana);
         this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if (!b) {
             if (abs > 7 || n2 > 0 || n2 == -2 || this.cntan != 0) {
@@ -9061,11 +9054,11 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawLine(187, 235, 187, 245);
         }
         this.rd.drawImage(this.sped, 7, 234, null);
-        final int n12 = contO.x - this.lcarx;
+        final float n12 = contO.x - this.lcarx;
         this.lcarx = contO.x;
-        final int n13 = contO.y - this.lcary;
+        final float n13 = contO.y - this.lcary;
         this.lcary = contO.y;
-        final int n14 = contO.z - this.lcarz;
+        final float n14 = contO.z - this.lcarz;
         this.lcarz = contO.z;
         final float n15 = (float)Math.sqrt(n12 * n12 + n14 * n14) * 1.4f * 21.0f * 60.0f * 60.0f / 100000.0f;
         final float n16 = n15 * 0.621371f;
@@ -9470,18 +9463,18 @@ public class xtGraphics extends Panel implements Runnable
         if (n2 < 50) {
             n2 = 50;
         }
-        return (n2 - this.m.focus_point) * (this.m.cx - n) / n2 + n;
+        return (int) ((n2 - this.m.focus_point) * (this.m.cx - n) / n2 + n);
     }
     
     public int ys(final int n, int n2) {
         if (n2 < 50) {
             n2 = 50;
         }
-        return (n2 - this.m.focus_point) * (this.m.cy - n) / n2 + n;
+        return (int) ((n2 - this.m.focus_point) * (this.m.cy - n) / n2 + n);
     }
     
-    public int py(final int n, final int n2, final int n3, final int n4) {
-        return (n - n2) * (n - n2) + (n3 - n4) * (n3 - n4);
+    public float py(final float f, final float g, final float h, final float i) {
+        return (f - g) * (f - g) + (h - i) * (h - i);
     }
     
     public float pys(final int n, final int n2, final int n3, final int n4) {

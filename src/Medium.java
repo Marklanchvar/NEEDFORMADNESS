@@ -5,7 +5,7 @@ import java.util.Random;
 public class Medium
 {
     int focus_point;
-    int ground;
+    float ground;
     int skyline;
     int[] fade;
     int[] cldd;
@@ -28,23 +28,23 @@ public class Medium
     int lilo;
     boolean lton;
     int noelec;
-    int trk;
+    boolean trk;
     boolean crs;
-    int cx;
-    int cy;
-    int cz;
-    int xz;
-    int zy;
-    int x;
-    int y;
-    int z;
+    float cx;
+    float cy;
+    float cz;
+    float xz;
+    float zy;
+    float x;
+    float y;
+    float z;
     int iw;
     int ih;
     int w;
     int h;
     int nsp;
-    int[] spx;
-    int[] spz;
+    float[] spx;
+    float[] spz;
     int[] sprad;
     boolean td;
     int bcxz;
@@ -70,21 +70,21 @@ public class Medium
     int nrnd;
     long trx;
     long trz;
-    long atrx;
-    long atrz;
+    float atrx;
+    float atrz;
     int fallen;
     float fo;
     float gofo;
     int fvect;
-    int[][] ogpx;
-    int[][] ogpz;
+    float[][] ogpx;
+    float[][] ogpz;
     float[][] pvr;
-    int[] cgpx;
-    int[] cgpz;
+    float[] cgpx;
+    float[] cgpz;
     int[] pmx;
     float[] pcv;
-    int sgpx;
-    int sgpz;
+    float sgpx;
+    float sgpz;
     int nrw;
     int ncl;
     int noc;
@@ -98,13 +98,13 @@ public class Medium
     int nmt;
     int[] mrd;
     int[] nmv;
-    int[][] mtx;
-    int[][] mty;
-    int[][] mtz;
+    float[][] mtx;
+    float[][] mty;
+    float[][] mtz;
     int[][][] mtc;
     int nst;
-    int[] stx;
-    int[] stz;
+    float[] stx;
+    float[] stz;
     int[][][] stc;
     boolean[] bst;
     int[] twn;
@@ -129,14 +129,13 @@ public class Medium
         this.snap = new int[] { 0, 0, 0 };
         this.fogd = 7;
         this.mgen = (int)(Math.random() * 100000.0);
-        this.loadnew = false;
         this.lightson = false;
         this.darksky = false;
         this.lightn = -1;
         this.lilo = 217;
         this.lton = false;
         this.noelec = 0;
-        this.trk = 0;
+        this.trk = false;
         this.crs = false;
         this.cx = 400;
         this.cy = 225;
@@ -151,8 +150,8 @@ public class Medium
         this.w = 800;
         this.h = 450;
         this.nsp = 0;
-        this.spx = new int[7];
-        this.spz = new int[7];
+        this.spx = new float[7];
+        this.spz = new float[7];
         this.sprad = new int[7];
         this.td = false;
         this.bcxz = 0;
@@ -416,7 +415,7 @@ public class Medium
             this.vxz += 4;
         }
         int n2 = 0;
-        int y = this.y;
+        float y = this.y;
         if (y > 0) {
             y = 0;
         }
@@ -451,9 +450,9 @@ public class Medium
         if (n < 1000) {
             n = 1000;
         }
-        final int y = contO.y - this.adv;
-        final int x = contO.x + (int)((contO.x - n - contO.x) * this.cos(this.vxz));
-        final int z = contO.z + (int)((contO.x - n - contO.x) * this.sin(this.vxz));
+        final float y = contO.y - this.adv;
+        final float x = contO.x + ((contO.x - n - contO.x) * this.cos(this.vxz));
+        final float z = contO.z + ((contO.x - n - contO.x) * this.sin(this.vxz));
         int n2 = 0;
         if (Math.abs(y - this.y) > this.fvect) {
             if (this.y < y) {
@@ -507,7 +506,7 @@ public class Medium
             n3 = 180;
         }
         int j = -(int)(90 + n3 + Math.atan((contO.z - this.z) / (double)(contO.x - this.x - this.cx)) / 0.017453292519943295);
-        int y2 = this.y;
+        float y2 = this.y;
         int n4 = 0;
         if (y2 > 0) {
             y2 = 0;
@@ -576,9 +575,9 @@ public class Medium
     }
     
     public void transaround(final ContO contO, final ContO contO2, final int n) {
-        final int n2 = (contO.x * (20 - n) + contO2.x * n) / 20;
-        final int n3 = (contO.y * (20 - n) + contO2.y * n) / 20;
-        final int n4 = (contO.z * (20 - n) + contO2.z * n) / 20;
+        final float n2 = (contO.x * (20 - n) + contO2.x * n) / 20;
+        final float n3 = (contO.y * (20 - n) + contO2.y * n) / 20;
+        final float n4 = (contO.z * (20 - n) + contO2.z * n) / 20;
         if (!this.vert) {
             this.adv += 2;
         }
@@ -603,7 +602,7 @@ public class Medium
         this.z = n4 + (int)((n2 - n5 - n2) * this.sin(this.vxz));
         this.vxz += 2;
         int n6 = 0;
-        int y = this.y;
+        float y = this.y;
         if (y > 0) {
             y = 0;
         }
@@ -694,9 +693,9 @@ public class Medium
         }
         n += this.bcxz;
         this.xz = -n;
-        final int x = contO.x - this.cx + (int)(-(contO.z - 800 - contO.z) * this.sin(n));
-        final int z = contO.z - this.cz + (int)((contO.z - 800 - contO.z) * this.cos(n));
-        final int y = contO.y - 250 - this.cy;
+        final float x = contO.x - this.cx + (int)(-(contO.z - 800 - contO.z) * this.sin(n));
+        final float z = contO.z - this.cz + (int)((contO.z - 800 - contO.z) * this.cos(n));
+        final float y = contO.y - 250 - this.cy;
         int n4 = 0;
         if (Math.abs(y - this.y) > this.fvect) {
             if (this.y < y) {
@@ -755,11 +754,11 @@ public class Medium
         this.cgpz = null;
         this.pmx = null;
         this.pcv = null;
-        this.ogpx = new int[this.nrw * this.ncl][8];
-        this.ogpz = new int[this.nrw * this.ncl][8];
+        this.ogpx = new float[this.nrw * this.ncl][8];
+        this.ogpz = new float[this.nrw * this.ncl][8];
         this.pvr = new float[this.nrw * this.ncl][8];
-        this.cgpx = new int[this.nrw * this.ncl];
-        this.cgpz = new int[this.nrw * this.ncl];
+        this.cgpx = new float[this.nrw * this.ncl];
+        this.cgpz = new float[this.nrw * this.ncl];
         this.pmx = new int[this.nrw * this.ncl];
         this.pcv = new float[this.nrw * this.ncl];
         int n6 = 0;
@@ -772,14 +771,14 @@ public class Medium
                     if (trackers.zy[j] == 0 && trackers.xy[j] == 0) {
                         if (trackers.radx[j] < trackers.radz[j] && Math.abs(this.cgpz[i] - trackers.z[j]) < trackers.radz[j]) {
                             while (Math.abs(this.cgpx[i] - trackers.x[j]) < trackers.radx[j]) {
-                                final int[] cgpx = this.cgpx;
+                                final float[] cgpx = this.cgpx;
                                 final int n8 = i;
                                 cgpx[n8] += (int)(random.nextDouble() * trackers.radx[j] * 2.0 - trackers.radx[j]);
                             }
                         }
                         if (trackers.radz[j] < trackers.radx[j] && Math.abs(this.cgpx[i] - trackers.x[j]) < trackers.radx[j]) {
                             while (Math.abs(this.cgpz[i] - trackers.z[j]) < trackers.radz[j]) {
-                                final int[] cgpz = this.cgpz;
+                                final float[] cgpz = this.cgpz;
                                 final int n9 = i;
                                 cgpz[n9] += (int)(random.nextDouble() * trackers.radz[j] * 2.0 - trackers.radz[j]);
                             }
@@ -838,7 +837,7 @@ public class Medium
     }
     
     public void groundpolys(final Graphics2D graphics2D) {
-        int n = (this.x - this.sgpx) / 1200 - 12;
+        int n = (int) ((this.x - this.sgpx) / 1200 - 12);
         if (n < 0) {
             n = 0;
         }
@@ -849,7 +848,7 @@ public class Medium
         if (nrw < n) {
             nrw = n;
         }
-        int n2 = (this.z - this.sgpz) / 1200 - 12;
+        int n2 = (int) ((this.z - this.sgpz) / 1200 - 12);
         if (n2 < 0) {
             n2 = 0;
         }
@@ -860,19 +859,19 @@ public class Medium
         if (ncl < n2) {
             ncl = n2;
         }
-        final int[][] array = new int[nrw - n][ncl - n2];
+        final float[][] array = new float[nrw - n][ncl - n2];
         for (int i = n; i < nrw; ++i) {
             for (int j = n2; j < ncl; ++j) {
                 array[i - n][j - n2] = 0;
                 final int n3 = i + j * this.nrw;
                 if (this.resdown < 2 || n3 % 2 == 0) {
-                    final int n4 = this.cx + (int)((this.cgpx[n3] - this.x - this.cx) * this.cos(this.xz) - (this.cgpz[n3] - this.z - this.cz) * this.sin(this.xz));
-                    final int n5 = this.cz + (int)((250 - this.y - this.cy) * this.sin(this.zy) + (this.cz + (int)((this.cgpx[n3] - this.x - this.cx) * this.sin(this.xz) + (this.cgpz[n3] - this.z - this.cz) * this.cos(this.xz)) - this.cz) * this.cos(this.zy));
+                    final float n4 = this.cx + (int)((this.cgpx[n3] - this.x - this.cx) * this.cos(this.xz) - (this.cgpz[n3] - this.z - this.cz) * this.sin(this.xz));
+                    final float n5 = this.cz + (int)((250 - this.y - this.cy) * this.sin(this.zy) + (this.cz + (int)((this.cgpx[n3] - this.x - this.cx) * this.sin(this.xz) + (this.cgpz[n3] - this.z - this.cz) * this.cos(this.xz)) - this.cz) * this.cos(this.zy));
                     if (this.xs(n4 + this.pmx[n3], n5) > 0 && this.xs(n4 - this.pmx[n3], n5) < this.w && n5 > -this.pmx[n3] && n5 < this.fade[2]) {
                         array[i - n][j - n2] = n5;
-                        final int[] array2 = new int[8];
-                        final int[] array3 = new int[8];
-                        final int[] array4 = new int[8];
+                        final float[] array2 = new float[8];
+                        final float[] array3 = new float[8];
+                        final float[] array4 = new float[8];
                         for (int k = 0; k < 8; ++k) {
                             array2[k] = (int)(this.ogpx[n3][k] * this.pvr[n3][k] + this.cgpx[n3] - this.x);
                             array3[k] = (int)(this.ogpz[n3][k] * this.pvr[n3][k] + this.cgpz[n3] - this.z);
@@ -931,9 +930,9 @@ public class Medium
             for (int n11 = n2; n11 < ncl; ++n11) {
                 if (array[n10 - n][n11 - n2] != 0) {
                     final int n12 = n10 + n11 * this.nrw;
-                    final int[] array7 = new int[8];
-                    final int[] array8 = new int[8];
-                    final int[] array9 = new int[8];
+                    final float[] array7 = new float[8];
+                    final float[] array8 = new float[8];
+                    final float[] array9 = new float[8];
                     for (int n13 = 0; n13 < 8; ++n13) {
                         array7[n13] = this.ogpx[n12][n13] + this.cgpx[n12] - this.x;
                         array8[n13] = this.ogpz[n12][n13] + this.cgpz[n12] - this.z;
@@ -989,7 +988,7 @@ public class Medium
         }
     }
     
-    public void newclouds(int n, int n2, int n3, int n4) {
+	public void newclouds(int n, int n2, int n3, int n4) {
         this.clx = null;
         this.clz = null;
         this.cmx = null;
@@ -1127,14 +1126,14 @@ public class Medium
     
     public void drawclouds(final Graphics2D graphics2D) {
         for (int i = 0; i < this.noc; ++i) {
-            final int n = this.cx + (int)((this.clx[i] - this.x / 20 - this.cx) * this.cos(this.xz) - (this.clz[i] - this.z / 20 - this.cz) * this.sin(this.xz));
-            final int n2 = this.cz + (int)((this.cldd[4] - this.y / 20 - this.cy) * this.sin(this.zy) + (this.cz + (int)((this.clx[i] - this.x / 20 - this.cx) * this.sin(this.xz) + (this.clz[i] - this.z / 20 - this.cz) * this.cos(this.xz)) - this.cz) * this.cos(this.zy));
+            final float n = this.cx + (int)((this.clx[i] - this.x / 20 - this.cx) * this.cos(this.xz) - (this.clz[i] - this.z / 20 - this.cz) * this.sin(this.xz));
+            final float n2 = this.cz + (int)((this.cldd[4] - this.y / 20 - this.cy) * this.sin(this.zy) + (this.cz + (int)((this.clx[i] - this.x / 20 - this.cx) * this.sin(this.xz) + (this.clz[i] - this.z / 20 - this.cz) * this.cos(this.xz)) - this.cz) * this.cos(this.zy));
             final int xs = this.xs(n + this.cmx[i], n2);
             final int xs2 = this.xs(n - this.cmx[i], n2);
             if (xs > 0 && xs2 < this.w && n2 > -this.cmx[i] && xs - xs2 > 20) {
-                final int[][] array = new int[3][12];
-                final int[][] array2 = new int[3][12];
-                final int[][] array3 = new int[3][12];
+                final float[][] array = new float[3][12];
+                final float[][] array2 = new float[3][12];
+                final float[][] array3 = new float[3][12];
                 final int[] array4 = new int[12];
                 final int[] array5 = new int[12];
                 for (int j = 0; j < 3; ++j) {
@@ -1388,9 +1387,9 @@ public class Medium
         this.mtc = null;
         this.mrd = new int[this.nmt];
         this.nmv = new int[this.nmt];
-        this.mtx = new int[this.nmt][];
-        this.mty = new int[this.nmt][];
-        this.mtz = new int[this.nmt][];
+        this.mtx = new float[this.nmt][];
+        this.mty = new float[this.nmt][];
+        this.mtz = new float[this.nmt][];
         this.mtc = new int[this.nmt][][];
         final int[] array = new int[this.nmt];
         final int[] array2 = new int[this.nmt];
@@ -1412,9 +1411,9 @@ public class Medium
                 this.nmv[i] = (int)(n9 * (12.0 + 8.0 * random.nextDouble()));
                 n11 = (int)(104.0 - 10.0 * random.nextDouble());
             }
-            this.mtx[i] = new int[this.nmv[i] * 2];
-            this.mty[i] = new int[this.nmv[i] * 2];
-            this.mtz[i] = new int[this.nmv[i] * 2];
+            this.mtx[i] = new float[this.nmv[i] * 2];
+            this.mty[i] = new float[this.nmv[i] * 2];
+            this.mtz[i] = new float[this.nmv[i] * 2];
             this.mtc[i] = new int[this.nmv[i]][3];
             for (int j = 0; j < this.nmv[i]; ++j) {
                 this.mtx[i][j] = (int)((j * 500 + (random.nextDouble() * 800.0 - 400.0) - 250 * (this.nmv[i] - 1)) * n9);
@@ -1476,12 +1475,12 @@ public class Medium
     public void drawmountains(final Graphics2D graphics2D) {
         for (int i = 0; i < this.nmt; ++i) {
             final int n = this.mrd[i];
-            final int n2 = this.cx + (int)((this.mtx[n][0] - this.x / 30 - this.cx) * this.cos(this.xz) - (this.mtz[n][0] - this.z / 30 - this.cz) * this.sin(this.xz));
-            final int n3 = this.cz + (int)((this.mty[n][0] - this.y / 30 - this.cy) * this.sin(this.zy) + (this.cz + (int)((this.mtx[n][0] - this.x / 30 - this.cx) * this.sin(this.xz) + (this.mtz[n][0] - this.z / 30 - this.cz) * this.cos(this.xz)) - this.cz) * this.cos(this.zy));
+            final float n2 = this.cx + (int)((this.mtx[n][0] - this.x / 30 - this.cx) * this.cos(this.xz) - (this.mtz[n][0] - this.z / 30 - this.cz) * this.sin(this.xz));
+            final float n3 = this.cz + (int)((this.mty[n][0] - this.y / 30 - this.cy) * this.sin(this.zy) + (this.cz + (int)((this.mtx[n][0] - this.x / 30 - this.cx) * this.sin(this.xz) + (this.mtz[n][0] - this.z / 30 - this.cz) * this.cos(this.xz)) - this.cz) * this.cos(this.zy));
             if (this.xs(this.cx + (int)((this.mtx[n][this.nmv[n] - 1] - this.x / 30 - this.cx) * this.cos(this.xz) - (this.mtz[n][this.nmv[n] - 1] - this.z / 30 - this.cz) * this.sin(this.xz)), this.cz + (int)((this.mty[n][this.nmv[n] - 1] - this.y / 30 - this.cy) * this.sin(this.zy) + (this.cz + (int)((this.mtx[n][this.nmv[n] - 1] - this.x / 30 - this.cx) * this.sin(this.xz) + (this.mtz[n][this.nmv[n] - 1] - this.z / 30 - this.cz) * this.cos(this.xz)) - this.cz) * this.cos(this.zy))) > 0 && this.xs(n2, n3) < this.w) {
-                final int[] array = new int[this.nmv[n] * 2];
-                final int[] array2 = new int[this.nmv[n] * 2];
-                final int[] array3 = new int[this.nmv[n] * 2];
+                final float[] array = new float[this.nmv[n] * 2];
+                final float[] array2 = new float[this.nmv[n] * 2];
+                final float[] array3 = new float[this.nmv[n] * 2];
                 for (int j = 0; j < this.nmv[n] * 2; ++j) {
                     array[j] = this.mtx[n][j] - this.x / 30;
                     array2[j] = this.mty[n][j] - this.y / 30;
@@ -1549,8 +1548,8 @@ public class Medium
         if (this.lightson) {
             final Random random = new Random((long)(Math.random() * 100000.0));
             this.nst = 40;
-            this.stx = new int[this.nst];
-            this.stz = new int[this.nst];
+            this.stx = new float[this.nst];
+            this.stz = new float[this.nst];
             this.stc = new int[this.nst][2][3];
             this.bst = new boolean[this.nst];
             this.twn = new int[this.nst];
@@ -1602,10 +1601,10 @@ public class Medium
     
     public void drawstars(final Graphics2D graphics2D) {
         for (int i = 0; i < this.nst; ++i) {
-            final int n = this.cx + (int)(this.stx[i] * this.cos(this.xz) - this.stz[i] * this.sin(this.xz));
-            final int n2 = this.cz + (int)(this.stx[i] * this.sin(this.xz) + this.stz[i] * this.cos(this.xz));
-            final int n3 = this.cy + (int)(-200.0f * this.cos(this.zy) - n2 * this.sin(this.zy));
-            final int n4 = this.cz + (int)(-200.0f * this.sin(this.zy) + n2 * this.cos(this.zy));
+            final float n = this.cx + (int)(this.stx[i] * this.cos(this.xz) - this.stz[i] * this.sin(this.xz));
+            final float n2 = this.cz + (int)(this.stx[i] * this.sin(this.xz) + this.stz[i] * this.cos(this.xz));
+            final float n3 = this.cy + (int)(-200.0f * this.cos(this.zy) - n2 * this.sin(this.zy));
+            final float n4 = this.cz + (int)(-200.0f * this.sin(this.zy) + n2 * this.cos(this.zy));
             final int xs = this.xs(n, n4);
             final int ys = this.ys(n3, n4);
             if (xs - 1 > this.iw && xs + 3 < this.w && ys - 1 > this.ih && ys + 3 < this.h) {
@@ -1690,8 +1689,8 @@ public class Medium
         int n3 = this.crgrnd[2];
         int h = this.h;
         for (int i = 0; i < 16; ++i) {
-            int n4 = this.fade[i];
-            int ground = this.ground;
+            float n4 = this.fade[i];
+            float ground = this.ground;
             if (this.zy != 0) {
                 ground = this.cy + (int)((this.ground - this.cy) * this.cos(this.zy) - (this.fade[i] - this.cz) * this.sin(this.zy));
                 n4 = this.cz + (int)((this.ground - this.cy) * this.sin(this.zy) + (this.fade[i] - this.cz) * this.cos(this.zy));
@@ -1777,8 +1776,8 @@ public class Medium
         int ys = this.ys(this.cy + (int)((this.skyline - 700 - this.cy) * this.cos(this.zy) - (7000 - this.cz) * this.sin(this.zy)), this.cz + (int)((this.skyline - 700 - this.cy) * this.sin(this.zy) + (7000 - this.cz) * this.cos(this.zy)));
         int ih = this.ih;
         for (int j = 0; j < 16; ++j) {
-            int n5 = this.fade[j];
-            int skyline = this.skyline;
+            float n5 = this.fade[j];
+            float skyline = this.skyline;
             if (this.zy != 0) {
                 skyline = this.cy + (int)((this.skyline - this.cy) * this.cos(this.zy) - (this.fade[j] - this.cz) * this.sin(this.zy));
                 n5 = this.cz + (int)((this.skyline - this.cy) * this.sin(this.zy) + (this.fade[j] - this.cz) * this.cos(this.zy));
@@ -1834,8 +1833,8 @@ public class Medium
         }
         if (this.resdown != 2) {
             for (int k = 1; k < 20; ++k) {
-                int n7 = 7000;
-                int n8 = this.skyline - 700 - k * 70;
+                float n7 = 7000;
+                float n8 = this.skyline - 700 - k * 70;
                 if (this.zy != 0 && k != 19) {
                     n8 = this.cy + (int)((this.skyline - 700 - k * 70 - this.cy) * this.cos(this.zy) - (7000 - this.cz) * this.sin(this.zy));
                     n7 = this.cz + (int)((this.skyline - 700 - k * 70 - this.cy) * this.sin(this.zy) + (7000 - this.cz) * this.cos(this.zy));
@@ -1860,9 +1859,9 @@ public class Medium
                 array[3] = this.w;
                 array2[3] = array2[0];
                 ys = array2[0];
-                r3 *= (int)0.991;
-                g3 *= (int)0.991;
-                b3 *= (int)0.998;
+                r3 = (int)(r3 * 0.991F);
+                g3 = (int)(g3 * 0.991F);
+                b3 = (int)(b3 * 0.998F);
                 if (array2[1] > this.ih && array2[0] < this.h) {
                     graphics2D.setColor(new Color(r3, g3, b3));
                     graphics2D.fillPolygon(array, array2, 4);
@@ -1887,10 +1886,10 @@ public class Medium
         }
     }
     
-    public void addsp(final int n, final int n2, final int n3) {
+    public void addsp(final float f, final float g, final int n3) {
         if (this.nsp != 7) {
-            this.spx[this.nsp] = n;
-            this.spz[this.nsp] = n2;
+            this.spx[this.nsp] = f;
+            this.spz[this.nsp] = g;
             this.sprad[this.nsp] = n3;
             ++this.nsp;
         }
@@ -2143,48 +2142,59 @@ public class Medium
         }
     }
     
-    public int xs(final int n, int cz) {
-        if (cz < this.cz) {
-            cz = this.cz;
+    public int xs(final float f, float n5) {
+        if (n5 < this.cz) {
+            n5 = this.cz;
         }
-        return (cz - this.focus_point) * (this.cx - n) / cz + n;
+        return (int) ((n5 - this.focus_point) * (this.cx - f) / n5 + f);
     }
     
-    public int ys(final int n, int n2) {
-        if (n2 < 10) {
-            n2 = 10;
+    public int ys(final float n, float n2) {
+        if (n2 < this.cz) {
+            n2 = this.cz;
         }
-        return (n2 - this.focus_point) * (this.cy - n) / n2 + n;
+        return (int) ((n2 - this.focus_point) * (this.cy - n) / n2 + n);
     }
     
-    public float cos(int i) {
+    public float cos(float i) {
         while (i >= 360) {
             i -= 360;
         }
         while (i < 0) {
             i += 360;
         }
-        return this.tcos[i];
+        return (float) Math.cos(Math.toRadians(i));
     }
     
-    public float sin(int i) {
-        while (i >= 360) {
-            i -= 360;
+    public float sin(float f) {
+        while (f >= 360) {
+            f -= 360;
         }
-        while (i < 0) {
-            i += 360;
+        while (f < 0) {
+            f += 360;
         }
-        return this.tsin[i];
+        return (float) Math.sin(Math.toRadians(f));
     }
     
-    public void rot(final int[] array, final int[] array2, final int n, final int n2, final int n3, final int n4) {
-        if (n3 != 0) {
+    public void rot(final float[] array4, final float[] array3, final float cy2, final float cz2, final float zy2, final int n4) {
+        if (zy2 != 0) {
             for (int i = 0; i < n4; ++i) {
-                final int n5 = array[i];
-                final int n6 = array2[i];
-                array[i] = n + (int)((n5 - n) * this.cos(n3) - (n6 - n2) * this.sin(n3));
-                array2[i] = n2 + (int)((n5 - n) * this.sin(n3) + (n6 - n2) * this.cos(n3));
+                final float n5 = array4[i];
+                final float n6 = array3[i];
+                array4[i] = cy2 + (int)((n5 - cy2) * this.cos(zy2) - (n6 - cz2) * this.sin(zy2));
+                array3[i] = cz2 + (int)((n5 - cy2) * this.sin(zy2) + (n6 - cz2) * this.cos(zy2));
             }
         }
     }
+    public void rot(final int[] array4, final int[] array3, final float cy2, final float cz2, final float zy2, final int n4) {
+        if (zy2 != 0) {
+            for (int i = 0; i < n4; ++i) {
+                final int n5 = array4[i];
+                final int n6 = array3[i];
+                array4[i] = (int) (cy2 + (int)((n5 - cy2) * this.cos(zy2) - (n6 - cz2) * this.sin(zy2)));
+                array3[i] = (int) (cz2 + (int)((n5 - cy2) * this.sin(zy2) + (n6 - cz2) * this.cos(zy2)));
+            }
+        }
+    }
+
 }

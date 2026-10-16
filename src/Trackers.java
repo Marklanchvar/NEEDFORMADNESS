@@ -1,18 +1,18 @@
 public class Trackers
 {
-    int[] x;
-    int[] y;
-    int[] z;
-    int[] xy;
-    int[] zy;
+    float[] x;
+    float[] y;
+    float[] z;
+    float[] xy;
+    float[] zy;
     int[] skd;
     int[] dam;
     boolean[] notwall;
     boolean[] decor;
     int[][] c;
-    int[] radx;
-    int[] radz;
-    int[] rady;
+    float[] radx;
+    float[] radz;
+    float[] rady;
     int nt;
     int sx;
     int sz;
@@ -21,19 +21,19 @@ public class Trackers
     int[][][] sect;
     
     public Trackers() {
-        this.x = new int[6700];
-        this.y = new int[6700];
-        this.z = new int[6700];
-        this.xy = new int[6700];
-        this.zy = new int[6700];
+        this.x = new float[6700];
+        this.y = new float[6700];
+        this.z = new float[6700];
+        this.xy = new float[6700];
+        this.zy = new float[6700];
         this.skd = new int[6700];
         this.dam = new int[6700];
         this.notwall = new boolean[6700];
         this.decor = new boolean[6700];
         this.c = new int[6700][3];
-        this.radx = new int[6700];
-        this.radz = new int[6700];
-        this.rady = new int[6700];
+        this.radx = new float[6700];
+        this.radz = new float[6700];
+        this.rady = new float[6700];
         this.nt = 0;
         this.sx = 0;
         this.sz = 0;
@@ -62,7 +62,7 @@ public class Trackers
                 final int[] array = new int[6700];
                 int n5 = 0;
                 for (int k = 0; k < this.nt; ++k) {
-                    final int py = this.py(n3, this.x[k], n4, this.z[k]);
+                    final float py = this.py(n3, this.x[k], n4, this.z[k]);
                     if (py < 20250000 && py > 0 && this.dam[k] != 167) {
                         array[n5] = k;
                         ++n5;
@@ -95,7 +95,7 @@ public class Trackers
         --this.ncz;
     }
     
-    public int py(final int n, final int n2, final int n3, final int n4) {
-        return (n - n2) * (n - n2) + (n3 - n4) * (n3 - n4);
+    public float py(final int n, final float x2, final int n3, final float z2) {
+        return (n - x2) * (n - x2) + (n3 - z2) * (n3 - z2);
     }
 }

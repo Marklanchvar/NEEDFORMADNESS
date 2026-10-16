@@ -1,15 +1,15 @@
 public class CheckPoints
 {
-    int[] x;
-    int[] z;
-    int[] y;
+    float[] x;
+    float[] z;
+    float[] y;
     int[] typ;
     int pcs;
     int nsp;
     int n;
-    int[] fx;
-    int[] fz;
-    int[] fy;
+    float[] fx;
+    float[] fz;
+    float[] fy;
     boolean[] roted;
     boolean[] special;
     int fn;
@@ -31,25 +31,25 @@ public class CheckPoints
     int wasted;
     boolean haltall;
     int pcleared;
-    int[] opx;
-    int[] opz;
-    int[] onscreen;
-    int[] omxz;
+    float[] opx;
+    float[] opz;
+    float[] onscreen;
+    float[] omxz;
     int catchfin;
     int postwo;
     float prox;
     
     public CheckPoints() {
-        this.x = new int[140];
-        this.z = new int[140];
-        this.y = new int[140];
+        this.x = new float[140];
+        this.z = new float[140];
+        this.y = new float[140];
         this.typ = new int[140];
         this.pcs = 0;
         this.nsp = 0;
         this.n = 0;
-        this.fx = new int[5];
-        this.fz = new int[5];
-        this.fy = new int[5];
+        this.fx = new float[5];
+        this.fz = new float[5];
+        this.fy = new float[5];
         this.roted = new boolean[5];
         this.special = new boolean[5];
         this.fn = 0;
@@ -71,10 +71,10 @@ public class CheckPoints
         this.wasted = 0;
         this.haltall = false;
         this.pcleared = 0;
-        this.opx = new int[8];
-        this.opz = new int[8];
-        this.onscreen = new int[8];
-        this.omxz = new int[8];
+        this.opx = new float[8];
+        this.opz = new float[8];
+        this.onscreen = new float[8];
+        this.omxz = new float[8];
         this.catchfin = 0;
         this.postwo = 0;
         this.prox = 0.0f;
@@ -176,7 +176,7 @@ public class CheckPoints
     }
     
     public void calprox() {
-        int n = 0;
+        float n = 0;
         for (int i = 0; i < this.n - 1; ++i) {
             for (int j = i + 1; j < this.n; ++j) {
                 if (Math.abs(this.x[i] - this.x[j]) > n) {
@@ -190,7 +190,7 @@ public class CheckPoints
         this.prox = n / 90.0f;
     }
     
-    public int py(final int n, final int n2, final int n3, final int n4) {
-        return (n - n2) * (n - n2) + (n3 - n4) * (n3 - n4);
+    public float py(final float f, final float g, final float h, final float i) {
+        return (f - g) * (f - g) + (h - i) * (h - i);
     }
 }

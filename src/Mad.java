@@ -12,8 +12,8 @@ public class Mad
     CarDefine cd;
     boolean[] dominate;
     boolean[] caught;
-    int pzy;
-    int pxy;
+    float pzy;
+    float pxy;
     float speed;
     float forca;
     float[] scy;
@@ -24,8 +24,8 @@ public class Mad
     boolean wtouch;
     int cntouch;
     boolean capsized;
-    int txz;
-    int fxz;
+    float txz;
+    float fxz;
     int pmlt;
     int nmlt;
     int dcnt;
@@ -41,7 +41,7 @@ public class Mad
     float dcomp;
     float lcomp;
     float rcomp;
-    int lxz;
+    float lxz;
     int travxy;
     int travzy;
     int travxz;
@@ -259,19 +259,19 @@ public class Mad
         boolean b = false;
         boolean b2 = false;
         this.capsized = false;
-        int i;
+        float i;
         for (i = Math.abs(this.pzy); i > 270; i -= 360) {}
         if (Math.abs(i) > 90) {
             zyinv = true;
         }
         int n3 = 0;
-        int j;
+        float j;
         for (j = Math.abs(this.pxy); j > 270; j -= 360) {}
         if (Math.abs(j) > 90) {
             n3 = 1;
             n2 = -1;
         }
-        int grat = contO.grat;
+        float grat = contO.grat;
         if (zyinv) {
             if (n3 != 0) {
                 n3 = 0;
@@ -542,17 +542,9 @@ public class Mad
                 }
             }
         }
-        float n11 = 20.0f * this.speed / (154.0f * this.cd.simag[this.cn]);
-        if (n11 > 20.0f) {
-            n11 = 20.0f;
-        }
-        contO.wzy -= (int)n11;
-        if (contO.wzy < -30) {
-            contO.wzy += 30;
-        }
-        if (contO.wzy > 30) {
-            contO.wzy -= 30;
-        }
+        float n11 = this.speed / contO.wrad;
+        contO.wzy -= n11;
+        contO.wzy = (contO.wzy + 360) % 360;
         if (control.right) {
             contO.wxz -= this.cd.turn[this.cn];
             if (contO.wxz < -36) {
@@ -589,7 +581,7 @@ public class Mad
                 }
             }
         }
-        int n12 = (int)(3600.0f / (this.speed * this.speed));
+        float n12 = 3600.0f / (this.speed * this.speed);
         if (n12 < 5) {
             n12 = 5;
         }
@@ -678,14 +670,14 @@ public class Mad
             final int n21 = n18;
             array6[n21] += (this.scz[0] + this.scz[1] + this.scz[2] + this.scz[3]) / 4.0f;
         }
-        int ncx = (contO.x - trackers.sx) / 3000;
+        int ncx = (int) ((contO.x - trackers.sx) / 3000);
         if (ncx > trackers.ncx) {
             ncx = trackers.ncx;
         }
         if (ncx < 0) {
             ncx = 0;
         }
-        int ncz = (contO.z - trackers.sz) / 3000;
+        int ncz = (int) ((contO.z - trackers.sz) / 3000);
         if (ncz > trackers.ncz) {
             ncz = trackers.ncz;
         }
@@ -714,14 +706,14 @@ public class Mad
                 this.skid = 2;
             }
             if (n22 == 1) {
-                n25 *= 0.75;
+                n25 *= 0.75F;
             }
             if (n22 == 2) {
-                n25 *= (float)0.55;
+                n25 *= 0.55F;
             }
-            int n26 = -(int)(this.speed * this.m.sin(contO.xz) * this.m.cos(this.pzy));
-            int n27 = (int)(this.speed * this.m.cos(contO.xz) * this.m.cos(this.pzy));
-            int n28 = -(int)(this.speed * this.m.sin(this.pzy));
+            float n26 = -(this.speed * this.m.sin(contO.xz) * this.m.cos(this.pzy));
+            float n27 = (this.speed * this.m.cos(contO.xz) * this.m.cos(this.pzy));
+            float n28 = -(this.speed * this.m.sin(this.pzy));
             if (this.capsized || this.dest || checkPoints.haltall) {
                 n26 = 0;
                 n27 = 0;
@@ -812,7 +804,7 @@ public class Mad
                             n38 = 1.2f;
                         }
                         if (this.m.random() > 0.65) {
-                            contO.dust(n31, array[n31], array3[n31], array2[n31], (int)this.scx[n31], (int)this.scz[n31], n38 * this.cd.simag[this.cn], (int)this.tilt, this.capsized && this.mtouch);
+                            contO.dust(n31, array[n31], array3[n31], array2[n31], this.scx[n31], this.scz[n31], n38 * this.cd.simag[this.cn], (int)this.tilt, this.capsized && this.mtouch);
                             if (this.im == this.xt.im && !this.capsized) {
                                 this.xt.skid(n22, (float)Math.sqrt(this.scx[n31] * this.scx[n31] + this.scz[n31] * this.scz[n31]));
                             }
@@ -1174,7 +1166,7 @@ public class Mad
                         }
                     }
                     if (trackers.zy[n53] != 0 && trackers.zy[n53] != 90 && trackers.zy[n53] != -90) {
-                        final int n90 = 90 + trackers.zy[n53];
+                        final float n90 = 90 + trackers.zy[n53];
                         float n91 = 1.0f + (50 - Math.abs(trackers.zy[n53])) / 30.0f;
                         if (n91 < 1.0f) {
                             n91 = 1.0f;
@@ -1211,7 +1203,7 @@ public class Mad
                         array7[n56] = true;
                     }
                     if (trackers.xy[n53] != 0 && trackers.xy[n53] != 90 && trackers.xy[n53] != -90) {
-                        final int n95 = 90 + trackers.xy[n53];
+                        final float n95 = 90 + trackers.xy[n53];
                         float n96 = 1.0f + (50 - Math.abs(trackers.xy[n53])) / 30.0f;
                         if (n96 < 1.0f) {
                             n96 = 1.0f;
@@ -1336,7 +1328,7 @@ public class Mad
             }
         }
         if (b2) {
-            int abs;
+            float abs;
             for (abs = Math.abs(contO.xz + 45); abs > 180; abs -= 360) {}
             if (Math.abs(abs) > 90) {
                 this.pmlt = 1;
@@ -1344,7 +1336,7 @@ public class Mad
             else {
                 this.pmlt = -1;
             }
-            int abs2;
+            float abs2;
             for (abs2 = Math.abs(contO.xz - 45); abs2 > 180; abs2 -= 360) {}
             if (Math.abs(abs2) > 90) {
                 this.nmlt = 1;
@@ -1517,7 +1509,7 @@ public class Mad
             }
         }
         int focus = 0;
-        int n110 = 0;
+        float n110 = 0;
         int n111 = 0;
         int n112;
         if (this.nofocus) {
@@ -1902,8 +1894,8 @@ public class Mad
             a -= 100.0f;
             int n3 = 0;
             int n4 = 0;
-            int i = contO.zy;
-            int j = contO.xy;
+            float i = contO.zy;
+            float j = contO.xy;
             while (i < 360) {
                 i += 360;
             }
@@ -1940,10 +1932,10 @@ public class Mad
                     for (int l = 0; l < contO.p[k].n; ++l) {
                         if (contO.p[k].wz == 0 && this.py(contO.keyx[n], contO.p[k].ox[l], contO.keyz[n], contO.p[k].oz[l]) < this.cd.clrad[this.cn]) {
                             n5 = a / 20.0f * this.m.random();
-                            final int[] oz = contO.p[k].oz;
+                            final float[] oz = contO.p[k].oz;
                             final int n6 = l;
                             oz[n6] += (int)(n5 * this.m.sin(i));
-                            final int[] ox = contO.p[k].ox;
+                            final float[] ox = contO.p[k].ox;
                             final int n7 = l;
                             ox[n7] -= (int)(n5 * this.m.sin(j));
                             if (b) {
@@ -2004,7 +1996,7 @@ public class Mad
                             if (contO.p[n10].wz == 0) {
                                 n11 = a / 15.0f * this.m.random();
                                 if ((Math.abs(contO.p[n10].oy[n12] - this.cd.flipy[this.cn] - this.squash) < this.cd.msquash[this.cn] * 3 || contO.p[n10].oy[n12] < this.cd.flipy[this.cn] + this.squash) && this.squash < this.cd.msquash[this.cn]) {
-                                    final int[] oy = contO.p[n10].oy;
+                                    final float[] oy = contO.p[n10].oy;
                                     final int n13 = n12;
                                     oy[n13] += (int)n11;
                                     n8 += (int)n11;
@@ -2070,10 +2062,10 @@ public class Mad
                 for (int j = 0; j < contO.p[i].n; ++j) {
                     if (contO.p[i].wz == 0 && this.py(contO.keyx[n], contO.p[i].ox[j], contO.keyz[n], contO.p[i].oz[j]) < this.cd.clrad[this.cn]) {
                         a = n2 / 20.0f * this.m.random();
-                        final int[] oz = contO.p[i].oz;
+                        final float[] oz = contO.p[i].oz;
                         final int n4 = j;
                         oz[n4] -= (int)(a * this.m.sin(contO.xz) * this.m.cos(contO.zy));
-                        final int[] ox = contO.p[i].ox;
+                        final float[] ox = contO.p[i].ox;
                         final int n5 = j;
                         ox[n5] += (int)(a * this.m.cos(contO.xz) * this.m.cos(contO.xy));
                         if (b) {
@@ -2157,10 +2149,10 @@ public class Mad
                 for (int j = 0; j < contO.p[i].n; ++j) {
                     if (contO.p[i].wz == 0 && this.py(contO.keyx[n], contO.p[i].ox[j], contO.keyz[n], contO.p[i].oz[j]) < this.cd.clrad[this.cn]) {
                         a = n2 / 20.0f * this.m.random();
-                        final int[] oz = contO.p[i].oz;
+                        final float[] oz = contO.p[i].oz;
                         final int n4 = j;
                         oz[n4] += (int)(a * this.m.cos(contO.xz) * this.m.cos(contO.zy));
-                        final int[] ox = contO.p[i].ox;
+                        final float[] ox = contO.p[i].ox;
                         final int n5 = j;
                         ox[n5] += (int)(a * this.m.sin(contO.xz) * this.m.cos(contO.xy));
                         if (b) {
@@ -2393,13 +2385,13 @@ public class Mad
         }
     }
     
-    public void rot(final float[] array, final float[] array2, final int n, final int n2, final int n3, final int n4) {
-        if (n3 != 0) {
+    public void rot(final float[] array, final float[] array2, final float x, final float z, final float xz, final int n4) {
+        if (xz != 0) {
             for (int i = 0; i < n4; ++i) {
                 final float n5 = array[i];
                 final float n6 = array2[i];
-                array[i] = n + ((n5 - n) * this.m.cos(n3) - (n6 - n2) * this.m.sin(n3));
-                array2[i] = n2 + ((n5 - n) * this.m.sin(n3) + (n6 - n2) * this.m.cos(n3));
+                array[i] = x + ((n5 - x) * this.m.cos(xz) - (n6 - z) * this.m.sin(xz));
+                array2[i] = z + ((n5 - x) * this.m.sin(xz) + (n6 - z) * this.m.cos(xz));
             }
         }
     }
@@ -2408,7 +2400,7 @@ public class Mad
         return (int)((n - n2) * (n - n2) + (n3 - n4) * (n3 - n4) + (n5 - n6) * (n5 - n6));
     }
     
-    public int py(final int n, final int n2, final int n3, final int n4) {
-        return (n - n2) * (n - n2) + (n3 - n4) * (n3 - n4);
+    public float py(final float keyx, final float ox, final float keyz, final float oz) {
+        return (keyx - ox) * (keyx - ox) + (keyz - oz) * (keyz - oz);
     }
 }

@@ -12,41 +12,41 @@ public class Record
     int[][] squash;
     int[] fix;
     int[] dest;
-    int[][] x;
-    int[][] y;
-    int[][] z;
-    int[][] xy;
-    int[][] zy;
-    int[][] xz;
-    int[][] wxz;
-    int[][] wzy;
+    float[][] x;
+    float[][] y;
+    float[][] z;
+    float[][] xy;
+    float[][] zy;
+    float[][] xz;
+    float[][] wxz;
+    float[][] wzy;
     int[][] ns;
     int[][][] sspark;
-    int[][][] sx;
-    int[][][] sy;
-    int[][][] sz;
+    float[][][] sx;
+    float[][][] sy;
+    float[][][] sz;
     float[][][] smag;
-    int[][][] scx;
-    int[][][] scz;
+    float[][][] scx;
+    float[][][] scz;
     int[] nr;
     int[][] rspark;
     int[][] sprk;
-    int[][] srx;
-    int[][] sry;
-    int[][] srz;
+    float[][] srx;
+    float[][] sry;
+    float[][] srz;
     float[][] rcx;
     float[][] rcy;
     float[][] rcz;
     int[][] nry;
-    int[][][] ry;
-    int[][][] magy;
+    float[][][] ry;
+    float[][][] magy;
     boolean[][] mtouch;
     int[][] nrx;
-    int[][][] rx;
-    int[][][] magx;
+    float[][][] rx;
+    float[][][] magx;
     int[][] nrz;
-    int[][][] rz;
-    int[][][] magz;
+    float[][][] rz;
+    float[][][] magz;
     int[] checkpoint;
     boolean[] lastcheck;
     int wasted;
@@ -57,35 +57,35 @@ public class Record
     int[] hsquash;
     int[] hfix;
     int[] hdest;
-    int[][] hx;
-    int[][] hy;
-    int[][] hz;
-    int[][] hxy;
-    int[][] hzy;
-    int[][] hxz;
-    int[][] hwxz;
-    int[][] hwzy;
+    float[][] hx;
+    float[][] hy;
+    float[][] hz;
+    float[][] hxy;
+    float[][] hzy;
+    float[][] hxz;
+    float[][] hwxz;
+    float[][] hwzy;
     int[][][] hsspark;
-    int[][][] hsx;
-    int[][][] hsy;
-    int[][][] hsz;
+    float[][][] hsx;
+    float[][][] hsy;
+    float[][][] hsz;
     float[][][] hsmag;
-    int[][][] hscx;
-    int[][][] hscz;
+    float[][][] hscx;
+    float[][][] hscz;
     int[][] hrspark;
     int[][] hsprk;
-    int[][] hsrx;
-    int[][] hsry;
-    int[][] hsrz;
+    float[][] hsrx;
+    float[][] hsry;
+    float[][] hsrz;
     float[][] hrcx;
     float[][] hrcy;
     float[][] hrcz;
-    int[][][] hry;
-    int[][][] hmagy;
-    int[][][] hrx;
-    int[][][] hmagx;
-    int[][][] hrz;
-    int[][][] hmagz;
+    float[][][] hry;
+    float[][][] hmagy;
+    float[][][] hrx;
+    float[][][] hmagx;
+    float[][][] hrz;
+    float[][][] hmagz;
     boolean[][] hmtouch;
     int[] hcheckpoint;
     boolean[] hlastcheck;
@@ -102,41 +102,41 @@ public class Record
         this.squash = new int[6][8];
         this.fix = new int[8];
         this.dest = new int[8];
-        this.x = new int[300][8];
-        this.y = new int[300][8];
-        this.z = new int[300][8];
-        this.xy = new int[300][8];
-        this.zy = new int[300][8];
-        this.xz = new int[300][8];
-        this.wxz = new int[300][8];
-        this.wzy = new int[300][8];
+        this.x = new float[300][8];
+        this.y = new float[300][8];
+        this.z = new float[300][8];
+        this.xy = new float[300][8];
+        this.zy = new float[300][8];
+        this.xz = new float[300][8];
+        this.wxz = new float[300][8];
+        this.wzy = new float[300][8];
         this.ns = new int[8][20];
         this.sspark = new int[8][20][30];
-        this.sx = new int[8][20][30];
-        this.sy = new int[8][20][30];
-        this.sz = new int[8][20][30];
+        this.sx = new float[8][20][30];
+        this.sy = new float[8][20][30];
+        this.sz = new float[8][20][30];
         this.smag = new float[8][20][30];
-        this.scx = new int[8][20][30];
-        this.scz = new int[8][20][30];
+        this.scx = new float[8][20][30];
+        this.scz = new float[8][20][30];
         this.nr = new int[8];
         this.rspark = new int[8][200];
         this.sprk = new int[8][200];
-        this.srx = new int[8][200];
-        this.sry = new int[8][200];
-        this.srz = new int[8][200];
+        this.srx = new float[8][200];
+        this.sry = new float[8][200];
+        this.srz = new float[8][200];
         this.rcx = new float[8][200];
         this.rcy = new float[8][200];
         this.rcz = new float[8][200];
         this.nry = new int[8][4];
-        this.ry = new int[8][4][7];
-        this.magy = new int[8][4][7];
+        this.ry = new float[8][4][7];
+        this.magy = new float[8][4][7];
         this.mtouch = new boolean[8][7];
         this.nrx = new int[8][4];
-        this.rx = new int[8][4][7];
-        this.magx = new int[8][4][7];
+        this.rx = new float[8][4][7];
+        this.magx = new float[8][4][7];
         this.nrz = new int[8][4];
-        this.rz = new int[8][4][7];
-        this.magz = new int[8][4][7];
+        this.rz = new float[8][4][7];
+        this.magz = new float[8][4][7];
         this.checkpoint = new int[300];
         this.lastcheck = new boolean[300];
         this.wasted = 0;
@@ -147,35 +147,35 @@ public class Record
         this.hsquash = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
         this.hfix = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
         this.hdest = new int[] { -1, -1, -1, -1, -1, -1, -1, -1 };
-        this.hx = new int[300][8];
-        this.hy = new int[300][8];
-        this.hz = new int[300][8];
-        this.hxy = new int[300][8];
-        this.hzy = new int[300][8];
-        this.hxz = new int[300][8];
-        this.hwxz = new int[300][8];
-        this.hwzy = new int[300][8];
+        this.hx = new float[300][8];
+        this.hy = new float[300][8];
+        this.hz = new float[300][8];
+        this.hxy = new float[300][8];
+        this.hzy = new float[300][8];
+        this.hxz = new float[300][8];
+        this.hwxz = new float[300][8];
+        this.hwzy = new float[300][8];
         this.hsspark = new int[8][20][30];
-        this.hsx = new int[8][20][30];
-        this.hsy = new int[8][20][30];
-        this.hsz = new int[8][20][30];
+        this.hsx = new float[8][20][30];
+        this.hsy = new float[8][20][30];
+        this.hsz = new float[8][20][30];
         this.hsmag = new float[8][20][30];
-        this.hscx = new int[8][20][30];
-        this.hscz = new int[8][20][30];
+        this.hscx = new float[8][20][30];
+        this.hscz = new float[8][20][30];
         this.hrspark = new int[8][200];
         this.hsprk = new int[8][200];
-        this.hsrx = new int[8][200];
-        this.hsry = new int[8][200];
-        this.hsrz = new int[8][200];
+        this.hsrx = new float[8][200];
+        this.hsry = new float[8][200];
+        this.hsrz = new float[8][200];
         this.hrcx = new float[8][200];
         this.hrcy = new float[8][200];
         this.hrcz = new float[8][200];
-        this.hry = new int[8][4][7];
-        this.hmagy = new int[8][4][7];
-        this.hrx = new int[8][4][7];
-        this.hmagx = new int[8][4][7];
-        this.hrz = new int[8][4][7];
-        this.hmagz = new int[8][4][7];
+        this.hry = new float[8][4][7];
+        this.hmagy = new float[8][4][7];
+        this.hrx = new float[8][4][7];
+        this.hmagx = new float[8][4][7];
+        this.hrz = new float[8][4][7];
+        this.hmagz = new float[8][4][7];
         this.hmtouch = new boolean[8][7];
         this.hcheckpoint = new int[300];
         this.hlastcheck = new boolean[300];
@@ -400,13 +400,13 @@ public class Record
         }
         for (int n11 = 0; n11 < 4; ++n11) {
             for (int n12 = 0; n12 < 7; ++n12) {
-                final int[] array4 = this.ry[n][n11];
+                final float[] array4 = this.ry[n][n11];
                 final int n13 = n12;
                 --array4[n13];
-                final int[] array5 = this.rx[n][n11];
+                final float[] array5 = this.rx[n][n11];
                 final int n14 = n12;
                 --array5[n14];
-                final int[] array6 = this.rz[n][n11];
+                final float[] array6 = this.rz[n][n11];
                 final int n15 = n12;
                 --array6[n15];
             }
@@ -608,8 +608,8 @@ public class Record
             n2 -= 100.0f;
             int n3 = 0;
             int n4 = 0;
-            int i = contO.zy;
-            int j = contO.xy;
+            float i = contO.zy;
+            float j = contO.xy;
             while (i < 360) {
                 i += 360;
             }
@@ -640,10 +640,10 @@ public class Record
                     for (int l = 0; l < contO.p[k].n; ++l) {
                         if (contO.p[k].wz == 0 && this.py(contO.keyx[n], contO.p[k].ox[l], contO.keyz[n], contO.p[k].oz[l]) < mad.cd.clrad[mad.cn]) {
                             n5 = n2 / 20.0f * this.m.random();
-                            final int[] oz = contO.p[k].oz;
+                            final float[] oz = contO.p[k].oz;
                             final int n6 = l;
                             oz[n6] += (int)(n5 * this.m.sin(i));
-                            final int[] ox = contO.p[k].ox;
+                            final float[] ox = contO.p[k].ox;
                             final int n7 = l;
                             ox[n7] -= (int)(n5 * this.m.sin(j));
                         }
@@ -702,7 +702,7 @@ public class Record
                         if (contO.p[n10].wz == 0) {
                             n11 = n2 / 15.0f * this.m.random();
                             if ((Math.abs(contO.p[n10].oy[n12] - mad.cd.flipy[mad.cn] - this.squash[0][mad.im]) < mad.cd.msquash[mad.cn] * 3 || contO.p[n10].oy[n12] < mad.cd.flipy[mad.cn] + this.squash[0][mad.im]) && this.squash[0][mad.im] < mad.cd.msquash[mad.cn]) {
-                                final int[] oy = contO.p[n10].oy;
+                                final float[] oy = contO.p[n10].oy;
                                 final int n13 = n12;
                                 oy[n13] += (int)n11;
                                 n8 += (int)n11;
@@ -743,10 +743,10 @@ public class Record
                 for (int j = 0; j < contO.p[i].n; ++j) {
                     if (contO.p[i].wz == 0 && this.py(contO.keyx[n], contO.p[i].ox[j], contO.keyz[n], contO.p[i].oz[j]) < mad.cd.clrad[mad.cn]) {
                         a2 = a / 20.0f * this.m.random();
-                        final int[] oz = contO.p[i].oz;
+                        final float[] oz = contO.p[i].oz;
                         final int n2 = j;
                         oz[n2] -= (int)(a2 * this.m.sin(contO.xz) * this.m.cos(contO.zy));
-                        final int[] ox = contO.p[i].ox;
+                        final float[] ox = contO.p[i].ox;
                         final int n3 = j;
                         ox[n3] += (int)(a2 * this.m.cos(contO.xz) * this.m.cos(contO.xy));
                     }
@@ -811,10 +811,10 @@ public class Record
                 for (int j = 0; j < contO.p[i].n; ++j) {
                     if (contO.p[i].wz == 0 && this.py(contO.keyx[n], contO.p[i].ox[j], contO.keyz[n], contO.p[i].oz[j]) < mad.cd.clrad[mad.cn]) {
                         a2 = a / 20.0f * this.m.random();
-                        final int[] oz = contO.p[i].oz;
+                        final float[] oz = contO.p[i].oz;
                         final int n2 = j;
                         oz[n2] += (int)(a2 * this.m.cos(contO.xz) * this.m.cos(contO.zy));
-                        final int[] ox = contO.p[i].ox;
+                        final float[] ox = contO.p[i].ox;
                         final int n3 = j;
                         ox[n3] += (int)(a2 * this.m.sin(contO.xz) * this.m.cos(contO.xy));
                     }
@@ -912,7 +912,7 @@ public class Record
         }
     }
     
-    public int py(final int n, final int n2, final int n3, final int n4) {
-        return (n - n2) * (n - n2) + (n3 - n4) * (n3 - n4);
+    public float py(final float keyx, final float ox, final float keyz, final float oz) {
+        return (keyx - ox) * (keyx - ox) + (keyz - oz) * (keyz - oz);
     }
 }

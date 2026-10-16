@@ -92,12 +92,12 @@ public class CarMaker extends Applet implements Runnable, ActionListener
     int cntchk;
     int npolys;
     boolean tomany;
-    int ox;
-    int oy;
-    int oz;
-    int oxz;
-    int oxy;
-    int ozy;
+    float ox;
+    float oy;
+    float oz;
+    float oxz;
+    float oxy;
+    float ozy;
     Medium m;
     Trackers t;
     ContO o;
@@ -365,7 +365,6 @@ public class CarMaker extends Applet implements Runnable, ActionListener
         this.m.cfade[2] = 227;
         this.loadsounds();
         this.loadbase();
-        this.m.loadnew = true;
         this.loadsettings();
         this.editor.setFont(new Font(this.cfont, 1, 14));
         this.srch.setFont(new Font(this.cfont, 1, 14));
@@ -3151,9 +3150,9 @@ public class CarMaker extends Applet implements Runnable, ActionListener
                         if (showConfirmDialog2 == 0) {
                             this.setCursor(new Cursor(3));
                             this.setupo();
-                            final int[] array7 = new int[6000];
-                            final int[] array8 = new int[6000];
-                            final int[] array9 = new int[6000];
+                            final float[] array7 = new float[6000];
+                            final float[] array8 = new float[6000];
+                            final float[] array9 = new float[6000];
                             int n7 = 0;
                             String str = "";
                             for (int l = 0; l < this.o.npl; ++l) {
@@ -4697,10 +4696,10 @@ public class CarMaker extends Applet implements Runnable, ActionListener
                 for (int j = 0; j < this.o.p[i].n; ++j) {
                     if (this.o.p[i].wz == 0 && this.py(this.o.keyx[n], this.o.p[i].ox[j], this.o.keyz[n], this.o.p[i].oz[j]) < n2) {
                         n3 = a / 20.0f * this.m.random();
-                        final int[] oz = this.o.p[i].oz;
+                        final float[] oz = this.o.p[i].oz;
                         final int n4 = j;
                         oz[n4] -= (int)(n3 * this.m.sin(this.o.xz) * this.m.cos(this.o.zy));
-                        final int[] ox = this.o.p[i].ox;
+                        final float[] ox = this.o.p[i].ox;
                         final int n5 = j;
                         ox[n5] += (int)(n3 * this.m.cos(this.o.xz) * this.m.cos(this.o.xy));
                         if (b) {
@@ -4774,10 +4773,10 @@ public class CarMaker extends Applet implements Runnable, ActionListener
                 for (int j = 0; j < this.o.p[i].n; ++j) {
                     if (this.o.p[i].wz == 0 && this.py(this.o.keyx[n], this.o.p[i].ox[j], this.o.keyz[n], this.o.p[i].oz[j]) < n2) {
                         n3 = a / 20.0f * this.m.random();
-                        final int[] oz = this.o.p[i].oz;
+                        final float[] oz = this.o.p[i].oz;
                         final int n4 = j;
                         oz[n4] += (int)(n3 * this.m.cos(this.o.xz) * this.m.cos(this.o.zy));
-                        final int[] ox = this.o.p[i].ox;
+                        final float[] ox = this.o.p[i].ox;
                         final int n5 = j;
                         ox[n5] += (int)(n3 * this.m.sin(this.o.xz) * this.m.cos(this.o.xy));
                         if (b) {
@@ -4844,7 +4843,7 @@ public class CarMaker extends Applet implements Runnable, ActionListener
                 for (int j = 0; j < this.o.p[i].n; ++j) {
                     if (this.o.p[i].wz == 0 && (Math.abs(this.o.p[i].oy[j] - this.o.roofat - this.squash) < n2 * 3 || this.o.p[i].oy[j] < this.o.roofat + this.squash) && this.squash < n2) {
                         ctmag = n / 15.0f * this.m.random();
-                        final int[] oy = this.o.p[i].oy;
+                        final float[] oy = this.o.p[i].oy;
                         final int n5 = j;
                         oy[n5] += (int)ctmag;
                         n3 += (int)ctmag;
@@ -4961,33 +4960,33 @@ public class CarMaker extends Applet implements Runnable, ActionListener
         }
     }
     
-    public int py(final int n, final int n2, final int n3, final int n4) {
-        return (n - n2) * (n - n2) + (n3 - n4) * (n3 - n4);
+    public float py(final float keyx, final float ox2, final float keyz, final float oz2) {
+        return (keyx - ox2) * (keyx - ox2) + (keyz - oz2) * (keyz - oz2);
     }
     
-    public void rot(final int[] array, final int[] array2, final int n, final int n2, final int n3, final int n4) {
-        if (n3 != 0) {
+    public void rot(final int[] array, final int[] array2, final float cx, final float cz, final float xz, final int n4) {
+        if (xz != 0) {
             for (int i = 0; i < n4; ++i) {
                 final int n5 = array[i];
                 final int n6 = array2[i];
-                array[i] = n + (int)((n5 - n) * this.m.cos(n3) - (n6 - n2) * this.m.sin(n3));
-                array2[i] = n2 + (int)((n5 - n) * this.m.sin(n3) + (n6 - n2) * this.m.cos(n3));
+                array[i] = (int) (cx + ((n5 - cx) * this.m.cos(xz) - (n6 - cz) * this.m.sin(xz)));
+                array2[i] = (int) (cz + ((n5 - cx) * this.m.sin(xz) + (n6 - cz) * this.m.cos(xz)));
             }
         }
     }
     
-    public int xs(final int n, int cz) {
+    public int xs(final float n, float cz) {
         if (cz < this.m.cz) {
             cz = this.m.cz;
         }
-        return (cz - this.m.focus_point) * (this.m.cx - n) / cz + n;
+        return (int) ((cz - this.m.focus_point) * (this.m.cx - n) / cz + n);
     }
     
-    public int ys(final int n, int cz) {
+    public int ys(final float n, float cz) {
         if (cz < this.m.cz) {
             cz = this.m.cz;
         }
-        return (cz - this.m.focus_point) * (this.m.cy - n) / cz + n;
+        return (int) ((cz - this.m.focus_point) * (this.m.cy - n) / cz + n);
     }
     
     @Override
