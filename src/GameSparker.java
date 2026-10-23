@@ -46,10 +46,10 @@ public class GameSparker extends Applet implements Runnable
     boolean exwist;
     int apx;
     int apy;
+    int apw;
+    int aph;
     float apmult;
     float reqmult;
-    int smooth;
-    int moto;
     int lastw;
     int lasth;
     boolean onbar;
@@ -62,7 +62,6 @@ public class GameSparker extends Applet implements Runnable
     Image[] chkbx;
     Image[] carmaker;
     Image[] stagemaker;
-    int showsize;
     Control[] u;
     int mouses;
     int xm;
@@ -115,18 +114,16 @@ public class GameSparker extends Applet implements Runnable
     Smenu ilaps;
     Smenu icars;
     Smenu proitem;
-	static int[] minMillis = {15, 30};
-    static int[] millis = {47, 30};
     
     public GameSparker() {
         this.mload = 1;
         this.exwist = false;
         this.apx = 0;
         this.apy = 0;
+        this.apw = 0;
+        this.aph = 0;
         this.apmult = 1.0f;
         this.reqmult = 0.0f;
-        this.smooth = 1;
-        this.moto = 1;
         this.lastw = 0;
         this.lasth = 0;
         this.onbar = false;
@@ -136,7 +133,6 @@ public class GameSparker extends Applet implements Runnable
         this.chkbx = new Image[2];
         this.carmaker = new Image[2];
         this.stagemaker = new Image[2];
-        this.showsize = 0;
         this.u = new Control[8];
         this.mouses = 0;
         this.xm = 0;
@@ -185,7 +181,8 @@ public class GameSparker extends Applet implements Runnable
     
     @Override
     public void run() {
-        this.rd.setColor(new Color(0, 0, 0));
+        this.rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        this.rd.setColor(Color.BLACK);
         this.rd.fillRect(0, 0, 800, 450);
         this.repaint();
         this.requestFocus();
@@ -221,7 +218,6 @@ public class GameSparker extends Applet implements Runnable
             array3[i] = new Mad(carDefine, medium, record, xtGraphics, i);
             this.u[i] = new Control(medium);
         }
-        float n2 = millis[0];
         this.readcookies(xtGraphics, carDefine, array);
         xtGraphics.testdrive = Madness.testdrive;
         if (xtGraphics.testdrive != 0) {
@@ -247,18 +243,23 @@ public class GameSparker extends Applet implements Runnable
         }
         System.gc();
         long time = new Date().getTime();
-        float a = millis[1];
-        int n3 = 0;
-        int n4 = minMillis [1];
-        final int n5 = 530;
-        int n6 = 0;
+        float menu = 30.0f;
+        float ingame = 47.0f;
+        int firstFrame = 0;
+        int menuMinimum = 30;
+        final int budget = 530;
+        int nfr = 0;
         int n7 = 0;
         int n8 = 0;
         int n9 = 0;
         int n10 = 0;
         int n11 = 0;
+        boolean isGaming = (xtGraphics.fase == 0 || xtGraphics.fase == -1 || xtGraphics.fase == -3 || xtGraphics.fase == 7001);
         while (true) {
             final long time2 = new Date().getTime();
+        	if (xtGraphics.fase == 9999) {
+        		xtGraphics.settings();
+        	}
             if (xtGraphics.fase == 111) {
                 if (this.mouses == 1) {
                     n8 = 800;
@@ -295,10 +296,10 @@ public class GameSparker extends Applet implements Runnable
                     this.u[0].falseo(0);
                 }
             }
-            if (xtGraphics.fase == -9) {
+            if (xtGraphics.fase == -9) { //car select?
                 if (xtGraphics.loadedt) {
-                    xtGraphics.mainbg(-101);
-                    this.rd.setColor(new Color(0, 0, 0));
+                    xtGraphics.mainbg();
+                    this.rd.setColor(Color.BLACK);
                     this.rd.fillRect(0, 0, 800, 450);
                     this.repaint();
                     xtGraphics.strack.unload();
@@ -309,9 +310,9 @@ public class GameSparker extends Applet implements Runnable
                     xtGraphics.loadedt = false;
                 }
                 if (n8 < 2) {
-                    xtGraphics.mainbg(-101);
-                    this.rd.setColor(new Color(0, 0, 0));
-                    this.rd.fillRect(65, 25, 670, 400);
+                    xtGraphics.mainbg();
+                    this.rd.setColor(Color.BLACK);
+                    this.rd.fillRect(0, 0, 800, 450);
                     ++n8;
                 }
                 else {
@@ -336,9 +337,9 @@ public class GameSparker extends Applet implements Runnable
                     this.mouses = 2;
                 }
             }
-            if (xtGraphics.fase == 10) {
+            if (xtGraphics.fase == 10) { //main menu
                 this.mvect = 100;
-                xtGraphics.maini(this.u[0]);
+                xtGraphics.maini(this.u[0], array);
                 xtGraphics.ctachm(this.xm, this.ym, this.mouses, this.u[0]);
                 if (this.mouses == 2) {
                     this.mouses = 0;
@@ -350,7 +351,7 @@ public class GameSparker extends Applet implements Runnable
             if (xtGraphics.fase == 102) {
                 this.mvect = 100;
                 if (xtGraphics.loadedt) {
-                    this.rd.setColor(new Color(0, 0, 0));
+                    this.rd.setColor(Color.BLACK);
                     this.rd.fillRect(0, 0, 800, 450);
                     this.repaint();
                     this.checkmemory(xtGraphics);
@@ -367,7 +368,6 @@ public class GameSparker extends Applet implements Runnable
                 if (xtGraphics.testdrive == 3 || xtGraphics.testdrive == 4) {
                     Madness.stagemaker();
                 }
-                xtGraphics.maini2(this.u[0], this.xm, this.ym, this.mouses);
                 xtGraphics.ctachm(this.xm, this.ym, this.mouses, this.u[0]);
                 if (this.mouses == 2) {
                     this.mouses = 0;
@@ -442,7 +442,7 @@ public class GameSparker extends Applet implements Runnable
                 }
             }
             if (xtGraphics.fase == 3) {
-                this.rd.setColor(new Color(0, 0, 0));
+                this.rd.setColor(Color.BLACK);
                 this.rd.fillRect(65, 25, 670, 400);
                 this.repaint();
                 xtGraphics.inishstageselect(checkPoints);
@@ -458,8 +458,7 @@ public class GameSparker extends Applet implements Runnable
                 this.mvect = 20;
             }
             if (xtGraphics.fase == 1) { //stage select
-                xtGraphics.trackbg(false);
-                this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+            	xtGraphics.trackbg(true);
                 if (checkPoints.stage != -3) {
                     medium.aroundtrack(checkPoints);
                     if (medium.hit == 5000 && this.mvect < 40) {
@@ -523,7 +522,6 @@ public class GameSparker extends Applet implements Runnable
                 if (this.mouses == 1) {
                     this.mouses = 2;
                 }
-                this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 xtGraphics.stageselect(checkPoints, this.u[0], this.xm, this.ym, this.moused);
                 this.drawms();
             }
@@ -531,7 +529,7 @@ public class GameSparker extends Applet implements Runnable
                 this.mvect = 100;
                 if (n == 0) {
                     if (xtGraphics.loadedt) {
-                        this.rd.setColor(new Color(0, 0, 0));
+                        this.rd.setColor(Color.BLACK);
                         this.rd.fillRect(0, 0, 800, 450);
                         this.repaint();
                         this.checkmemory(xtGraphics);
@@ -543,7 +541,7 @@ public class GameSparker extends Applet implements Runnable
                         xtGraphics.loadedt = false;
                     }
                     xtGraphics.intertrack.unloadimod();
-                    this.rd.setColor(new Color(0, 0, 0));
+                    this.rd.setColor(Color.BLACK);
                     this.rd.fillRect(65, 25, 670, 400);
                     if (this.mload > 0) {
                         this.rd.drawImage(xtGraphics.mload, 259, 195, this);
@@ -676,7 +674,6 @@ public class GameSparker extends Applet implements Runnable
                     }
                     if (lobby.fase == 4) {
                         this.mvect = 50;
-                        this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                         medium.d(this.rd);
                         medium.aroundtrack(checkPoints);
                         int n20 = 0;
@@ -719,7 +716,6 @@ public class GameSparker extends Applet implements Runnable
                                 }
                             }
                         }
-                        this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                         lobby.stageselect(checkPoints, this.u[0], this.xm, this.ym, this.moused);
                         if (lobby.plsndt == 1) {
                             this.mvect = 70;
@@ -879,7 +875,7 @@ public class GameSparker extends Applet implements Runnable
                 System.runFinalization();
                 xtGraphics.fase = 22;
             }
-            if (xtGraphics.fase == 0) { // in-game
+            if (xtGraphics.fase == 0) { // ingame
                 for (int n33 = 0; n33 < xtGraphics.nplayers; ++n33) {
                     if (array3[n33].newcar) {
                         final float xz = array2[n33].xz;
@@ -951,7 +947,7 @@ public class GameSparker extends Applet implements Runnable
                         medium.adv = 1900;
                         medium.zy = 40;
                         medium.vxz = 70;
-                        this.rd.setColor(new Color(255, 255, 255));
+                        this.rd.setColor(Color.WHITE);
                         this.rd.fillRect(0, 0, 800, 450);
                     }
                     if (xtGraphics.starcnt != 0) {
@@ -1120,7 +1116,7 @@ public class GameSparker extends Applet implements Runnable
                         medium.adv = 1900;
                         medium.zy = 40;
                         medium.vxz = 70;
-                        this.rd.setColor(new Color(255, 255, 255));
+                        this.rd.setColor(Color.WHITE);
                         this.rd.fillRect(0, 0, 800, 450);
                         this.repaint();
                         if (xtGraphics.lan) {
@@ -1240,7 +1236,7 @@ public class GameSparker extends Applet implements Runnable
                         checkPoints.checkstat(array3, array2, record, xtGraphics.nplayers, xtGraphics.im, xtGraphics.multion);
                         medium.follow(array2[xtGraphics.im], array3[xtGraphics.im].cxz, 0);
                         xtGraphics.stat(array3[xtGraphics.im], array2[xtGraphics.im], checkPoints, this.u[0], true);
-                        this.rd.setColor(new Color(255, 255, 255));
+                        this.rd.setColor(Color.WHITE);
                         this.rd.fillRect(0, 0, 800, 450);
                     }
                 }
@@ -1344,7 +1340,7 @@ public class GameSparker extends Applet implements Runnable
                     record.hcaught = false;
                 }
                 if (record.hcaught) {
-                    this.rd.setColor(new Color(0, 0, 0));
+                    this.rd.setColor(Color.BLACK);
                     this.rd.fillRect(0, 0, 800, 450);
                     this.repaint();
                 }
@@ -1478,13 +1474,13 @@ public class GameSparker extends Applet implements Runnable
                 else {
                     xtGraphics.levelhigh(record.wasted, record.whenwasted, record.closefinish, n7, checkPoints.stage);
                     if (n7 == 0 || n7 == 1 || n7 == 2) {
-                        this.rd.setColor(new Color(0, 0, 0));
+                        this.rd.setColor(Color.BLACK);
                         this.rd.fillRect(0, 0, 800, 450);
                     }
                     if (record.wasted != xtGraphics.im) {
                         if (record.closefinish == 0) {
                             if (n8 == 9 || n8 == 11) {
-                                this.rd.setColor(new Color(255, 255, 255));
+                                this.rd.setColor(Color.WHITE);
                                 this.rd.fillRect(0, 0, 800, 450);
                             }
                             if (n8 == 0) {
@@ -1591,16 +1587,16 @@ public class GameSparker extends Applet implements Runnable
                     }
                     else {
                         if (n10 == 67 && (n8 == 3 || n8 == 31 || n8 == 66)) {
-                            this.rd.setColor(new Color(255, 255, 255));
+                            this.rd.setColor(Color.WHITE);
                             this.rd.fillRect(0, 0, 800, 450);
                         }
                         if (n10 == 69 && (n8 == 3 || n8 == 5 || n8 == 31 || n8 == 33 || n8 == 66 || n8 == 68)) {
-                            this.rd.setColor(new Color(255, 255, 255));
+                            this.rd.setColor(Color.WHITE);
                             this.rd.fillRect(0, 0, 800, 450);
                         }
                         if (n10 == 30 && n8 >= 1 && n8 < 30) {
                             if (n8 % (int)(2.0f + medium.random() * 3.0f) == 0 && n11 == 0) {
-                                this.rd.setColor(new Color(255, 255, 255));
+                                this.rd.setColor(Color.WHITE);
                                 this.rd.fillRect(0, 0, 800, 450);
                                 n11 = 1;
                             }
@@ -1642,8 +1638,6 @@ public class GameSparker extends Applet implements Runnable
                 }
                 if (++n7 == 7) {
                     xtGraphics.fase = -5;
-                    this.rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                    this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 }
             }
             if (xtGraphics.fase == -6) {
@@ -1685,6 +1679,13 @@ public class GameSparker extends Applet implements Runnable
                     --this.fcscnt;
                 }
             }
+            rd.setColor(Color.WHITE);
+            rd.drawString("Fase " + xtGraphics.fase, 200, 225);
+            rd.drawString("FlipO " + xtGraphics.flipo, 200, 240);
+            rd.drawString("C-Fase " + xtGraphics.cfase, 200, 255);
+            rd.drawString("Old Fase " + xtGraphics.oldfase, 200, 270);
+            rd.drawString("Base Fase " + xtGraphics.basefase, 200, 285);
+            
             this.repaint();
             if (xtGraphics.im > -1 && xtGraphics.im < 8) {
                 int im = 0;
@@ -1696,59 +1697,59 @@ public class GameSparker extends Applet implements Runnable
                 xtGraphics.playsounds(array3[xtGraphics.im], this.u[im], checkPoints.stage);
             }
             final long time3 = new Date().getTime();
-            if (xtGraphics.fase == 0 || xtGraphics.fase == -1 || xtGraphics.fase == -3 || xtGraphics.fase == 7001) {
-                if (n3 == 0) {
-                    n4 = minMillis[0];
-                    a = n2;
-                    if (a < 30.0f) {
-                        a = 30.0f;
-                    }
-                    n3 = 1;
-                    n6 = 0;
-                }
-                if (n6 == 10) {
-                    float n95 = (n5 + udpMistro.freg - (time3 - time)) / 20.0f;
-                    if (n95 > 40.0f) {
-                        n95 = 40.0f;
-                    }
-                    if (n95 < -40.0f) {
-                        n95 = -40.0f;
-                    }
-                    a += n95;
-                    if (a < 5.0f) {
-                        a = 5.0f;
-                    }
-                    medium.adjstfade(a, n95, xtGraphics.starcnt, this);
-                    time = time3;
-                    n6 = 0;
-                }
-                else {
-                    ++n6;
-                }
+            if (isGaming) {
+            	if (firstFrame == 0) {
+            		menuMinimum = 15;
+            		menu = ingame;
+            		if (menu < 30.0f) {
+            			menu = 30.0f;
+            		}
+            		firstFrame = 1;
+            		nfr = 0;
+            	}
+            	if (nfr == 10) {
+            		float bullshit = (budget + udpMistro.freg - (time3 - time)) / 20.0f;
+            		if (bullshit > 40.0f) {
+            			bullshit = 40.0f;
+            		}
+            		if (bullshit < -40.0f) {
+            			bullshit = -40.0f;
+            		}
+            		menu += bullshit;
+            		if (menu < 5.0f) {
+            			menu = 5.0f;
+            		}
+            		if (xtGraphics.starcnt == 0) medium.adjstfade(15 - menu);
+            		time = time3;
+            		nfr = 0;
+            	}
+            	else {
+            		++nfr;
+            	}
             }
             else {
-                if (n3 != 0) {
-                    n4 = minMillis[1];
-                    n2 = a;
-                    n3 = 0;
-                    n6 = 0;
-                }
-                if (n6 == 10) {
-                    if (time3 - time < 400L) {
-                        a += 3.5;
-                    }
-                    else {
-                        a -= 3.5;
-                        if (a < 5.0f) {
-                            a = 5.0f;
-                        }
-                    }
-                    time = time3;
-                    n6 = 0;
-                }
-                else {
-                    ++n6;
-                }
+            	if (firstFrame != 0) {
+            		menuMinimum = 30;
+            		ingame = menu;
+            		firstFrame = 0;
+            		nfr = 0;
+            	}
+            	if (nfr == 10) {
+            		if (time3 - time < 400L) {
+            			menu += 3.5;
+            		}
+            		else {
+            			menu -= 3.5;
+            			if (menu < 5.0f) {
+            				menu = 5.0f;
+            			}
+            		}
+            		time = time3;
+            		nfr = 0;
+            	}
+            	else {
+            		++nfr;
+            	}
             }
             if (this.exwist) {
                 this.rd.dispose();
@@ -1767,11 +1768,13 @@ public class GameSparker extends Applet implements Runnable
                 this.gamer.interrupt();
                 this.gamer = null;
             }
-            long millis = Math.round(a) - (time3 - time2);
-            if (millis < n4) {
-                millis = n4;
+            long millis = Math.round(menu) - (time3 - time2);
+            rd.drawString("Sleep time " + millis, 200, 300);
+            if (millis < menuMinimum) {
+                millis = menuMinimum;
             }
             try {
+                final Thread gamer = this.gamer;
                 Thread.sleep(millis);
             }
             catch (final InterruptedException ex) {}
@@ -1790,153 +1793,59 @@ public class GameSparker extends Applet implements Runnable
         if (this.lastw != this.getWidth() || this.lasth != this.getHeight()) {
             this.lastw = this.getWidth();
             this.lasth = this.getHeight();
-            this.showsize = 100;
-            if (this.lastw <= 1280 || this.lasth <= 880) {
-                this.reqmult = 0.0f;
-            }
-            if (Madness.fullscreen) {
-                this.apx = (int)(this.getWidth() / 2 - 640 * this.apmult);
-                this.apy = (int)(this.getHeight() / 2 - 360 * this.apmult);
-            }
         }
-        int n = 0;
-        int n2 = 0;
-        if (this.moto == 1 && this.shaka > 0) {
-            n = (int)((this.shaka * 2 * Math.random() - this.shaka) * this.apmult);
-            n2 = (int)((this.shaka * 2 * Math.random() - this.shaka) * this.apmult);
+        // Always scale offImage to fit inside the window
+        float scaleW = this.getWidth() / 800.0f;
+        float scaleH = this.getHeight() / 450.0f;
+        this.apmult = Math.min(scaleW, scaleH);
+        if (this.apmult < 0.01f) {
+            this.apmult = 0.01f;
+        }
+        this.apx = (int)(this.getWidth() / 2 - 400.0f * this.apmult);
+        this.apy = (int)(this.getHeight() / 2 - 225.0f * this.apmult);
+        this.apw = (int)(800.0f * this.apmult);
+        this.aph = (int)(450.0f * this.apmult);
+        int[] shaka = {0, 0};
+        if (Madness.moto == 1 && this.shaka > 0) {
+            shaka[0] = (int)((this.shaka * 2 * Math.random() - this.shaka) * this.apmult);
+            shaka[1] = (int)((this.shaka * 2 * Math.random() - this.shaka) * this.apmult);
             --this.shaka;
         }
-        if (!Madness.fullscreen) {
-            if (this.showsize != 0) {
-                if (this.showsize == 100 || this.showsize == 70) {
-                    graphics2D.clearRect(0, 0, this.getWidth(), this.getHeight());
-                }
-                float n3 = (this.getWidth() - 40) / 1280.0f - 1.0f;
-                if (n3 > (this.getHeight() - 70) / 720.0f - 1.0f) {
-                    n3 = (this.getHeight() - 70) / 720.0f - 1.0f;
-                }
-                if (n3 > 1.0f) {
-                    n3 = 1.0f;
-                }
-                if (n3 < 0.0f) {
-                    n3 = 0.0f;
-                }
-                this.apmult = 1.0f + n3 * this.reqmult;
-                if (!this.oncarm) {
-                    graphics2D.drawImage(this.carmaker[0], 50, 14, this);
-                }
-                else {
-                    graphics2D.drawImage(this.carmaker[1], 50, 14, this);
-                }
-                if (!this.onstgm) {
-                    graphics2D.drawImage(this.stagemaker[0], this.getWidth() - 208, 14, this);
-                }
-                else {
-                    graphics2D.drawImage(this.stagemaker[1], this.getWidth() - 208, 14, this);
-                }
-                graphics2D.drawImage(this.sizebar, this.getWidth() / 2 - 230, 23, this);
-                graphics2D.drawImage(this.blb, (int)(this.getWidth() / 2 - 222 + 141.0f * this.reqmult), 23, this);
-                graphics2D.drawImage(this.chkbx[this.smooth], this.getWidth() / 2 - 53, 23, this);
-                graphics2D.setFont(new Font("Arial", 1, 11));
-                graphics2D.setColor(new Color(74, 99, 125));
-                graphics2D.drawString("Screen Size:", this.getWidth() / 2 - 224, 17);
-                graphics2D.drawString("Smooth", this.getWidth() / 2 - 36, 34);
-                graphics2D.drawImage(this.fulls, this.getWidth() / 2 + 27, 15, this);
-                graphics2D.setColor(new Color(94, 126, 159));
-                graphics2D.drawString("Fullscreen", this.getWidth() / 2 + 63, 30);
-                graphics2D.drawImage(this.chkbx[Madness.anti], this.getWidth() / 2 + 135, 9, this);
-                graphics2D.drawString("Antialiasing", this.getWidth() / 2 + 152, 20);
-                graphics2D.drawImage(this.chkbx[this.moto], this.getWidth() / 2 + 135, 26, this);
-                graphics2D.drawString("Motion Effects", this.getWidth() / 2 + 152, 37);
-                graphics2D.setColor(new Color(0, 0, 0));
-                graphics2D.fillRect(this.getWidth() / 2 - 153, 5, 80, 16);
-                graphics2D.setColor(new Color(121, 135, 152));
-                String string = "" + (int)(this.apmult * 100.0f) + "%";
-                if (this.reqmult == 0.0f) {
-                    string = "Original";
-                }
-                if (this.reqmult == 1.0f) {
-                    string = "Maximum";
-                }
-                graphics2D.drawString(string, this.getWidth() / 2 - 150, 17);
-                if (!this.oncarm && !this.onstgm) {
-                    --this.showsize;
-                }
-                if (this.showsize == 0) {
-                    graphics2D.setColor(new Color(0, 0, 0));
-                    graphics2D.fillRect(this.getWidth() / 2 - 260, 0, 520, 40);
-                    graphics2D.fillRect(50, 14, 142, 23);
-                    graphics2D.fillRect(this.getWidth() - 208, 14, 158, 23);
-                }
-            }
-            this.apx = (int)(this.getWidth() / 2 - 640.0f * this.apmult);
-            this.apy = (int)(this.getHeight() / 2 - 360.0f * this.apmult - 50.0f);
-            if (this.apy < 50) {
-                this.apy = 50;
-            }
-            if (this.apmult > 1.0f) {
-                if (this.smooth == 1) {
-                    graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                    if (this.moto == 1) {
-                        graphics2D.setComposite(AlphaComposite.getInstance(3, this.mvect / 100.0f));
-                        this.rd.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
-                        graphics2D.drawImage(this.offImage, this.apx + n, this.apy + n2, (int)(1280.0f * this.apmult), (int)(720.0f * this.apmult), this);
-                        this.cropit(graphics2D, n, n2);
-                    }
-                    else {
-                        graphics2D.drawImage(this.offImage, this.apx, this.apy, (int)(1280.0f * this.apmult), (int)(720.0f * this.apmult), this);
-                    }
-                }
-                else if (this.moto == 1) {
-                    graphics2D.setComposite(AlphaComposite.getInstance(3, this.mvect / 100.0f));
-                    this.rd.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
-                    graphics2D.drawImage(this.offImage, this.apx + n, this.apy + n2, (int)(1280.0f * this.apmult), (int)(720.0f * this.apmult), this);
-                    this.cropit(graphics2D, n, n2);
-                }
-                else {
-                    graphics2D.drawImage(this.offImage, this.apx, this.apy, (int)(1280.0f * this.apmult), (int)(720.0f * this.apmult), this);
-                }
-            }
-            else if (this.moto == 1) {
-                graphics2D.setComposite(AlphaComposite.getInstance(3, this.mvect / 100.0f));
-                this.rd.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
-                graphics2D.drawImage(this.offImage, this.apx + n, this.apy + n2, this);
-                this.cropit(graphics2D, n, n2);
-            }
-            else {
-                graphics2D.drawImage(this.offImage, this.apx, this.apy, this);
-            }
-        }
-        else if (this.moto == 1) {
-            graphics2D.setComposite(AlphaComposite.getInstance(3, this.mvect / 100.0f));
-            this.rd.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
-            graphics2D.drawImage(this.offImage, this.apx + n, this.apy + n2, this);
-            this.cropit(graphics2D, n, n2);
-        }
-        else {
-            graphics2D.drawImage(this.offImage, this.apx, this.apy, this);
-        }
+        	if (Madness.smooth == 1 && this.apmult != 1.0f) {
+        		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        	} else {
+        		graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+        	}
+        	if (Madness.moto == 1) {
+        		graphics2D.setComposite(AlphaComposite.getInstance(3, this.mvect / 100.0f));
+        		this.rd.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
+        		graphics2D.drawImage(this.offImage, this.apx + shaka[0], this.apy + shaka[1], apw, aph, this);
+        		this.cropit(graphics2D, shaka[0], shaka[1]);
+        	}
+        	else {
+        		graphics2D.drawImage(this.offImage, this.apx, this.apy, apw, aph, this);
+        	}
     }
     
     public void cropit(final Graphics2D graphics2D, final int a, final int a2) {
         if (a != 0 || a2 != 0) {
-            graphics2D.setComposite(AlphaComposite.getInstance(3, 1.0f));
+            graphics2D.setComposite(AlphaComposite.getInstance(3));
             graphics2D.setColor(new Color(0, 0, 0));
         }
         if (a != 0) {
             if (a < 0) {
-                graphics2D.fillRect(this.apx + a, this.apy - (int)(25.0f * this.apmult), Math.abs(a), (int)(500.0f * this.apmult));
+                graphics2D.fillRect(this.apx + a, this.apy - (int)(25.0f * this.apmult), Math.abs(a), aph);
             }
             else {
-                graphics2D.fillRect(this.apx + (int)(1280.0f * this.apmult), this.apy - (int)(25.0f * this.apmult), a, (int)(800.0f * this.apmult));
+                graphics2D.fillRect(this.apx + apw, this.apy - (int)(25.0f * this.apmult), a, aph);
             }
         }
         if (a2 != 0) {
             if (a2 < 0) {
-                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + a2, (int)(1360.0f * this.apmult), Math.abs(a2));
+                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + a2, apw, Math.abs(a2));
             }
             else {
-                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + (int)(720.0f * this.apmult), (int)(1360.0f * this.apmult), a2);
+                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + aph, apw, a2);
             }
         }
     }
@@ -1948,13 +1857,11 @@ public class GameSparker extends Applet implements Runnable
     
     @Override
     public void init() {
-        this.setBackground(new Color(0, 0, 0));
-        this.offImage = this.createImage(1280, 720);
+        this.setBackground(Color.BLACK);
+        this.offImage = this.createImage(800, 450);
         if (this.offImage != null) {
             this.rd = (Graphics2D)this.offImage.getGraphics();
         }
-        this.rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.setLayout(null);
         (this.tnick = new TextField("Nickbname")).setFont(new Font("Arial", 1, 13));
         (this.tpass = new TextField("")).setFont(new Font("Arial", 1, 13));
@@ -2339,11 +2246,6 @@ public class GameSparker extends Applet implements Runnable
         if (xtGraphics.testdrive == 2 || xtGraphics.testdrive == 4) {
             xtGraphics.nplayers = 1;
         }
-        if (xtGraphics.gmode == 1) {
-            xtGraphics.nplayers = 5;
-            xtGraphics.xstart[4] = 0;
-            xtGraphics.zstart[4] = 760;
-        }
         trackers.nt = 0;
         this.nob = xtGraphics.nplayers;
         this.notb = 0;
@@ -2354,8 +2256,6 @@ public class GameSparker extends Applet implements Runnable
         checkPoints.haltall = false;
         checkPoints.wasted = 0;
         checkPoints.catchfin = 0;
-        medium.resdown = 0;
-        medium.rescnt = 5;
         medium.lightson = false;
         medium.noelec = 0;
         medium.ground = 250;
@@ -2448,6 +2348,7 @@ public class GameSparker extends Applet implements Runnable
                 }
                 if (string.startsWith("fadefrom")) {
                     medium.fadfrom(this.getint("fadefrom", string, 0));
+                    medium.origfade = medium.fade[0];
                 }
                 if (string.startsWith("lightson")) {
                     medium.lightson = true;
@@ -2717,10 +2618,6 @@ public class GameSparker extends Applet implements Runnable
                 medium.fallen = 0;
                 medium.nrnd = 0;
                 medium.trk = true;
-                medium.ih = 25;
-                medium.iw = 65;
-                medium.h = 425;
-                medium.w = 735;
                 xtGraphics.fase = 1;
                 this.mouses = 0;
             }
@@ -2858,6 +2755,7 @@ public class GameSparker extends Applet implements Runnable
                 }
                 if (string.startsWith("fadefrom")) {
                     medium.fadfrom(this.getint("fadefrom", string, 0));
+                    medium.origfade = medium.fade[0];
                 }
                 if (string.startsWith("lightson")) {
                     medium.lightson = true;
@@ -3120,7 +3018,7 @@ public class GameSparker extends Applet implements Runnable
             if (n == 2) {
                 array3[3] = "NFM2(" + i + "," + array2[1] + ")";
             }
-            array3[4] = "graphics(" + this.moto + "," + Madness.anti + ")";
+            array3[4] = "graphics(" + Madness.moto + "," + Madness.anti + "," + Madness.smooth + ")";
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
             for (int j = 0; j < 5; ++j) {
                 bufferedWriter.write(array3[j]);
@@ -3215,11 +3113,15 @@ public class GameSparker extends Applet implements Runnable
             if (array2[4].startsWith("graphics")) {
                 final int getint5 = this.getint("graphics", array2[4], 0);
                 if (getint5 >= 0 && getint5 <= 1) {
-                    this.moto = getint5;
+                    Madness.moto = getint5;
                 }
                 final int getint6 = this.getint("graphics", array2[4], 1);
                 if (getint6 >= 0 && getint6 <= 1) {
                     Madness.anti = getint6;
+                }
+                final int getint7 = this.getint("graphics", array2[4], 2);
+                if (getint7 >= 0 && getint7 <= 1) {
+                    Madness.smooth = getint7;
                 }
             }
             if (array2[1].startsWith("lastcar")) {
@@ -3273,45 +3175,6 @@ public class GameSparker extends Applet implements Runnable
             }
             this.moused = false;
         }
-        if (!Madness.fullscreen) {
-            if (n > this.getWidth() / 2 - 55 && n < this.getWidth() / 2 + 7 && n2 > 21 && n2 < 38 && !this.onbar) {
-                if (this.smooth == 1) {
-                    this.smooth = 0;
-                }
-                else {
-                    this.smooth = 1;
-                }
-                this.showsize = 60;
-            }
-            if (n > this.getWidth() / 2 + 133 && n < this.getWidth() / 2 + 231 && n2 > 7 && n2 < 24 && !this.onbar) {
-                if (Madness.anti == 0) {
-                    Madness.anti = 1;
-                }
-                else {
-                    Madness.anti = 0;
-                }
-                this.showsize = 60;
-            }
-            if (n > this.getWidth() / 2 + 133 && n < this.getWidth() / 2 + 231 && n2 > 24 && n2 < 41 && !this.onbar) {
-                if (this.moto == 0) {
-                    this.moto = 1;
-                }
-                else {
-                    this.moto = 0;
-                }
-                this.showsize = 60;
-            }
-            if (this.oncarm) {
-                Madness.carmaker();
-            }
-            if (this.onstgm) {
-                Madness.stagemaker();
-            }
-            if (this.onfulls) {
-                Madness.gofullscreen();
-            }
-            this.onbar = false;
-        }
         return false;
     }
     
@@ -3326,52 +3189,14 @@ public class GameSparker extends Applet implements Runnable
             }
             this.moused = true;
         }
-        if (!Madness.fullscreen) {
-            this.sizescreen(n, n2);
-        }
         return false;
     }
     
     @Override
-    public boolean mouseMove(final Event event, final int n, final int n2) {
+    public boolean mouseMove(final Event event, final int mouseX, final int mouseY) {
         if (!this.exwist && !this.lostfcs) {
-            this.xm = (int)((n - this.apx) / this.apmult);
-            this.ym = (int)((n2 - this.apy) / this.apmult);
-        }
-        if (!Madness.fullscreen) {
-            if (this.showsize < 20) {
-                this.showsize = 20;
-            }
-            if (n > 50 && n < 192 && n2 > 14 && n2 < 37) {
-                if (!this.oncarm) {
-                    this.oncarm = true;
-                    this.setCursor(new Cursor(12));
-                }
-            }
-            else if (this.oncarm) {
-                this.oncarm = false;
-                this.setCursor(new Cursor(0));
-            }
-            if (n > this.getWidth() - 208 && n < this.getWidth() - 50 && n2 > 14 && n2 < 37) {
-                if (!this.onstgm) {
-                    this.onstgm = true;
-                    this.setCursor(new Cursor(12));
-                }
-            }
-            else if (this.onstgm) {
-                this.onstgm = false;
-                this.setCursor(new Cursor(0));
-            }
-            if (n > this.getWidth() / 2 + 22 && n < this.getWidth() / 2 + 122 && n2 > 14 && n2 < 37) {
-                if (!this.onfulls) {
-                    this.onfulls = true;
-                    this.setCursor(new Cursor(12));
-                }
-            }
-            else if (this.onfulls) {
-                this.onfulls = false;
-                this.setCursor(new Cursor(0));
-            }
+            this.xm = (int)((mouseX - this.apx) / this.apmult);
+            this.ym = (int)((mouseY - this.apy) / this.apmult);
         }
         return false;
     }
@@ -3381,9 +3206,6 @@ public class GameSparker extends Applet implements Runnable
         if (!this.exwist && !this.lostfcs) {
             this.xm = (int)((n - this.apx) / this.apmult);
             this.ym = (int)((n2 - this.apy) / this.apmult);
-        }
-        if (!Madness.fullscreen) {
-            this.sizescreen(n, n2);
         }
         return false;
     }
@@ -3412,26 +3234,6 @@ public class GameSparker extends Applet implements Runnable
             this.lostfcs = false;
         }
         return false;
-    }
-    
-    public void mouseW(final int n) {
-        if (!this.exwist) {
-            this.mousew += n * 4;
-        }
-    }
-    
-    public void sizescreen(final int n, final int n2) {
-        if ((n > this.getWidth() / 2 - 230 && n < this.getWidth() / 2 - 68 && n2 > 21 && n2 < 39) || this.onbar) {
-            this.reqmult = (n - (this.getWidth() / 2 - 222)) / 141.0f;
-            if (this.reqmult < 0.1) {
-                this.reqmult = 0.0f;
-            }
-            if (this.reqmult > 1.0f) {
-                this.reqmult = 1.0f;
-            }
-            this.onbar = true;
-            this.showsize = 100;
-        }
     }
     
     public void catchlink() {
@@ -3632,9 +3434,6 @@ public class GameSparker extends Applet implements Runnable
             }
             if (n == 27) {
                 this.u[0].exit = false;
-                if (Madness.fullscreen) {
-                    Madness.exitfullscreen();
-                }
             }
             if (n == 120 || n == 88 || n == 122 || n == 90) {
                 this.u[0].lookback = 0;

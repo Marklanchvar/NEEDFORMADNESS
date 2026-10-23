@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.awt.Component;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.io.InputStream;
 import java.util.zip.ZipInputStream;
@@ -140,7 +141,7 @@ public class xtGraphics extends Panel implements Runnable
     Image sped;
     Image was;
     Image lap;
-    Image br;
+    Image peek;
     Image select;
     Image loadingmusic;
     Image yourwasted;
@@ -161,19 +162,15 @@ public class xtGraphics extends Panel implements Runnable
     Image mdness;
     Image paused;
     Image radicalplay;
-    Image logocars;
     Image logomadnes;
-    Image logomadbg;
     Image byrd;
-    Image bggo;
     Image opback;
     Image nfmcoms;
     Image opti;
-    Image opti2;
     Image bgmain;
     Image rpro;
     Image nfmcom;
-    Image flaot;
+    Image tips;
     Image brt;
     Image arn;
     Image exitgame;
@@ -365,7 +362,7 @@ public class xtGraphics extends Panel implements Runnable
     int movly;
     int gxdu;
     int gydu;
-    int muhi;
+    int playhi;
     int lsc;
     int mouson;
     int onmsc;
@@ -400,7 +397,16 @@ public class xtGraphics extends Panel implements Runnable
     int flyr;
     int flyrdest;
     int flang;
-    
+	Image opbtn;
+	Image opbtn2;
+	Image logomadnes2;
+	int menuCar;
+	int changeCar;
+	int xdu;
+	int ydu;
+	boolean grabable;
+	float logoLight;
+	
     public xtGraphics(final Medium m, final CarDefine cd, final Graphics2D rd, final GameSparker app) {
         this.fase = 111;
         this.oldfase = 0;
@@ -447,15 +453,15 @@ public class xtGraphics extends Panel implements Runnable
         this.discon = 0;
         this.cntptrys = 5;
         this.delays = new int[] { 600, 600, 600 };
-        this.nplayers = 7;
+        this.nplayers = 8;
         this.im = 0;
         this.plnames = new String[] { "", "", "", "", "", "", "", "" };
         this.osc = 10;
         this.minsl = 0;
         this.maxsl = 15;
         this.sc = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-        this.xstart = new int[] { 0, -350, 350, 0, -350, 350, 0, 0 };
-        this.zstart = new int[] { -760, -380, -380, 0, 380, 380, 760, 0 };
+        this.xstart = new int[] { 0, -350, 350, -350, 350, -350, 350, 0 };
+        this.zstart = new int[] { -380, -760, -760, 0, 0, 760, 760, 380 };
         this.allrnp = new float[8][6];
         this.isbot = new boolean[8];
         this.clangame = 0;
@@ -551,11 +557,11 @@ public class xtGraphics extends Panel implements Runnable
         this.shload = 0.0f;
         this.radpx = 212;
         this.pin = 60;
-        this.trkx = new int[] { 65, 735 };
+        this.trkx = new int[] { 0, 800 };
         this.trkl = 0;
         this.trklim = (int)(Math.random() * 40.0);
         this.lmode = 0;
-        this.bgmy = new int[] { 0, -400 };
+        this.bgmy = new int[] { 0, -450 };
         this.bgf = 0.0f;
         this.bgup = false;
         this.ovx = new int[] { 0, 0, 0, 0 };
@@ -581,10 +587,10 @@ public class xtGraphics extends Panel implements Runnable
         this.msgflk = new int[] { 0, 0 };
         this.lcmsg = new String[] { "", "" };
         this.flkat = 0;
-        this.movly = 0;
-        this.gxdu = 0;
-        this.gydu = 0;
-        this.muhi = 0;
+        this.movly = 1;
+        this.gxdu = -14;
+        this.gydu = 283;
+        this.playhi = 0;
         this.lsc = -1;
         this.mouson = -1;
         this.onmsc = -1;
@@ -626,6 +632,12 @@ public class xtGraphics extends Panel implements Runnable
         this.hello = this.getImage("data/hello.gif");
         this.sign = this.getImage("data/sign.gif");
         this.loadbar = this.getImage("data/loadbar.gif");
+    	this.menuCar = (int) (Math.random() * 15F);
+    	this.changeCar = 0;
+    	this.xdu = -14;
+    	this.ydu = 283;
+    	this.grabable = true;
+    	this.logoLight = 0;
         for (int i = 0; i < 5; ++i) {
             this.pengs[i] = false;
         }
@@ -796,7 +808,7 @@ public class xtGraphics extends Panel implements Runnable
                 if (name.equals("lap.gif")) {
                     this.olap = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
-                if (name.equals("paused.gif")) {
+                if (name.equals("paused.png")) {
                     this.paused = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("select.gif")) {
@@ -862,11 +874,11 @@ public class xtGraphics extends Panel implements Runnable
                 if (name.equals("8.gif")) {
                     this.orank[7] = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
-                if (name.equals("bgmain.jpg")) {
-                    this.bgmain = this.loadBimage(b, mediaTracker, defaultToolkit, 2);
+                if (name.equals("bgmain.png")) {
+                    this.bgmain = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
-                if (name.equals("br.png")) {
-                    this.br = this.loadimage(b, mediaTracker, defaultToolkit);
+                if (name.equals("peek.png")) {
+                    this.peek = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("loadingmusic.gif")) {
                     this.oloadingmusic = this.loadimage(b, mediaTracker, defaultToolkit);
@@ -892,8 +904,8 @@ public class xtGraphics extends Panel implements Runnable
                 if (name.equals("selectcar.gif")) {
                     this.selectcar = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
-                if (name.equals("track.jpg")) {
-                    this.trackbg[0] = this.loadBimage(b, mediaTracker, defaultToolkit, 3);
+                if (name.equals("track.png")) {
+                    this.trackbg[0] = this.loadimage(b, mediaTracker, defaultToolkit);
                     this.trackbg[1] = this.dodgen(this.trackbg[0]);
                 }
                 if (name.equals("youlost.gif")) {
@@ -996,26 +1008,14 @@ public class xtGraphics extends Panel implements Runnable
                 if (name.equals("options.png")) {
                     this.opti = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
-                if (name.equals("options2.png")) {
-                    this.opti2 = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
                 if (name.equals("opback.png")) {
                     this.opback = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
-                if (name.equals("logocars.png")) {
-                    this.logocars = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("logomad.png")) {
                     this.logomadnes = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
-                if (name.equals("logomadbg.jpg")) {
-                    this.logomadbg = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
                 if (name.equals("byrd.png")) {
                     this.byrd = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
-                if (name.equals("bggo.jpg")) {
-                    this.bggo = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("nfmcoms.png")) {
                     this.nfmcoms = this.loadimage(b, mediaTracker, defaultToolkit);
@@ -1190,6 +1190,15 @@ public class xtGraphics extends Panel implements Runnable
                 }
                 if (name.equals("top20s.gif")) {
                     this.top20s = this.loadimage(b, mediaTracker, defaultToolkit);
+                }
+                if (name.equals("opbtn.png")) {
+                    this.opbtn = this.loadimage(b, mediaTracker, defaultToolkit);
+                }
+                if (name.equals("opbtn2.png")) {
+                    this.opbtn2 = this.loadimage(b, mediaTracker, defaultToolkit);
+                }
+                if (name.equals("logomad2.png")) {
+                    this.logomadnes2 = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 this.dnload += 2;
             }
@@ -1405,7 +1414,7 @@ public class xtGraphics extends Panel implements Runnable
     
     public void loading() {
         this.rd.setColor(Color.BLACK);
-        this.rd.fillRect(0, 0, 1280, 720);
+        this.rd.fillRect(0, 0, 800, 450);
         this.rd.drawImage(this.sign, 362, 35, this);
         this.rd.drawImage(this.hello, 125, 105, this);
         this.rd.setColor(new Color(198, 214, 255));
@@ -1576,7 +1585,7 @@ public class xtGraphics extends Panel implements Runnable
         }
         this.trackbg(false);
         this.rd.setColor(Color.BLACK);
-        this.rd.fillRect(0, 135, 1280, 59);
+        this.rd.fillRect(0, 135, 800, 59);
         if (this.pin != 0) {
             this.rd.drawImage(this.radicalplay, this.radpx + (int)(8.0 * Math.random() - 4.0), 135, null);
         }
@@ -1628,7 +1637,7 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         if (this.flipo == 101) {
-            this.mainbg(-1);
+            this.mainbg();
             this.rd.drawImage(this.mdness, 283, 32, null);
             this.rd.setFont(new Font("Arial", 1, 13));
             this.ftm = this.rd.getFontMetrics();
@@ -1665,17 +1674,8 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         if (this.flipo == 102) {
-            this.mainbg(0);
-            this.rd.drawImage(this.nfmcom, 190, 195, null);
-            if (n > 190 && n < 609 && n2 > 195 && n2 < 216) {
-                this.app.setCursor(new Cursor(12));
-                if (n3 == 2) {
-                    this.app.madlink();
-                }
-            }
-            else {
-                this.app.setCursor(new Cursor(0));
-            }
+            this.mainbg();
+            this.rd.drawImage(logomadnes, 0, 190, null);
         }
         this.rd.drawImage(this.next[this.pnext], 665, 395, null);
         if (control.enter || control.handb || control.right) {
@@ -1688,7 +1688,7 @@ public class xtGraphics extends Panel implements Runnable
             }
             if (this.flipo == 103) {
                 this.flipo = 0;
-                this.fase = 10;
+                this.fase = 9999;
             }
             control.enter = false;
             control.handb = false;
@@ -1708,167 +1708,24 @@ public class xtGraphics extends Panel implements Runnable
             n = 0;
         }
         for (int i = 0; i < 2; ++i) {
-            this.rd.drawImage(this.trackbg[n], this.trkx[i], 25, null);
+            this.rd.drawImage(this.trackbg[n], this.trkx[i], 0, null);
             final int[] trkx = this.trkx;
             final int n2 = i;
-            trkx[n2] -= 10;
-            if (this.trkx[i] <= -605) {
-                this.trkx[i] = 735;
+            trkx[n2] -= 2;
+            if (this.trkx[i] <= -800) {
+                this.trkx[i] = 800;
             }
         }
         this.rd.setColor(Color.BLACK);
     }
     
-    public void mainbg(final int n) {
-        int n2 = 2;
-        this.rd.setColor(new Color(191, 184, 124));
-        if (n == -1) {
-            if (n != this.lmode) {
-                this.bgmy[0] = 0;
-                this.bgmy[1] = -400;
-                this.bgup = false;
-                this.bgf = 0.0f;
-                this.lmode = n;
-            }
-            this.rd.setColor(new Color(144, 222, 9));
-            n2 = 8;
-        }
-        if (n == 0) {
-            if (n != this.lmode) {
-                this.bgmy[0] = 0;
-                this.bgmy[1] = -400;
-                this.bgup = false;
-                this.bgf = 0.0f;
-                this.lmode = n;
-            }
-            final int r = (int)(255.0f * this.bgf + 191.0f * (1.0f - this.bgf));
-            final int g = (int)(176.0f * this.bgf + 184.0f * (1.0f - this.bgf));
-            final int b = (int)(67.0f * this.bgf + 124.0f * (1.0f - this.bgf));
-            if (!this.bgup) {
-                this.bgf += 0.02f;
-                if (this.bgf > 0.9f) {
-                    this.bgf = 0.9f;
-                    this.bgup = true;
-                }
-            }
-            else {
-                this.bgf -= 0.02f;
-                if (this.bgf < 0.2f) {
-                    this.bgf = 0.2f;
-                    this.bgup = false;
-                }
-            }
-            this.rd.setColor(new Color(r, g, b));
-            n2 = 4;
-        }
-        if (n == 1) {
-            if (n != this.lmode) {
-                this.bgmy[0] = 0;
-                this.bgmy[1] = -400;
-                this.lmode = n;
-            }
-            this.rd.setColor(new Color(255, 176, 67));
-            n2 = 8;
-        }
-        if (n == 2) {
-            if (n != this.lmode) {
-                this.bgmy[0] = 0;
-                this.bgmy[1] = -400;
-                this.lmode = n;
-                this.bgf = 0.2f;
-            }
-            this.rd.setColor(new Color(188, 170, 122));
-            if (this.flipo == 16) {
-                this.rd.setColor(new Color((int)(176.0f * this.bgf + 191.0f * (1.0f - this.bgf)), (int)(202.0f * this.bgf + 184.0f * (1.0f - this.bgf)), (int)(255.0f * this.bgf + 124.0f * (1.0f - this.bgf))));
-                this.bgf += 0.025f;
-                if (this.bgf > 0.85f) {
-                    this.bgf = 0.85f;
-                }
-            }
-            else {
-                this.bgf = 0.2f;
-            }
-            n2 = 2;
-        }
-        if (n == 3) {
-            if (n != this.lmode) {
-                this.bgmy[0] = 0;
-                this.bgmy[1] = -400;
-                this.bgup = false;
-                this.bgf = 0.0f;
-                this.lmode = n;
-            }
-            final int r2 = (int)(255.0f * this.bgf + 191.0f * (1.0f - this.bgf));
-            final int g2 = (int)(176.0f * this.bgf + 184.0f * (1.0f - this.bgf));
-            final int b2 = (int)(67.0f * this.bgf + 124.0f * (1.0f - this.bgf));
-            if (!this.bgup) {
-                this.bgf += 0.02f;
-                if (this.bgf > 0.9f) {
-                    this.bgf = 0.9f;
-                    this.bgup = true;
-                }
-            }
-            else {
-                this.bgf -= 0.02f;
-                if (this.bgf < 0.2f) {
-                    this.bgf = 0.2f;
-                    this.bgup = false;
-                }
-            }
-            this.rd.setColor(new Color(r2, g2, b2));
-            n2 = 2;
-        }
-        if (n != -101) {
-            if (n == 4) {
-                this.rd.setColor(new Color(216, 177, 100));
-                this.rd.fillRect(0, 40, 1280, 680);
-            }
-            else {
-                this.rd.fillRect(0, 0, 1280, 720);
-            }
-        }
-        if (n == 4) {
-            if (n != this.lmode) {
-                this.bgmy[0] = 0;
-                this.bgmy[1] = 400;
-                for (int i = 0; i < 4; ++i) {
-                    this.ovw[i] = (int)(50.0 + 150.0 * Math.random());
-                    this.ovh[i] = (int)(50.0 + 150.0 * Math.random());
-                    this.ovy[i] = (int)(400.0 * Math.random());
-                    this.ovx[i] = (int)(Math.random() * 670.0);
-                    this.ovsx[i] = (int)(5.0 + Math.random() * 10.0);
-                }
-                this.lmode = n;
-            }
-            for (int j = 0; j < 4; ++j) {
-                this.rd.setColor(new Color(235, 176, 84));
-                this.rd.fillOval((int)(65 + this.ovx[j] - this.ovw[j] * 1.5 / 2.0), (int)(25 + this.ovy[j] - this.ovh[j] * 1.5 / 2.0), (int)(this.ovw[j] * 1.5), (int)(this.ovh[j] * 1.5));
-                this.rd.setColor(new Color(255, 176, 67));
-                this.rd.fillOval(65 + this.ovx[j] - this.ovh[j] / 2, 25 + this.ovy[j] - this.ovh[j] / 2, this.ovw[j], this.ovh[j]);
-                final int[] ovx = this.ovx;
-                final int n3 = j;
-                ovx[n3] -= this.ovsx[j];
-                if (this.ovx[j] + this.ovw[j] * 1.5 / 2.0 < 0.0) {
-                    this.ovw[j] = (int)(50.0 + 150.0 * Math.random());
-                    this.ovh[j] = (int)(50.0 + 150.0 * Math.random());
-                    this.ovy[j] = (int)(400.0 * Math.random());
-                    this.ovx[j] = (int)(670.0 + this.ovw[j] * 1.5 / 2.0);
-                    this.ovsx[j] = (int)(5.0 + Math.random() * 10.0);
-                }
-            }
-        }
-        if (n != -101 && n != 4) {
-            for (int k = 0; k < 2; ++k) {
-                if (n != 2 || this.flipo != 16) {
-                    this.rd.drawImage(this.bgmain, 65, 25 + this.bgmy[k], null);
-                }
-                final int[] bgmy = this.bgmy;
-                final int n4 = k;
-                bgmy[n4] += n2;
-                if (this.bgmy[k] >= 400) {
-                    this.bgmy[k] = -400;
-                }
-            }
+    public void mainbg() {
+        for (int k = 0; k < 2; ++k) {
+        	this.rd.drawImage(this.bgmain, 0, this.bgmy[k], null);
+        	this.bgmy[k] += 2;
+        	if (this.bgmy[k] >= 450) {
+        		this.bgmy[k] = -450;
+        	}
         }
         this.rd.setColor(Color.BLACK);
     }
@@ -1951,8 +1808,9 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void loadingstage(final int n, final boolean b) {
-        this.trackbg(true);
-        this.rd.drawImage(this.br, 65, 25, null);
+        this.app.u[0].handb = false;
+        this.app.u[0].enter = false;
+        this.rd.drawImage(this.peek, 0, 275, null);
         this.rd.setColor(new Color(212, 214, 138));
         this.rd.fillRoundRect(265, 201, 270, 26, 20, 40);
         this.rd.setColor(new Color(57, 64, 8));
@@ -1975,7 +1833,6 @@ public class xtGraphics extends Panel implements Runnable
     public void cantgo(final Control control) {
         this.pnext = 0;
         this.trackbg(false);
-        this.rd.drawImage(this.br, 65, 25, null);
         this.rd.drawImage(this.select, 338, 35, null);
         this.rd.setFont(new Font("Arial", 1, 13));
         this.ftm = this.rd.getFontMetrics();
@@ -2004,7 +1861,7 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void stageselect(final CheckPoints checkPoints, final Control control, final int n, final int n2, final boolean b) {
-        this.rd.drawImage(this.br, 65, 25, null);
+        this.rd.drawImage(this.peek, 0, 275, null);
         this.rd.drawImage(this.select, 338, 35, null);
         if (this.testdrive != 3 && this.testdrive != 4) {
             if (checkPoints.stage > 0 && this.cd.staction == 0) {
@@ -2473,8 +2330,8 @@ public class xtGraphics extends Panel implements Runnable
                         this.app.gmode.show();
                     }
                     this.app.gmode.move(400 - this.app.gmode.getWidth() / 2, 395);
-                    if (this.app.gmode.getSelectedIndex() == 0 && this.nplayers != 7) {
-                        this.nplayers = 7;
+                    if (this.app.gmode.getSelectedIndex() == 0 && this.nplayers != 8) {
+                        this.nplayers = 8;
                         this.fase = 2;
                         this.app.requestFocus();
                     }
@@ -2639,16 +2496,8 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         if (this.drawcarb(true, null, " Exit X ", 670, 30, n, n2, b)) {
-            this.fase = 102;
-            if (this.gmode == 0) {
-                this.opselect = 3;
-            }
-            if (this.gmode == 1) {
-                this.opselect = 0;
-            }
-            if (this.gmode == 2) {
-                this.opselect = 1;
-            }
+        	this.fase = 10;
+        	this.opselect = 0;
             this.app.gmode.hide();
             this.hidos();
             this.app.tnick.hide();
@@ -2697,10 +2546,7 @@ public class xtGraphics extends Panel implements Runnable
             b2 = 0;
         }
         this.rd.setColor(new Color(r, g, b2));
-        this.rd.fillRect(0, 0, 1280, 720);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 0.3f));
-        this.rd.drawImage(this.bggo, 0, -25, null);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
+        this.rd.fillRect(0, 0, 800, 450);
         this.rd.setFont(new Font("Arial", 1, 13));
         this.ftm = this.rd.getFontMetrics();
         this.drawcs(50, this.asay, 0, 0, 0, 3);
@@ -2738,10 +2584,9 @@ public class xtGraphics extends Panel implements Runnable
             else {
                 this.duds = 0;
             }
-            this.rd.setComposite(AlphaComposite.getInstance(3, 0.3f));
             this.rd.drawImage(this.dude[this.duds], 95, 35, null);
             this.rd.setComposite(AlphaComposite.getInstance(3, 0.7f));
-            this.rd.drawImage(this.flaot, 192, 67, null);
+            this.rd.drawImage(this.tips, 192, 67, null);
             this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
             int r2 = (int)(80.0f - 80.0f * (array[0] / 100.0f));
             if (r2 > 255) {
@@ -3093,14 +2938,12 @@ public class xtGraphics extends Panel implements Runnable
             this.m.crs = false;
             this.m.ih = 0;
             this.m.iw = 0;
-            this.m.h = 720;
-            this.m.w = 1280;
-            this.m.focus_point = 640;
-            this.m.cx = 640;
-            this.m.cy = 360;
-            this.m.cz = 100;
-            this.rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
-            this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+            this.m.h = 450;
+            this.m.w = 800;
+            this.m.focus_point = 400;
+            this.m.cx = 400;
+            this.m.cy = 250;
+            this.m.cz = 50;
             if (this.multion == 0) {
                 this.fase = 0;
             }
@@ -4054,16 +3897,8 @@ public class xtGraphics extends Panel implements Runnable
             this.flipo = 15;
             this.dudo = 100;
         }
-        this.mainbg(2);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 0.3f));
-        this.rd.drawImage(this.bggo, 65, 25, null);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        if (this.aflk) {
-            this.aflk = false;
-        }
-        else {
-            this.aflk = true;
-        }
+        this.mainbg();
+        aflk = !aflk;
         if (this.flipo != 1 && this.flipo != 16) {
             if (this.dudo > 0) {
                 if (this.aflk) {
@@ -4079,9 +3914,7 @@ public class xtGraphics extends Panel implements Runnable
             else {
                 this.duds = 0;
             }
-            this.rd.setComposite(AlphaComposite.getInstance(3, 0.4f));
             this.rd.drawImage(this.dude[this.duds], 95, 15, null);
-            this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
             this.rd.drawImage(this.oflaot, 192, 42, null);
         }
         this.rd.setColor(new Color(0, 64, 128));
@@ -4280,53 +4113,51 @@ public class xtGraphics extends Panel implements Runnable
         }
     }
     
-    public void maini(final Control control) {
+    public void maini(final Control control, ContO[] array) {
         if (this.flipo == 0) {
             this.app.setCursor(new Cursor(0));
             ++this.flipo;
         }
-        this.mainbg(1);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 0.6f));
-        this.rd.drawImage(this.logomadbg, 65, 25, null);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        this.rd.drawImage(this.logomadnes, 233, 186, null);
-        float alpha = this.flkat / 800.0f;
-        if (alpha > 0.2) {
-            alpha = 0.2f;
+        if (changeCar > 100) {
+                menuCar = (int) (Math.random() * 15F);
+                changeCar = 0;
         }
-        if (this.flkat > 200) {
-            alpha = (400 - this.flkat) / 1000.0f;
-            if (alpha < 0.0f) {
-                alpha = 0.0f;
-            }
-        }
-        ++this.flkat;
-        if (this.flkat == 400) {
-            this.flkat = 0;
-        }
-        this.rd.setComposite(AlphaComposite.getInstance(3, alpha));
-        this.rd.drawImage(this.dude[0], 351 + this.gxdu, 28 + this.gydu, null);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        if (this.movly == 0) {
-            this.gxdu = (int)(5.0 - 11.0 * Math.random());
-            this.gydu = (int)(5.0 - 11.0 * Math.random());
-        }
-        ++this.movly;
-        if (this.movly == 2) {
-            this.movly = 0;
-        }
-        this.rd.drawImage(this.logocars, 66, 33, null);
-        this.rd.drawImage(this.opback, 247, 237, null);
-        if (this.muhi < 0) {
-            this.rd.setColor(new Color(140, 70, 0));
-            this.rd.fillRoundRect(335, 293, 114, 19, 7, 20);
-        }
-        --this.muhi;
-        if (this.muhi < -5) {
-            this.muhi = 50;
+        changeCar++;
+        array[menuCar].z = array[menuCar].maxR;
+        array[menuCar].y = 250 - array[menuCar].grat;
+        array[menuCar].x = 0;
+        array[menuCar].xz = 135F + (changeCar / 100F) * 360F;
+        array[menuCar].xy = 0;
+        array[menuCar].zy = 0;
+        array[menuCar].wzy = 0;
+        array[menuCar].wxz = 0;
+        this.m.defaultMedium();
+        this.m.trk = false;
+        this.m.crs = false;
+        this.m.x = -200;
+        this.m.cx = 200;
+        this.m.focus_point = 200;
+        this.m.y = (this.cd.flipy[menuCar] - array[menuCar].grat) * .5F;
+        this.m.z = -250;
+        this.m.zy = 0;
+        this.m.ground = 250;
+        this.m.d(this.rd);
+        array[menuCar].d(this.rd);
+        this.dudeMove();
+        this.rd.setColor(Color.BLACK);
+        this.rd.fillRect(0, 0, 800, 90);
+        this.logo(0, 0);
+        this.rd.drawImage(this.opback, 408, 194, null);
+        aflk = !aflk;
+        --this.playhi;
+        if (this.playhi < -5) {
+            this.playhi = 50;
         }
         if (control.up) {
             --this.opselect;
+            if (this.opselect == 1) {
+                this.opselect = 0;
+            }
             if (this.opselect == -1) {
                 this.opselect = 3;
             }
@@ -4334,44 +4165,30 @@ public class xtGraphics extends Panel implements Runnable
         }
         if (control.down) {
             ++this.opselect;
+            if (this.opselect == 1) {
+                this.opselect = 2;
+            }
             if (this.opselect == 4) {
                 this.opselect = 0;
             }
             control.down = false;
         }
         if (this.opselect == 0) {
-            if (this.shaded) {
-                this.rd.setColor(new Color(140, 70, 0));
-                this.rd.fillRect(343, 261, 110, 22);
-                this.aflk = false;
+            if (aflk || shaded) {
+            	this.rd.drawImage(opbtn, 440, 194, null);
             }
-            if (this.aflk) {
-                this.rd.setColor(new Color(200, 200, 0));
-                this.aflk = false;
-            }
-            else {
-                this.rd.setColor(new Color(255, 128, 0));
-                this.aflk = true;
-            }
-            this.rd.drawRoundRect(343, 261, 110, 22, 7, 20);
-        }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.drawRoundRect(343, 261, 110, 22, 7, 20);
-        }
+        } else if (playhi < 0) this.rd.drawImage(opbtn, 440, 194, null);
+        /*
         if (this.opselect == 1) {
             if (this.shaded) {
                 this.rd.setColor(new Color(140, 70, 0));
                 this.rd.fillRect(288, 291, 221, 22);
-                this.aflk = false;
             }
             if (this.aflk) {
                 this.rd.setColor(new Color(200, 191, 0));
-                this.aflk = false;
             }
             else {
                 this.rd.setColor(new Color(255, 95, 0));
-                this.aflk = true;
             }
             this.rd.drawRoundRect(288, 291, 221, 22, 7, 20);
         }
@@ -4379,90 +4196,51 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.setColor(Color.BLACK);
             this.rd.drawRoundRect(288, 291, 221, 22, 7, 20);
         }
+        */
         if (this.opselect == 2) {
-            if (this.shaded) {
-                this.rd.setColor(new Color(140, 70, 0));
-                this.rd.fillRect(301, 321, 196, 22);
-                this.aflk = false;
+        	 if (aflk || shaded) {
+        		this.rd.drawImage(opbtn2, 472, 274, null);
             }
-            if (this.aflk) {
-                this.rd.setColor(new Color(200, 128, 0));
-                this.aflk = false;
-            }
-            else {
-                this.rd.setColor(new Color(255, 128, 0));
-                this.aflk = true;
-            }
-            this.rd.drawRoundRect(301, 321, 196, 22, 7, 20);
-        }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.drawRoundRect(301, 321, 196, 22, 7, 20);
         }
         if (this.opselect == 3) {
-            if (this.shaded) {
-                this.rd.setColor(new Color(140, 70, 0));
-                this.rd.fillRect(357, 351, 85, 22);
-                this.aflk = false;
+        	 if (aflk || shaded) {
+        		this.rd.drawImage(opbtn2, 472, 322, null);
             }
-            if (this.aflk) {
-                this.rd.setColor(new Color(200, 0, 0));
-                this.aflk = false;
-            }
-            else {
-                this.rd.setColor(new Color(255, 128, 0));
-                this.aflk = true;
-            }
-            this.rd.drawRoundRect(357, 351, 85, 22, 7, 20);
         }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.drawRoundRect(357, 351, 85, 22, 7, 20);
-        }
-        this.rd.drawImage(this.opti, 294, 265, null);
-        if (control.enter || control.handb) {
-            if (this.opselect == 1) {
-                this.mtop = true;
-                this.multion = 1;
-                this.gmode = 0;
-                if (this.firstime) {
-                    this.oldfase = -9;
-                    this.fase = 11;
-                    this.firstime = false;
-                }
-                else {
-                    this.fase = -9;
-                }
-            }
-            if (this.opselect == 2) {
-                this.oldfase = 10;
-                this.fase = 11;
-                this.firstime = false;
-            }
-            if (this.opselect == 3) {
-                this.fase = 8;
-            }
-            if (this.opselect == 0) {
-                if (this.unlocked[0] == 11) {
-                    if (this.unlocked[1] != 17) {
-                        this.opselect = 1;
-                    }
-                    else {
-                        this.opselect = 2;
-                    }
-                }
-                if (this.firstime) {
-                    this.oldfase = 102;
-                    this.fase = 11;
-                    this.firstime = false;
-                }
-                else {
-                    this.fase = 102;
-                }
-            }
-            this.flipo = 0;
-            control.enter = false;
-            control.handb = false;
+        this.rd.drawImage(this.opti, 508, 205, null);
+        if ((control.enter || control.handb) && opselect != -1) {
+        	if (this.opselect == 0) {
+        		if (this.unlocked[0] == 11) {
+        			if (this.unlocked[1] != 17) {
+        				this.opselect = 1;
+        			}
+        			else {
+        				this.opselect = 2;
+        			}
+        		}
+        		if (this.firstime) {
+        			this.oldfase = 10;
+        			this.fase = 11;
+        			this.firstime = false;
+        		}
+        		else {
+        		   this.multion = 0;
+                   this.clangame = 0;
+                   this.gmode = 0;
+                   this.fase = -9;
+        		}
+        	}
+        	if (this.opselect == 2) {
+        		this.oldfase = 10;
+        		this.fase = 11;
+        		this.firstime = false;
+        	}
+        	if (this.opselect == 3) {
+        		this.fase = 8;
+        	}
+        	this.flipo = 0;
+        	control.enter = false;
+        	control.handb = false;
         }
         this.rd.drawImage(this.byrd, 72, 410, null);
         this.rd.drawImage(this.nfmcoms, 567, 410, null);
@@ -4474,206 +4252,90 @@ public class xtGraphics extends Panel implements Runnable
             catch (final InterruptedException ex) {}
         }
     }
+
+	private void dudeMove() {
+		int dudeAlert = 0;
+		if (this.overon(this.xdu,
+				this.ydu,
+				this.dude[0].getWidth(null),
+				this.dude[0].getHeight(null), lxm, lym)) {
+			dudeAlert = 1;
+			if (this.app.moused && grabable) {
+				dudeAlert = 2;
+				this.xdu = this.lxm - this.dude[0].getWidth(null) / 2;
+				this.ydu = this.lym - this.dude[0].getHeight(null) / 2;
+			}
+		}
+		 ++this.flipo;
+	        if (this.flipo > this.flkat + 36) {
+	            this.flipo = 1;
+	            this.flkat = (int)(60.0 + 140.0 * Math.random());
+	        }
+	        if (this.movly <= 10) {
+	            if (this.movly == 10 || this.movly == 8 || this.movly == 6 || this.movly == 4 || this.movly == 2) {
+	                this.gxdu = (int)((800 - this.dude[0].getWidth(null)) * Math.random());
+	                this.gydu = (int)((450 - this.dude[0].getHeight(null)) * Math.random());
+	                if (this.movly == 2) {
+	                    this.gxdu = -14;
+	                    this.gydu = 283;
+	                }
+	                --this.movly;
+	            }
+	            this.xdu += (this.gxdu - this.xdu) / 15;
+	            this.ydu += (this.gydu - this.ydu) / 15;
+	            if (this.movly != 1) {
+	            	dudeAlert = 0;
+	                if (this.pys(this.xdu, this.gxdu, this.ydu, this.gydu) < 20.0f) {
+	                    --this.movly;
+	                }
+	            }
+	            else {
+	            	dudeAlert = 0;
+	                if (this.xdu > this.gxdu) {
+	                    --this.xdu;
+	                }
+	                else {
+	                    ++this.xdu;
+	                }
+	                if (this.ydu > this.gydu) {
+	                    --this.ydu;
+	                }
+	                else {
+	                    ++this.ydu;
+	                }
+	                if (this.pys(this.xdu, this.gxdu, this.ydu, this.gydu) < 2.0f) {
+	                    --this.movly;
+	                }
+	            }
+	            if (this.movly == 0) {
+	            	grabable = true;
+	                this.xdu = -14;
+	                this.ydu = 283;
+	                this.movly = (int)(100.0 + 100.0 * Math.random());
+	            }
+	        }
+	        else if (this.flipo >= this.movly) {
+	            this.movly = 10;
+            	grabable = false;
+            	dudeAlert = 0;
+	        }
+        if (!grabable || !(this.xdu == -14 && this.ydu == 283)) {
+				this.rd.drawImage(this.dude[dudeAlert], this.xdu, this.ydu, null);
+	        } else {
+	        	this.rd.drawImage(this.peek, 0, 275, null);
+	        }
+	}
     
-    public void maini2(final Control control, final int n, final int n2, final int n3) {
-        this.mainbg(1);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 0.6f));
-        this.rd.drawImage(this.logomadbg, 65, 25, null);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        this.rd.drawImage(this.logomadnes, 233, 186, null);
-        float alpha = this.flkat / 800.0f;
-        if (alpha > 0.2) {
-            alpha = 0.2f;
-        }
-        if (this.flkat > 200) {
-            alpha = (400 - this.flkat) / 1000.0f;
-            if (alpha < 0.0f) {
-                alpha = 0.0f;
-            }
-        }
-        ++this.flkat;
-        if (this.flkat == 400) {
-            this.flkat = 0;
-        }
-        this.rd.setComposite(AlphaComposite.getInstance(3, alpha));
-        this.rd.drawImage(this.dude[0], 351 + this.gxdu, 28 + this.gydu, null);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        if (this.movly == 0) {
-            this.gxdu = (int)(5.0 - 11.0 * Math.random());
-            this.gydu = (int)(5.0 - 11.0 * Math.random());
-        }
-        ++this.movly;
-        if (this.movly == 2) {
-            this.movly = 0;
-        }
-        this.rd.drawImage(this.logocars, 66, 33, null);
-        this.rd.drawImage(this.opback, 247, 237, null);
-        if (control.up) {
-            --this.opselect;
-            if (this.opselect == -1) {
-                this.opselect = 3 - this.dropf / 15;
-            }
-            control.up = false;
-        }
-        if (control.down) {
-            ++this.opselect;
-            if (this.opselect == 4 - this.dropf / 15) {
-                this.opselect = 0;
-            }
-            control.down = false;
-        }
-        if (this.opselect == 0) {
-            if (this.shaded) {
-                this.rd.setColor(new Color(140, 70, 0));
-                this.rd.fillRect(358, 262 + this.dropf, 82, 22);
-                this.aflk = false;
-            }
-            if (this.aflk) {
-                this.rd.setColor(new Color(200, 64, 0));
-                this.aflk = false;
-            }
-            else {
-                this.rd.setColor(new Color(255, 128, 0));
-                this.aflk = true;
-            }
-            this.rd.drawRoundRect(358, 262 + this.dropf, 82, 22, 7, 20);
-        }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.drawRoundRect(358, 262 + this.dropf, 82, 22, 7, 20);
-        }
-        if (this.opselect == 1) {
-            if (this.shaded) {
-                this.rd.setColor(new Color(140, 70, 0));
-                this.rd.fillRect(358, 290 + this.dropf, 82, 22);
-                this.aflk = false;
-            }
-            if (this.aflk) {
-                this.rd.setColor(new Color(200, 64, 0));
-                this.aflk = false;
-            }
-            else {
-                this.rd.setColor(new Color(255, 95, 0));
-                this.aflk = true;
-            }
-            this.rd.drawRoundRect(358, 290 + this.dropf, 82, 22, 7, 20);
-        }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.drawRoundRect(358, 290 + this.dropf, 82, 22, 7, 20);
-        }
-        if (this.opselect == 2) {
-            if (this.shaded) {
-                this.rd.setColor(new Color(140, 70, 0));
-                this.rd.fillRect(333, 318 + this.dropf, 132, 22);
-                this.aflk = false;
-            }
-            if (this.aflk) {
-                this.rd.setColor(new Color(200, 255, 0));
-                this.aflk = false;
-            }
-            else {
-                this.rd.setColor(new Color(255, 128, 0));
-                this.aflk = true;
-            }
-            this.rd.drawRoundRect(333, 318 + this.dropf, 132, 22, 7, 20);
-        }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.drawRoundRect(333, 318 + this.dropf, 132, 22, 7, 20);
-        }
-        if (this.dropf == 0) {
-            if (this.opselect == 3) {
-                if (this.shaded) {
-                    this.rd.setColor(new Color(140, 70, 0));
-                    this.rd.fillRect(348, 346, 102, 22);
-                    this.aflk = false;
-                }
-                if (this.aflk) {
-                    this.rd.setColor(new Color(200, 64, 0));
-                    this.aflk = false;
-                }
-                else {
-                    this.rd.setColor(new Color(255, 128, 0));
-                    this.aflk = true;
-                }
-                this.rd.drawRoundRect(348, 346, 102, 22, 7, 20);
-            }
-            else {
-                this.rd.setColor(Color.BLACK);
-                this.rd.drawRoundRect(348, 346, 102, 22, 7, 20);
-            }
-        }
-        this.rd.drawImage(this.opti2, 346, 265 + this.dropf, null);
-        if (this.dropf != 0) {
-            this.rd.setColor(new Color(58, 30, 8));
-            this.rd.fillRect(357, 365, 87, 15);
-        }
-        if (control.enter || control.handb) {
-            this.mtop = false;
-            if (this.opselect == 0) {
-                this.multion = 0;
-                this.clangame = 0;
-                this.gmode = 1;
-                this.fase = -9;
-            }
-            if (this.opselect == 1) {
-                this.multion = 0;
-                this.clangame = 0;
-                this.gmode = 2;
-                this.fase = -9;
-                this.opselect = 0;
-            }
-            if (this.dropf == 0 && this.opselect == 3) {
-                this.multion = 0;
-                this.clangame = 0;
-                this.gmode = 0;
-                this.fase = -9;
-                this.opselect = 0;
-            }
-            if (this.opselect == 2) {
-                this.multion = 1;
-                this.gmode = 0;
-                if (this.firstime) {
-                    this.oldfase = -9;
-                    this.fase = 11;
-                    this.firstime = false;
-                }
-                else {
-                    this.fase = -9;
-                }
-            }
-            this.flipo = 0;
-            control.enter = false;
-            control.handb = false;
-        }
-        this.rd.drawImage(this.byrd, 72, 410, null);
-        this.rd.drawImage(this.nfmcoms, 567, 410, null);
-        boolean b = false;
-        if (n3 == 2) {
-            b = true;
-        }
-        if (this.drawcarb(true, null, "   < Back   ", 161, 313, n, n2, b)) {
-            this.opselect = 0;
-            this.fase = 10;
-        }
-        if (this.shaded) {
-            this.app.repaint();
-            try {
-                Thread.sleep(200L);
-            }
-            catch (final InterruptedException ex) {}
-        }
-    }
-    
+    private void logo(int i, int j) {
+    	if (this.overon(0, 0, 800, 90, app.xm, app.ym))
+    		this.rd.drawImage(logomadnes2, i, j, null);
+    	else
+    		this.rd.drawImage(logomadnes, i, j, null);
+    	
+	}
+
     public void pausedgame(final int n, final Control control, final Record record) {
-        if (!this.badmac) {
             this.rd.drawImage(this.fleximg, 0, 0, null);
-        }
-        else {
-            this.rd.setColor(new Color(30, 67, 110));
-            this.rd.fillRect(281, 8, 237, 188);
-        }
         if (control.up) {
             --this.opselect;
             if (this.opselect == -1) {
@@ -4733,7 +4395,7 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawRoundRect(341, 125, 109, 22, 7, 20);
         }
         this.rd.drawImage(this.paused, 281, 8, null);
-        if (control.enter || control.handb) {
+        if ((control.enter || control.handb) && opselect != -1) {
             if (this.opselect == 0) {
                 if (this.loadedt && !this.mutem) {
                     this.strack.resume();
@@ -4762,18 +4424,8 @@ public class xtGraphics extends Panel implements Runnable
                 if (this.loadedt) {
                     this.strack.unload();
                 }
-                this.fase = 102;
-                if (this.gmode == 0) {
-                    this.opselect = 3;
-                }
-                if (this.gmode == 1) {
-                    this.opselect = 0;
-                }
-                if (this.gmode == 2) {
-                    this.opselect = 1;
-                }
-                this.rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                this.fase = 10;
+                this.opselect = 0;
             }
             control.enter = false;
             control.handb = false;
@@ -4816,22 +4468,10 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void inishcarselect(final ContO[] array) {
-        this.nplayers = 7;
+        this.nplayers = 8;
         this.im = 0;
-        this.xstart[0] = 0;
-        this.xstart[1] = -350;
-        this.xstart[2] = 350;
-        this.xstart[3] = 0;
-        this.xstart[4] = -350;
-        this.xstart[5] = 350;
-        this.xstart[6] = 0;
-        this.zstart[0] = -760;
-        this.zstart[1] = -380;
-        this.zstart[2] = -380;
-        this.zstart[3] = 0;
-        this.zstart[4] = 380;
-        this.zstart[5] = 380;
-        this.zstart[6] = 760;
+        this.xstart = new int[] { 0, -350, 350, -350, 350, -350, 350, 0 };
+        this.zstart = new int[] { -380, -760, -760, 0, 0, 760, 760, 380 };
         this.onmsc = -1;
         this.remi = false;
         this.basefase = 0;
@@ -5031,27 +4671,27 @@ public class xtGraphics extends Panel implements Runnable
         }
         this.m.trk = false;
         this.m.crs = true;
-        this.m.x = -640;
-        this.m.y = -570;
+        this.m.x = -400;
+        this.m.y = -525;
         this.m.z = -50;
         this.m.xz = 0;
         this.m.zy = 10;
         this.m.ground = 495;
         this.m.ih = 0;
         this.m.iw = 0;
-        this.m.h = 720;
-        this.m.w = 1280;
-        this.m.focus_point = 640;
-        this.m.cx = 640;
-        this.m.cy = 360;
-        this.m.cz = 100;
+        this.m.h = 450;
+        this.m.w = 800;
+        this.m.focus_point = 400;
+        this.m.cx = 400;
+        this.m.cy = 225;
+        this.m.cz = 50;
         if (this.multion == 0) {
             this.intertrack.loadimod(false);
             this.intertrack.play();
         }
     }
     
-    public void carselect(final Control control, final ContO[] array, final Mad mad, final int n, final int n2, final boolean b) {
+    public void carselect(final Control control, final ContO[] array, final Mad mad, final int mouseX, final int mouseY, final boolean mouseHold) {
         this.rd.setColor(Color.BLACK);
         if (this.flatrstart == 6) {
             if (this.multion != 0 || this.testdrive == 1 || this.testdrive == 2) {
@@ -5066,7 +4706,7 @@ public class xtGraphics extends Panel implements Runnable
         }
         else {
             this.rd.setColor(Color.WHITE);
-            this.rd.fillRect(0, 0, 1280, 720);
+            this.rd.fillRect(65, 25, 670, 400);
             this.carsbginflex();
             this.flatrstart = 6;
         }
@@ -5123,9 +4763,7 @@ public class xtGraphics extends Panel implements Runnable
             this.drawcs(69, "" + this.cd.viewname + "'s account cars!", 220, 112, 33, 3);
         }
         if (!this.remi) {
-            this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
             array[this.sc[0]].d(this.rd);
-            this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         }
         if (this.cfase == 8) {
             this.drawprom(150, 85);
@@ -5389,20 +5027,20 @@ public class xtGraphics extends Panel implements Runnable
                             this.drawprom(145, 170);
                             this.drawcs(195, "Failed to Load List.", 0, 0, 0, 3);
                             this.drawcs(225, "Unknown Error.  Please try again later.", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, "   OK   ", 371, 255, n, n2, b)) {
+                            if (this.drawcarb(true, null, "   OK   ", 371, 255, mouseX, mouseY, mouseHold)) {
                                 this.cd.action = 0;
                                 this.cfase = this.basefase;
                             }
                         }
                         if (this.cd.action == 0 || this.cd.action == 14 || this.cd.action == 15 || this.cd.action == 16 || this.cd.action == 17) {
                             this.drawprom(65, 250);
-                            if (this.drawcarb(true, null, " X ", 557, 70, n, n2, b)) {
+                            if (this.drawcarb(true, null, " X ", 557, 70, mouseX, mouseY, mouseHold)) {
                                 this.cd.action = 0;
                                 this.cfase = this.basefase;
                             }
                             this.drawcs(305, "The lists get updated every 24 hours!", 0, 0, 0, 3);
                             if (this.cd.action == 14 || this.cd.action == 15 || this.cd.action == 16 || this.cd.action == 17) {
-                                if (!b && this.cntflock == 20) {
+                                if (!mouseHold && this.cntflock == 20) {
                                     this.cntflock = 0;
                                 }
                                 if (this.cd.action == 14) {
@@ -5417,32 +5055,32 @@ public class xtGraphics extends Panel implements Runnable
                                 if (this.cd.action == 17) {
                                     this.drawcs(91, "Annual Top 20 Cars", 0, 0, 0, 3);
                                 }
-                                if (this.drawcarb(true, null, "   All Cars, All Classes   ", 318, 105, n, n2, b) && this.cntflock == 0) {
+                                if (this.drawcarb(true, null, "   All Cars, All Classes   ", 318, 105, mouseX, mouseY, mouseHold) && this.cntflock == 0) {
                                     this.cd.loadlist = 1 + (this.cd.action - 14) * 6;
                                     this.cd.action = 11;
                                     this.cd.sparkactionloader();
                                 }
-                                if (this.drawcarb(true, null, "Class A Cars", 337, 135, n, n2, b) && this.cntflock == 0) {
+                                if (this.drawcarb(true, null, "Class A Cars", 337, 135, mouseX, mouseY, mouseHold) && this.cntflock == 0) {
                                     this.cd.loadlist = 2 + (this.cd.action - 14) * 6;
                                     this.cd.action = 11;
                                     this.cd.sparkactionloader();
                                 }
-                                if (this.drawcarb(true, null, "Class A & B Cars", 337, 165, n, n2, b) && this.cntflock == 0) {
+                                if (this.drawcarb(true, null, "Class A & B Cars", 337, 165, mouseX, mouseY, mouseHold) && this.cntflock == 0) {
                                     this.cd.loadlist = 3 + (this.cd.action - 14) * 6;
                                     this.cd.action = 11;
                                     this.cd.sparkactionloader();
                                 }
-                                if (this.drawcarb(true, null, "Class B Cars", 337, 195, n, n2, b) && this.cntflock == 0) {
+                                if (this.drawcarb(true, null, "Class B Cars", 337, 195, mouseX, mouseY, mouseHold) && this.cntflock == 0) {
                                     this.cd.loadlist = 4 + (this.cd.action - 14) * 6;
                                     this.cd.action = 11;
                                     this.cd.sparkactionloader();
                                 }
-                                if (this.drawcarb(true, null, "Class B & C Cars", 337, 225, n, n2, b) && this.cntflock == 0) {
+                                if (this.drawcarb(true, null, "Class B & C Cars", 337, 225, mouseX, mouseY, mouseHold) && this.cntflock == 0) {
                                     this.cd.loadlist = 5 + (this.cd.action - 14) * 6;
                                     this.cd.action = 11;
                                     this.cd.sparkactionloader();
                                 }
-                                if (this.drawcarb(true, null, "Class C Cars", 337, 255, n, n2, b) && this.cntflock == 0) {
+                                if (this.drawcarb(true, null, "Class C Cars", 337, 255, mouseX, mouseY, mouseHold) && this.cntflock == 0) {
                                     this.cd.loadlist = 6 + (this.cd.action - 14) * 6;
                                     this.cd.action = 11;
                                     this.cd.sparkactionloader();
@@ -5450,16 +5088,16 @@ public class xtGraphics extends Panel implements Runnable
                             }
                             if (this.cd.action == 0) {
                                 this.drawcs(91, "Top 20 Most Added Public Custom Cars", 0, 0, 0, 3);
-                                if (this.drawcarb(true, null, "  Weekly Top 20  ", 338, 125, n, n2, b)) {
+                                if (this.drawcarb(true, null, "  Weekly Top 20  ", 338, 125, mouseX, mouseY, mouseHold)) {
                                     this.cd.action = 14;
                                 }
-                                if (this.drawcarb(true, null, "  Monthly Top 20  ", 337, 165, n, n2, b)) {
+                                if (this.drawcarb(true, null, "  Monthly Top 20  ", 337, 165, mouseX, mouseY, mouseHold)) {
                                     this.cd.action = 15;
                                 }
-                                if (this.drawcarb(true, null, "  Semi-Annual Top 20  ", 321, 205, n, n2, b)) {
+                                if (this.drawcarb(true, null, "  Semi-Annual Top 20  ", 321, 205, mouseX, mouseY, mouseHold)) {
                                     this.cd.action = 16;
                                 }
-                                if (this.drawcarb(true, null, "  Annual Top 20  ", 339, 245, n, n2, b)) {
+                                if (this.drawcarb(true, null, "  Annual Top 20  ", 339, 245, mouseX, mouseY, mouseHold)) {
                                     this.cd.action = 17;
                                 }
                                 if (this.cntflock != 20) {
@@ -5473,7 +5111,7 @@ public class xtGraphics extends Panel implements Runnable
                             this.drawprom(145, 170);
                             this.drawcs(195, "Failed to Load List.", 0, 0, 0, 3);
                             this.drawcs(225, "Unknown Error.  Please try again later.", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, "   OK   ", 371, 255, n, n2, b)) {
+                            if (this.drawcarb(true, null, "   OK   ", 371, 255, mouseX, mouseY, mouseHold)) {
                                 if (this.sc[0] >= 16 && this.cd.lastload == 2 && this.sc[0] < 36) {
                                     this.cfase = 3;
                                 }
@@ -5486,7 +5124,7 @@ public class xtGraphics extends Panel implements Runnable
                             this.drawprom(145, 170);
                             this.drawcs(195, "No account cars found.", 0, 0, 0, 3);
                             this.drawcs(225, "" + this.cd.viewname + " does not have any published or added cars.", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, "   OK   ", 371, 255, n, n2, b)) {
+                            if (this.drawcarb(true, null, "   OK   ", 371, 255, mouseX, mouseY, mouseHold)) {
                                 if (this.sc[0] >= 16 && this.cd.lastload == 2 && this.sc[0] < 36) {
                                     this.cfase = 3;
                                 }
@@ -5525,7 +5163,7 @@ public class xtGraphics extends Panel implements Runnable
                             n13 = 185;
                             n14 = 0;
                         }
-                        if (this.multion == 0 && this.drawcarb(false, this.cmc, "", 95, 70, n, n2, b)) {
+                        if (this.multion == 0 && this.drawcarb(false, this.cmc, "", 95, 70, mouseX, mouseY, mouseHold)) {
                             if (this.cd.lastload != 1) {
                                 this.cfase = 1;
                             }
@@ -5536,7 +5174,7 @@ public class xtGraphics extends Panel implements Runnable
                                 this.cfase = 3;
                             }
                         }
-                        if (this.drawcarb(false, this.myc, "", n13, 105 + n14, n, n2, b)) {
+                        if (this.drawcarb(false, this.myc, "", n13, 105 + n14, mouseX, mouseY, mouseHold)) {
                             if (this.cd.lastload != 2) {
                                 this.cfase = 5;
                                 this.showtf = false;
@@ -5563,7 +5201,7 @@ public class xtGraphics extends Panel implements Runnable
                                 this.cfase = 3;
                             }
                         }
-                        if ((this.multion == 0 || this.onjoin == -1) && this.drawcarb(false, this.top20s, "", n13, (n13 - 95) / 7 + 25 + n14, n, n2, b)) {
+                        if ((this.multion == 0 || this.onjoin == -1) && this.drawcarb(false, this.top20s, "", n13, (n13 - 95) / 7 + 25 + n14, mouseX, mouseY, mouseHold)) {
                             this.cd.action = 0;
                             this.cfase = 10;
                         }
@@ -5607,7 +5245,7 @@ public class xtGraphics extends Panel implements Runnable
                     if (this.cfase == 9) {
                         this.drawprom(145, 95);
                         this.drawcs(175, "Failed to remove car.  Unkown Error.  Try again laster.", 0, 0, 0, 3);
-                        if (this.drawcarb(true, null, "   OK   ", 371, 195, n, n2, b)) {
+                        if (this.drawcarb(true, null, "   OK   ", 371, 195, mouseX, mouseY, mouseHold)) {
                             this.minsl = 16;
                             this.maxsl = this.cd.nlocars - 1;
                             if (this.onmsc >= this.minsl && this.onmsc <= this.maxsl) {
@@ -5625,7 +5263,7 @@ public class xtGraphics extends Panel implements Runnable
                         }
                         this.drawprom(145, 95);
                         this.drawcs(175, "Remove this car from your account?", 0, 0, 0, 3);
-                        if (this.drawcarb(true, null, " Yes ", 354, 195, n, n2, b)) {
+                        if (this.drawcarb(true, null, " Yes ", 354, 195, mouseX, mouseY, mouseHold)) {
                             this.remi = true;
                             this.minsl = 0;
                             this.maxsl = 15;
@@ -5636,7 +5274,7 @@ public class xtGraphics extends Panel implements Runnable
                             this.cd.action = 10;
                             this.cd.sparkactionloader();
                         }
-                        if (this.drawcarb(true, null, " No ", 408, 195, n, n2, b)) {
+                        if (this.drawcarb(true, null, " No ", 408, 195, mouseX, mouseY, mouseHold)) {
                             this.cfase = 3;
                         }
                     }
@@ -5647,7 +5285,7 @@ public class xtGraphics extends Panel implements Runnable
                             n15 = 185;
                             n16 = 0;
                         }
-                        if (this.drawcarb(false, this.gac, "", n15, 105 + n16, n, n2, b)) {
+                        if (this.drawcarb(false, this.gac, "", n15, 105 + n16, mouseX, mouseY, mouseHold)) {
                             this.minsl = 0;
                             this.maxsl = 15;
                             if (this.onmsc >= this.minsl && this.onmsc <= this.maxsl) {
@@ -5678,7 +5316,7 @@ public class xtGraphics extends Panel implements Runnable
                                 this.app.requestFocus();
                             }
                         }
-                        if ((this.multion == 0 || this.onjoin == -1) && this.drawcarb(false, this.top20s, "", n15, (n15 - 95) / 7 + 25 + n16, n, n2, b)) {
+                        if ((this.multion == 0 || this.onjoin == -1) && this.drawcarb(false, this.top20s, "", n15, (n15 - 95) / 7 + 25 + n16, mouseX, mouseY, mouseHold)) {
                             this.cd.action = 0;
                             this.cfase = 10;
                             if (this.app.mycar.isShowing()) {
@@ -5686,14 +5324,14 @@ public class xtGraphics extends Panel implements Runnable
                             }
                         }
                         if (this.cd.lastload == 2) {
-                            if (this.drawcarb(true, null, "X", 567, 135, n, n2, b)) {
+                            if (this.drawcarb(true, null, "X", 567, 135, mouseX, mouseY, mouseHold)) {
                                 this.cfase = 7;
                             }
                             this.rd.setFont(new Font("Arial", 1, 12));
                             this.ftm = this.rd.getFontMetrics();
                             this.rd.setColor(Color.BLACK);
                             if (!this.cd.createdby[this.sc[0] - 16].equals(this.nickname)) {
-                                b2 = this.clink(this.cd.createdby[this.sc[0] - 16], n, n2, b);
+                                b2 = this.clink(this.cd.createdby[this.sc[0] - 16], mouseX, mouseY, mouseHold);
                             }
                             else {
                                 this.rd.drawString("Created by You", 241, 160);
@@ -5720,7 +5358,7 @@ public class xtGraphics extends Panel implements Runnable
                                 str2 = "Class A";
                             }
                             this.drawcs(230, "You do not have a " + str2 + " car in your account cars.", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, "   OK   ", 371, 250, n, n2, b)) {
+                            if (this.drawcarb(true, null, "   OK   ", 371, 250, mouseX, mouseY, mouseHold)) {
                                 this.noclass = false;
                             }
                         }
@@ -5729,28 +5367,28 @@ public class xtGraphics extends Panel implements Runnable
                         if (this.cd.action == -9) {
                             this.drawprom(145, 95);
                             this.drawcs(175, "Unknown error!  Failed to add car.  Try again later.", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, " OK ", 379, 195, n, n2, b)) {
+                            if (this.drawcarb(true, null, " OK ", 379, 195, mouseX, mouseY, mouseHold)) {
                                 this.cd.action = 0;
                             }
                         }
                         if (this.cd.action == -8) {
                             this.drawprom(145, 95);
                             this.drawcs(175, "Failed.  You already have 20 cars in your account!", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, " OK ", 379, 195, n, n2, b)) {
+                            if (this.drawcarb(true, null, " OK ", 379, 195, mouseX, mouseY, mouseHold)) {
                                 this.cd.action = 0;
                             }
                         }
                         if (this.cd.action == -7) {
                             this.drawprom(145, 95);
                             this.drawcs(175, "You already have this car!", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, " OK ", 379, 195, n, n2, b)) {
+                            if (this.drawcarb(true, null, " OK ", 379, 195, mouseX, mouseY, mouseHold)) {
                                 this.cd.action = 0;
                             }
                         }
                         if (this.cd.action == 7) {
                             this.drawprom(145, 95);
                             this.drawcs(175, "" + this.cd.names[this.cd.ac] + " has been successfully added to your cars!", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, " OK ", 379, 195, n, n2, b)) {
+                            if (this.drawcarb(true, null, " OK ", 379, 195, mouseX, mouseY, mouseHold)) {
                                 this.cd.action = 0;
                             }
                         }
@@ -5765,7 +5403,7 @@ public class xtGraphics extends Panel implements Runnable
                             n18 = 0;
                         }
                         if (this.onmsc >= 16 && (this.cd.lastload == 2 || this.cd.lastload == -2)) {
-                            if (this.drawcarb(false, this.myc, "", n17, 105 + n18, n, n2, b)) {
+                            if (this.drawcarb(false, this.myc, "", n17, 105 + n18, mouseX, mouseY, mouseHold)) {
                                 if (this.cd.lastload != 2) {
                                     this.cfase = 5;
                                     this.showtf = false;
@@ -5795,7 +5433,7 @@ public class xtGraphics extends Panel implements Runnable
                                 this.app.moused = false;
                             }
                         }
-                        else if (this.drawcarb(false, this.gac, "", n17, 105 + n18, n, n2, b)) {
+                        else if (this.drawcarb(false, this.gac, "", n17, 105 + n18, mouseX, mouseY, mouseHold)) {
                             this.cd.action = 0;
                             this.minsl = 0;
                             this.maxsl = 15;
@@ -5808,7 +5446,7 @@ public class xtGraphics extends Panel implements Runnable
                             this.cfase = 0;
                             this.app.moused = false;
                         }
-                        if (this.drawcarb(false, this.top20s, "", n17, (n17 - 95) / 7 + 25 + n18, n, n2, b)) {
+                        if (this.drawcarb(false, this.top20s, "", n17, (n17 - 95) / 7 + 25 + n18, mouseX, mouseY, mouseHold)) {
                             this.cd.action = 0;
                             this.cfase = 10;
                         }
@@ -5817,7 +5455,7 @@ public class xtGraphics extends Panel implements Runnable
                             this.ftm = this.rd.getFontMetrics();
                             this.rd.setColor(Color.BLACK);
                             if (!this.cd.createdby[this.sc[0] - 16].equals(this.nickname)) {
-                                b2 = this.clink(this.cd.createdby[this.sc[0] - 16], n, n2, b);
+                                b2 = this.clink(this.cd.createdby[this.sc[0] - 16], mouseX, mouseY, mouseHold);
                             }
                             else {
                                 this.rd.drawString("Created by You", 241, 160);
@@ -5852,14 +5490,14 @@ public class xtGraphics extends Panel implements Runnable
                         if (this.cd.action == -2) {
                             this.drawcs(195, "Unknown Connection Error", 0, 0, 0, 3);
                             this.drawcs(225, "Failed to connect to server, try again later!", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, "   OK   ", 371, 255, n, n2, b)) {
+                            if (this.drawcarb(true, null, "   OK   ", 371, 255, mouseX, mouseY, mouseHold)) {
                                 this.cfase = 0;
                             }
                         }
                         if (this.cd.action == -1) {
                             this.drawcs(195, "No published cars found...", 0, 0, 0, 3);
                             this.drawcs(225, "You have no added cars to your account yet!", 0, 0, 0, 3);
-                            if (this.drawcarb(true, null, "   OK   ", 371, 255, n, n2, b)) {
+                            if (this.drawcarb(true, null, "   OK   ", 371, 255, mouseX, mouseY, mouseHold)) {
                                 this.cfase = 0;
                             }
                         }
@@ -5981,7 +5619,7 @@ public class xtGraphics extends Panel implements Runnable
                                 }
                             }
                             if (this.cd.reco != -177) {
-                                if (this.drawcarb(true, null, "       Login       ", 347, 247, n, n2, b) && this.tcnt > 5) {
+                                if (this.drawcarb(true, null, "       Login       ", 347, 247, mouseX, mouseY, mouseHold) && this.tcnt > 5) {
                                     this.tcnt = 0;
                                     if (!this.app.tnick.getText().equals("") && !this.app.tpass.getText().equals("")) {
                                         this.autolog = false;
@@ -6001,17 +5639,17 @@ public class xtGraphics extends Panel implements Runnable
                                     }
                                 }
                             }
-                            else if (this.drawcarb(true, null, "  Upgrade to have your own cars!  ", 284, 247, n, n2, b) && this.cntflock == 0) {
+                            else if (this.drawcarb(true, null, "  Upgrade to have your own cars!  ", 284, 247, mouseX, mouseY, mouseHold) && this.cntflock == 0) {
                                 this.app.editlink(this.nickname, true);
                                 this.cntflock = 100;
                             }
-                            if (this.drawcarb(true, null, "  Cancel  ", 409, 282, n, n2, b)) {
+                            if (this.drawcarb(true, null, "  Cancel  ", 409, 282, mouseX, mouseY, mouseHold)) {
                                 this.app.tnick.hide();
                                 this.app.tpass.hide();
                                 this.app.requestFocus();
                                 this.cfase = this.basefase;
                             }
-                            if (this.drawcarb(true, null, "  Register!  ", 316, 282, n, n2, b)) {
+                            if (this.drawcarb(true, null, "  Register!  ", 316, 282, mouseX, mouseY, mouseHold)) {
                                 if (this.cntflock == 0) {
                                     this.app.reglink();
                                     this.cntflock = 100;
@@ -6028,7 +5666,7 @@ public class xtGraphics extends Panel implements Runnable
                         this.rd.drawString("Failed to find any ready car in your \u2018mycars\u2019 folder!", 215, 175);
                         this.rd.drawString("Please \u2018Test Drive\u2019 your cars in the Car Maker to make", 215, 215);
                         this.rd.drawString("sure they are ready.", 215, 235);
-                        if (this.drawcarb(true, null, "   OK   ", 371, 255, n, n2, b)) {
+                        if (this.drawcarb(true, null, "   OK   ", 371, 255, mouseX, mouseY, mouseHold)) {
                             this.cfase = 0;
                         }
                     }
@@ -6055,56 +5693,11 @@ public class xtGraphics extends Panel implements Runnable
                         this.rd.drawString("If a car is not loaded, then it is not ready (not finished).", 215, 210);
                         this.rd.drawString("Perform a \u2018Test Drive\u2019 on any car to see if it is ready or not.", 215, 230);
                         this.rd.drawString("The maximum number of cars that can be loaded is  40 !", 215, 260);
-                        if (this.drawcarb(true, null, "   OK   ", 371, 275, n, n2, b)) {
+                        if (this.drawcarb(true, null, "   OK   ", 371, 275, mouseX, mouseY, mouseHold)) {
                             this.cfase = 2;
                         }
                     }
-                    this.rd.setFont(new Font("Arial", 1, 11));
-                    this.ftm = this.rd.getFontMetrics();
-                    this.rd.setColor(new Color(181, 120, 40));
-                    this.rd.drawString("Top Speed:", 98, 343);
-                    this.rd.drawImage(this.statb, 162, 337, null);
-                    this.rd.drawString("Acceleration:", 88, 358);
-                    this.rd.drawImage(this.statb, 162, 352, null);
-                    this.rd.drawString("Handling:", 110, 373);
-                    this.rd.drawImage(this.statb, 162, 367, null);
-                    this.rd.drawString("Stunts:", 495, 343);
-                    this.rd.drawImage(this.statb, 536, 337, null);
-                    this.rd.drawString("Strength:", 483, 358);
-                    this.rd.drawImage(this.statb, 536, 352, null);
-                    this.rd.drawString("Endurance:", 473, 373);
-                    this.rd.drawImage(this.statb, 536, 367, null);
-                    this.rd.setColor(Color.BLACK);
-                    float n19 = (this.cd.swits[this.sc[0]][2] - 220) / 90.0f;
-                    if (n19 < 0.2) {
-                        n19 = 0.2f;
-                    }
-                    this.rd.fillRect((int)(162.0f + 156.0f * n19), 337, (int)(156.0f * (1.0f - n19) + 1.0f), 7);
-                    float n20 = this.cd.acelf[this.sc[0]][1] * this.cd.acelf[this.sc[0]][0] * this.cd.acelf[this.sc[0]][2] * this.cd.grip[this.sc[0]] / 7700.0f;
-                    if (n20 > 1.0f) {
-                        n20 = 1.0f;
-                    }
-                    this.rd.fillRect((int)(162.0f + 156.0f * n20), 352, (int)(156.0f * (1.0f - n20) + 1.0f), 7);
-                    final float n21 = this.cd.dishandle[this.sc[0]];
-                    this.rd.fillRect((int)(162.0f + 156.0f * n21), 367, (int)(156.0f * (1.0f - n21) + 1.0f), 7);
-                    float n22 = (this.cd.airc[this.sc[0]] * this.cd.airs[this.sc[0]] * this.cd.bounce[this.sc[0]] + 28.0f) / 139.0f;
-                    if (n22 > 1.0f) {
-                        n22 = 1.0f;
-                    }
-                    this.rd.fillRect((int)(536.0f + 156.0f * n22), 337, (int)(156.0f * (1.0f - n22) + 1.0f), 7);
-                    float n23 = (this.cd.moment[this.sc[0]] + 0.5f) / 2.6f;
-                    if (n23 > 1.0f) {
-                        n23 = 1.0f;
-                    }
-                    this.rd.fillRect((int)(536.0f + 156.0f * n23), 352, (int)(156.0f * (1.0f - n23) + 1.0f), 7);
-                    final float n24 = this.cd.outdam[this.sc[0]];
-                    this.rd.fillRect((int)(536.0f + 156.0f * n24), 367, (int)(156.0f * (1.0f - n24) + 1.0f), 7);
-                    this.rd.drawImage(this.statbo, 162, 337, null);
-                    this.rd.drawImage(this.statbo, 162, 352, null);
-                    this.rd.drawImage(this.statbo, 162, 367, null);
-                    this.rd.drawImage(this.statbo, 536, 337, null);
-                    this.rd.drawImage(this.statbo, 536, 352, null);
-                    this.rd.drawImage(this.statbo, 536, 367, null);
+                    carStatsDisplay();
                     if (this.multion != 0 || this.testdrive == 1 || this.testdrive == 2) {
                         this.rd.setFont(new Font("Arial", 1, 13));
                         this.ftm = this.rd.getFontMetrics();
@@ -6178,16 +5771,16 @@ public class xtGraphics extends Panel implements Runnable
                         this.rd.fillRect(670 + (int)(this.arnp[4] * 40.0f), 222, 3, 3);
                         this.rd.drawLine(671 + (int)(this.arnp[4] * 40.0f), 224, 671 + (int)(this.arnp[4] * 40.0f), 230);
                         this.rd.fillRect(670 + (int)(this.arnp[4] * 40.0f), 230, 3, 3);
-                        if (b) {
+                        if (mouseHold) {
                             if (this.mouson == -1) {
-                                if (n > 96 && n < 152 && n2 > 248 && n2 < 258) {
+                                if (mouseX > 96 && mouseX < 152 && mouseY > 248 && mouseY < 258) {
                                     final float[] hsbvals3 = new float[3];
                                     Color.RGBtoHSB(array[this.sc[0]].fcol[0], array[this.sc[0]].fcol[1], array[this.sc[0]].fcol[2], hsbvals3);
                                     this.arnp[0] = hsbvals3[0];
                                     this.arnp[1] = hsbvals3[1];
                                     this.arnp[2] = 1.0f - hsbvals3[2];
                                 }
-                                if (n > 646 && n < 702 && n2 > 248 && n2 < 258) {
+                                if (mouseX > 646 && mouseX < 702 && mouseY > 248 && mouseY < 258) {
                                     final float[] hsbvals4 = new float[3];
                                     Color.RGBtoHSB(array[this.sc[0]].scol[0], array[this.sc[0]].scol[1], array[this.sc[0]].scol[2], hsbvals4);
                                     this.arnp[3] = hsbvals4[0];
@@ -6195,22 +5788,22 @@ public class xtGraphics extends Panel implements Runnable
                                     this.arnp[5] = 1.0f - hsbvals4[2];
                                 }
                                 this.mouson = -2;
-                                if (n > 119 && n < 163 && n2 > 222 && n2 < 232) {
+                                if (mouseX > 119 && mouseX < 163 && mouseY > 222 && mouseY < 232) {
                                     this.mouson = 1;
                                 }
-                                if (n > 669 && n < 713 && n2 > 222 && n2 < 232) {
+                                if (mouseX > 669 && mouseX < 713 && mouseY > 222 && mouseY < 232) {
                                     this.mouson = 4;
                                 }
-                                if (n > 98 && n < 122 && n2 > 69 && n2 < 241 && this.mouson == -2) {
+                                if (mouseX > 98 && mouseX < 122 && mouseY > 69 && mouseY < 241 && this.mouson == -2) {
                                     this.mouson = 0;
                                 }
-                                if (n > 133 && n < 157 && n2 > 69 && n2 < 209 && this.mouson == -2) {
+                                if (mouseX > 133 && mouseX < 157 && mouseY > 69 && mouseY < 209 && this.mouson == -2) {
                                     this.mouson = 2;
                                 }
-                                if (n > 648 && n < 672 && n2 > 69 && n2 < 241 && this.mouson == -2) {
+                                if (mouseX > 648 && mouseX < 672 && mouseY > 69 && mouseY < 241 && this.mouson == -2) {
                                     this.mouson = 3;
                                 }
-                                if (n > 683 && n < 707 && n2 > 69 && n2 < 209 && this.mouson == -2) {
+                                if (mouseX > 683 && mouseX < 707 && mouseY > 69 && mouseY < 209 && this.mouson == -2) {
                                     this.mouson = 5;
                                 }
                             }
@@ -6219,7 +5812,7 @@ public class xtGraphics extends Panel implements Runnable
                             this.mouson = -1;
                         }
                         if (this.mouson == 0 || this.mouson == 2 || this.mouson == 3 || this.mouson == 5) {
-                            this.arnp[this.mouson] = (float)((n2 - 75.0f) * 0.00625);
+                            this.arnp[this.mouson] = (float)((mouseY - 75.0f) * 0.00625);
                             if (this.mouson == 2 || this.mouson == 5) {
                                 if (this.arnp[this.mouson] > 0.8) {
                                     this.arnp[this.mouson] = 0.8f;
@@ -6233,7 +5826,7 @@ public class xtGraphics extends Panel implements Runnable
                             }
                         }
                         if (this.mouson == 1) {
-                            this.arnp[this.mouson] = (float)((n - 121.0f) * 0.025);
+                            this.arnp[this.mouson] = (float)((mouseX - 121.0f) * 0.025);
                             if (this.arnp[this.mouson] > 1.0f) {
                                 this.arnp[this.mouson] = 1.0f;
                             }
@@ -6242,7 +5835,7 @@ public class xtGraphics extends Panel implements Runnable
                             }
                         }
                         if (this.mouson == 4) {
-                            this.arnp[this.mouson] = (float)((n - 671.0f) * 0.025);
+                            this.arnp[this.mouson] = (float)((mouseX - 671.0f) * 0.025);
                             if (this.arnp[this.mouson] > 1.0f) {
                                 this.arnp[this.mouson] = 1.0f;
                             }
@@ -6284,7 +5877,7 @@ public class xtGraphics extends Panel implements Runnable
                     this.rd.drawImage(this.contin[this.pcontin], 355, 385, null);
                 }
                 else {
-                    if (this.cfase == 11 && this.drawcarb(true, null, "Add to My Cars", 345, 385, n, n2, b) && this.cd.action == 0) {
+                    if (this.cfase == 11 && this.drawcarb(true, null, "Add to My Cars", 345, 385, mouseX, mouseY, mouseHold) && this.cd.action == 0) {
                         this.cd.ac = this.sc[0];
                         if (this.logged) {
                             this.cd.action = 6;
@@ -6298,7 +5891,7 @@ public class xtGraphics extends Panel implements Runnable
                     }
                     if (this.cfase == 101 && n7 == -1) {
                         if (this.cd.publish[this.sc[0] - 16] == 1 || this.cd.publish[this.sc[0] - 16] == 2) {
-                            if (this.drawcarb(true, null, "Add to My Cars", 345, 385, n, n2, b) && this.cd.action == 0) {
+                            if (this.drawcarb(true, null, "Add to My Cars", 345, 385, mouseX, mouseY, mouseHold) && this.cd.action == 0) {
                                 this.cd.ac = this.sc[0];
                                 if (this.logged) {
                                     this.cd.action = 6;
@@ -6526,7 +6119,73 @@ public class xtGraphics extends Panel implements Runnable
             control.handb = false;
             control.enter = false;
         }
+
+        if (this.drawcarb(true, null, " Exit X ", 670, 30, mouseX, mouseY, mouseHold)) {
+        	this.fase = 10;
+        	this.opselect = 0;
+            this.app.gmode.hide();
+            this.hidos();
+            this.app.tnick.hide();
+            this.app.tpass.hide();
+            this.intertrack.stop();
+        }
     }
+
+	private void carStatsDisplay() {
+		this.rd.setFont(new Font("Arial", 1, 11));
+		this.ftm = this.rd.getFontMetrics();
+		this.rd.setColor(new Color(181, 120, 40));
+		this.rd.drawString("Top Speed:", 98, 343);
+		this.rd.drawImage(this.statb, 162, 337, null);
+		this.rd.drawString("Acceleration:", 88, 358);
+		this.rd.drawImage(this.statb, 162, 352, null);
+		this.rd.drawString("Handling:", 110, 373);
+		this.rd.drawImage(this.statb, 162, 367, null);
+		this.rd.drawString("Stunts:", 495, 343);
+		this.rd.drawImage(this.statb, 536, 337, null);
+		this.rd.drawString("Strength:", 483, 358);
+		this.rd.drawImage(this.statb, 536, 352, null);
+		this.rd.drawString("Endurance:", 473, 373);
+		this.rd.drawImage(this.statb, 536, 367, null);
+		this.rd.setColor(Color.BLACK);
+		
+		float n19 = (this.cd.swits[this.sc[0]][2] - 220) / 90.0f;
+		if (n19 < 0.2) {
+		    n19 = 0.2f;
+		}
+		this.rd.fillRect((int)(162.0f + 156.0f * n19), 337, (int)(156.0f * (1.0f - n19) + 1.0f), 7);
+		
+		float n20 = this.cd.acelf[this.sc[0]][1] * this.cd.acelf[this.sc[0]][0] * this.cd.acelf[this.sc[0]][2] * this.cd.grip[this.sc[0]] / 7700.0f;
+		if (n20 > 1.0f) {
+		    n20 = 1.0f;
+		}
+		this.rd.fillRect((int)(162.0f + 156.0f * n20), 352, (int)(156.0f * (1.0f - n20) + 1.0f), 7);
+		
+		final float n21 = this.cd.dishandle[this.sc[0]];
+		this.rd.fillRect((int)(162.0f + 156.0f * n21), 367, (int)(156.0f * (1.0f - n21) + 1.0f), 7);
+		
+		float n22 = (this.cd.airc[this.sc[0]] * this.cd.airs[this.sc[0]] * this.cd.bounce[this.sc[0]] + 28.0f) / 139.0f;
+		if (n22 > 1.0f) {
+		    n22 = 1.0f;
+		}
+		this.rd.fillRect((int)(536.0f + 156.0f * n22), 337, (int)(156.0f * (1.0f - n22) + 1.0f), 7);
+		
+		float n23 = (this.cd.moment[this.sc[0]] + 0.5f) / 2.6f;
+		if (n23 > 1.0f) {
+		    n23 = 1.0f;
+		}
+		this.rd.fillRect((int)(536.0f + 156.0f * n23), 352, (int)(156.0f * (1.0f - n23) + 1.0f), 7);
+		
+		final float n24 = this.cd.outdam[this.sc[0]];
+		this.rd.fillRect((int)(536.0f + 156.0f * n24), 367, (int)(156.0f * (1.0f - n24) + 1.0f), 7);
+		
+		this.rd.drawImage(this.statbo, 162, 337, null);
+		this.rd.drawImage(this.statbo, 162, 352, null);
+		this.rd.drawImage(this.statbo, 162, 367, null);
+		this.rd.drawImage(this.statbo, 536, 337, null);
+		this.rd.drawImage(this.statbo, 536, 352, null);
+		this.rd.drawImage(this.statbo, 536, 367, null);
+	}
     
     public void colorCar(final ContO contO, final int n) {
         if (this.plnames[n].indexOf("MadBot") == -1) {
@@ -6611,15 +6270,7 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void finish(final CheckPoints checkPoints, final ContO[] array, final Control control, final int n, final int n2, final boolean b) {
-        if (!this.badmac) {
-            this.rd.drawImage(this.fleximg, 0, 0, null);
-        }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.setComposite(AlphaComposite.getInstance(3, 0.1f));
-            this.rd.fillRect(0, 0, 1280, 720);
-            this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        }
+    	this.rd.drawImage(this.fleximg, 0, 0, null);
         this.rd.setFont(new Font("Arial", 1, 11));
         this.ftm = this.rd.getFontMetrics();
         int n3 = 0;
@@ -6787,9 +6438,7 @@ public class xtGraphics extends Panel implements Runnable
                     if (array[this.sc[0]].wzy < -180) {
                     	array[this.sc[0]].wzy += 360;
                     }
-                    this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                     array[n4].d(this.rd);
-                    this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     if (Math.random() < 0.5) {
                         this.rd.setComposite(AlphaComposite.getInstance(3, 0.4f));
                         this.rd.setColor(new Color(236, 226, 202));
@@ -6994,7 +6643,7 @@ public class xtGraphics extends Panel implements Runnable
                 if (checkPoints.stage == 27 && this.gmode == 0) {
                     checkPoints.stage = (int)(Math.random() * 27.0) + 1;
                 }
-                this.fase = 102;
+                this.fase = 10;
             }
             else if (this.cd.haltload == 1) {
                 this.sc[0] = 36;
@@ -7002,7 +6651,7 @@ public class xtGraphics extends Panel implements Runnable
             }
             else if (!this.mtop || (this.nfreeplays >= 5 && !this.logged)) {
                 this.opselect = 2;
-                this.fase = 102;
+                this.fase = 10;
             }
             else {
                 this.fase = -9;
@@ -7020,272 +6669,271 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void sortcars(int n) {
-        if (n != 0) {
-            for (int i = 1; i < 7; ++i) {
-                this.sc[i] = -1;
-            }
-            final boolean[] array = new boolean[7];
-            if (n < 0) {
-                n = 27;
-            }
-            int n2 = 7;
+    if (n != 0) {
+        for (int i = 1; i < 8; ++i) {
+            this.sc[i] = -1;
+        }
+        final boolean[] array = new boolean[8];
+        if (n < 0) {
+            n = 27;
+        }
+        int n2 = 8;
+        if (this.gmode == 1) {
+            n2 = 6;
+        }
+        boolean b = false;
+        if (n <= 10) {
+            int n3 = 7;
             if (this.gmode == 1) {
-                n2 = 5;
+                n3 = 5;
             }
-            boolean b = false;
-            if (n <= 10) {
-                int n3 = 6;
+            if ((n == 1 || n == 2) && this.sc[0] != 5) {
+                this.sc[n3] = 5;
+                n2 = n3;
+            }
+            if ((n == 3 || n == 4) && this.sc[0] != 6) {
+                this.sc[n3] = 6;
+                n2 = n3;
+            }
+            if ((n == 5 || n == 6) && this.sc[0] != 11) {
+                this.sc[n3] = 11;
+                n2 = n3;
+            }
+            if ((n == 7 || n == 8) && this.sc[0] != 14) {
+                this.sc[n3] = 14;
+                n2 = n3;
+            }
+            if ((n == 9 || n == 10) && this.sc[0] != 15) {
+                this.sc[n3] = 15;
+                n2 = n3;
+            }
+        }
+        else {
+            n -= 10;
+            b = true;
+            if (this.sc[0] != 7 + (n + 1) / 2 && n != 17) {
+                this.sc[7] = 7 + (n + 1) / 2;  // last car = boss
+                n2 = 7;
+            }
+        }
+        int n4 = 16;
+        int n5 = 1;
+        int n6 = 2;
+        for (int j = 1; j < n2; ++j) {
+            array[j] = false;
+            while (!array[j]) {
+                float n7 = 10.0f;
+                if (b) {
+                    n7 = 17.0f;
+                }
+                this.sc[j] = (int)(Math.random() * (24.0f + 8.0f * (n / n7)));
+                if (this.sc[j] >= 16) {
+                    final int[] sc = this.sc;
+                    final int n8 = j;
+                    sc[n8] -= 16;
+                }
+                array[j] = true;
+                for (int k = 0; k < 8; ++k) {
+                    if (j != k && this.sc[j] == this.sc[k]) {
+                        array[j] = false;
+                    }
+                }
+                if (b) {
+                    n7 = 16.0f;
+                }
+                float n9 = (15 - this.sc[j]) / 15.0f * (n / n7);
+                if (n9 > 0.8) {
+                    n9 = 0.8f;
+                }
+                if (n == 17 && n9 > 0.5) {
+                    n9 = 0.5f;
+                }
+                if (n9 > Math.random()) {
+                    array[j] = false;
+                }
                 if (this.gmode == 1) {
-                    n3 = 4;
-                }
-                if ((n == 1 || n == 2) && this.sc[0] != 5) {
-                    this.sc[n3] = 5;
-                    n2 = n3;
-                }
-                if ((n == 3 || n == 4) && this.sc[0] != 6) {
-                    this.sc[n3] = 6;
-                    n2 = n3;
-                }
-                if ((n == 5 || n == 6) && this.sc[0] != 11) {
-                    this.sc[n3] = 11;
-                    n2 = n3;
-                }
-                if ((n == 7 || n == 8) && this.sc[0] != 14) {
-                    this.sc[n3] = 14;
-                    n2 = n3;
-                }
-                if ((n == 9 || n == 10) && this.sc[0] != 15) {
-                    this.sc[n3] = 15;
-                    n2 = n3;
-                }
-            }
-            else {
-                n -= 10;
-                b = true;
-                if (this.sc[0] != 7 + (n + 1) / 2 && n != 17) {
-                    this.sc[6] = 7 + (n + 1) / 2;
-                    n2 = 6;
-                }
-            }
-            int n4 = 16;
-            int n5 = 1;
-            int n6 = 2;
-            for (int j = 1; j < n2; ++j) {
-                array[j] = false;
-                while (!array[j]) {
-                    float n7 = 10.0f;
-                    if (b) {
-                        n7 = 17.0f;
-                    }
-                    this.sc[j] = (int)(Math.random() * (24.0f + 8.0f * (n / n7)));
-                    if (this.sc[j] >= 16) {
-                        final int[] sc = this.sc;
-                        final int n8 = j;
-                        sc[n8] -= 16;
-                    }
-                    array[j] = true;
-                    for (int k = 0; k < 7; ++k) {
-                        if (j != k && this.sc[j] == this.sc[k]) {
-                            array[j] = false;
-                        }
-                    }
-                    if (b) {
-                        n7 = 16.0f;
-                    }
-                    float n9 = (15 - this.sc[j]) / 15.0f * (n / n7);
-                    if (n9 > 0.8) {
-                        n9 = 0.8f;
-                    }
-                    if (n == 17 && n9 > 0.5) {
-                        n9 = 0.5f;
-                    }
-                    if (n9 > Math.random()) {
+                    if (this.sc[j] >= 7 && this.sc[j] <= 10) {
                         array[j] = false;
                     }
-                    if (this.gmode == 1) {
-                        if (this.sc[j] >= 7 && this.sc[j] <= 10) {
-                            array[j] = false;
-                        }
-                        if (this.sc[j] == 12 || this.sc[j] == 13) {
-                            array[j] = false;
-                        }
-                        if (this.sc[j] > 5 && this.unlocked[0] <= 2) {
-                            array[j] = false;
-                        }
-                        if (this.sc[j] > 6 && this.unlocked[0] <= 4) {
-                            array[j] = false;
-                        }
-                        if (this.sc[j] > 11 && this.unlocked[0] <= 6) {
-                            array[j] = false;
-                        }
-                        if (this.sc[j] > 14 && this.unlocked[0] <= 8) {
-                            array[j] = false;
-                        }
+                    if (this.sc[j] == 12 || this.sc[j] == 13) {
+                        array[j] = false;
                     }
-                    if (this.gmode == 2) {
-                        if ((this.sc[j] - 7) * 2 > this.unlocked[1]) {
-                            array[j] = false;
-                        }
-                        if (n != 16 || this.unlocked[1] != 16 || this.sc[j] >= 9) {
-                            continue;
-                        }
+                    if (this.sc[j] > 5 && this.unlocked[0] <= 2) {
+                        array[j] = false;
+                    }
+                    if (this.sc[j] > 6 && this.unlocked[0] <= 4) {
+                        array[j] = false;
+                    }
+                    if (this.sc[j] > 11 && this.unlocked[0] <= 6) {
+                        array[j] = false;
+                    }
+                    if (this.sc[j] > 14 && this.unlocked[0] <= 8) {
                         array[j] = false;
                     }
                 }
-                if (this.sc[j] < n4) {
-                    n4 = this.sc[j];
-                    if (n5 != j) {
-                        n6 = n5;
-                        n5 = j;
+                if (this.gmode == 2) {
+                    if ((this.sc[j] - 7) * 2 > this.unlocked[1]) {
+                        array[j] = false;
+                    }
+                    if (n != 16 || this.unlocked[1] != 16 || this.sc[j] >= 9) {
+                        continue;
+                    }
+                    array[j] = false;
+                }
+            }
+            if (this.sc[j] < n4) {
+                n4 = this.sc[j];
+                if (n5 != j) {
+                    n6 = n5;
+                    n5 = j;
+                }
+            }
+        }
+        if (!b && n == 10) {
+            boolean b2 = false;
+            for (int l = 0; l < 8; ++l) {
+                if (this.sc[l] == 11) {
+                    b2 = true;
+                }
+            }
+            if (!b2 && (Math.random() > Math.random() || this.gmode != 0)) {
+                this.sc[n5] = 11;
+            }
+            boolean b3 = false;
+            for (int n10 = 0; n10 < 8; ++n10) {
+                if (this.sc[n10] == 14) {
+                    b3 = true;
+                }
+            }
+            if (!b3 && (Math.random() > Math.random() || this.gmode != 0)) {
+                this.sc[n6] = 14;
+            }
+        }
+        if (n == 12) {
+            boolean b4 = false;
+            for (int n11 = 0; n11 < 8; ++n11) {
+                if (this.sc[n11] == 11) {
+                    b4 = true;
+                }
+            }
+            if (!b4) {
+                this.sc[n5] = 11;
+            }
+        }
+        if (n == 14) {
+            boolean b5 = false;
+            for (int n12 = 0; n12 < 8; ++n12) {
+                if (this.sc[n12] == 12) {
+                    b5 = true;
+                }
+            }
+            if (!b5 && (Math.random() > Math.random() || this.gmode != 0)) {
+                this.sc[n5] = 12;
+            }
+            boolean b6 = false;
+            for (int n13 = 0; n13 < 8; ++n13) {
+                if (this.sc[n13] == 10) {
+                    b6 = true;
+                }
+            }
+            if (!b6 && (Math.random() > Math.random() || this.gmode != 0)) {
+                this.sc[n6] = 10;
+            }
+        }
+        if (n == 15) {
+            boolean b7 = false;
+            for (int n14 = 0; n14 < 8; ++n14) {
+                if (this.sc[n14] == 11) {
+                    b7 = true;
+                }
+            }
+            if (!b7 && (Math.random() > Math.random() || this.gmode != 0)) {
+                this.sc[n5] = 11;
+            }
+            boolean b8 = false;
+            for (int n15 = 0; n15 < 8; ++n15) {
+                if (this.sc[n15] == 13) {
+                    b8 = true;
+                }
+            }
+            if (!b8 && (Math.random() > Math.random() || this.gmode != 0)) {
+                this.sc[n6] = 13;
+            }
+        }
+        if (n == 16) {
+            boolean b9 = false;
+            for (int n16 = 0; n16 < 8; ++n16) {
+                if (this.sc[n16] == 13) {
+                    b9 = true;
+                }
+            }
+            if (!b9 && (Math.random() > Math.random() || this.gmode != 0)) {
+                this.sc[n5] = 13;
+            }
+            boolean b10 = false;
+            for (int n17 = 0; n17 < 8; ++n17) {
+                if (this.sc[n17] == 12) {
+                    b10 = true;
+                }
+            }
+            if (!b10 && (Math.random() > Math.random() || this.gmode != 0)) {
+                this.sc[n6] = 12;
+            }
+        }
+        if (this.cd.lastload == 1) {
+            int n18 = 0;
+            for (int n19 = 0; n19 < this.cd.nlcars - 16; ++n19) {
+                if (n18 == 0) {
+                    for (int n20 = 1; n20 < n2; ++n20) {
+                        array[n20] = false;
+                    }
+                }
+                if (this.cd.include[n19] && this.sc[0] != n19 + 16) {
+                    int n21;
+                    for (n21 = (int)(1.0 + Math.random() * (n2 - 1)); array[n21]; n21 = (int)(1.0 + Math.random() * (n2 - 1))) {}
+                    array[n21] = true;
+                    this.sc[n21] = n19 + 16;
+                    if (++n18 == n2 - 1) {
+                        n18 = 0;
                     }
                 }
             }
-            if (!b && n == 10) {
-                boolean b2 = false;
-                for (int l = 0; l < 7; ++l) {
-                    if (this.sc[l] == 11) {
-                        b2 = true;
+        }
+        if (this.cd.lastload == 2) {
+            int n22 = 0;
+            for (int n23 = 0; n23 < this.cd.nlocars - 16; ++n23) {
+                if (n22 == 0) {
+                    for (int n24 = 1; n24 < n2; ++n24) {
+                        array[n24] = false;
                     }
                 }
-                if (!b2 && (Math.random() > Math.random() || this.gmode != 0)) {
-                    this.sc[n5] = 11;
-                }
-                boolean b3 = false;
-                for (int n10 = 0; n10 < 7; ++n10) {
-                    if (this.sc[n10] == 14) {
-                        b3 = true;
-                    }
-                }
-                if (!b3 && (Math.random() > Math.random() || this.gmode != 0)) {
-                    this.sc[n6] = 14;
-                }
-            }
-            if (n == 12) {
-                boolean b4 = false;
-                for (int n11 = 0; n11 < 7; ++n11) {
-                    if (this.sc[n11] == 11) {
-                        b4 = true;
-                    }
-                }
-                if (!b4) {
-                    this.sc[n5] = 11;
-                }
-            }
-            if (n == 14) {
-                boolean b5 = false;
-                for (int n12 = 0; n12 < 7; ++n12) {
-                    if (this.sc[n12] == 12) {
-                        b5 = true;
-                    }
-                }
-                if (!b5 && (Math.random() > Math.random() || this.gmode != 0)) {
-                    this.sc[n5] = 12;
-                }
-                boolean b6 = false;
-                for (int n13 = 0; n13 < 7; ++n13) {
-                    if (this.sc[n13] == 10) {
-                        b6 = true;
-                    }
-                }
-                if (!b6 && (Math.random() > Math.random() || this.gmode != 0)) {
-                    this.sc[n6] = 10;
-                }
-            }
-            if (n == 15) {
-                boolean b7 = false;
-                for (int n14 = 0; n14 < 7; ++n14) {
-                    if (this.sc[n14] == 11) {
-                        b7 = true;
-                    }
-                }
-                if (!b7 && (Math.random() > Math.random() || this.gmode != 0)) {
-                    this.sc[n5] = 11;
-                }
-                boolean b8 = false;
-                for (int n15 = 0; n15 < 7; ++n15) {
-                    if (this.sc[n15] == 13) {
-                        b8 = true;
-                    }
-                }
-                if (!b8 && (Math.random() > Math.random() || this.gmode != 0)) {
-                    this.sc[n6] = 13;
-                }
-            }
-            if (n == 16) {
-                boolean b9 = false;
-                for (int n16 = 0; n16 < 7; ++n16) {
-                    if (this.sc[n16] == 13) {
-                        b9 = true;
-                    }
-                }
-                if (!b9 && (Math.random() > Math.random() || this.gmode != 0)) {
-                    this.sc[n5] = 13;
-                }
-                boolean b10 = false;
-                for (int n17 = 0; n17 < 7; ++n17) {
-                    if (this.sc[n17] == 12) {
-                        b10 = true;
-                    }
-                }
-                if (!b10 && (Math.random() > Math.random() || this.gmode != 0)) {
-                    this.sc[n6] = 12;
-                }
-            }
-            if (this.cd.lastload == 1) {
-                int n18 = 0;
-                for (int n19 = 0; n19 < this.cd.nlcars - 16; ++n19) {
-                    if (n18 == 0) {
-                        for (int n20 = 1; n20 < n2; ++n20) {
-                            array[n20] = false;
-                        }
-                    }
-                    if (this.cd.include[n19] && this.sc[0] != n19 + 16) {
-                        int n21;
-                        for (n21 = (int)(1.0 + Math.random() * (n2 - 1)); array[n21]; n21 = (int)(1.0 + Math.random() * (n2 - 1))) {}
-                        array[n21] = true;
-                        this.sc[n21] = n19 + 16;
-                        if (++n18 == n2 - 1) {
-                            n18 = 0;
-                        }
-                    }
-                }
-            }
-            if (this.cd.lastload == 2) {
-                int n22 = 0;
-                for (int n23 = 0; n23 < this.cd.nlocars - 16; ++n23) {
-                    if (n22 == 0) {
-                        for (int n24 = 1; n24 < n2; ++n24) {
-                            array[n24] = false;
-                        }
-                    }
-                    if (this.cd.include[n23] && this.sc[0] != n23 + 16) {
-                        int n25;
-                        for (n25 = (int)(1.0 + Math.random() * (n2 - 1)); array[n25]; n25 = (int)(1.0 + Math.random() * (n2 - 1))) {}
-                        array[n25] = true;
-                        this.sc[n25] = n23 + 16;
-                        if (++n22 == n2 - 1) {
-                            n22 = 0;
-                        }
+                if (this.cd.include[n23] && this.sc[0] != n23 + 16) {
+                    int n25;
+                    for (n25 = (int)(1.0 + Math.random() * (n2 - 1)); array[n25]; n25 = (int)(1.0 + Math.random() * (n2 - 1))) {}
+                    array[n25] = true;
+                    this.sc[n25] = n23 + 16;
+                    if (++n22 == n2 - 1) {
+                        n22 = 0;
                     }
                 }
             }
         }
     }
-    
-    public void ctachm(final int n, final int n2, final int n3, final Control control) {
+}
+    public void ctachm(final int mouseX, final int mouseY, final int mouseClick, final Control control) {
         if (this.fase == 1) {
-            if (n3 == 1) {
-                if (this.over(this.next[0], n, n2, 625, 135)) {
+            if (mouseClick == 1) {
+                if (this.over(this.next[0], mouseX, mouseY, 625, 135)) {
                     this.pnext = 1;
                 }
-                if (this.over(this.back[0], n, n2, 115, 135)) {
+                if (this.over(this.back[0], mouseX, mouseY, 115, 135)) {
                     this.pback = 1;
                 }
-                if (this.over(this.contin[0], n, n2, 355, 360)) {
+                if (this.over(this.contin[0], mouseX, mouseY, 355, 360)) {
                     this.pcontin = 1;
                 }
             }
-            if (n3 == 2) {
+            if (mouseClick == 2) {
                 if (this.pnext == 1) {
                     control.right = true;
                 }
@@ -7298,45 +6946,45 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         if (this.fase == 3) {
-            if (n3 == 1 && this.over(this.contin[0], n, n2, 355, 350)) {
+            if (mouseClick == 1 && this.over(this.contin[0], mouseX, mouseY, 355, 350)) {
                 this.pcontin = 1;
             }
-            if (n3 == 2 && this.pcontin == 1) {
+            if (mouseClick == 2 && this.pcontin == 1) {
                 control.enter = true;
                 this.pcontin = 0;
             }
         }
         if (this.fase == 4) {
-            if (n3 == 1 && this.over(this.back[0], n, n2, 370, 345)) {
+            if (mouseClick == 1 && this.over(this.back[0], mouseX, mouseY, 370, 345)) {
                 this.pback = 1;
             }
-            if (n3 == 2 && this.pback == 1) {
+            if (mouseClick == 2 && this.pback == 1) {
                 control.enter = true;
                 this.pback = 0;
             }
         }
         if (this.fase == 6) {
-            if (n3 == 1 && (this.over(this.star[0], n, n2, 359, 385) || this.over(this.star[0], n, n2, 359, 295))) {
+            if (mouseClick == 1 && (this.over(this.star[0], mouseX, mouseY, 359, 385) || this.over(this.star[0], mouseX, mouseY, 359, 295))) {
                 this.pstar = 2;
             }
-            if (n3 == 2 && this.pstar == 2) {
+            if (mouseClick == 2 && this.pstar == 2) {
                 control.enter = true;
                 this.pstar = 1;
             }
         }
         if (this.fase == 7) {
-            if (n3 == 1) {
-                if (this.over(this.next[0], n, n2, 645, 275)) {
+            if (mouseClick == 1) {
+                if (this.over(this.next[0], mouseX, mouseY, 645, 275)) {
                     this.pnext = 1;
                 }
-                if (this.over(this.back[0], n, n2, 95, 275)) {
+                if (this.over(this.back[0], mouseX, mouseY, 95, 275)) {
                     this.pback = 1;
                 }
-                if (this.over(this.contin[0], n, n2, 355, 385) && !this.app.openm) {
+                if (this.over(this.contin[0], mouseX, mouseY, 355, 385) && !this.app.openm) {
                     this.pcontin = 1;
                 }
             }
-            if (n3 == 2) {
+            if (mouseClick == 2) {
                 if (this.pnext == 1) {
                     control.right = true;
                 }
@@ -7350,170 +6998,124 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         if (this.fase == -5) {
-            this.lxm = n;
-            this.lym = n2;
-            if (n3 == 1 && this.over(this.contin[0], n, n2, 355, 380)) {
+            this.lxm = mouseX;
+            this.lym = mouseY;
+            if (mouseClick == 1 && this.over(this.contin[0], mouseX, mouseY, 355, 380)) {
                 this.pcontin = 1;
             }
-            if (n3 == 2 && this.pcontin == 1) {
+            if (mouseClick == 2 && this.pcontin == 1) {
                 control.enter = true;
                 this.pcontin = 0;
             }
         }
         if (this.fase == -7) {
-            if (n3 == 1) {
-                if (this.overon(329, 45, 137, 22, n, n2)) {
+            if (mouseClick == 1) {
+                if (this.overon(329, 45, 137, 22, mouseX, mouseY)) {
                     this.opselect = 0;
                     this.shaded = true;
                 }
-                if (this.overon(320, 73, 155, 22, n, n2)) {
+                if (this.overon(320, 73, 155, 22, mouseX, mouseY)) {
                     this.opselect = 1;
                     this.shaded = true;
                 }
-                if (this.overon(303, 99, 190, 22, n, n2)) {
+                if (this.overon(303, 99, 190, 22, mouseX, mouseY)) {
                     this.opselect = 2;
                     this.shaded = true;
                 }
-                if (this.overon(341, 125, 109, 22, n, n2)) {
+                if (this.overon(341, 125, 109, 22, mouseX, mouseY)) {
                     this.opselect = 3;
                     this.shaded = true;
                 }
             }
-            if (n3 == 2 && this.shaded) {
+            if (mouseClick == 2 && this.shaded) {
                 control.enter = true;
                 this.shaded = false;
             }
-            if (n3 == 0 && (n != this.lxm || n2 != this.lym)) {
-                if (this.overon(329, 45, 137, 22, n, n2)) {
+            if (mouseClick == 0 && (mouseX != this.lxm || mouseY != this.lym)) {
+                if (this.overon(329, 45, 137, 22, mouseX, mouseY)) {
                     this.opselect = 0;
                 }
-                if (this.overon(320, 73, 155, 22, n, n2)) {
+                if (this.overon(320, 73, 155, 22, mouseX, mouseY)) {
                     this.opselect = 1;
                 }
-                if (this.overon(303, 99, 190, 22, n, n2)) {
+                if (this.overon(303, 99, 190, 22, mouseX, mouseY)) {
                     this.opselect = 2;
                 }
-                if (this.overon(341, 125, 109, 22, n, n2)) {
+                if (this.overon(341, 125, 109, 22, mouseX, mouseY)) {
                     this.opselect = 3;
                 }
-                this.lxm = n;
-                this.lym = n2;
+                this.lxm = mouseX;
+                this.lym = mouseY;
             }
         }
         if (this.fase == 10) {
-            if (n3 == 1) {
-                if (this.overon(343, 261, 110, 22, n, n2)) {
+        	if (mouseClick == 1) {
+                if (this.overon(504, 194, 192, 64, mouseX, mouseY)) {
                     this.opselect = 0;
                     this.shaded = true;
                 }
-                if (this.overon(288, 291, 221, 22, n, n2)) {
-                    this.opselect = 1;
-                    this.shaded = true;
-                }
-                if (this.overon(301, 321, 196, 22, n, n2)) {
+                if (this.overon(504, 274, 192, 32, mouseX, mouseY)) {
                     this.opselect = 2;
                     this.shaded = true;
                 }
-                if (this.overon(357, 351, 85, 22, n, n2)) {
+                if (this.overon(504, 322, 192, 32, mouseX, mouseY)) {
                     this.opselect = 3;
                     this.shaded = true;
                 }
             }
-            if (n3 == 2 && this.shaded) {
+            if (mouseClick == 2 && this.shaded) {
                 control.enter = true;
                 this.shaded = false;
             }
-            if (n3 == 0 && (n != this.lxm || n2 != this.lym)) {
-                if (this.overon(343, 261, 110, 22, n, n2)) {
+            if (mouseClick == 0 && (mouseX != this.lxm || mouseY != this.lym)) {
+            	opselect = 1;
+                if (this.overon(504, 194, 192, 64, mouseX, mouseY)) {
                     this.opselect = 0;
                 }
-                if (this.overon(288, 291, 221, 22, n, n2)) {
-                    this.opselect = 1;
-                }
-                if (this.overon(301, 321, 196, 22, n, n2)) {
+                if (this.overon(504, 274, 192, 32, mouseX, mouseY)) {
                     this.opselect = 2;
                 }
-                if (this.overon(357, 351, 85, 22, n, n2)) {
+                if (this.overon(504, 322, 192, 32, mouseX, mouseY)) {
                     this.opselect = 3;
                 }
-                this.lxm = n;
-                this.lym = n2;
-            }
-        }
-        if (this.fase == 102) {
-            if (n3 == 1) {
-                if (this.overon(358, 262 + this.dropf, 82, 22, n, n2)) {
-                    this.opselect = 0;
-                    this.shaded = true;
-                }
-                if (this.overon(358, 290 + this.dropf, 82, 22, n, n2)) {
-                    this.opselect = 1;
-                    this.shaded = true;
-                }
-                if (this.overon(333, 318 + this.dropf, 132, 22, n, n2)) {
-                    this.opselect = 2;
-                    this.shaded = true;
-                }
-                if (this.dropf == 0 && this.overon(348, 346, 102, 22, n, n2)) {
-                    this.opselect = 3;
-                    this.shaded = true;
-                }
-            }
-            if (n3 == 2 && this.shaded) {
-                control.enter = true;
-                this.shaded = false;
-            }
-            if (n3 == 0 && (n != this.lxm || n2 != this.lym)) {
-                if (this.overon(358, 262 + this.dropf, 82, 22, n, n2)) {
-                    this.opselect = 0;
-                }
-                if (this.overon(358, 290 + this.dropf, 82, 22, n, n2)) {
-                    this.opselect = 1;
-                }
-                if (this.overon(333, 318 + this.dropf, 132, 22, n, n2)) {
-                    this.opselect = 2;
-                }
-                if (this.dropf == 0 && this.overon(348, 346, 102, 22, n, n2)) {
-                    this.opselect = 3;
-                }
-                this.lxm = n;
-                this.lym = n2;
+                this.lxm = mouseX;
+                this.lym = mouseY;
             }
         }
         if (this.fase == 11) {
             if (this.flipo >= 1 && this.flipo <= 15) {
-                if (n3 == 1 && this.over(this.next[0], n, n2, 665, 395)) {
+                if (mouseClick == 1 && this.over(this.next[0], mouseX, mouseY, 665, 395)) {
                     this.pnext = 1;
                 }
-                if (n3 == 2 && this.pnext == 1) {
+                if (mouseClick == 2 && this.pnext == 1) {
                     control.right = true;
                     this.pnext = 0;
                 }
             }
             if (this.flipo >= 3 && this.flipo <= 16) {
-                if (n3 == 1 && this.over(this.back[0], n, n2, 75, 395)) {
+                if (mouseClick == 1 && this.over(this.back[0], mouseX, mouseY, 75, 395)) {
                     this.pback = 1;
                 }
-                if (n3 == 2 && this.pback == 1) {
+                if (mouseClick == 2 && this.pback == 1) {
                     control.left = true;
                     this.pback = 0;
                 }
             }
             if (this.flipo == 16) {
-                if (n3 == 1 && this.over(this.contin[0], n, n2, 565, 395)) {
+                if (mouseClick == 1 && this.over(this.contin[0], mouseX, mouseY, 565, 395)) {
                     this.pcontin = 1;
                 }
-                if (n3 == 2 && this.pcontin == 1) {
+                if (mouseClick == 2 && this.pcontin == 1) {
                     control.enter = true;
                     this.pcontin = 0;
                 }
             }
         }
         if (this.fase == 8) {
-            if (n3 == 1 && this.over(this.next[0], n, n2, 665, 395)) {
+            if (mouseClick == 1 && this.over(this.next[0], mouseX, mouseY, 665, 395)) {
                 this.pnext = 1;
             }
-            if (n3 == 2 && this.pnext == 1) {
+            if (mouseClick == 2 && this.pnext == 1) {
                 control.enter = true;
                 this.pnext = 0;
             }
@@ -8013,9 +7615,7 @@ public class xtGraphics extends Panel implements Runnable
                         this.duds = 2;
                     }
                     if (this.dudo != -1) {
-                        this.rd.setComposite(AlphaComposite.getInstance(3, 0.3f));
                         this.rd.drawImage(this.dude[this.duds], this.dudo, 0, null);
-                        this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
                     }
                     if (this.gocnt != 0) {
                         this.rd.drawImage(this.cntdn[this.gocnt], 385, 50, null);
@@ -8697,7 +8297,6 @@ public class xtGraphics extends Panel implements Runnable
         }
         this.rot(array, array3, n3, n5, this.ana, 7);
         final int abs = (int) Math.abs(this.ana);
-        this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         if (!b) {
             if (abs > 7 || n2 > 0 || n2 == -2 || this.cntan != 0) {
                 for (int l = 0; l < 7; ++l) {
@@ -8860,7 +8459,6 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.setColor(new Color(r4, g4, b5));
             this.rd.drawPolygon(array, array2, 7);
         }
-        this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
     }
     
     public void radarstat(final Mad mad, final ContO contO, final CheckPoints checkPoints) {
@@ -8868,7 +8466,6 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.setColor(new Color(this.m.csky[0], this.m.csky[1], this.m.csky[2]));
         this.rd.fillRoundRect(10, 55, 172, 172, 30, 30);
         this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         this.rd.setColor(new Color(this.m.csky[0] / 2, this.m.csky[1] / 2, this.m.csky[2] / 2));
         for (int i = 0; i < checkPoints.n; ++i) {
             int n = i + 1;
@@ -9014,7 +8611,6 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.drawLine(94, 141, 98, 141);
         this.rd.setColor(new Color(r, g, b2));
         this.rd.fillRect(95, 140, 3, 3);
-        this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
         if (this.m.darksky) {
             final Color color = new Color(this.m.csky[0], this.m.csky[1], this.m.csky[2]);
             final float[] hsbvals = new float[3];
@@ -9482,21 +9078,20 @@ public class xtGraphics extends Panel implements Runnable
         this.loadingmusic = this.loadopsnap(this.oloadingmusic, n, 76);
         this.star[0] = this.loadopsnap(this.ostar[0], n, 0);
         this.star[1] = this.loadopsnap(this.ostar[1], n, 0);
-        this.flaot = this.loadopsnap(this.oflaot, n, 1);
+        this.tips = this.loadopsnap(this.oflaot, n, 1);
     }
     
     public boolean overon(final int n, final int n2, final int n3, final int n4, final int n5, final int n6) {
         return n5 > n && n5 < n + n3 && n6 > n2 && n6 < n2 + n4;
     }
     
-    public boolean over(final Image image, final int n, final int n2, final int n3, final int n4) {
+    public boolean over(final Image image, final int mouseX, final int mouseY, final int imageX, final int imageY) {
         final int height = image.getHeight(this.ob);
         final int width = image.getWidth(this.ob);
-        return n > n3 - 5 && n < n3 + width + 5 && n2 > n4 - 5 && n2 < n4 + height + 5;
+        return mouseX > imageX - 5 && mouseX < imageX + width + 5 && mouseY > imageY - 5 && mouseY < imageY + height + 5;
     }
     
     public void fleximage(final Image img, final int n, final int n2) {
-        if (!this.badmac) {
             if (n == 0) {
                 this.flexpix = new int[360000];
                 final PixelGrabber pixelGrabber = new PixelGrabber(img, 0, 0, 800, 450, this.flexpix, 0, 800);
@@ -9540,13 +9135,6 @@ public class xtGraphics extends Panel implements Runnable
             }
             this.fleximg = this.createImage(new MemoryImageSource(800, 450, this.flexpix, 0, 800));
             this.rd.drawImage(this.fleximg, 0, 0, null);
-        }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.setComposite(AlphaComposite.getInstance(3, 0.1f));
-            this.rd.fillRect(0, 0, 1280, 720);
-            this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        }
     }
     
     private Image loadsnap(final Image img) {
@@ -9726,56 +9314,33 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void pauseimage(final Image img) {
-        if (!this.badmac) {
-            final int[] array = new int[360000];
-            final PixelGrabber pixelGrabber = new PixelGrabber(img, 0, 0, 800, 450, array, 0, 800);
-            try {
-                pixelGrabber.grabPixels();
-            }
-            catch (final InterruptedException ex) {}
-            int n = 0;
-            int n2 = 0;
-            int n3 = 0;
-            int n4 = 0;
-            for (int i = 0; i < 360000; ++i) {
-                final Color color = new Color(array[i]);
-                int n5;
-                if (n4 == 0) {
-                    n5 = (n3 = (color.getRed() + color.getGreen() + color.getBlue()) / 3);
-                }
-                else {
-                    n5 = (n3 = (color.getRed() + color.getGreen() + color.getBlue() + n3 * 30) / 33);
-                }
-                if (++n4 == 800) {
-                    n4 = 0;
-                }
-                if (i > 800 * (8 + n2) + 281 && n2 < 188) {
-                    final int r = (n5 + 60) / 3;
-                    final int g = (n5 + 135) / 3;
-                    final int b = (n5 + 220) / 3;
-                    if (++n == 237) {
-                        ++n2;
-                        n = 0;
-                    }
-                    array[i] = new Color(r, g, b).getRGB();
-                }
-                else {
-                    array[i] = new Color(n5, n5, n5).getRGB();
-                }
-            }
-            this.fleximg = this.createImage(new MemoryImageSource(800, 450, array, 0, 800));
-            this.rd.drawImage(this.fleximg, 0, 0, null);
-        }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.setComposite(AlphaComposite.getInstance(3, 0.5f));
-            this.rd.fillRect(0, 0, 1280, 720);
-            this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        }
+    	final int[] array = new int[800 * 450];
+    	final PixelGrabber pixelGrabber = new PixelGrabber(img, 0, 0, 800, 450, array, 0, 800);
+    	try {
+    		pixelGrabber.grabPixels();
+    	}
+    	catch (final InterruptedException ex) {}
+    	int n3 = 0;
+    	int n4 = 0;
+    	for (int i = 0; i < 360000; ++i) {
+    		final Color color = new Color(array[i]);
+    		int n5;
+    		if (n4 == 0) {
+    			n5 = (n3 = (color.getRed() + color.getGreen() + color.getBlue()) / 3);
+    		}
+    		else {
+    			n5 = (n3 = (color.getRed() + color.getGreen() + color.getBlue() + n3 * 30) / 33);
+    		}
+    		if (++n4 == 800) {
+    			n4 = 0;
+    		}
+    		array[i] = new Color(n5, n5, n5).getRGB();
+    	}
+    	this.fleximg = this.createImage(new MemoryImageSource(800, 450, array, 0, 800));
+    	this.rd.drawImage(this.fleximg, 0, 0, null);
     }
     
     public void jflexo() {
-        if (!this.badmac) {
             final int[] array = new int[360000];
             final PixelGrabber pixelGrabber = new PixelGrabber(this.app.offImage, 0, 0, 800, 450, array, 0, 800);
             try {
@@ -9807,13 +9372,6 @@ public class xtGraphics extends Panel implements Runnable
                 array[i] = new Color(r, g, b).getRGB();
             }
             this.rd.drawImage(this.createImage(new MemoryImageSource(800, 450, array, 0, 800)), 0, 0, null);
-        }
-        else {
-            this.rd.setColor(Color.BLACK);
-            this.rd.setComposite(AlphaComposite.getInstance(3, 0.5f));
-            this.rd.fillRect(0, 0, 1280, 720);
-            this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-        }
     }
     
     public void pingstat() {
@@ -10107,7 +9665,6 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void carsbginflex() {
-        if (!this.badmac) {
             this.flatr = 0;
             this.flyr = (int)(this.m.random() * 160.0f - 80.0f);
             this.flyrdest = (int)(this.flyr + this.m.random() * 160.0f - 80.0f);
@@ -10118,11 +9675,9 @@ public class xtGraphics extends Panel implements Runnable
                 pixelGrabber.grabPixels();
             }
             catch (final InterruptedException ex) {}
-        }
     }
     
     public void drawSmokeCarsbg() {
-        if (!this.badmac) {
             if (Math.abs(this.flyr - this.flyrdest) > 20) {
                 if (this.flyr > this.flyrdest) {
                     this.flyr -= 20;
@@ -10187,11 +9742,7 @@ public class xtGraphics extends Panel implements Runnable
             this.flang += 2;
             this.flatr += 10 + this.flatrstart * 2;
             this.rd.drawImage(this.createImage(new MemoryImageSource(670, 400, this.flexpix, 0, 670)), 65, 25, null);
-        }
-        else {
-            this.rd.drawImage(this.carsbg, 65, 25, null);
-            ++this.flatrstart;
-        }
+        
     }
     
     public boolean msgcheck(String lowerCase) {
@@ -10372,7 +9923,7 @@ public class xtGraphics extends Panel implements Runnable
         }
         if (b) {
             if (s.equals("X") && n6 == 1) {
-                this.rd.setColor(new Color(255, 0, 0));
+                this.rd.setColor(Color.RED);
             }
             else {
                 this.rd.setColor(Color.BLACK);
@@ -10392,7 +9943,7 @@ public class xtGraphics extends Panel implements Runnable
     
     public void drawWarning() {
         this.rd.setColor(Color.BLACK);
-        this.rd.fillRect(0, 0, 1280, 720);
+        this.rd.fillRect(0, 0, 800, 450);
         this.rd.setFont(new Font("Arial", 1, 22));
         this.ftm = this.rd.getFontMetrics();
         this.drawcs(100, "Warning!", 255, 0, 0, 3);
@@ -10471,4 +10022,47 @@ public class xtGraphics extends Panel implements Runnable
         catch (final Exception ex) {}
         return s2;
     }
+
+	public void settings() {
+		rd.setColor(Color.GRAY);
+		rd.fillRect(0, 0, 800, 450);
+		rd.setColor(Color.WHITE);
+        this.ftm = this.rd.getFontMetrics();
+        rd.setFont(new Font("Arial", 1, 11));
+        rd.setColor(new Color(94, 126, 159));
+        
+        int optionY[] = {9, 26, 43};
+        int option2[] = {Madness.anti, Madness.moto, Madness.smooth};
+
+        app.oncarm = over(app.carmaker[0], app.xm, app.ym, 50, 14);
+        app.onstgm = over(app.stagemaker[0], app.xm, app.ym, 592, 14);
+        rd.drawImage(app.chkbx[option2[0]], 335, 9, this);
+        rd.drawString("Antialiasing", 352, 20);
+        rd.drawImage(app.chkbx[option2[1]], 335, 26, this);
+        rd.drawString("Motion Effects", 352, 37);
+        rd.drawImage(app.chkbx[option2[2]], 335, 43, this);
+        rd.drawString("Smooth", 352, 54);
+        rd.drawImage(app.carmaker[app.oncarm ? 1 : 0], 50, 14, this);
+        rd.drawImage(app.stagemaker[app.onstgm ? 1 : 0], 592, 14, this);
+
+        for (int i = 0; i < 3; i++) {
+        	if (over(app.chkbx[option2[i]], app.xm, app.ym, 335, optionY[i]) && app.mouses == 2) {
+        		option2[i] = (option2[i] == 0) ? 1 : 0;
+        	}
+        }
+        if (app.moused) {
+        	if (app.oncarm) {
+                Madness.carmaker();
+            }
+            if (app.onstgm) {
+                Madness.stagemaker();
+            }
+        }
+        
+        
+        if (this.drawcarb(true, null, "Finish", 400, 200, this.app.xm, this.app.ym, this.app.moused)) {
+        	fase = 10;
+        }
+		
+	}
 }

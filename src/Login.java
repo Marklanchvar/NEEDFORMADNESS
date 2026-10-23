@@ -807,7 +807,7 @@ public class Login implements Runnable
     
     public void multimode(final ContO[] array) {
         this.btn = 0;
-        this.xt.mainbg(4);
+        this.xt.mainbg(2);
         for (int i = 0; i < 3; ++i) {
             this.rd.drawImage(this.xt.bgmain, 65, this.bgmy[i], null);
             final int[] bgmy = this.bgmy;
@@ -817,9 +817,6 @@ public class Login implements Runnable
                 this.bgmy[i] = 800;
             }
         }
-        this.rd.setComposite(AlphaComposite.getInstance(3, 0.2f));
-        this.rd.drawImage(this.xt.bggo, 0, 0, null);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
         this.rd.setColor(new Color(0, 0, 0));
         this.rd.fillRect(65, 425, 670, 25);
         this.rd.fillRect(0, 0, 65, 450);
@@ -853,10 +850,10 @@ public class Login implements Runnable
         this.rd.drawRoundRect(319, 83, 180, 96, 20, 20);
         this.rd.drawRoundRect(173, 83, 132, 32, 20, 20);
         if (!this.gotcai) {
-            int n3;
-            int n2 = n3 = array[this.xt.sc[0]].p[0].oz[0];
-            int n5;
-            int n4 = n5 = array[this.xt.sc[0]].p[0].oy[0];
+            float n3;
+            float n2 = n3 = array[this.xt.sc[0]].p[0].oz[0];
+            float n5;
+            float n4 = n5 = array[this.xt.sc[0]].p[0].oy[0];
             for (int j = 0; j < array[this.xt.sc[0]].npl; ++j) {
                 for (int k = 0; k < array[this.xt.sc[0]].p[j].n; ++k) {
                     if (array[this.xt.sc[0]].p[j].oz[k] < n2) {
@@ -873,8 +870,8 @@ public class Login implements Runnable
                     }
                 }
             }
-            this.cax = (n3 + n2) / 2;
-            this.cay = (n5 + n4) / 2;
+            this.cax = (int) ((n3 + n2) / 2);
+            this.cay = (int) ((n5 + n4) / 2);
             this.gotcai = true;
         }
         array[this.xt.sc[0]].z = 1500;
@@ -1313,7 +1310,7 @@ public class Login implements Runnable
     
     public void multistart(final ContO[] array, final int oxm, final int oym, final boolean b) {
         this.btn = 0;
-        this.xt.mainbg(4);
+        this.xt.mainbg(2);
         for (int i = 0; i < 3; ++i) {
             this.rd.drawImage(this.xt.bgmain, 65, this.bgmy[i], null);
             final int[] bgmy = this.bgmy;
@@ -1323,9 +1320,6 @@ public class Login implements Runnable
                 this.bgmy[i] = 800;
             }
         }
-        this.rd.setComposite(AlphaComposite.getInstance(3, 0.2f));
-        this.rd.drawImage(this.xt.bggo, 0, 0, null);
-        this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
         this.rd.setColor(new Color(0, 0, 0));
         this.rd.fillRect(65, 425, 670, 25);
         this.rd.fillRect(0, 0, 65, 450);
@@ -1374,10 +1368,10 @@ public class Login implements Runnable
             this.rd.drawString("" + this.xt.cd.names[this.xt.sc[0]] + "", 336 - this.ftm.stringWidth("" + this.xt.cd.names[this.xt.sc[0]] + "") / 2, 81);
             this.rd.drawRoundRect(246, 83, 180, 96, 20, 20);
             if (!this.gotcai) {
-                int n4;
-                int n3 = n4 = array[this.xt.sc[0]].p[0].oz[0];
-                int n6;
-                int n5 = n6 = array[this.xt.sc[0]].p[0].oy[0];
+                float n4;
+                float n3 = n4 = array[this.xt.sc[0]].p[0].oz[0];
+                float n6;
+                float n5 = n6 = array[this.xt.sc[0]].p[0].oy[0];
                 for (int j = 0; j < array[this.xt.sc[0]].npl; ++j) {
                     for (int k = 0; k < array[this.xt.sc[0]].p[j].n; ++k) {
                         if (array[this.xt.sc[0]].p[j].oz[k] < n3) {
@@ -1394,8 +1388,8 @@ public class Login implements Runnable
                         }
                     }
                 }
-                this.cax = (n4 + n3) / 2;
-                this.cay = (n6 + n5) / 2;
+                this.cax = (int) ((n4 + n3) / 2);
+                this.cay = (int) ((n6 + n5) / 2);
                 this.gotcai = true;
             }
             array[this.xt.sc[0]].z = 1500;

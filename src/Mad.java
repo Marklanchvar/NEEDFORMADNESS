@@ -7,8 +7,8 @@ public class Mad
     xtGraphics xt;
     int cn;
     int im;
-    float mxz;
-    float cxz;
+    int mxz;
+    int cxz;
     CarDefine cd;
     boolean[] dominate;
     boolean[] caught;
@@ -542,17 +542,17 @@ public class Mad
                 }
             }
         }
-        float n11 = this.speed / contO.wrad;
-            contO.wzy -= n11;
-            if (n11 > 20) n11 = 20;
-            if (n11 < -20) n11 = -20;
-            if (contO.wzy < -30) {
-                contO.wxz += 30;
-            }
-            if (contO.wzy > 30) {
-                contO.wxz -= 30;
-            }
-        
+        float n11 = this.speed / (7.7F * this.cd.simag[this.cn]);
+        if (n11 > 20) {
+            n11 = 20;
+        }
+        contO.wzy -= n11;
+        if (contO.wzy < -360) {
+            contO.wzy += 360;
+        }
+        if (contO.wzy > 360) {
+            contO.wzy -= 360;
+        }
         if (control.right) {
             contO.wxz -= this.cd.turn[this.cn];
             if (contO.wxz < -36) {
@@ -695,7 +695,7 @@ public class Mad
         int n22 = 1;
         for (int n23 = 0; n23 < trackers.sect[ncx][ncz].length; ++n23) {
             final int n24 = trackers.sect[ncx][ncz][n23];
-            if (Math.abs(trackers.zy[n24]) != 90 && Math.abs(trackers.xy[n24]) != 90 && Math.abs(contO.x - trackers.x[n24]) < trackers.radx[n24] && Math.abs(contO.z - trackers.z[n24]) < trackers.radz[n24] && (!trackers.decor[n24] || this.m.resdown != 2 || this.xt.multion != 0)) {
+            if (Math.abs(trackers.zy[n24]) != 90 && Math.abs(trackers.xy[n24]) != 90 && Math.abs(contO.x - trackers.x[n24]) < trackers.radx[n24] && Math.abs(contO.z - trackers.z[n24]) < trackers.radz[n24] && !trackers.decor[n24]) {
                 n22 = trackers.skd[n24];
             }
         }
@@ -850,7 +850,7 @@ public class Mad
             else {
                 n39 = 1;
             }
-            this.mxz = (float) (Math.acos(n30 / Math.sqrt(n29 * n29 + n30 * n30)) / 0.017453292519943295 * n39);
+            this.mxz = (int) (Math.acos(n30 / Math.sqrt(n29 * n29 + n30 * n30)) / 0.017453292519943295 * n39);
             if (this.skid == 2) {
                 if (!this.capsized) {
                     n29 /= 4.0f;
@@ -943,7 +943,7 @@ public class Mad
                         this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                     }
                 }
-                if (!array7[n56] && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53] && array3[n56] > trackers.y[n53] - trackers.rady[n53] && array3[n56] < trackers.y[n53] + trackers.rady[n53] && (!trackers.decor[n53] || this.m.resdown != 2 || this.xt.multion != 0)) {
+                if (!array7[n56] && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53] && array3[n56] > trackers.y[n53] - trackers.rady[n53] && array3[n56] < trackers.y[n53] + trackers.rady[n53] && !trackers.decor[n53]) {
                     if (trackers.xy[n53] == 0 && trackers.zy[n53] == 0 && trackers.y[n53] != 250 && array3[n56] > trackers.y[n53] - 5) {
                         ++n55;
                         this.wtouch = true;

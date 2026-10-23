@@ -30,7 +30,6 @@ public class RadicalMod
         this.pmod = "";
         final int n4 = 22000;
         n2 = (int)(n2 / 8000.0f * 2.0f * n4);
-        n = (int)(n * 0.8f);
         try {
             Module module;
             if (!b2) {

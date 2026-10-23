@@ -33,8 +33,9 @@ public class Madness extends Panel
     static Frame frame;
     static Applet applet;
     static String fpath;
-    static boolean fullscreen;
     static int anti;
+	static int smooth;
+	static int moto;
     static GraphicsDevice myDevice;
     static DisplayMode defdisp;
     static DisplayMode fulldisp;
@@ -98,109 +99,6 @@ public class Madness extends Panel
         Madness.defdisp = Madness.myDevice.getDisplayMode();
     }
     
-    public static void gofullscreen() {
-        final DisplayMode[] displayModes = Madness.myDevice.getDisplayModes();
-        final String[] array = new String[100];
-        final int[] array2 = new int[100];
-        int i = 0;
-        final float n = Madness.defdisp.getWidth() / (float)Madness.defdisp.getHeight();
-        float n2 = -1.0f;
-        int n3 = 0;
-        for (int j = 0; j < displayModes.length; ++j) {
-            if (displayModes[j].getWidth() >= 800 && displayModes[j].getBitDepth() >= 16 && n3 < 100) {
-                if (displayModes[j].getWidth() < 900) {
-                    final float abs = Math.abs(n - displayModes[j].getWidth() / (float)displayModes[j].getHeight());
-                    if (abs <= n2 || n2 == -1.0f) {
-                        i = n3;
-                        n2 = abs;
-                    }
-                }
-                array[n3] = "" + displayModes[j].getWidth() + " x " + displayModes[j].getHeight() + " Resolution   -   " + displayModes[j].getBitDepth() + " Bits   -   " + displayModes[j].getRefreshRate() + " Refresh Rate";
-                array2[n3] = j;
-                ++n3;
-            }
-        }
-        if (n2 != -1.0f) {
-            final StringBuilder sb = new StringBuilder();
-            final String[] array3 = array;
-            final int n4 = i;
-            array3[n4] = sb.append(array3[n4]).append("     <  Recommended").toString();
-        }
-        try {
-            final File file = new File("" + Madness.fpath + "data/full_screen.data");
-            if (file.exists()) {
-                final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-                String line;
-                for (int n5 = 0; (line = bufferedReader.readLine()) != null && n5 == 0; n5 = 1) {
-                    final String trim = line.trim();
-                    int intValue;
-                    try {
-                        intValue = Integer.valueOf(trim);
-                    }
-                    catch (final Exception ex) {
-                        intValue = i;
-                    }
-                    i = intValue;
-                    if (i < 0) {
-                        i = 0;
-                    }
-                    if (i > n3 - 1) {
-                        i = n3 - 1;
-                    }
-                }
-                bufferedReader.close();
-            }
-        }
-        catch (final Exception ex2) {}
-        final String[] array4 = new String[n3];
-        for (int k = 0; k < n3; ++k) {
-            array4[k] = array[k];
-        }
-        final String[] selectionValues = array4;
-        final Object showInputDialog = JOptionPane.showInputDialog(null, "Choose a screen resolution setting below and click OK to try it.\nExit Fullscreen by pressing [Esc].\n\nIMPORTANT: If the game does not display properly in Fullscreen press [Esc]      \nand try a different resolution setting below,", "Fullscreen Options", 1, null, selectionValues, selectionValues[i]);
-        int n6 = -1;
-        if (showInputDialog != null) {
-            for (int l = 0; l < n3; ++l) {
-                if (showInputDialog.equals(selectionValues[l])) {
-                    n6 = array2[l];
-                    i = l;
-                    break;
-                }
-            }
-        }
-        if (n6 != -1) {
-            try {
-                final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("" + Madness.fpath + "data/full_screen.data")));
-                bufferedWriter.write("" + i + "");
-                bufferedWriter.newLine();
-                bufferedWriter.close();
-            }
-            catch (final Exception ex3) {}
-            Madness.fullscreen = true;
-            Madness.frame.dispose();
-            (Madness.frame = new Frame("Fullscreen Need for Madness")).setBackground(new Color(0, 0, 0));
-            Madness.frame.setUndecorated(true);
-            Madness.frame.setResizable(false);
-            Madness.frame.setExtendedState(6);
-            Madness.frame.setIgnoreRepaint(true);
-            Madness.frame.add("Center", Madness.applet);
-            Madness.frame.show();
-            if (Madness.myDevice.isFullScreenSupported()) {
-                try {
-                    Madness.myDevice.setFullScreenWindow(Madness.frame);
-                }
-                catch (final Exception ex4) {}
-                if (Madness.myDevice.isDisplayChangeSupported()) {
-                    try {
-                        Madness.myDevice.setDisplayMode(displayModes[n6]);
-                    }
-                    catch (final Exception ex5) {}
-                }
-            }
-            Madness.applet.requestFocus();
-        }
-    }
-    
     public static void exitfullscreen() {
         Madness.frame.dispose();
         (Madness.frame = new Frame("Need for Madness")).setBackground(new Color(0, 0, 0));
@@ -230,7 +128,6 @@ public class Madness extends Panel
         Madness.frame.setSize(800, 586);
         Madness.frame.setExtendedState(6);
         Madness.applet.requestFocus();
-        Madness.fullscreen = false;
     }
     
     public static void exitsequance() {
@@ -393,8 +290,9 @@ public class Madness extends Panel
     
     static {
         Madness.fpath = "";
-        Madness.fullscreen = false;
         Madness.anti = 1;
+        Madness.smooth = 1;
+        Madness.moto = 1;
         Madness.testdrive = 0;
         Madness.testcar = "";
         Madness.textid = 0;

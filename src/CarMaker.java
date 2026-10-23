@@ -4996,7 +4996,7 @@ public class CarMaker extends Applet implements Runnable, ActionListener
         if (this.offImage != null) {
             this.rd = (Graphics2D)this.offImage.getGraphics();
         }
-        this.rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        
         boolean b = true;
         if (System.getProperty("java.vendor").toLowerCase().indexOf("apple") != -1 || System.getProperty("java.vendor").toLowerCase().indexOf("sun") != -1) {
             b = false;

@@ -1,6 +1,5 @@
 import java.awt.RenderingHints;
 import java.awt.Graphics2D;
-import java.awt.AlphaComposite;
 import java.awt.Color;
 
 public class Plane
@@ -51,7 +50,7 @@ public class Plane
     int flx;
     int colnum;
     
-    public Plane(final Medium m, final Trackers t, final float[] ox3, final float[] oz3, final float[] oy2, final int n, final int[] array4, final int glass, final int gr, final int fs, final float wx2, final float wy2, final float wz2, final int disline, final int bfase, final boolean road, final int light, final boolean solo) {
+    public Plane(final Medium m, final Trackers t, final float[] array3, final float[] array5, final float[] array42, final int n, final int[] array4, final int glass, final int gr, final int fs, final float wx2, final float wy2, final float wz2, final int disline, final int bfase, final boolean road, final int light, final boolean solo) {
         this.c = new int[3];
         this.oc = new int[3];
         this.hsb = new float[3];
@@ -98,9 +97,9 @@ public class Plane
         this.oz = new float[this.n];
         this.oy = new float[this.n];
         for (int i = 0; i < this.n; ++i) {
-            this.ox[i] = ox3[i];
-            this.oy[i] = oy2[i];
-            this.oz[i] = oz3[i];
+            this.ox[i] = array3[i];
+            this.oy[i] = array42[i];
+            this.oz[i] = array5[i];
         }
         for (int j = 0; j < 3; ++j) {
             this.oc[j] = array4[j];
@@ -110,8 +109,12 @@ public class Plane
                 final int n2 = (int)(Math.random() * 40.0 - 20.0);
                 final int n3 = (int)(Math.random() * 40.0 - 20.0);
                 for (int k = 0; k < this.n; ++k) {
-                    this.ox[k] += n2;
-                    this.oz[k] += n3;
+                    final float[] ox = this.ox;
+                    final int n4 = k;
+                    ox[n4] += n2;
+                    final float[] oz = this.oz;
+                    final int n5 = k;
+                    oz[n5] += n3;
                 }
             }
             final int n6 = (int)(185.0 + Math.random() * 20.0);
@@ -123,9 +126,19 @@ public class Plane
             array4[2] = (132 + n6) / 2;
             for (int l = 0; l < this.n; ++l) {
                 if (Math.random() > Math.random()) {
-                    this.ox[l] += (int)(8.0 * Math.random() - 4.0);
-                    this.oy[l] += (int)(8.0 * Math.random() - 4.0);
-                    this.oz[l] += (int)(8.0 * Math.random() - 4.0);
+                    final float[] ox2 = this.ox;
+                    final int n7 = l;
+                    ox2[n7] += (int)(8.0 * Math.random() - 4.0);
+                }
+                if (Math.random() > Math.random()) {
+                    final float[] oy = this.oy;
+                    final int n8 = l;
+                    oy[n8] += (int)(8.0 * Math.random() - 4.0);
+                }
+                if (Math.random() > Math.random()) {
+                    final float[] oz2 = this.oz;
+                    final int n9 = l;
+                    oz2[n9] += (int)(8.0 * Math.random() - 4.0);
                 }
             }
         }
@@ -162,7 +175,7 @@ public class Plane
         this.bfase = bfase;
         this.glass = glass;
         Color.RGBtoHSB(this.c[0], this.c[1], this.c[2], this.hsb);
-        if (glass == 3) {
+        if (glass == 3 && !this.m.trk) {
             final float[] hsb = this.hsb;
             final int n14 = 1;
             hsb[n14] += 0.05f;
@@ -240,7 +253,7 @@ public class Plane
         this.projf /= 3.0f;
     }
     
-    public void d(final Graphics2D graphics2D, final float n, final float n2, final float n3, final float cxz, final float n4, final float n5, final float n6, final float n7, boolean b, final float n410) {
+    public void d(final Graphics2D graphics2D, final float f, final float h, final float o, final float xz, final float xy, final float zy, final float wxz, final float wzy, boolean b, final float n4) {
         if (this.master == 1) {
             if (this.av > 1500 && !this.m.crs) {
                 this.n = 12;
@@ -254,28 +267,28 @@ public class Plane
         final float[] array3 = new float[this.n];
         if (this.embos == 0) {
             for (int i = 0; i < this.n; ++i) {
-                array[i] = this.ox[i] + n;
-                array3[i] = this.oy[i] + n2;
-                array2[i] = this.oz[i] + n3;
+                array[i] = this.ox[i] + f;
+                array3[i] = this.oy[i] + h;
+                array2[i] = this.oz[i] + o;
             }
             if ((this.gr == -11 || this.gr == -12 || this.gr == -13) && this.m.lastmaf == 1) {
                 for (int j = 0; j < this.n; ++j) {
-                    array[j] = -this.ox[j] + n;
-                    array3[j] = this.oy[j] + n2;
-                    array2[j] = -this.oz[j] + n3;
+                    array[j] = -this.ox[j] + f;
+                    array3[j] = this.oy[j] + h;
+                    array2[j] = -this.oz[j] + o;
                 }
             }
         }
         else {
             if (this.embos <= 11 && this.m.random() > 0.5 && this.glass != 1) {
                 for (int k = 0; k < this.n; ++k) {
-                    array[k] = (int)(this.ox[k] + n + (15.0f - this.m.random() * 30.0f));
-                    array3[k] = (int)(this.oy[k] + n2 + (15.0f - this.m.random() * 30.0f));
-                    array2[k] = (int)(this.oz[k] + n3 + (15.0f - this.m.random() * 30.0f));
+                    array[k] = (int)(this.ox[k] + f + (15.0f - this.m.random() * 30.0f));
+                    array3[k] = (int)(this.oy[k] + h + (15.0f - this.m.random() * 30.0f));
+                    array2[k] = (int)(this.oz[k] + o + (15.0f - this.m.random() * 30.0f));
                 }
-                this.rot(array, array3, n, n2, n4, this.n);
-                this.rot(array3, array2, n2, n3, n5, this.n);
-                this.rot(array, array2, n, n3, cxz, this.n);
+                this.rot(array, array3, f, h, xy, this.n);
+                this.rot(array3, array2, h, o, zy, this.n);
+                this.rot(array, array2, f, o, xz, this.n);
                 this.rot(array, array2, this.m.cx, this.m.cz, this.m.xz, this.n);
                 this.rot(array3, array2, this.m.cy, this.m.cz, this.m.zy, this.n);
                 final int[] array4 = new int[this.n];
@@ -332,23 +345,23 @@ public class Plane
                 int n10 = 1;
                 int n11 = 1;
                 float abs;
-                for (abs = Math.abs(n5); abs > 270; abs -= 360) {}
+                for (abs = Math.abs(zy); abs > 270; abs -= 360) {}
                 if (Math.abs(abs) > 90) {
                     n10 = -1;
                 }
                 float abs2;
-                for (abs2 = Math.abs(n4); abs2 > 270; abs2 -= 360) {}
+                for (abs2 = Math.abs(xy); abs2 > 270; abs2 -= 360) {}
                 if (Math.abs(abs2) > 90) {
                     n11 = -1;
                 }
                 final int[] array6 = new int[3];
                 final int[] array7 = new int[3];
-                array[0] = this.ox[this.pa] + n;
-                array3[0] = this.oy[this.pa] + n2;
-                array2[0] = this.oz[this.pa] + n3;
-                array[1] = this.ox[this.pb] + n;
-                array3[1] = this.oy[this.pb] + n2;
-                array2[1] = this.oz[this.pb] + n3;
+                array[0] = this.ox[this.pa] + f;
+                array3[0] = this.oy[this.pa] + h;
+                array2[0] = this.oz[this.pa] + o;
+                array[1] = this.ox[this.pb] + f;
+                array3[1] = this.oy[this.pb] + h;
+                array2[1] = this.oz[this.pb] + o;
                 while (Math.abs(array[0] - array[1]) > 100) {
                     if (array[1] > array[0]) {
                         final float[] array8 = array;
@@ -379,9 +392,9 @@ public class Plane
                 array2[2] = (array2[0] + array2[1]) / 2 + n17;
                 final int n18 = (int)((Math.abs(array[0] - array[1]) + Math.abs(array2[0] - array2[1])) / 1.5 * (this.m.random() / 2.0f + 0.5));
                 array3[2] = (array3[0] + array3[1]) / 2 - n10 * n11 * n18;
-                this.rot(array, array3, n, n2, n4, 3);
-                this.rot(array3, array2, n2, n3, n5, 3);
-                this.rot(array, array2, n, n3, cxz, 3);
+                this.rot(array, array3, f, h, xy, 3);
+                this.rot(array3, array2, h, o, zy, 3);
+                this.rot(array, array2, f, o, xz, 3);
                 this.rot(array, array2, this.m.cx, this.m.cz, this.m.xz, 3);
                 this.rot(array3, array2, this.m.cy, this.m.cz, this.m.zy, 3);
                 for (int n19 = 0; n19 < 3; ++n19) {
@@ -411,12 +424,12 @@ public class Plane
                 }
                 graphics2D.setColor(new Color(r, g, b2));
                 graphics2D.fillPolygon(array6, array7, 3);
-                array[0] = this.ox[this.pa] + n;
-                array3[0] = this.oy[this.pa] + n2;
-                array2[0] = this.oz[this.pa] + n3;
-                array[1] = this.ox[this.pb] + n;
-                array3[1] = this.oy[this.pb] + n2;
-                array2[1] = this.oz[this.pb] + n3;
+                array[0] = this.ox[this.pa] + f;
+                array3[0] = this.oy[this.pa] + h;
+                array2[0] = this.oz[this.pa] + o;
+                array[1] = this.ox[this.pb] + f;
+                array3[1] = this.oy[this.pb] + h;
+                array2[1] = this.oz[this.pb] + o;
                 while (Math.abs(array[0] - array[1]) > 100) {
                     if (array[1] > array[0]) {
                         final float[] array12 = array;
@@ -444,9 +457,9 @@ public class Plane
                 array[2] = (array[0] + array[1]) / 2 + n16;
                 array2[2] = (array2[0] + array2[1]) / 2 + n17;
                 array3[2] = (array3[0] + array3[1]) / 2 - n10 * n11 * (int)(n18 * 0.8);
-                this.rot(array, array3, n, n2, n4, 3);
-                this.rot(array3, array2, n2, n3, n5, 3);
-                this.rot(array, array2, n, n3, cxz, 3);
+                this.rot(array, array3, f, h, xy, 3);
+                this.rot(array3, array2, h, o, zy, 3);
+                this.rot(array, array2, f, o, xz, 3);
                 this.rot(array, array2, this.m.cx, this.m.cz, this.m.xz, 3);
                 this.rot(array3, array2, this.m.cy, this.m.cz, this.m.zy, 3);
                 for (int n24 = 0; n24 < 3; ++n24) {
@@ -479,22 +492,22 @@ public class Plane
             }
             for (int n25 = 0; n25 < this.n; ++n25) {
                 if (this.typ == 1) {
-                    array[n25] = (int)(this.ox[n25] * n9 + n);
+                    array[n25] = (int)(this.ox[n25] * n9 + f);
                 }
                 else {
-                    array[n25] = this.ox[n25] + n;
+                    array[n25] = this.ox[n25] + f;
                 }
                 if (this.typ == 2) {
-                    array3[n25] = (int)(this.oy[n25] * n9 + n2);
+                    array3[n25] = (int)(this.oy[n25] * n9 + h);
                 }
                 else {
-                    array3[n25] = this.oy[n25] + n2;
+                    array3[n25] = this.oy[n25] + h;
                 }
                 if (this.typ == 3) {
-                    array2[n25] = (int)(this.oz[n25] * n9 + n3);
+                    array2[n25] = (int)(this.oz[n25] * n9 + o);
                 }
                 else {
-                    array2[n25] = this.oz[n25] + n3;
+                    array2[n25] = this.oz[n25] + o;
                 }
             }
             if (this.embos != 70) {
@@ -505,10 +518,10 @@ public class Plane
             }
         }
         if (this.wz != 0) {
-            this.rot(array3, array2, this.wy + n2, this.wz + n3, n7, this.n);
+            this.rot(array3, array2, this.wy + h, this.wz + o, wzy, this.n);
         }
         if (this.wx != 0) {
-            this.rot(array, array2, this.wx + n, this.wz + n3, n6, this.n);
+            this.rot(array, array2, this.wx + f, this.wz + o, wxz, this.n);
         }
         if (this.chip == 1 && (this.m.random() > 0.6 || this.bfase == 0)) {
             this.chip = 0;
@@ -518,9 +531,9 @@ public class Plane
         }
         if (this.chip != 0) {
             if (this.chip == 1) {
-                this.cxz = cxz;
-                this.cxy = n4;
-                this.czy = n5;
+                this.cxz = xz;
+                this.cxy = xy;
+                this.czy = zy;
                 final int n26 = (int)(this.m.random() * this.n);
                 this.cox[0] = this.ox[n26];
                 this.coz[0] = this.oz[n26];
@@ -556,13 +569,13 @@ public class Plane
             final float[] array17 = new float[3];
             final float[] array18 = new float[3];
             for (int n27 = 0; n27 < 3; ++n27) {
-                array16[n27] = this.cox[n27] + n;
-                array18[n27] = this.coy[n27] + n2;
-                array17[n27] = this.coz[n27] + n3;
+                array16[n27] = this.cox[n27] + f;
+                array18[n27] = this.coy[n27] + h;
+                array17[n27] = this.coz[n27] + o;
             }
-            this.rot(array16, array18, n, n2, this.cxy, 3);
-            this.rot(array18, array17, n2, n3, this.czy, 3);
-            this.rot(array16, array17, n, n3, this.cxz, 3);
+            this.rot(array16, array18, f, h, this.cxy, 3);
+            this.rot(array18, array17, h, o, this.czy, 3);
+            this.rot(array16, array17, f, o, this.cxz, 3);
             for (int n28 = 0; n28 < 3; ++n28) {
                 final float[] array19 = array16;
                 final int n29 = n28;
@@ -610,10 +623,10 @@ public class Plane
                 this.chip = 0;
             }
         }
-        this.rot(array, array3, n, n2, n4, this.n);
-        this.rot(array3, array2, n2, n3, n5, this.n);
-        this.rot(array, array2, n, n3, cxz, this.n);
-        if ((n4 != 0 || n5 != 0 || cxz != 0)) {
+        this.rot(array, array3, f, h, xy, this.n);
+        this.rot(array3, array2, h, o, zy, this.n);
+        this.rot(array, array2, f, o, xz, this.n);
+        if ((xy != 0 || zy != 0 || xz != 0) && !this.m.trk) {
             this.projf = 1.0f;
             for (int n34 = 0; n34 < 3; ++n34) {
                 for (int n35 = 0; n35 < 3; ++n35) {
@@ -695,16 +708,16 @@ public class Plane
         if (n48 == this.n || n46 == this.n || n47 == this.n || n49 == this.n) {
             n45 = 0;
         }
-        if ((n48 != 0 || n46 != 0 || n47 != 0 || n49 != 0)) {
+        if (this.m.trk && (n48 != 0 || n46 != 0 || n47 != 0 || n49 != 0)) {
             n45 = 0;
         }
-        if (n50 != 0) {
+        if (this.m.trk && n50 != 0) {
             n45 = 0;
         }
         if (n50 != 0) {
             b = true;
         }
-        if (n45 != 0 && n410 != -1) {
+        if (n45 != 0 && n4 != -1) {
             int abs3 = 0;
             int abs4 = 0;
             for (int n52 = 0; n52 < this.n; ++n52) {
@@ -722,7 +735,7 @@ public class Plane
             if (abs3 == 0 || abs4 == 0) {
                 n45 = 0;
             }
-            else if (abs3 < 3 && abs4 < 3 && ((n410 / abs3 > 15 && n410 / abs4 > 15) || b) && (!this.m.lightson || this.light == 0)) {
+            else if (abs3 < 3 && abs4 < 3 && ((n4 / abs3 > 15 && n4 / abs4 > 15) || b) && (!this.m.lightson || this.light == 0)) {
                 n45 = 0;
             }
         }
@@ -802,8 +815,8 @@ public class Plane
             final float n63 = (n56 + n57) / 2;
             final float n64 = (n58 + n59) / 2;
             final float n65 = (n60 + n61) / 2;
-            this.av = (int)Math.sqrt((this.m.cy - n63) * (this.m.cy - n63) + (this.m.cx - n64) * (this.m.cx - n64) + n65 * n65 + gr * gr * gr);
-            if (this.av > this.m.fade[this.disline] || this.av == 0) {
+            this.av = (float)Math.sqrt((this.m.cy - n63) * (this.m.cy - n63) + (this.m.cx - n64) * (this.m.cx - n64) + n65 * n65 + gr * gr * gr);
+            if (!this.m.trk && (this.av > this.m.fade[this.disline] || this.av == 0)) {
                 n45 = 0;
             }
             if (lastmaf == -111 && this.av > 4500 && !this.road) {
@@ -818,19 +831,19 @@ public class Plane
             if (this.fs == 22 && this.av < 11200) {
                 this.m.lastmaf = lastmaf;
             }
-            if (this.gr == -13 && (!this.m.lastcheck || n410 != -1)) {
+            if (this.gr == -13 && (!this.m.lastcheck || n4 != -1)) {
                 n45 = 0;
             }
             if (this.master == 2 && this.av > 1500 && !this.m.crs) {
                 n45 = 0;
             }
-            if ((this.gr == -14 || this.gr == -15 || this.gr == -12) && (this.av > 11000 || b4 || lastmaf == -111 || this.m.resdown == 2)) {
+            if ((this.gr == -14 || this.gr == -15 || this.gr == -12) && (this.av > 11000 || b4 || lastmaf == -111) && !this.m.trk) {
                 n45 = 0;
             }
-            if (this.gr == -11 && this.av > 11000) {
+            if (this.gr == -11 && this.av > 11000 && !this.m.trk) {
                 n45 = 0;
             }
-            if (this.glass == 2 && this.av > 6700) {
+            if (this.glass == 2 && (this.m.trk || this.av > 6700)) {
                 n45 = 0;
             }
             if (this.flx != 0 && this.m.random() > 0.3 && this.flx != 77) {
@@ -862,7 +875,7 @@ public class Plane
                 if (this.gr == -4) {
                     n66 = 0.74f;
                 }
-                if (this.gr != -7 && b4) {
+                if (this.gr != -7 && !this.m.trk && b4) {
                     n66 = 0.32f;
                 }
                 if (this.gr == -8 || this.gr == -14 || this.gr == -15) {
@@ -870,7 +883,7 @@ public class Plane
                 }
                 if (this.gr == -11 || this.gr == -12) {
                     n66 = 0.6f;
-                    if (n410 == -1) {
+                    if (n4 == -1) {
                         if (this.m.cpflik || (this.m.nochekflk && !this.m.lastcheck)) {
                             n66 = 1.0f;
                         }
@@ -879,7 +892,7 @@ public class Plane
                         }
                     }
                 }
-                if (this.gr == -13 && n410 == -1) {
+                if (this.gr == -13 && n4 == -1) {
                     if (this.m.cpflik) {
                         n66 = 0.0f;
                     }
@@ -903,17 +916,17 @@ public class Plane
                 }
             }
             Color color = Color.getHSBColor(this.hsb[0], this.hsb[1], this.hsb[2] * n66);
-            if (false) {
-                final float[] hsbvals = new float[3];
-                Color.RGBtoHSB(this.oc[0], this.oc[1], this.oc[2], hsbvals);
-                hsbvals[0] = 0.15f;
-                hsbvals[1] = 0.3f;
-                color = Color.getHSBColor(hsbvals[0], hsbvals[1], hsbvals[2] * n66 + 0.0f);
+            if (this.m.trk) {
+                    final float[] hsbvals = new float[3];
+                    int gray = (int) (0.299 * oc[0] + 0.587 * oc[1] + 0.114 * oc[2]);
+                    if (gray > 255) gray = 255;
+                    Color.RGBtoHSB(gray, gray, gray, hsbvals);
+                    color = Color.getHSBColor(hsbvals[0], hsbvals[1], hsbvals[2] * n66);
             }
             int red = color.getRed();
             int green = color.getGreen();
             int blue = color.getBlue();
-            if (this.m.lightson && (this.light != 0 || ((this.gr == -11 || this.gr == -12) && n410 == -1))) {
+            if (this.m.lightson && (this.light != 0 || ((this.gr == -11 || this.gr == -12) && n4 == -1))) {
                 red = this.oc[0];
                 if (red > 255) {
                     red = 255;
@@ -936,7 +949,7 @@ public class Plane
                     blue = 0;
                 }
             }
-            if (true) {
+            if (!this.m.trk) {
                 for (int n67 = 0; n67 < 16; ++n67) {
                     if (this.av > this.m.fade[n67]) {
                         red = (red * this.m.fogd + this.m.cfade[0]) / (this.m.fogd + 1);
@@ -947,7 +960,7 @@ public class Plane
             }
             graphics2D.setColor(new Color(red, green, blue));
             graphics2D.fillPolygon(array26, array27, this.n);
-            if (this.gr == -10) {
+            if (this.m.trk && this.gr == -10) {
                 b = false;
             }
             if (!b) {
@@ -1041,7 +1054,7 @@ public class Plane
                     }
                 }
             }
-            else if (this.road && this.av <= 3000 && this.m.fade[0] > 4000) {
+            else if (this.road && this.av <= 3000 && !this.m.trk && this.m.fade[0] > 4000) {
                 red -= 10;
                 if (red < 0) {
                     red = 0;
@@ -1058,11 +1071,11 @@ public class Plane
                 graphics2D.drawPolygon(array26, array27, this.n);
             }
             if (this.gr == -10) {
-                if (this.m.trk) {
+                if (!this.m.trk) {
                     int r6 = this.c[0];
                     int g6 = this.c[1];
                     int b9 = this.c[2];
-                    if (n410 == -1 && this.m.cpflik) {
+                    if (n4 == -1 && this.m.cpflik) {
                         r6 *= (int)1.6;
                         if (r6 > 255) {
                             r6 = 255;
@@ -1113,7 +1126,7 @@ public class Plane
                     graphics2D.drawPolygon(array26, array27, this.n);
                 }
             }
-            if (this.gr == -18) {
+            if (this.gr == -18 && !this.m.trk) {
                 int r8 = this.c[0];
                 int g8 = this.c[1];
                 int b11 = this.c[2];
@@ -1141,18 +1154,18 @@ public class Plane
         }
     }
     
-    public void s(final Graphics2D graphics2D, final float n, final float n2, final float n3, final float n4, final float n5, final float n6, final int n7) {
+    public void s(final Graphics2D graphics2D, final float f, final float h, final float o, final float xz, final float xy, final float zy, final int n7) {
         final float[] array = new float[this.n];
         final float[] array2 = new float[this.n];
         final float[] array3 = new float[this.n];
         for (int i = 0; i < this.n; ++i) {
-            array[i] = this.ox[i] + n;
-            array3[i] = this.oy[i] + n2;
-            array2[i] = this.oz[i] + n3;
+            array[i] = this.ox[i] + f;
+            array3[i] = this.oy[i] + h;
+            array2[i] = this.oz[i] + o;
         }
-        this.rot(array, array3, n, n2, n5, this.n);
-        this.rot(array3, array2, n2, n3, n6, this.n);
-        this.rot(array, array2, n, n3, n4, this.n);
+        this.rot(array, array3, f, h, xy, this.n);
+        this.rot(array3, array2, h, o, zy, this.n);
+        this.rot(array, array2, f, o, xz, this.n);
         int r = (int)((float)this.m.crgrnd[0] / 1.5);
         int g = (int)((float)this.m.crgrnd[1] / 1.5);
         int b = (int)((float)this.m.crgrnd[2] / 1.5);
@@ -1215,7 +1228,7 @@ public class Plane
             for (int n18 = this.t.sect[ncx][ncz].length - 1; n18 >= 0; --n18) {
                 final int n19 = this.t.sect[ncx][ncz][n18];
                 int n20 = 0;
-                if (Math.abs(this.t.zy[n19]) != 90 && Math.abs(this.t.xy[n19]) != 90 && this.t.rady[n19] != 801 && Math.abs(n16 - (this.t.x[n19] - this.m.x)) < this.t.radx[n19] && Math.abs(n17 - (this.t.z[n19] - this.m.z)) < this.t.radz[n19] && (!this.t.decor[n19] || this.m.resdown != 2)) {
+                if (Math.abs(this.t.zy[n19]) != 90 && Math.abs(this.t.xy[n19]) != 90 && this.t.rady[n19] != 801 && Math.abs(n16 - (this.t.x[n19] - this.m.x)) < this.t.radx[n19] && Math.abs(n17 - (this.t.z[n19] - this.m.z)) < this.t.radz[n19] && !this.t.decor[n19]) {
                     ++n20;
                 }
                 if (n20 != 0) {
@@ -1291,39 +1304,37 @@ public class Plane
                     b = (b * this.m.fogd + this.m.cfade[2]) / (this.m.fogd + 1);
                 }
             }
-            graphics2D.setColor(Color.BLACK);
-            graphics2D.setComposite(AlphaComposite.getInstance(3, 1/3F));
+            graphics2D.setColor(new Color(r, g, b));
             graphics2D.fillPolygon(array6, array7, this.n);
-            graphics2D.setComposite(AlphaComposite.getInstance(3));
         }
     }
     
-    public int xs(final float array, float array2) {
-        if (array2 < this.m.cz) {
-            array2 = this.m.cz;
+    public int xs(final float n, float cz) {
+        if (cz < this.m.cz) {
+            cz = this.m.cz;
         }
-        return (int) ((array2 - this.m.focus_point) * (this.m.cx - array) / array2 + array);
+        return (int) ((cz - this.m.focus_point) * (this.m.cx - n) / cz + n);
     }
     
-    public int ys(final float array3, float array2) {
-        if (array2 < this.m.cz) {
-            array2 = this.m.cz;
+    public int ys(final float n, float cz) {
+        if (cz < this.m.cz) {
+            cz = this.m.cz;
         }
-        return (int) ((array2 - this.m.focus_point) * (this.m.cy - array3) / array2 + array3);
+        return (int) ((cz - this.m.focus_point) * (this.m.cy - n) / cz + n);
     }
     
-    public void rot(final float[] array, final float[] array3, final float n2, final float n22, final float n52, final int n4) {
-        if (n52 != 0) {
+    public void rot(final float[] array, final float[] array2, final float cx, final float cz, final float xz, final int n4) {
+        if (xz != 0) {
             for (int i = 0; i < n4; ++i) {
                 final float n5 = array[i];
-                final float n6 = array3[i];
-                array[i] = n2 + (int)((n5 - n2) * this.m.cos((int) n52) - (n6 - n22) * this.m.sin((int) n52));
-                array3[i] = n22 + (int)((n5 - n2) * this.m.sin((int) n52) + (n6 - n22) * this.m.cos((int) n52));
+                final float n6 = array2[i];
+                array[i] = cx + ((n5 - cx) * this.m.cos(xz) - (n6 - cz) * this.m.sin(xz));
+                array2[i] = cz + ((n5 - cx) * this.m.sin(xz) + (n6 - cz) * this.m.cos(xz));
             }
         }
     }
     
-    public int spy(final float array, final float array2) {
-        return (int)Math.sqrt((array - this.m.cx) * (array - this.m.cx) + array2 * array2);
+    public float spy(final float array, final float array2) {
+        return (float)Math.sqrt((array - this.m.cx) * (array - this.m.cx) + array2 * array2);
     }
 }

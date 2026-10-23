@@ -19,6 +19,7 @@ public class Medium
     int[] crgrnd;
     int[] cfade;
     int[] snap;
+    int origfade;
     int fogd;
     int mgen;
     boolean loadnew;
@@ -108,11 +109,9 @@ public class Medium
     int[][][] stc;
     boolean[] bst;
     int[] twn;
-    int resdown;
-    int rescnt;
     
     public Medium() {
-        this.focus_point = 640;
+        this.focus_point = 400;
         this.ground = 250;
         this.skyline = -300;
         this.fade = new int[] { 3000, 4500, 6000, 7500, 9000, 10500, 12000, 13500, 15000, 16500, 18000, 19500, 21000, 22500, 24000, 25500 };
@@ -127,6 +126,7 @@ public class Medium
         this.crgrnd = new int[] { 205, 200, 200 };
         this.cfade = new int[] { 255, 220, 220 };
         this.snap = new int[] { 0, 0, 0 };
+        this.origfade = 5000;
         this.fogd = 7;
         this.mgen = (int)(Math.random() * 100000.0);
         this.lightson = false;
@@ -137,9 +137,9 @@ public class Medium
         this.noelec = 0;
         this.trk = false;
         this.crs = false;
-        this.cx = 640;
-        this.cy = 360;
-        this.cz = 100;
+        this.cx = 400;
+        this.cy = 225;
+        this.cz = 50;
         this.xz = 0;
         this.zy = 0;
         this.x = 0;
@@ -147,8 +147,8 @@ public class Medium
         this.z = 0;
         this.iw = 0;
         this.ih = 0;
-        this.w = 1280;
-        this.h = 720;
+        this.w = 800;
+        this.h = 450;
         this.nsp = 0;
         this.spx = new float[7];
         this.spz = new float[7];
@@ -215,14 +215,117 @@ public class Medium
         this.stc = null;
         this.bst = null;
         this.twn = null;
-        this.resdown = 0;
-        this.rescnt = 5;
         for (int i = 0; i < 360; ++i) {
             this.tcos[i] = (float)Math.cos(i * 0.017453292519943295);
         }
         for (int j = 0; j < 360; ++j) {
             this.tsin[j] = (float)Math.sin(j * 0.017453292519943295);
         }
+    }
+    
+    public void defaultMedium() {
+        this.focus_point = 400;
+        this.ground = 250;
+        this.skyline = -300;
+        this.fade = new int[] { 3000, 4500, 6000, 7500, 9000, 10500, 12000, 13500, 15000, 16500, 18000, 19500, 21000, 22500, 24000, 25500 };
+        this.cldd = new int[] { 210, 210, 210, 1, -1000 };
+        this.clds = new int[] { 210, 210, 210 };
+        this.osky = new int[] { 170, 220, 255 };
+        this.csky = new int[] { 170, 220, 255 };
+        this.ogrnd = new int[] { 205, 200, 200 };
+        this.cgrnd = new int[] { 205, 200, 200 };
+        this.texture = new int[] { 0, 0, 0, 50 };
+        this.cpol = new int[] { 215, 210, 210 };
+        this.crgrnd = new int[] { 205, 200, 200 };
+        this.cfade = new int[] { 255, 220, 220 };
+        this.snap = new int[] { 0, 0, 0 };
+        this.origfade = 5000;
+        this.fogd = 7;
+        this.mgen = (int)(Math.random() * 100000.0);
+        this.lightson = false;
+        this.darksky = false;
+        this.lightn = -1;
+        this.lilo = 217;
+        this.lton = false;
+        this.noelec = 0;
+        this.trk = false;
+        this.crs = false;
+        this.cx = 400;
+        this.cy = 225;
+        this.cz = 50;
+        this.xz = 0;
+        this.zy = 0;
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+        this.iw = 0;
+        this.ih = 0;
+        this.w = 800;
+        this.h = 450;
+        this.nsp = 0;
+        this.spx = new float[7];
+        this.spz = new float[7];
+        this.sprad = new int[7];
+        this.td = false;
+        this.bcxz = 0;
+        this.bt = false;
+        this.vxz = 180;
+        this.adv = 500;
+        this.vert = false;
+        this.lastmaf = 0;
+        this.checkpoint = -1;
+        this.lastcheck = false;
+        this.elecr = 0.0f;
+        this.cpflik = false;
+        this.nochekflk = false;
+        this.cntrn = 0;
+        this.diup = new boolean[] { false, false, false };
+        this.rand = new int[] { 0, 0, 0 };
+        this.trn = 0;
+        this.hit = 45000;
+        this.ptr = 0;
+        this.ptcnt = -10;
+        this.nrnd = 0;
+        this.trx = 0L;
+        this.trz = 0L;
+        this.atrx = 0L;
+        this.atrz = 0L;
+        this.fallen = 0;
+        this.fo = 1.0f;
+        this.gofo = (float)(0.33000001311302185 + Math.random() * 1.34);
+        this.fvect = 200;
+        this.ogpx = null;
+        this.ogpz = null;
+        this.pvr = null;
+        this.cgpx = null;
+        this.cgpz = null;
+        this.pmx = null;
+        this.pcv = null;
+        this.sgpx = 0;
+        this.sgpz = 0;
+        this.nrw = 0;
+        this.ncl = 0;
+        this.noc = 0;
+        this.clx = null;
+        this.clz = null;
+        this.cmx = null;
+        this.clax = null;
+        this.clay = null;
+        this.claz = null;
+        this.clc = null;
+        this.nmt = 0;
+        this.mrd = null;
+        this.nmv = null;
+        this.mtx = null;
+        this.mty = null;
+        this.mtz = null;
+        this.mtc = null;
+        this.nst = 0;
+        this.stx = null;
+        this.stz = null;
+        this.stc = null;
+        this.bst = null;
+        this.twn = null;
     }
     
     public float random() {
@@ -306,7 +409,7 @@ public class Medium
                 this.zy = 67;
                 this.atrx = (checkPoints.x[0] - this.trx) / 116L;
                 this.atrz = (checkPoints.z[0] - this.trz) / 116L;
-                this.focus_point = 640;
+                this.focus_point = 400;
             }
             if (this.hit == 20000) {
                 this.fallen = 500;
@@ -314,7 +417,7 @@ public class Medium
                 this.zy = 67;
                 this.atrx = (checkPoints.x[0] - this.trx) / 116L;
                 this.atrz = (checkPoints.z[0] - this.trz) / 116L;
-                this.focus_point = 640;
+                this.focus_point = 400;
             }
             this.hit -= this.fallen;
             this.fallen += 7;
@@ -333,7 +436,7 @@ public class Medium
             this.vxz += 3;
         }
         else {
-            this.focus_point = 640 * this.fo;
+            this.focus_point = 400 * this.fo;
             if (Math.abs(this.fo - this.gofo) > 0.005) {
                 if (this.fo < this.gofo) {
                     this.fo += 0.005f;
@@ -651,8 +754,8 @@ public class Medium
         }
         cxz += this.bcxz;
         this.xz = -cxz;
-        this.x = contO.x - this.cx + (int)(-(contO.z - 800 - contO.z) * this.sin(cxz));
-        this.z = contO.z - this.cz + (int)((contO.z - 800 - contO.z) * this.cos(cxz));
+        this.x = contO.x - this.cx + (-(contO.z - 800 - contO.z) * this.sin(cxz));
+        this.z = contO.z - this.cz + ((contO.z - 800 - contO.z) * this.cos(cxz));
         this.y = contO.y - 250 - this.cy;
     }
     
@@ -864,7 +967,7 @@ public class Medium
             for (int j = n2; j < ncl; ++j) {
                 array[i - n][j - n2] = 0;
                 final int n3 = i + j * this.nrw;
-                if (this.resdown < 2 || n3 % 2 == 0) {
+                if (n3 % 2 == 0) {
                     final float n4 = this.cx + (int)((this.cgpx[n3] - this.x - this.cx) * this.cos(this.xz) - (this.cgpz[n3] - this.z - this.cz) * this.sin(this.xz));
                     final float n5 = this.cz + (int)((250 - this.y - this.cy) * this.sin(this.zy) + (this.cz + (int)((this.cgpx[n3] - this.x - this.cx) * this.sin(this.xz) + (this.cgpz[n3] - this.z - this.cz) * this.cos(this.xz)) - this.cz) * this.cos(this.zy));
                     if (this.xs(n4 + this.pmx[n3], n5) > 0 && this.xs(n4 - this.pmx[n3], n5) < this.w && n5 > -this.pmx[n3] && n5 < this.fade[2]) {
@@ -1831,13 +1934,12 @@ public class Medium
             graphics2D.setColor(new Color((int)((r2 * (1.0f - n6) + n * (1.0f + n6)) / 2.0f), (int)((g2 * (1.0f - n6) + n2 * (1.0f + n6)) / 2.0f), (int)((b2 * (1.0f - n6) + n3 * (1.0f + n6)) / 2.0f)));
             graphics2D.fillPolygon(array, array2, 4);
         }
-        if (this.resdown != 2) {
             for (int k = 1; k < 20; ++k) {
                 float n7 = 7000;
                 float n8 = this.skyline - 700 - k * 70;
                 if (this.zy != 0 && k != 19) {
-                    n8 = this.cy + (int)((this.skyline - 700 - k * 70 - this.cy) * this.cos(this.zy) - (7000 - this.cz) * this.sin(this.zy));
-                    n7 = this.cz + (int)((this.skyline - 700 - k * 70 - this.cy) * this.sin(this.zy) + (7000 - this.cz) * this.cos(this.zy));
+                    n8 = this.cy + ((this.skyline - 700 - k * 70 - this.cy) * this.cos(this.zy) - (7000 - this.cz) * this.sin(this.zy));
+                    n7 = this.cz + ((this.skyline - 700 - k * 70 - this.cy) * this.sin(this.zy) + (7000 - this.cz) * this.cos(this.zy));
                 }
                 array[0] = this.iw;
                 if (k != 19) {
@@ -1872,7 +1974,7 @@ public class Medium
             }
             this.drawmountains(graphics2D);
             this.drawclouds(graphics2D);
-        }
+        
         this.groundpolys(graphics2D);
         if (this.noelec != 0) {
             --this.noelec;
@@ -2111,34 +2213,26 @@ public class Medium
         if (n > 8000) {
             n = 8000;
         }
-        for (int i = 1; i < 17; ++i) {
-            this.fade[i - 1] = n / 2 * (i + 1);
-        }
+        int n2 = 0;
+        do {
+            this.fade[n2] = (int) (n * (n2 * .5F + 1));
+        } while (++n2 < 16);
     }
     
-    public void adjstfade(final float n, final float n2, final int n3, final GameSparker gameSparker) {
-        if (this.resdown != 2) {
-            if (n == 5.0f) {
-                if (this.resdown == 0 && this.rescnt == 0) {
-                    gameSparker.moto = 0;
-                    Madness.anti = 0;
-                    this.fadfrom(this.fade[0] = 3000);
-                    this.resdown = 1;
-                    this.rescnt = 10;
-                }
-                if (this.resdown == 1 && this.rescnt == 0) {
-                    this.resdown = 2;
-                }
-                if ((n3 == 0 || this.resdown == 0) && n2 <= -20.0f) {
-                    --this.rescnt;
-                }
+    public void adjstfade(final float n) {
+        if (n < 15F) {
+            this.fade[0] = (int)(this.origfade - 1000F * (15F - n));
+            if (this.fade[0] < 3000) {
+                this.fade[0] = 3000;
             }
-            else if (this.resdown == 0) {
-                this.rescnt = 5;
+            this.fadfrom(this.fade[0]);
+        }
+        else if (this.fade[0] != this.origfade) {
+            this.fade[0] += 500;
+            if (this.fade[0] > this.origfade) {
+                this.fade[0] = this.origfade;
             }
-            else {
-                this.rescnt = 10;
-            }
+            this.fadfrom(this.fade[0]);
         }
     }
     

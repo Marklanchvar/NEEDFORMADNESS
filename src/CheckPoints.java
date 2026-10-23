@@ -33,7 +33,7 @@ public class CheckPoints
     int pcleared;
     float[] opx;
     float[] opz;
-    float[] onscreen;
+    int[] onscreen;
     float[] omxz;
     int catchfin;
     int postwo;
@@ -73,7 +73,7 @@ public class CheckPoints
         this.pcleared = 0;
         this.opx = new float[8];
         this.opz = new float[8];
-        this.onscreen = new float[8];
+        this.onscreen = new int[8];
         this.omxz = new float[8];
         this.catchfin = 0;
         this.postwo = 0;
@@ -89,7 +89,7 @@ public class CheckPoints
                     this.magperc[i] = 1.0f;
                 }
                 this.pos[i] = 0;
-                this.onscreen[i] = array2[i].dist;
+                this.onscreen[i] = (int) array2[i].dist;
                 this.opx[i] = array2[i].x;
                 this.opz[i] = array2[i].z;
                 this.omxz[i] = array[i].mxz;

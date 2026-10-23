@@ -6265,7 +6265,7 @@ public class Lobby implements Runnable
         this.rd.fillRect(65, 425, 670, 25);
         this.btn = 0;
         int n3 = 0;
-        this.rd.drawImage(this.xt.br, 65, 25, null);
+        this.rd.drawImage(this.xt.peek, 65, 25, null);
         if (this.britchl == -1) {
             this.ongame = -1;
             this.britchl = 0;
