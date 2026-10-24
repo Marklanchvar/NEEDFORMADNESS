@@ -405,7 +405,7 @@ public class xtGraphics extends Panel implements Runnable
 	int xdu;
 	int ydu;
 	boolean grabable;
-	float logoLight;
+	float carrot;
 	
     public xtGraphics(final Medium m, final CarDefine cd, final Graphics2D rd, final GameSparker app) {
         this.fase = 111;
@@ -637,7 +637,7 @@ public class xtGraphics extends Panel implements Runnable
     	this.xdu = -14;
     	this.ydu = 283;
     	this.grabable = true;
-    	this.logoLight = 0;
+    	this.carrot = 0;
         for (int i = 0; i < 5; ++i) {
             this.pengs[i] = false;
         }
@@ -1446,6 +1446,8 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void clicknow() {
+    	this.rd.setColor(Color.BLACK);
+    	this.rd.drawRect(250, 340, 301, 81);
         this.rd.setColor(new Color(198, 214, 255));
         this.rd.fillRoundRect(250, 340, 300, 80, 30, 70);
         this.rd.setColor(new Color(128, 167, 255));
@@ -4885,17 +4887,15 @@ public class xtGraphics extends Panel implements Runnable
             array[this.sc[0]].y = -34 - array[this.sc[0]].grat;
             array[this.sc[0]].x = 0;
             if (this.mouson >= 0 && this.mouson <= 3) {
-                final ContO contO = array[this.sc[0]];
-                contO.xz += 2;
+            	carrot += 2;
             }
             else {
-                final ContO contO2 = array[this.sc[0]];
-                contO2.xz += 5;
+            	carrot += 5;
             }
-            if (array[this.sc[0]].xz > 360) {
-                final ContO contO3 = array[this.sc[0]];
-                contO3.xz -= 360;
+            if (carrot > 360) {
+            	carrot -= 360;
             }
+            array[this.sc[0]].xz = carrot;
             array[this.sc[0]].zy = 0;
             array[this.sc[0]].wzy -= 10;
             if (array[this.sc[0]].wzy < -180) {
@@ -5924,15 +5924,12 @@ public class xtGraphics extends Panel implements Runnable
             this.pnext = 0;
             this.gatey = 300;
             if (this.flipo > 10) {
-                final ContO contO6 = array[this.sc[0]];
-                contO6.y -= 100;
+                array[this.sc[0]].y -= 100;
                 if (this.nextc == 1) {
-                    final ContO contO7 = array[this.sc[0]];
-                    contO7.zy += 20;
+                    array[this.sc[0]].zy += 20;
                 }
                 if (this.nextc == -1) {
-                    final ContO contO8 = array[this.sc[0]];
-                    contO8.zy -= 20;
+                    array[this.sc[0]].zy -= 20;
                 }
             }
             else {
@@ -5945,14 +5942,7 @@ public class xtGraphics extends Panel implements Runnable
                         final int[] sc = this.sc;
                         final int n28 = 0;
                         ++sc[n28];
-                        if (this.gmode == 1) {
-                            if (this.sc[0] == 7) {
-                                this.sc[0] = 11;
-                            }
-                            if (this.sc[0] == 12) {
-                                this.sc[0] = 14;
-                            }
-                        }
+                        /*
                         if (this.multion != 0 && this.onjoin != -1 && this.ontyp > 0 && this.ontyp <= 5) {
                             while (this.sc[0] < this.maxsl && Math.abs(this.cd.cclass[this.sc[0]] - (this.ontyp - 1)) > 1) {
                                 final int[] sc2 = this.sc;
@@ -5960,19 +5950,13 @@ public class xtGraphics extends Panel implements Runnable
                                 ++sc2[n29];
                             }
                         }
+                        */
                     }
                     if (this.nextc == -1) {
                         final int[] sc3 = this.sc;
                         final int n30 = 0;
                         --sc3[n30];
-                        if (this.gmode == 1) {
-                            if (this.sc[0] == 13) {
-                                this.sc[0] = 11;
-                            }
-                            if (this.sc[0] == 10) {
-                                this.sc[0] = 6;
-                            }
-                        }
+                        /*
                         if (this.multion != 0 && this.onjoin != -1 && this.ontyp > 0 && this.ontyp <= 5) {
                             while (this.sc[0] > this.minsl && Math.abs(this.cd.cclass[this.sc[0]] - (this.ontyp - 1)) > 1) {
                                 final int[] sc4 = this.sc;
@@ -5980,6 +5964,7 @@ public class xtGraphics extends Panel implements Runnable
                                 --sc4[n31];
                             }
                         }
+                        */
                     }
                     if (this.cfase == 3 && this.cd.lastload == 2) {
                         this.app.mcars.select(this.cd.names[this.sc[0]]);
@@ -5988,6 +5973,7 @@ public class xtGraphics extends Panel implements Runnable
                     array[this.sc[0]].y = -34 - array[this.sc[0]].grat - 1100;
                     array[this.sc[0]].x = 0;
                     array[this.sc[0]].zy = 0;
+                    array[this.sc[0]].xz = carrot;
                 }
                 final ContO contO9 = array[this.sc[0]];
                 contO9.y += 100;
@@ -8554,8 +8540,15 @@ public class xtGraphics extends Panel implements Runnable
                     else {
                         this.rd.setColor(new Color((n2 + this.m.csky[0]) / 2, (this.m.csky[1] + n3) / 2, (n4 + this.m.csky[2]) / 2));
                     }
+                    if (Madness.anti == 1) {
+                    	this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    }
                     this.rd.drawLine(array3[k] - n8, array4[k], array3[k] + n8, array4[k]);
                     this.rd.drawLine(array3[k], array4[k] + n8, array3[k], array4[k] - n8);
+
+                    if (Madness.anti == 1) {
+                    	this.rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                    }
                     this.rd.setColor(new Color(n2, n3, n4));
                     this.rd.fillRect(array3[k] - 1, array4[k] - 1, 3, 3);
                 }
@@ -8612,7 +8605,6 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.setColor(new Color(r, g, b2));
         this.rd.fillRect(95, 140, 3, 3);
         if (this.m.darksky) {
-            final Color color = new Color(this.m.csky[0], this.m.csky[1], this.m.csky[2]);
             final float[] hsbvals = new float[3];
             Color.RGBtoHSB(this.m.csky[0], this.m.csky[1], this.m.csky[2], hsbvals);
             hsbvals[2] = 0.6f;
@@ -8630,7 +8622,7 @@ public class xtGraphics extends Panel implements Runnable
         this.lcary = contO.y;
         final float n14 = contO.z - this.lcarz;
         this.lcarz = contO.z;
-        final float n15 = (float)Math.sqrt(n12 * n12 + n14 * n14) * 1.4f * 21.0f * 60.0f * 60.0f / 100000.0f;
+        final float n15 = (float)Math.sqrt(n12 * n12 + n13 * n13 + n14 * n14) * 1.4f * 21.0f * 60.0f * 60.0f / 100000.0f;
         final float n16 = n15 * 0.621371f;
         this.rd.setColor(new Color(0, 0, 100));
         this.rd.drawString("" + (int)n15, 62, 245);
@@ -8938,8 +8930,8 @@ public class xtGraphics extends Panel implements Runnable
         }
     }
     
-    public void scrape(final int n, final int n2, final int n3) {
-        if (this.bfscrape == 0 && Math.sqrt(n * n + n2 * n2 + n3 * n3) / 10.0 > 10.0) {
+    public void scrape(final float scx, final float scy, final float scz) {
+        if (this.bfscrape == 0 && Math.sqrt(scx * scx + scy * scy + scz * scz) / 10.0 > 10.0) {
             int n4 = 0;
             if (this.m.random() > this.m.random()) {
                 n4 = 1;
@@ -8969,8 +8961,8 @@ public class xtGraphics extends Panel implements Runnable
         }
     }
     
-    public void gscrape(final int n, final int n2, final int n3) {
-        if ((this.bfsc1 == 0 || this.bfsc2 == 0) && Math.sqrt(n * n + n2 * n2 + n3 * n3) / 10.0 > 15.0) {
+    public void gscrape(final float scx, final float scy, final float scz) {
+        if ((this.bfsc1 == 0 || this.bfsc2 == 0) && Math.sqrt(scx * scx + scy * scy + scz * scz) / 10.0 > 15.0) {
             if (this.bfsc1 == 0) {
                 if (!this.mutes) {
                     this.scrape[2].stop();
@@ -10024,30 +10016,33 @@ public class xtGraphics extends Panel implements Runnable
     }
 
 	public void settings() {
-		rd.setColor(Color.GRAY);
-		rd.fillRect(0, 0, 800, 450);
+		this.trackbg(true);
 		rd.setColor(Color.WHITE);
         this.ftm = this.rd.getFontMetrics();
         rd.setFont(new Font("Arial", 1, 11));
         rd.setColor(new Color(94, 126, 159));
-        
-        int optionY[] = {9, 26, 43};
-        int option2[] = {Madness.anti, Madness.moto, Madness.smooth};
-
         app.oncarm = over(app.carmaker[0], app.xm, app.ym, 50, 14);
         app.onstgm = over(app.stagemaker[0], app.xm, app.ym, 592, 14);
-        rd.drawImage(app.chkbx[option2[0]], 335, 9, this);
+        rd.drawImage(app.chkbx[Madness.anti], 335, 9, this);
         rd.drawString("Antialiasing", 352, 20);
-        rd.drawImage(app.chkbx[option2[1]], 335, 26, this);
+        rd.drawImage(app.chkbx[Madness.moto], 335, 26, this);
         rd.drawString("Motion Effects", 352, 37);
-        rd.drawImage(app.chkbx[option2[2]], 335, 43, this);
+        rd.drawImage(app.chkbx[Madness.smooth], 335, 43, this);
         rd.drawString("Smooth", 352, 54);
         rd.drawImage(app.carmaker[app.oncarm ? 1 : 0], 50, 14, this);
         rd.drawImage(app.stagemaker[app.onstgm ? 1 : 0], 592, 14, this);
 
         for (int i = 0; i < 3; i++) {
-        	if (over(app.chkbx[option2[i]], app.xm, app.ym, 335, optionY[i]) && app.mouses == 2) {
-        		option2[i] = (option2[i] == 0) ? 1 : 0;
+        	if (app.mouses == 2) {
+        		if (over(app.chkbx[Madness.anti], app.xm, app.ym, 335, 9)) {
+        			Madness.anti = (Madness.anti == 0) ? 1 : 0;
+        		}
+        		if (over(app.chkbx[Madness.moto], app.xm, app.ym, 335, 26)) {
+        			Madness.moto = (Madness.moto == 0) ? 1 : 0;
+        		}
+        		if (over(app.chkbx[Madness.smooth], app.xm, app.ym, 335, 43)) {
+        			Madness.smooth = (Madness.smooth == 0) ? 1 : 0;
+        		}
         	}
         }
         if (app.moused) {

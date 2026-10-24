@@ -22,6 +22,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.LayoutManager;
 import java.awt.Composite;
 import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Cursor;
@@ -75,7 +76,7 @@ public class GameSparker extends Applet implements Runnable
     int view;
     float mvect;
     float lmxz;
-    int shaka;
+    float shaka;
     boolean applejava;
     TextField tnick;
     TextField tpass;
@@ -246,7 +247,7 @@ public class GameSparker extends Applet implements Runnable
         float menu = 30.0f;
         float ingame = 47.0f;
         int firstFrame = 0;
-        int menuMinimum = 30;
+        int menuMinimum = 5;
         final int budget = 530;
         int nfr = 0;
         int n7 = 0;
@@ -259,6 +260,12 @@ public class GameSparker extends Applet implements Runnable
             final long time2 = new Date().getTime();
         	if (xtGraphics.fase == 9999) {
         		xtGraphics.settings();
+        		if (this.mouses == 2) {
+        	        this.mouses = 0;
+        	    }
+        	    if (this.mouses == 1) {
+        	        this.mouses = 2;
+        	    }
         	}
             if (xtGraphics.fase == 111) {
                 if (this.mouses == 1) {
@@ -1708,7 +1715,7 @@ public class GameSparker extends Applet implements Runnable
             		nfr = 0;
             	}
             	if (nfr == 10) {
-            		float bullshit = (budget + udpMistro.freg - (time3 - time)) / 20.0f;
+            		float bullshit = (budget + (time3 - time)) / 20.0f;
             		if (bullshit > 40.0f) {
             			bullshit = 40.0f;
             		}
@@ -1719,7 +1726,7 @@ public class GameSparker extends Applet implements Runnable
             		if (menu < 5.0f) {
             			menu = 5.0f;
             		}
-            		if (xtGraphics.starcnt == 0) medium.adjstfade(15 - menu);
+            		if (xtGraphics.starcnt == 0) medium.adjstfade(menu);
             		time = time3;
             		nfr = 0;
             	}
@@ -1862,6 +1869,13 @@ public class GameSparker extends Applet implements Runnable
         if (this.offImage != null) {
             this.rd = (Graphics2D)this.offImage.getGraphics();
         }
+        BasicStroke roundStroke = new BasicStroke(
+        		1.0f, 
+        		BasicStroke.CAP_BUTT, 
+        		BasicStroke.JOIN_BEVEL
+        		);
+
+        this.rd.setStroke(roundStroke);
         this.setLayout(null);
         (this.tnick = new TextField("Nickbname")).setFont(new Font("Arial", 1, 13));
         (this.tpass = new TextField("")).setFont(new Font("Arial", 1, 13));
@@ -3025,6 +3039,7 @@ public class GameSparker extends Applet implements Runnable
                 bufferedWriter.newLine();
             }
             bufferedWriter.close();
+            System.out.println("Game saved.");
         }
         catch (final Exception ex) {}
     }

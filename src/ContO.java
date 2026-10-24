@@ -142,12 +142,10 @@ public class ContO
         for (int i = 0; i < 286; ++i) {
             array[i] = 0;
         }
-        if (this.m.loadnew) {
-            for (int j = 0; j < 4; ++j) {
-                this.keyz[j] = 0;
-            }
-            this.shadow = true;
+        for (int j = 0; j < 4; ++j) {
+        	this.keyz[j] = 0;
         }
+        this.shadow = false;
         String string = "";
         int n = 0;
         int n2 = 0;
@@ -250,60 +248,6 @@ public class ContO
                     this.keyz[n6] = (int)(this.getvalue("w", string, 2) * n4 * array2[2]);
                     wheels.make(this.m, this.t, this.p, this.npl, (int)(this.getvalue("w", string, 0) * n4 * n5 * array2[0]), (int)(this.getvalue("w", string, 1) * n4 * array2[1]), (int)(this.getvalue("w", string, 2) * n4 * array2[2]), this.getvalue("w", string, 3), (int)(this.getvalue("w", string, 4) * n4 * n5), (int)(this.getvalue("w", string, 5) * n4), getvalue3);
                     this.npl += 19;
-                    if (this.m.loadnew) {
-                        this.wh += (int)(this.getvalue("w", string, 5) * n4);
-                        if (wheels.ground > 140) {
-                            String s = "FRONT";
-                            if (this.keyz[n6] < 0) {
-                                s = "BACK";
-                            }
-                            this.err = "Wheels Error:\n" + s + " Wheels floor is too far below the center of Y Axis of the car!    \n\nPlease decrease the Y value of the " + s + " Wheels or decrease its height.     \n \n";
-                            this.errd = true;
-                            this.keyz[n6] = 0;
-                            this.keyx[n6] = 0;
-                        }
-                        if (wheels.ground < -100) {
-                            String s2 = "FRONT";
-                            if (this.keyz[n6] < 0) {
-                                s2 = "BACK";
-                            }
-                            this.err = "Wheels Error:\n" + s2 + " Wheels floor is too far above the center of Y Axis of the car!    \n\nPlease increase the Y value of the " + s2 + " Wheels or increase its height.     \n \n";
-                            this.errd = true;
-                            this.keyz[n6] = 0;
-                            this.keyx[n6] = 0;
-                        }
-                        if (Math.abs(this.keyx[n6]) > 400) {
-                            String s3 = "FRONT";
-                            if (this.keyz[n6] < 0) {
-                                s3 = "BACK";
-                            }
-                            this.err = "Wheels Error:\n" + s3 + " Wheels are too far apart!    \n\nPlease decrease the ±X value of the " + s3 + " Wheels.     \n \n";
-                            this.errd = true;
-                            this.keyz[n6] = 0;
-                            this.keyx[n6] = 0;
-                        }
-                        if (Math.abs(this.keyz[n6]) > 700) {
-                            if (this.keyz[n6] < 0) {
-                                this.err = "Wheels Error:\nBACK Wheels are too far backwards from the center of the Z Axis!    \n\nPlease increase the -Z value of the BACK Wheels.     \n \n";
-                            }
-                            else {
-                                this.err = "Wheels Error:\nFRONT Wheels are too far forwards from the center of the Z Axis!    \n\nPlease decrease the +Z value of the FRONT Wheels.     \n \n";
-                            }
-                            this.errd = true;
-                            this.keyz[n6] = 0;
-                            this.keyx[n6] = 0;
-                        }
-                        if ((int)(this.getvalue("w", string, 4) * n4 * n5) > 300) {
-                            String s4 = "FRONT";
-                            if (this.keyz[n6] < 0) {
-                                s4 = "BACK";
-                            }
-                            this.err = "Wheels Error:\nWidth of the " + s4 + " Wheels is too large!    \n\nPlease decrease the width of the " + s4 + " Wheels.     \n \n";
-                            this.errd = true;
-                            this.keyz[n6] = 0;
-                            this.keyx[n6] = 0;
-                        }
-                    }
                     ++n6;
                 }
                 if (string.startsWith("tracks")) {
@@ -434,17 +378,6 @@ public class ContO
                 }
                 if (string.startsWith("gwgr(")) {
                     getvalue3 = this.getvalue("gwgr", string, 0);
-                    if (this.m.loadnew) {
-                        if (getvalue3 > 40) {
-                            getvalue3 = 40;
-                        }
-                        if (getvalue3 < 0 && getvalue3 >= -15) {
-                            getvalue3 = -16;
-                        }
-                        if (getvalue3 < -40) {
-                            getvalue3 = -40;
-                        }
-                    }
                 }
                 if (string.startsWith("1stColor(")) {
                     this.fcol[0] = this.getvalue("1stColor", string, 0);
@@ -925,9 +858,6 @@ public class ContO
         this.shadow = contO.shadow;
         this.grounded = contO.grounded;
         this.decor = contO.decor;
-        if (this.m.loadnew && (xz2 == 90 || xz2 == -90)) {
-            this.grounded += 10000.0f;
-        }
         this.grat = contO.grat;
         this.sprkat = contO.sprkat;
         this.p = new Plane[contO.npl];
@@ -1905,12 +1835,12 @@ public class ContO
         }
     }
     
-    public void dust(final int n, final float n2, final float n3, final float n4, final float scx2, final float scz2, final float n7, final int n8, final boolean b) {
+    public void dust(final int n, final float n2, final float n3, final float n4, final float scx2, final float scz2, final float n7, final float tilt, final boolean b) {
         boolean b2 = false;
-        if (n8 > 5 && (n == 0 || n == 2)) {
+        if (tilt > 5 && (n == 0 || n == 2)) {
             b2 = true;
         }
-        if (n8 < -5 && (n == 1 || n == 3)) {
+        if (tilt < -5 && (n == 1 || n == 3)) {
             b2 = true;
         }
         float n9 = (float)((Math.sqrt(scx2 * scx2 + scz2 * scz2) - 40.0) / 160.0);
