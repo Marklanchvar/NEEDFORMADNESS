@@ -32,7 +32,7 @@ public class ContO
     float grat;
     int[] keyx;
     int[] keyz;
-    int sprkat;
+    float sprkat;
     int[] txy;
     int[] tzy;
     int[][] tc;
@@ -137,9 +137,9 @@ public class ContO
         this.wh = 0;
         this.m = m;
         this.t = t;
-        this.p = new Plane[286];
-        final int[] array = new int[286];
-        for (int i = 0; i < 286; ++i) {
+        this.p = new Plane[290];
+        final int[] array = new int[290];
+        for (int i = 0; i < 290; ++i) {
             array[i] = 0;
         }
         for (int j = 0; j < 4; ++j) {
@@ -247,7 +247,7 @@ public class ContO
                     this.keyx[n6] = (int)(this.getvalue("w", string, 0) * n4 * array2[0]);
                     this.keyz[n6] = (int)(this.getvalue("w", string, 2) * n4 * array2[2]);
                     wheels.make(this.m, this.t, this.p, this.npl, (int)(this.getvalue("w", string, 0) * n4 * n5 * array2[0]), (int)(this.getvalue("w", string, 1) * n4 * array2[1]), (int)(this.getvalue("w", string, 2) * n4 * array2[2]), this.getvalue("w", string, 3), (int)(this.getvalue("w", string, 4) * n4 * n5), (int)(this.getvalue("w", string, 5) * n4), getvalue3);
-                    this.npl += 19;
+                    this.npl += 20;
                     ++n6;
                 }
                 if (string.startsWith("tracks")) {

@@ -2,7 +2,7 @@ public class Wheels
 {
     float ground;
     int mast;
-    int sparkat;
+    float sparkat;
     int[] rc;
     float size;
     float depth;
@@ -41,17 +41,26 @@ public class Wheels
         final float[] array3 = new float[20];
         final float[] array4 = new float[20];
         final int[] array5 = { 45, 45, 45 };
-        int n9 = 0;
+        float n9 = 0;
         final float n10 = n6 / 10.0f;
         final float n11 = n7 / 10.0f;
         if (n5 == 11) {
-            n9 = (int)(n2 + 4.0f * n10);
+            n9 = (n2 + 4.0f * n10);
         }
-        this.sparkat = (int)(n11 * 24.0f);
+        this.sparkat = (n11 * 24.0f);
         this.ground = (n3 + 13.0f * n11);
         this.radius = (13.0f * n11);
-        int n12 = -1;
-        if (n2 < 0) n12 = 1;
+        
+        for (int i = 0; i < 12; ++i) {
+        	float radi = 13F;
+        	float radian = (float) ((Math.PI / 4F) + ((i / 6F) * Math.PI));
+            array2[i] = (n2 + 4.0f * n10);
+        	array3[i] = (float) (n3 + (Math.sin(radian) * radi) * n11);
+        	array4[i] = (float) (n4 + (Math.cos(radian) * radi) * n11);
+        }
+        array[n] = new Plane(medium, trackers, array2, array4, array3, 12, array5, 0, n8, 0, n9, n3, n4, 7, 0, false, 0, false);
+        ++n;
+        
         for (int i = 0; i < 20; ++i) {
             array2[i] = (n2 - 4.0f * n10);
         }
@@ -61,6 +70,7 @@ public class Wheels
         	array3[i] = (float) (n3 + (Math.sin(radian) * radi) * n11);
         	array4[i] = (float) (n4 + (Math.cos(radian) * radi) * n11);
         }
+        
         for (int i = 13; i < 20; ++i) {
         	float radi = 10F;
         	float radian = (float) ((i / 3F) * Math.PI);
@@ -74,7 +84,6 @@ public class Wheels
         array2[2] = (n2 - this.depth * n10);
         array3[2] = n3;
         array4[2] = n4;
-        int n13 = (int)(n8 - this.depth / this.size * 4.0f);
         for (int i = 0; i < 6; i++) {
         	float radian1 = (float) ((i / 3F) * Math.PI);
         	float radian2 = radian1 + (float)(Math.PI / 3F);
@@ -84,7 +93,7 @@ public class Wheels
 
         	array3[1] = (float) (n3 + (Math.sin(radian2) * radi) * this.size);
         	array4[1] = (float) (n4 + (Math.cos(radian2) * radi) * this.size);
-        	array[n] = new Plane(medium, trackers, array2, array4, array3, 3, this.rc, 0, n13, 0, n9, n3, n4, 7, 0, false, 0, false);
+        	array[n] = new Plane(medium, trackers, array2, array4, array3, 3, this.rc, 0, n8, 0, n9, n3, n4, 7, 0, false, 0, false);
         	if (this.depth / this.size < 7.0f) {
         		array[n].master = 2;
         	}
@@ -100,7 +109,7 @@ public class Wheels
         	array4[0] =	array4[3] = (float) (n4 + (Math.cos(radian1) * radi) * n11);
         	array3[1] = array3[2] = (float) (n3 + (Math.sin(radian2) * radi) * n11);
         	array4[1] =	array4[2] = (float) (n4 + (Math.cos(radian2) * radi) * n11);
-        	array[n] = new Plane(medium, trackers, array2, array4, array3, 4, array5, 0, n8, n12, n9, n3, n4, 7, 0, false, 0, true);
+        	array[n] = new Plane(medium, trackers, array2, array4, array3, 4, array5, 0, n8, 0, n9, n3, n4, 7, 0, false, 0, true);
         	++n;
         }
     }

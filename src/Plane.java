@@ -255,7 +255,7 @@ public class Plane
     
     public void d(final Graphics2D graphics2D, final float f, final float h, final float o, final float xz, final float xy, final float zy, final float wxz, final float wzy, boolean b, final float n4) {
         if (this.master == 1) {
-            if (this.av > 1500 && !this.m.crs) {
+            if (this.av > 3000 && !this.m.crs) {
                 this.n = 12;
             }
             else {
@@ -834,7 +834,7 @@ public class Plane
             if (this.gr == -13 && (!this.m.lastcheck || n4 != -1)) {
                 n45 = 0;
             }
-            if (this.master == 2 && this.av > 1500 && !this.m.crs) {
+            if (this.master == 2 && this.av > 3000 && !this.m.crs) {
                 n45 = 0;
             }
             if ((this.gr == -14 || this.gr == -15 || this.gr == -12) && (this.av > 11000 || b4 || lastmaf == -111) && !this.m.trk) {
