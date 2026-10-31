@@ -1,10 +1,8 @@
 public class CheckPoints
 {
-	static final int checkPointsCount = 1000;
     float[] x;
     float[] z;
     float[] y;
-	float[] xz;
     int[] typ;
     int pcs;
     int nsp;
@@ -12,7 +10,7 @@ public class CheckPoints
     float[] fx;
     float[] fz;
     float[] fy;
-    float[] fxz;
+    boolean[] roted;
     boolean[] special;
     int fn;
     int stage;
@@ -41,19 +39,18 @@ public class CheckPoints
     float prox;
     
     public CheckPoints() {
-    	this.x = new float[checkPointsCount];      // was 140
-    	this.z = new float[checkPointsCount];
-    	this.y = new float[checkPointsCount];
-        this.xz = new float[checkPointsCount];
-    	this.typ = new int[checkPointsCount];
+    	this.x = new float[1000];      // was 140
+    	this.z = new float[1000];
+    	this.y = new float[1000];
+    	this.typ = new int[1000];
         this.pcs = 0;
         this.nsp = 0;
         this.n = 0;
-        this.fx = new float[checkPointsCount];     // was 5
-        this.fz = new float[checkPointsCount];
-        this.fy = new float[checkPointsCount];
-        this.fxz = new float[checkPointsCount];
-        this.special = new boolean[checkPointsCount];
+        this.fx = new float[1000];     // was 5
+        this.fz = new float[1000];
+        this.fy = new float[1000];
+        this.roted = new boolean[1000];
+        this.special = new boolean[1000];
         this.fn = 0;
         this.stage = (int)(Math.random() * 27.0) + 1;
         this.nlaps = 0;

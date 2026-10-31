@@ -680,12 +680,18 @@ public class Plane
         }
         this.rot(plane3DY, plane3DZ, this.m.cy, this.m.cz, this.m.zy, this.n);
 
-        av = 0;
-        for (int i = 0; i < this.n; i++) {
-        	av += plane3DZ[i];
+        float[] accumulator = {0, 0, 0};
+        for (int n62 = 0; n62 < this.n; ++n62) {
+
+        	accumulator[0] += plane3DX[n62];
+        	accumulator[1] += plane3DY[n62];
+        	accumulator[2] += plane3DZ[n62];
         }
-        av /= this.n;
-        av += gr;
+        for (int n62 = 0; n62 < 3; ++n62) {
+        	accumulator[n62] /= n;
+        }
+        this.av = (float) Math.sqrt((this.m.cy - accumulator[1]) * (this.m.cy - accumulator[1]) + (this.m.cx - accumulator[0]) * (this.m.cx - accumulator[0]) + accumulator[2] * accumulator[2] + gr * gr * gr);
+        
         int visible = 1;
         final int[] polygon2DX = new int[this.n];
         final int[] polygon2DY = new int[this.n];
@@ -1130,37 +1136,67 @@ public class Plane
     }
     
     public void s(final Graphics2D graphics2D, final float f, final float h, final float o, final float xz, final float xy, final float zy, final int n7) {
-        final float[] shadow3DX = new float[this.n];
-        final float[] shadow3DY = new float[this.n];
-        final float[] shadow3DZ = new float[this.n];
+        final float[] array = new float[this.n];
+        final float[] array2 = new float[this.n];
+        final float[] array3 = new float[this.n];
         for (int i = 0; i < this.n; ++i) {
-            shadow3DX[i] = this.ox[i] + f;
-            shadow3DZ[i] = this.oy[i] + h;
-            shadow3DY[i] = this.oz[i] + o;
+            array[i] = this.ox[i] + f;
+            array3[i] = this.oy[i] + h;
+            array2[i] = this.oz[i] + o;
         }
-        this.rot(shadow3DX, shadow3DZ, f, h, xy, this.n);
-        this.rot(shadow3DZ, shadow3DY, h, o, zy, this.n);
-        this.rot(shadow3DX, shadow3DY, f, o, xz, this.n);
+        this.rot(array, array3, f, h, xy, this.n);
+        this.rot(array3, array2, h, o, zy, this.n);
+        this.rot(array, array2, f, o, xz, this.n);
         for (int j = 0; j < this.n; ++j) {
-            shadow3DZ[j] = this.m.ground;
+            array3[j] = this.m.ground;
         }
         if (n7 == 0) {
-            float midX = 0;
-            float midZ = 0;
+            float n8 = 0;
+            float n9 = 0;
+            float n10 = 0;
+            float n11 = 0;
             for (int k = 0; k < this.n; ++k) {
-            	midX += shadow3DX[k];
-            	midZ += shadow3DZ[k];
+                int n12 = 0;
+                int n13 = 0;
+                int n14 = 0;
+                int n15 = 0;
+                for (int l = 0; l < this.n; ++l) {
+                    if (array[k] >= array[l]) {
+                        ++n12;
+                    }
+                    if (array[k] <= array[l]) {
+                        ++n13;
+                    }
+                    if (array2[k] >= array2[l]) {
+                        ++n14;
+                    }
+                    if (array2[k] <= array2[l]) {
+                        ++n15;
+                    }
+                }
+                if (n12 == this.n) {
+                    n8 = array[k];
+                }
+                if (n13 == this.n) {
+                    n9 = array[k];
+                }
+                if (n14 == this.n) {
+                    n10 = array2[k];
+                }
+                if (n15 == this.n) {
+                    n11 = array2[k];
+                }
             }
-            midX /= this.n;
-            midZ /= this.n;
-            int ncx = (int) ((midX - this.t.sx + this.m.x) / 3000);
+            final float n16 = (n8 + n9) / 2;
+            final float n17 = (n10 + n11) / 2;
+            int ncx = (int) ((n16 - this.t.sx + this.m.x) / 3000);
             if (ncx > this.t.ncx) {
                 ncx = this.t.ncx;
             }
             if (ncx < 0) {
                 ncx = 0;
             }
-            int ncz = (int) ((midZ - this.t.sz + this.m.z) / 3000);
+            int ncz = (int) ((n17 - this.t.sz + this.m.z) / 3000);
             if (ncz > this.t.ncz) {
                 ncz = this.t.ncz;
             }
@@ -1170,52 +1206,68 @@ public class Plane
             for (int n18 = this.t.sect[ncx][ncz].length - 1; n18 >= 0; --n18) {
                 final int n19 = this.t.sect[ncx][ncz][n18];
                 int n20 = 0;
-                if (Math.abs(this.t.zy[n19]) != 90 && Math.abs(this.t.xy[n19]) != 90 && this.t.rady[n19] != 801 && Math.abs(midX - (this.t.x[n19] - this.m.x)) < this.t.radx[n19] && Math.abs(midZ - (this.t.z[n19] - this.m.z)) < this.t.radz[n19] && !this.t.decor[n19]) {
+                if (Math.abs(this.t.zy[n19]) != 90 && Math.abs(this.t.xy[n19]) != 90 && this.t.rady[n19] != 801 && Math.abs(n16 - (this.t.x[n19] - this.m.x)) < this.t.radx[n19] && Math.abs(n17 - (this.t.z[n19] - this.m.z)) < this.t.radz[n19] && !this.t.decor[n19]) {
                     ++n20;
                 }
                 if (n20 != 0) {
                     for (int n21 = 0; n21 < this.n; ++n21) {
-                        shadow3DZ[n21] = this.t.y[n19] - this.m.y;
+                        array3[n21] = this.t.y[n19] - this.m.y;
                         if (this.t.zy[n19] != 0) {
-                            shadow3DZ[n21] += ((shadow3DY[n21] - (this.t.z[n19] - this.m.z - this.t.radz[n19])) * this.m.sin(this.t.zy[n19]) / this.m.sin(90 - this.t.zy[n19]) - this.t.radz[n19] * this.m.sin(this.t.zy[n19]) / this.m.sin(90 - this.t.zy[n19]));
+                            final float[] array4 = array3;
+                            final int n22 = n21;
+                            array4[n22] += (int)((array2[n21] - (this.t.z[n19] - this.m.z - this.t.radz[n19])) * this.m.sin(this.t.zy[n19]) / this.m.sin(90 - this.t.zy[n19]) - this.t.radz[n19] * this.m.sin(this.t.zy[n19]) / this.m.sin(90 - this.t.zy[n19]));
                         }
                         if (this.t.xy[n19] != 0) {
-                            shadow3DZ[n21] += ((shadow3DX[n21] - (this.t.x[n19] - this.m.x - this.t.radx[n19])) * this.m.sin(this.t.xy[n19]) / this.m.sin(90 - this.t.xy[n19]) - this.t.radx[n19] * this.m.sin(this.t.xy[n19]) / this.m.sin(90 - this.t.xy[n19]));
+                            final float[] array5 = array3;
+                            final int n23 = n21;
+                            array5[n23] += (int)((array[n21] - (this.t.x[n19] - this.m.x - this.t.radx[n19])) * this.m.sin(this.t.xy[n19]) / this.m.sin(90 - this.t.xy[n19]) - this.t.radx[n19] * this.m.sin(this.t.xy[n19]) / this.m.sin(90 - this.t.xy[n19]));
                         }
                     }
                     break;
                 }
             }
         }
-        boolean isVisible = true;
-        final int[] shadow2DX = new int[this.n];
-        final int[] shadow2DY = new int[this.n];
+        int n24 = 1;
+        final int[] array6 = new int[this.n];
+        final int[] array7 = new int[this.n];
             for (int n25 = 0; n25 < this.m.nsp; ++n25) {
                 for (int n26 = 0; n26 < this.n; ++n26) {
-                    if (Math.abs(shadow3DX[n26] - this.m.spx[n25]) < this.m.sprad[n25] && Math.abs(shadow3DY[n26] - this.m.spz[n25]) < this.m.sprad[n25]) {
-                        isVisible = false;
+                    if (Math.abs(array[n26] - this.m.spx[n25]) < this.m.sprad[n25] && Math.abs(array2[n26] - this.m.spz[n25]) < this.m.sprad[n25]) {
+                        n24 = 0;
                     }
                 }
             }
-        if (isVisible) {
-            this.rot(shadow3DX, shadow3DY, this.m.cx, this.m.cz, this.m.xz, this.n);
-            this.rot(shadow3DZ, shadow3DY, this.m.cy, this.m.cz, this.m.zy, this.n);
+        if (n24 != 0) {
+            this.rot(array, array2, this.m.cx, this.m.cz, this.m.xz, this.n);
+            this.rot(array3, array2, this.m.cy, this.m.cz, this.m.zy, this.n);
+            int n27 = 0;
+            int n28 = 0;
+            int n29 = 0;
+            int n30 = 0;
             for (int n31 = 0; n31 < this.n; ++n31) {
-                shadow2DX[n31] = this.xs(shadow3DX[n31], shadow3DY[n31]);
-                shadow2DY[n31] = this.ys(shadow3DZ[n31], shadow3DY[n31]);
-                if (shadow2DY[n31] > this.m.ih || shadow2DY[n31] < this.m.h ||
-                		shadow2DX[n31] > this.m.iw || shadow2DX[n31] < this.m.w ||
-                		shadow3DY[n31] < m.cz) {
-                	isVisible = true;
-                } else {
-                	isVisible = false;
+                array6[n31] = this.xs(array[n31], array2[n31]);
+                array7[n31] = this.ys(array3[n31], array2[n31]);
+                if (array7[n31] < this.m.ih || array2[n31] < 10) {
+                    ++n27;
+                }
+                if (array7[n31] > this.m.h || array2[n31] < 10) {
+                    ++n28;
+                }
+                if (array6[n31] < this.m.iw || array2[n31] < 10) {
+                    ++n29;
+                }
+                if (array6[n31] > this.m.w || array2[n31] < 10) {
+                    ++n30;
                 }
             }
+            if (n29 == this.n || n27 == this.n || n28 == this.n || n30 == this.n) {
+                n24 = 0;
+            }
         }
-        if (isVisible) {
+        if (n24 != 0) {
             graphics2D.setColor(Color.BLACK);
             graphics2D.setComposite(AlphaComposite.getInstance(3, 1 / 3F));
-            graphics2D.fillPolygon(shadow2DX, shadow2DY, this.n);
+            graphics2D.fillPolygon(array6, array7, this.n);
             graphics2D.setComposite(AlphaComposite.getInstance(3));
         }
     }

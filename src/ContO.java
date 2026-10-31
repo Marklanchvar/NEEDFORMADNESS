@@ -30,18 +30,18 @@ public class ContO
     boolean decor;
     float grounded;
     float grat;
-    float[] keyx;
-    float[] keyz;
+    int[] keyx;
+    int[] keyz;
     float sprkat;
-    float[] txy;
-    float[] tzy;
+    int[] txy;
+    int[] tzy;
     int[][] tc;
-    float[] tradx;
-    float[] tradz;
-    float[] trady;
-    float[] tx;
-    float[] ty;
-    float[] tz;
+    int[] tradx;
+    int[] tradz;
+    int[] trady;
+    int[] tx;
+    int[] ty;
+    int[] tz;
     int[] skd;
     int[] dam;
     boolean[] notwall;
@@ -74,6 +74,7 @@ public class ContO
     float[] vry;
     float[] vrz;
     boolean elec;
+    boolean roted;
     int[] edl;
     int[] edr;
     int[] elc;
@@ -107,8 +108,8 @@ public class ContO
     	this.decor = false;
     	this.grounded = 1.0f;
     	this.grat = 0;
-    	this.keyx = new float[4];
-    	this.keyz = new float[4];
+    	this.keyx = new int[4];
+    	this.keyz = new int[4];
     	this.sprkat = 0;
     	this.tnt = 0;
     	this.ust = 0;
@@ -120,6 +121,7 @@ public class ContO
     	this.rcz = 0.0f;
     	this.sprk = 0;
     	this.elec = false;
+    	this.roted = false;
     	this.edl = new int[4];
     	this.edr = new int[4];
     	this.elc = new int[] { 0, 0, 0, 0 };
@@ -244,8 +246,8 @@ public class ContO
     				wheels.setrims(this.getvalue("rims", string, 0), this.getvalue("rims", string, 1), this.getvalue("rims", string, 2), this.getvalue("rims", string, 3), this.getvalue("rims", string, 4));
     			}
     			if (string.startsWith("w(") && n6 < 4) {
-    				this.keyx[n6] = (this.getvalue("w", string, 0) * n4 * array2[0]);
-    				this.keyz[n6] = (this.getvalue("w", string, 2) * n4 * array2[2]);
+    				this.keyx[n6] = (int)(this.getvalue("w", string, 0) * n4 * array2[0]);
+    				this.keyz[n6] = (int)(this.getvalue("w", string, 2) * n4 * array2[2]);
     				wheels.make(this.m, this.t, this.p, this.npl, (int)(this.getvalue("w", string, 0) * n4 * n5 * array2[0]), (int)(this.getvalue("w", string, 1) * n4 * array2[1]), (int)(this.getvalue("w", string, 2) * n4 * array2[2]), this.getvalue("w", string, 3), (int)(this.getvalue("w", string, 4) * n4 * n5), (int)(this.getvalue("w", string, 5) * n4), getvalue3);
     				this.npl += 20;
     				++n6;
@@ -254,15 +256,15 @@ public class ContO
     			}
     			if (string.startsWith("tracks")) {
     				final int getvalue4 = this.getvalue("tracks", string, 0);
-    				this.txy = new float[getvalue4];
-    				this.tzy = new float[getvalue4];
+    				this.txy = new int[getvalue4];
+    				this.tzy = new int[getvalue4];
     				this.tc = new int[getvalue4][3];
-    				this.tradx = new float[getvalue4];
-    				this.tradz = new float[getvalue4];
-    				this.trady = new float[getvalue4];
-    				this.tx = new float[getvalue4];
-    				this.ty = new float[getvalue4];
-    				this.tz = new float[getvalue4];
+    				this.tradx = new int[getvalue4];
+    				this.tradz = new int[getvalue4];
+    				this.trady = new int[getvalue4];
+    				this.tx = new int[getvalue4];
+    				this.ty = new int[getvalue4];
+    				this.tz = new int[getvalue4];
     				this.skd = new int[getvalue4];
     				this.dam = new int[getvalue4];
     				this.notwall = new boolean[getvalue4];
@@ -299,22 +301,22 @@ public class ContO
     						this.tzy[this.tnt] = this.getvalue("zy", string, 0);
     					}
     					if (string.startsWith("radx")) {
-    						this.tradx[this.tnt] = (this.getvalue("radx", string, 0) * n4);
+    						this.tradx[this.tnt] = (int)(this.getvalue("radx", string, 0) * n4);
     					}
     					if (string.startsWith("rady")) {
-    						this.trady[this.tnt] = (this.getvalue("rady", string, 0) * n4);
+    						this.trady[this.tnt] = (int)(this.getvalue("rady", string, 0) * n4);
     					}
     					if (string.startsWith("radz")) {
-    						this.tradz[this.tnt] = (this.getvalue("radz", string, 0) * n4);
+    						this.tradz[this.tnt] = (int)(this.getvalue("radz", string, 0) * n4);
     					}
     					if (string.startsWith("ty")) {
-    						this.ty[this.tnt] = (this.getvalue("ty", string, 0) * n4);
+    						this.ty[this.tnt] = (int)(this.getvalue("ty", string, 0) * n4);
     					}
     					if (string.startsWith("tx")) {
-    						this.tx[this.tnt] = (this.getvalue("tx", string, 0) * n4);
+    						this.tx[this.tnt] = (int)(this.getvalue("tx", string, 0) * n4);
     					}
     					if (string.startsWith("tz")) {
-    						this.tz[this.tnt] = (this.getvalue("tz", string, 0) * n4);
+    						this.tz[this.tnt] = (int)(this.getvalue("tz", string, 0) * n4);
     					}
     					if (string.startsWith("skid")) {
     						this.skd[this.tnt] = this.getvalue("skid", string, 0);
@@ -828,8 +830,8 @@ public class ContO
         this.decor = false;
         this.grounded = 1.0f;
         this.grat = 0;
-        this.keyx = new float[4];
-        this.keyz = new float[4];
+        this.keyx = new int[4];
+        this.keyz = new int[4];
         this.sprkat = 0;
         this.tnt = 0;
         this.ust = 0;
@@ -841,6 +843,7 @@ public class ContO
         this.rcz = 0.0f;
         this.sprk = 0;
         this.elec = false;
+        this.roted = false;
         this.edl = new int[4];
         this.edr = new int[4];
         this.elc = new int[] { 0, 0, 0, 0 };
@@ -879,18 +882,19 @@ public class ContO
         this.x = x2;
         this.y = y2;
         this.z = z2;
-        this.xz = xz2;
+        this.xz = 0;
         this.xy = 0;
         this.zy = 0;
         for (int j = 0; j < this.npl; ++j) {
             this.p[j].colnum = contO.p[j].colnum;
             this.p[j].master = contO.p[j].master;
+            this.p[j].rot(this.p[j].ox, this.p[j].oz, 0, 0, xz2, this.p[j].n);
             this.p[j].loadprojf();
         }
         if (contO.tnt != 0) { //for every trackers
             for (int k = 0; k < contO.tnt; ++k) {
-            	this.t.xy[this.t.nt] = contO.txy[k];
-            	this.t.zy[this.t.nt] = contO.tzy[k];
+            	this.t.xy[this.t.nt] = contO.txy[k] * m.cos(xz2) - contO.tzy[k] * m.sin(xz2);
+            	this.t.zy[this.t.nt] = contO.txy[k] * m.sin(xz2) + contO.tzy[k] * m.cos(xz2);
             	this.t.xz[this.t.nt] = xz2;
                 for (int l = 0; l < 3; ++l) {
                     this.t.c[this.t.nt][l] = (int)(contO.tc[k][l] + contO.tc[k][l] * (this.m.snap[l] / 100.0f));
@@ -901,8 +905,8 @@ public class ContO
                         this.t.c[this.t.nt][l] = 0;
                     }
                 }
-                this.t.x[this.t.nt] = this.x + contO.tx[k];
-                this.t.z[this.t.nt] = this.z + contO.tx[k];
+                this.t.x[this.t.nt] = this.x + (contO.tx[k] * m.cos(xz2) - contO.tz[k] * m.sin(xz2));
+                this.t.z[this.t.nt] = this.z + (contO.tx[k] * m.sin(xz2) + contO.tz[k] * m.cos(xz2));
                 this.t.y[this.t.nt] = this.y + contO.ty[k];
                 this.t.skd[this.t.nt] = contO.skd[k];
                 this.t.dam[this.t.nt] = contO.dam[k];
@@ -913,8 +917,8 @@ public class ContO
                 else {
                     this.t.decor[this.t.nt] = false;
                 }
-                this.t.radx[this.t.nt] = contO.tradx[k];
-                this.t.radz[this.t.nt] = contO.tradx[k];
+                this.t.radx[this.t.nt] = (contO.tradx[k] * m.cos(xz2) - contO.tradz[k] * m.sin(xz2));
+                this.t.radz[this.t.nt] = (contO.tradx[k] * m.sin(xz2) + contO.tradz[k] * m.cos(xz2));
                 this.t.rady[this.t.nt] = contO.trady[k];
                 final Trackers t = this.t;
                 ++t.nt;
@@ -973,8 +977,8 @@ public class ContO
         this.decor = false;
         this.grounded = 1.0f;
         this.grat = 0;
-        this.keyx = new float[4];
-        this.keyz = new float[4];
+        this.keyx = new int[4];
+        this.keyz = new int[4];
         this.sprkat = 0;
         this.tnt = 0;
         this.ust = 0;
@@ -986,6 +990,7 @@ public class ContO
         this.rcz = 0.0f;
         this.sprk = 0;
         this.elec = false;
+        this.roted = false;
         this.edl = new int[4];
         this.edr = new int[4];
         this.elc = new int[] { 0, 0, 0, 0 };
@@ -1722,7 +1727,9 @@ public class ContO
             array2[6] = this.y - this.m.y - n + 5 + (int)(this.m.random() * 5.0f);
             array[7] = this.x - this.m.x - 504;
             array2[7] = this.y - this.m.y - this.edl[i] + 5 + (int)(this.m.random() * 5.0f);
-            this.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 8);
+            if (this.roted) {
+                this.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 8);
+            }
             this.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 8);
             this.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 8);
             boolean b = true;

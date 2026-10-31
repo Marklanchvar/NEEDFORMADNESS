@@ -97,7 +97,7 @@ public class Control
         this.attack = 0;
         this.acr = 0;
         this.afta = false;
-        this.fpnt = new int[CheckPoints.checkPointsCount];
+        this.fpnt = new int[1000];
         this.trfix = 0;
         this.forget = false;
         this.bulistc = false;
