@@ -902,7 +902,7 @@ public class ContO
                     }
                 }
                 this.t.x[this.t.nt] = this.x + contO.tx[k];
-                this.t.z[this.t.nt] = this.z + contO.tx[k];
+                this.t.z[this.t.nt] = this.z + contO.tz[k];
                 this.t.y[this.t.nt] = this.y + contO.ty[k];
                 this.t.skd[this.t.nt] = contO.skd[k];
                 this.t.dam[this.t.nt] = contO.dam[k];
@@ -914,7 +914,7 @@ public class ContO
                     this.t.decor[this.t.nt] = false;
                 }
                 this.t.radx[this.t.nt] = contO.tradx[k];
-                this.t.radz[this.t.nt] = contO.tradx[k];
+                this.t.radz[this.t.nt] = contO.tradz[k];
                 this.t.rady[this.t.nt] = contO.trady[k];
                 final Trackers t = this.t;
                 ++t.nt;
