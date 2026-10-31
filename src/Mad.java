@@ -931,6 +931,15 @@ public class Mad
             final int n53 = trackers.sect[ncx][ncz][n52];
             int n54 = 0;
             int n55 = 0;
+            // Non-cardinal: transform car into tracker local frame (around parent cx/cz by -xz)
+            final boolean trRotated = trackers.xz[n53] != 0.0f;
+            final float trXz = trackers.xz[n53];
+            final float trCx = trackers.cx[n53];
+            final float trCz = trackers.cz[n53];
+            if (trRotated) {
+                this.rot(array, array2, trCx, trCz, -trXz, 4);
+                this.rot(this.scx, this.scz, 0.0f, 0.0f, -trXz, 4);
+            }
             for (int n56 = 0; n56 < 4; ++n56) {
                 if (array8[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53]) {
                     contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
@@ -1235,6 +1244,11 @@ public class Mad
                         array7[n56] = true;
                     }
                 }
+            }
+            // Convert local collision results back to world coordinates
+            if (trRotated) {
+                this.rot(array, array2, trCx, trCz, trXz, 4);
+                this.rot(this.scx, this.scz, 0.0f, 0.0f, trXz, 4);
             }
             if (n54 == 4) {
                 this.mtouch = true;
