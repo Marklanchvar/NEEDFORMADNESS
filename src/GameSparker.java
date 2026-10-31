@@ -1934,6 +1934,7 @@ public class GameSparker extends Applet implements Runnable
                     checkPoints.x[checkPoints.n] = this.getint("chk", string, 1);
                     checkPoints.z[checkPoints.n] = this.getint("chk", string, 2);
                     checkPoints.y[checkPoints.n] = getint7;
+                    checkPoints.xz[checkPoints.n] = this.getint("chk", string, 3);
                     if (this.getint("chk", string, 3) == 0) {
                         checkPoints.typ[checkPoints.n] = 1;
                     }
@@ -1954,14 +1955,9 @@ public class GameSparker extends Applet implements Runnable
                     checkPoints.fx[checkPoints.fn] = this.getint("fix", string, 1);
                     checkPoints.fz[checkPoints.fn] = this.getint("fix", string, 2);
                     checkPoints.fy[checkPoints.fn] = this.getint("fix", string, 3);
+                    checkPoints.xz[checkPoints.fn] = this.getint("fix", string, 4);
                     array[this.nob].elec = true;
-                    if (this.getint("fix", string, 4) != 0) {
-                        checkPoints.roted[checkPoints.fn] = true;
-                        array[this.nob].roted = true;
-                    }
-                    else {
-                        checkPoints.roted[checkPoints.fn] = false;
-                    }
+                    array[this.nob].shadow = true;
                     if (string.indexOf(")s") != -1) {
                         checkPoints.special[checkPoints.fn] = true;
                     }
@@ -2338,14 +2334,8 @@ public class GameSparker extends Applet implements Runnable
                     checkPoints.fx[checkPoints.fn] = this.getint("fix", string, 1);
                     checkPoints.fz[checkPoints.fn] = this.getint("fix", string, 2);
                     checkPoints.fy[checkPoints.fn] = this.getint("fix", string, 3);
+                    checkPoints.fxz[checkPoints.fn] = this.getint("fix", string, 4);
                     array[this.nob].elec = true;
-                    if (this.getint("fix", string, 4) != 0) {
-                        checkPoints.roted[checkPoints.fn] = true;
-                        array[this.nob].roted = true;
-                    }
-                    else {
-                        checkPoints.roted[checkPoints.fn] = false;
-                    }
                     if (string.indexOf(")s") != -1) {
                         checkPoints.special[checkPoints.fn] = true;
                     }

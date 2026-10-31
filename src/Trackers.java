@@ -1,5 +1,6 @@
 public class Trackers
 {
+	static final int trackersCount = 10000;
     float[] x;
     float[] y;
     float[] z;
@@ -22,20 +23,20 @@ public class Trackers
     int[][][] sect;
     
     public Trackers() {
-        this.x = new float[10000];
-        this.y = new float[10000];
-        this.z = new float[10000];
-        this.xy = new float[10000];
-        this.zy = new float[10000];
-        this.xz = new float[10000];
-        this.skd = new int[10000];
-        this.dam = new int[10000];
-        this.notwall = new boolean[10000];
-        this.decor = new boolean[10000];
-        this.c = new int[10000][3];
-        this.radx = new float[10000];
-        this.radz = new float[10000];
-        this.rady = new float[10000];
+        this.x = new float[trackersCount];
+        this.y = new float[trackersCount];
+        this.z = new float[trackersCount];
+        this.xy = new float[trackersCount];
+        this.zy = new float[trackersCount];
+        this.xz = new float[trackersCount];
+        this.skd = new int[trackersCount];
+        this.dam = new int[trackersCount];
+        this.notwall = new boolean[trackersCount];
+        this.decor = new boolean[trackersCount];
+        this.c = new int[trackersCount][3];
+        this.radx = new float[trackersCount];
+        this.radz = new float[trackersCount];
+        this.rady = new float[trackersCount];
         this.nt = 0;
         this.sx = 0;
         this.sz = 0;
@@ -57,34 +58,34 @@ public class Trackers
             this.ncz = 1;
         }
         this.sect = new int[this.ncx][this.ncz][];
-        for (int i = 0; i < this.ncx; ++i) {
-            for (int j = 0; j < this.ncz; ++j) {
-                final int n3 = this.sx + i * 3000 + 1500;
-                final int n4 = this.sz + j * 3000 + 1500;
-                final int[] array = new int[10000];
+        for (int everyCellX = 0; everyCellX < this.ncx; ++everyCellX) {
+            for (int everyCellZ = 0; everyCellZ < this.ncz; ++everyCellZ) {
+                final int sectorX = this.sx + everyCellX * 3000 + 1500;
+                final int sectorZ = this.sz + everyCellZ * 3000 + 1500;
+                final int[] trackerAmount = new int[trackersCount];
                 int n5 = 0;
                 for (int k = 0; k < this.nt; ++k) {
-                    final float py = this.py(n3, this.x[k], n4, this.z[k]);
+                    final float py = this.py(sectorX, this.x[k], sectorZ, this.z[k]);
                     if (py < 20250000 && py > 0 && this.dam[k] != 167) {
-                        array[n5] = k;
+                        trackerAmount[n5] = k;
                         ++n5;
                     }
                 }
-                if (i == 0 || j == 0 || i == this.ncx - 1 || j == this.ncz - 1) {
+                if (everyCellX == 0 || everyCellZ == 0 || everyCellX == this.ncx - 1 || everyCellZ == this.ncz - 1) {
                     for (int l = 0; l < this.nt; ++l) {
                         if (this.dam[l] == 167) {
-                            array[n5] = l;
+                            trackerAmount[n5] = l;
                             ++n5;
                         }
                     }
                 }
                 if (n5 == 0) {
-                    array[n5] = 0;
+                    trackerAmount[n5] = 0;
                     ++n5;
                 }
-                this.sect[i][j] = new int[n5];
+                this.sect[everyCellX][everyCellZ] = new int[n5];
                 for (int n6 = 0; n6 < n5; ++n6) {
-                    this.sect[i][j][n6] = array[n6];
+                    this.sect[everyCellX][everyCellZ][n6] = trackerAmount[n6];
                 }
             }
         }

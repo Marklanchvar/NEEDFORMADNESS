@@ -643,9 +643,7 @@ public class Mad
             array[n13] = (float)(contO.keyx[n13] + contO.x);
             array3[n13] = (float)(grat + contO.y);
             array2[n13] = (float)(contO.z + contO.keyz[n13]);
-            final float[] scy = this.scy;
-            final int n14 = n13;
-            scy[n14] += 7.0f;
+            this.scy[n13] += 7.0f;
         }
         this.rot(array, array3, contO.x, contO.y, this.pxy, 4);
         this.rot(array3, array2, contO.y, contO.z, this.pzy, 4);
@@ -750,48 +748,36 @@ public class Mad
             for (int n31 = 0; n31 < 4; ++n31) {
                 if (Math.abs(this.scx[n31] - n26) > n25) {
                     if (this.scx[n31] < n26) {
-                        final float[] scx = this.scx;
-                        final int n32 = n31;
-                        scx[n32] += n25;
+                        this.scx[n31] += n25;
                     }
                     else {
-                        final float[] scx2 = this.scx;
-                        final int n33 = n31;
-                        scx2[n33] -= n25;
+                        this.scx[n31] -= n25;
                     }
                 }
                 else {
-                    this.scx[n31] = (float)n26;
+                    this.scx[n31] = n26;
                 }
                 if (Math.abs(this.scz[n31] - n27) > n25) {
                     if (this.scz[n31] < n27) {
-                        final float[] scz = this.scz;
-                        final int n34 = n31;
-                        scz[n34] += n25;
+                        this.scz[n31] += n25;
                     }
                     else {
-                        final float[] scz2 = this.scz;
-                        final int n35 = n31;
-                        scz2[n35] -= n25;
+                        this.scz[n31] -= n25;
                     }
                 }
                 else {
-                    this.scz[n31] = (float)n27;
+                    this.scz[n31] = n27;
                 }
                 if (Math.abs(this.scy[n31] - n28) > n25) {
                     if (this.scy[n31] < n28) {
-                        final float[] scy2 = this.scy;
-                        final int n36 = n31;
-                        scy2[n36] += n25;
+                        this.scy[n31] += n25;
                     }
                     else {
-                        final float[] scy3 = this.scy;
-                        final int n37 = n31;
-                        scy3[n37] -= n25;
+                        this.scy[n31] -= n25;
                     }
                 }
                 else {
-                    this.scy[n31] = (float)n28;
+                    this.scy[n31] = n28;
                 }
                 if (n25 < this.cd.grip[this.cn]) {
                     if (this.txz != contO.xz) {
@@ -827,11 +813,12 @@ public class Mad
                         this.dcnt = 0;
                     }
                 }
+                int rando = (int)(this.m.random() * 4F);
                 if (n22 == 3) {
-                    this.scy[(int)(this.m.random() * 4.0f)] = (float)(-100.0f * this.m.random() * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
+                    this.scy[rando] = (-100.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3F));
                 }
                 if (n22 == 4) {
-                    this.scy[(int)(this.m.random() * 4.0f)] = (float)(-150.0f * this.m.random() * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
+                    this.scy[rando] = (-150.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3F));
                 }
                 n29 += this.scx[n31];
                 n30 += this.scz[n31];
@@ -928,321 +915,388 @@ public class Mad
         }
         int n51 = 0;
         for (int n52 = 0; n52 < trackers.sect[ncx][ncz].length; ++n52) {
-            final int n53 = trackers.sect[ncx][ncz][n52];
-            int n54 = 0;
-            int n55 = 0;
-            for (int n56 = 0; n56 < 4; ++n56) {
-                if (array8[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53]) {
-                    contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
-                    if (this.im == this.xt.im) {
-                        this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
-                    }
-                }
-                if (!array7[n56] && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53] && array3[n56] > trackers.y[n53] - trackers.rady[n53] && array3[n56] < trackers.y[n53] + trackers.rady[n53] && !trackers.decor[n53]) {
-                    if (trackers.xy[n53] == 0 && trackers.zy[n53] == 0 && trackers.y[n53] != 250 && array3[n56] > trackers.y[n53] - 5) {
-                        ++n55;
-                        this.wtouch = true;
-                        this.gtouch = true;
-                        if (!b3 && this.scy[n56] != 7.0f) {
-                            float n57 = this.scy[n56] / 333.33f;
-                            if (n57 > 0.3) {
-                                n57 = 0.3f;
-                            }
-                            float n58;
-                            if (n22 == 0) {
-                                n58 = (float)(n57 + 1.1);
-                            }
-                            else {
-                                n58 = (float)(n57 + 1.2);
-                            }
-                            contO.dust(n56, array[n56], array3[n56], array2[n56], this.scx[n56], this.scz[n56], n58 * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
-                        }
-                        array3[n56] = trackers.y[n53];
-                        if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
-                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
-                            if (this.im == this.xt.im) {
-                                this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
-                            }
-                        }
-                        float n59 = (Math.abs(this.m.sin(this.pxy)) + Math.abs(this.m.sin(this.pzy))) / 3.0f;
-                        if (n59 > 0.4) {
-                            n59 = 0.4f;
-                        }
-                        float n60 = n59 + this.cd.bounce[this.cn];
-                        if (n60 < 1.1) {
-                            n60 = 1.1f;
-                        }
-                        this.regy(n56, Math.abs(this.scy[n56] * n60), contO);
-                        if (this.scy[n56] > 0.0f) {
-                            final float[] scy5 = this.scy;
-                            final int n61 = n56;
-                            scy5[n61] -= Math.abs(this.scy[n56] * n60);
-                        }
-                        array7[n56] = true;
-                    }
-                    if (trackers.zy[n53] == -90 && array2[n56] < trackers.z[n53] + trackers.radz[n53] && (this.scz[n56] < 0.0f || trackers.radz[n53] == 287)) {
-                        for (int n62 = 0; n62 < 4; ++n62) {
-                            if (n56 != n62 && array2[n62] >= trackers.z[n53] + trackers.radz[n53]) {
-                                array2[n62] -= array2[n56] - (trackers.z[n53] + trackers.radz[n53]);
-                            }
-                        }
-                        array2[n56] = (float)(trackers.z[n53] + trackers.radz[n53]);
-                        if (trackers.skd[n53] != 2) {
-                            ++this.crank[0][n56];
-                        }
-                        if (trackers.skd[n53] == 5 && this.m.random() > this.m.random()) {
-                            ++this.crank[0][n56];
-                        }
-                        if (this.crank[0][n56] > 1) {
-                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
-                            if (this.im == this.xt.im) {
-                                this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
-                            }
-                        }
-                        float n66 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
-                        if (n66 > 0.3) {
-                            n66 = 0.3f;
-                        }
-                        if (b3) {
-                            n66 = 0.0f;
-                        }
-                        float n67 = (float)(n66 + (this.cd.bounce[this.cn] - 0.2));
-                        if (n67 < 1.1) {
-                            n67 = 1.1f;
-                        }
-                        this.regz(n56, Math.abs(this.scz[n56] * n67 * trackers.dam[n53]), contO);
-                        this.scz[n56] += Math.abs(this.scz[n56] * n67);
-                        this.skid = 2;
-                        b2 = true;
-                        array7[n56] = true;
-                        if (!trackers.notwall[n53]) {
-                            control.wall = n53;
-                        }
-                    }
-                    if (trackers.zy[n53] == 90 && array2[n56] > trackers.z[n53] - trackers.radz[n53] && (this.scz[n56] > 0.0f || trackers.radz[n53] == 287)) {
-                        for (int n69 = 0; n69 < 4; ++n69) {
-                            if (n56 != n69 && array2[n69] <= trackers.z[n53] - trackers.radz[n53]) {
-                                final float[] array14 = array2;
-                                final int n70 = n69;
-                                array14[n70] -= array2[n56] - (trackers.z[n53] - trackers.radz[n53]);
-                            }
-                        }
-                        array2[n56] = (float)(trackers.z[n53] - trackers.radz[n53]);
-                        if (trackers.skd[n53] != 2) {
-                            final int[] array15 = this.crank[1];
-                            final int n71 = n56;
-                            ++array15[n71];
-                        }
-                        if (trackers.skd[n53] == 5 && this.m.random() > this.m.random()) {
-                            final int[] array16 = this.crank[1];
-                            final int n72 = n56;
-                            ++array16[n72];
-                        }
-                        if (this.crank[1][n56] > 1) {
-                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
-                            if (this.im == this.xt.im) {
-                                this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
-                            }
-                        }
-                        float n73 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
-                        if (n73 > 0.3) {
-                            n73 = 0.3f;
-                        }
-                        if (b3) {
-                            n73 = 0.0f;
-                        }
-                        float n74 = (float)(n73 + (this.cd.bounce[this.cn] - 0.2));
-                        if (n74 < 1.1) {
-                            n74 = 1.1f;
-                        }
-                        this.regz(n56, -Math.abs(this.scz[n56] * n74 * trackers.dam[n53]), contO);
-                        final float[] scz4 = this.scz;
-                        final int n75 = n56;
-                        scz4[n75] -= Math.abs(this.scz[n56] * n74);
-                        this.skid = 2;
-                        b2 = true;
-                        array7[n56] = true;
-                        if (!trackers.notwall[n53]) {
-                            control.wall = n53;
-                        }
-                    }
-                    if (trackers.xy[n53] == -90 && array[n56] < trackers.x[n53] + trackers.radx[n53] && (this.scx[n56] < 0.0f || trackers.radx[n53] == 287)) {
-                        for (int n76 = 0; n76 < 4; ++n76) {
-                            if (n56 != n76 && array[n76] >= trackers.x[n53] + trackers.radx[n53]) {
-                                final float[] array17 = array;
-                                final int n77 = n76;
-                                array17[n77] -= array[n56] - (trackers.x[n53] + trackers.radx[n53]);
-                            }
-                        }
-                        array[n56] = (float)(trackers.x[n53] + trackers.radx[n53]);
-                        if (trackers.skd[n53] != 2) {
-                            final int[] array18 = this.crank[2];
-                            final int n78 = n56;
-                            ++array18[n78];
-                        }
-                        if (trackers.skd[n53] == 5 && this.m.random() > this.m.random()) {
-                            final int[] array19 = this.crank[2];
-                            final int n79 = n56;
-                            ++array19[n79];
-                        }
-                        if (this.crank[2][n56] > 1) {
-                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
-                            if (this.im == this.xt.im) {
-                                this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
-                            }
-                        }
-                        float n80 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
-                        if (n80 > 0.3) {
-                            n80 = 0.3f;
-                        }
-                        if (b3) {
-                            n80 = 0.0f;
-                        }
-                        float n81 = (float)(n80 + (this.cd.bounce[this.cn] - 0.2));
-                        if (n81 < 1.1) {
-                            n81 = 1.1f;
-                        }
-                        this.regx(n56, Math.abs(this.scx[n56] * n81 * trackers.dam[n53]), contO);
-                        final float[] scx3 = this.scx;
-                        final int n82 = n56;
-                        scx3[n82] += Math.abs(this.scx[n56] * n81);
-                        this.skid = 2;
-                        b2 = true;
-                        array7[n56] = true;
-                        if (!trackers.notwall[n53]) {
-                            control.wall = n53;
-                        }
-                    }
-                    if (trackers.xy[n53] == 90 && array[n56] > trackers.x[n53] - trackers.radx[n53] && (this.scx[n56] > 0.0f || trackers.radx[n53] == 287)) {
-                        for (int n83 = 0; n83 < 4; ++n83) {
-                            if (n56 != n83 && array[n83] <= trackers.x[n53] - trackers.radx[n53]) {
-                                final float[] array20 = array;
-                                final int n84 = n83;
-                                array20[n84] -= array[n56] - (trackers.x[n53] - trackers.radx[n53]);
-                            }
-                        }
-                        array[n56] = (float)(trackers.x[n53] - trackers.radx[n53]);
-                        if (trackers.skd[n53] != 2) {
-                            final int[] array21 = this.crank[3];
-                            final int n85 = n56;
-                            ++array21[n85];
-                        }
-                        if (trackers.skd[n53] == 5 && this.m.random() > this.m.random()) {
-                            final int[] array22 = this.crank[3];
-                            final int n86 = n56;
-                            ++array22[n86];
-                        }
-                        if (this.crank[3][n56] > 1) {
-                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
-                            if (this.im == this.xt.im) {
-                                this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
-                            }
-                        }
-                        float n87 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
-                        if (n87 > 0.3) {
-                            n87 = 0.3f;
-                        }
-                        if (b3) {
-                            n87 = 0.0f;
-                        }
-                        float n88 = (float)(n87 + (this.cd.bounce[this.cn] - 0.2));
-                        if (n88 < 1.1) {
-                            n88 = 1.1f;
-                        }
-                        this.regx(n56, -Math.abs(this.scx[n56] * n88 * trackers.dam[n53]), contO);
-                        final float[] scx4 = this.scx;
-                        final int n89 = n56;
-                        scx4[n89] -= Math.abs(this.scx[n56] * n88);
-                        this.skid = 2;
-                        b2 = true;
-                        array7[n56] = true;
-                        if (!trackers.notwall[n53]) {
-                            control.wall = n53;
-                        }
-                    }
-                    if (trackers.zy[n53] != 0 && trackers.zy[n53] != 90 && trackers.zy[n53] != -90) {
-                        final float n90 = 90 + trackers.zy[n53];
-                        float n91 = 1.0f + (50 - Math.abs(trackers.zy[n53])) / 30.0f;
-                        if (n91 < 1.0f) {
-                            n91 = 1.0f;
-                        }
-                        final float n92 = trackers.y[n53] + ((array3[n56] - trackers.y[n53]) * this.m.cos(n90) - (array2[n56] - trackers.z[n53]) * this.m.sin(n90));
-                        float n93 = trackers.z[n53] + ((array3[n56] - trackers.y[n53]) * this.m.sin(n90) + (array2[n56] - trackers.z[n53]) * this.m.cos(n90));
-                        if (n93 > trackers.z[n53] && n93 < trackers.z[n53] + 200) {
-                            final float[] scy6 = this.scy;
-                            final int n94 = n56;
-                            scy6[n94] -= (n93 - trackers.z[n53]) / n91;
-                            n93 = (float)trackers.z[n53];
-                        }
-                        if (n93 > trackers.z[n53] - 30) {
-                            if (trackers.skd[n53] == 2) {
-                                ++n54;
-                            }
-                            else {
-                                ++n51;
-                            }
-                            this.wtouch = true;
-                            this.gtouch = false;
-                            if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
-                                contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
-                                if (this.im == this.xt.im) {
-                                    this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
-                                }
-                            }
-                            if (!b3 && n22 != 0) {
-                                contO.dust(n56, array[n56], array3[n56], array2[n56], this.scx[n56], this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
-                            }
-                        }
-                        array3[n56] = trackers.y[n53] + ((n92 - trackers.y[n53]) * this.m.cos(-n90) - (n93 - trackers.z[n53]) * this.m.sin(-n90));
-                        array2[n56] = trackers.z[n53] + ((n92 - trackers.y[n53]) * this.m.sin(-n90) + (n93 - trackers.z[n53]) * this.m.cos(-n90));
-                        array7[n56] = true;
-                    }
-                    if (trackers.xy[n53] != 0 && trackers.xy[n53] != 90 && trackers.xy[n53] != -90) {
-                        final float n95 = 90 + trackers.xy[n53];
-                        float n96 = 1.0f + (50 - Math.abs(trackers.xy[n53])) / 30.0f;
-                        if (n96 < 1.0f) {
-                            n96 = 1.0f;
-                        }
-                        final float n97 = trackers.y[n53] + ((array3[n56] - trackers.y[n53]) * this.m.cos(n95) - (array[n56] - trackers.x[n53]) * this.m.sin(n95));
-                        float n98 = trackers.x[n53] + ((array3[n56] - trackers.y[n53]) * this.m.sin(n95) + (array[n56] - trackers.x[n53]) * this.m.cos(n95));
-                        if (n98 > trackers.x[n53] && n98 < trackers.x[n53] + 200) {
-                            final float[] scy7 = this.scy;
-                            final int n99 = n56;
-                            scy7[n99] -= (n98 - trackers.x[n53]) / n96;
-                            n98 = (float)trackers.x[n53];
-                        }
-                        if (n98 > trackers.x[n53] - 30) {
-                            if (trackers.skd[n53] == 2) {
-                                ++n54;
-                            }
-                            else {
-                                ++n51;
-                            }
-                            this.wtouch = true;
-                            this.gtouch = false;
-                            if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
-                                contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
-                                if (this.im == this.xt.im) {
-                                    this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
-                                }
-                            }
-                            if (!b3 && n22 != 0) {
-                                contO.dust(n56, array[n56], array3[n56], array2[n56], this.scx[n56], this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
-                            }
-                        }
-                        array3[n56] = trackers.y[n53] + ((n97 - trackers.y[n53]) * this.m.cos(-n95) - (n98 - trackers.x[n53]) * this.m.sin(-n95));
-                        array[n56] = trackers.x[n53] + ((n97 - trackers.y[n53]) * this.m.sin(-n95) + (n98 - trackers.x[n53]) * this.m.cos(-n95));
-                        array7[n56] = true;
-                    }
-                }
-            }
-            if (n54 == 4) {
-                this.mtouch = true;
-            }
-            if (n55 == 4) {
-                n40 = 4;
-            }
+        	final int n53 = trackers.sect[ncx][ncz][n52];
+        	int n54 = 0;
+        	int n55 = 0;
+
+        	// ------------------------------------------------------------------
+        	// Orientation – all angles are in degrees
+        	// ------------------------------------------------------------------
+        	float yaw = trackers.xz[n53];               // degrees
+        	float cosY = m.cos(-yaw);
+        	float sinY = m.sin(-yaw);
+
+        	for (int n56 = 0; n56 < 4; ++n56) {
+
+        		// ------------------------------------------------------------------
+        		// Transform wheel into tracker local space
+        		// ------------------------------------------------------------------
+        		float dx = array[n56]  - trackers.x[n53];
+        		float dz = array2[n56] - trackers.z[n53];
+        		float dy = array3[n56] - trackers.y[n53];
+
+        		float localX =  dx * cosY - dz * sinY;
+        		float localZ =  dx * sinY + dz * cosY;
+        		float localY =  dy;                     // +localY = downward
+
+        		// ------------------------------------------------------------------
+        		// Scrape on surface
+        		// ------------------------------------------------------------------
+        		if (array8[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)
+        				&& localX > -trackers.radx[n53] && localX < trackers.radx[n53]
+        						&& localZ > -trackers.radz[n53] && localZ < trackers.radz[n53])
+        		{
+        			contO.sprk(array[n56], array3[n56], array2[n56],
+        					this.scx[n56], this.scy[n56], this.scz[n56], 1);
+        			if (this.im == this.xt.im) {
+        				this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+        			}
+        		}
+
+        		// ------------------------------------------------------------------
+        		// Main volume test (oriented)
+        		// ------------------------------------------------------------------
+        		if (!array7[n56]
+        				&& localX > -trackers.radx[n53] && localX < trackers.radx[n53]
+        						&& localZ > -trackers.radz[n53] && localZ < trackers.radz[n53]
+        								&& localY > -trackers.rady[n53] && localY < trackers.rady[n53]
+        										&& !trackers.decor[n53])
+        		{
+        			// ========== Flat ground (xy == 0 && zy == 0) ==========
+        			// +Y is down → "above the surface and close" is localY < 5
+        			if (trackers.xy[n53] == 0 && trackers.zy[n53] == 0 && trackers.y[n53] != 250
+        					&& localY < 5)
+        			{
+        				++n55;
+        				this.wtouch = true;
+        				this.gtouch = true;
+
+        				if (!b3 && this.scy[n56] != 7.0f) {
+        					float n57 = this.scy[n56] / 333.33f;
+        					if (n57 > 0.3f) n57 = 0.3f;
+        					float n58 = (n22 == 0) ? (n57 + 1.1f) : (n57 + 1.2f);
+        					contO.dust(n56, array[n56], array3[n56], array2[n56],
+        							this.scx[n56], this.scz[n56],
+        							n58 * this.cd.simag[this.cn], 0,
+        							this.capsized && this.mtouch);
+        				}
+
+        				// Snap to surface
+        				localY = 0;
+        				array3[n56] = trackers.y[n53] + localY;
+
+        				if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
+        					contO.sprk(array[n56], array3[n56], array2[n56],
+        							this.scx[n56], this.scy[n56], this.scz[n56], 1);
+        					if (this.im == this.xt.im) {
+        						this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+        					}
+        				}
+
+        				float n59 = (Math.abs(this.m.sin(this.pxy)) + Math.abs(this.m.sin(this.pzy))) / 3.0f;
+        				if (n59 > 0.4f) n59 = 0.4f;
+        				float n60 = n59 + this.cd.bounce[this.cn];
+        				if (n60 < 1.1f) n60 = 1.1f;
+
+        				this.regy(n56, Math.abs(this.scy[n56] * n60), contO);
+        				if (this.scy[n56] > 0.0f) {
+        					this.scy[n56] -= Math.abs(this.scy[n56] * n60);
+        				}
+        				array7[n56] = true;
+        			}
+
+        			// ========== Local +Z wall (old zy == -90) ==========
+        			if (trackers.zy[n53] == -90
+        					&& localZ < trackers.radz[n53]
+        							&& (this.scz[n56] < 0.0f || trackers.radz[n53] == 287))
+        			{
+        				for (int n62 = 0; n62 < 4; ++n62) {
+        					if (n56 != n62) {
+        						float dx2 = array[n62]  - trackers.x[n53];
+        						float dz2 = array2[n62] - trackers.z[n53];
+        						float lZ2 = dx2 * sinY + dz2 * cosY;
+        						if (lZ2 >= trackers.radz[n53]) {
+        							float push = localZ - trackers.radz[n53];
+        							array2[n62] -= push * cosY;
+        							array[n62]  -= push * sinY;
+        						}
+        					}
+        				}
+
+        				localZ = trackers.radz[n53];
+        				array[n56]  = trackers.x[n53] + (localX * cosY + localZ * sinY);
+        				array2[n56] = trackers.z[n53] + (-localX * sinY + localZ * cosY);
+        				array3[n56] = trackers.y[n53] + localY;
+
+        				if (trackers.skd[n53] != 2) ++this.crank[0][n56];
+        				if (trackers.skd[n53] == 5 && this.m.random() > this.m.random()) ++this.crank[0][n56];
+
+        				if (this.crank[0][n56] > 1) {
+        					contO.sprk(array[n56], array3[n56], array2[n56],
+        							this.scx[n56], this.scy[n56], this.scz[n56], 0);
+        					if (this.im == this.xt.im) {
+        						this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+        					}
+        				}
+
+        				float n66 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
+        				if (n66 > 0.3f) n66 = 0.3f;
+        				if (b3) n66 = 0.0f;
+        				float n67 = n66 + (this.cd.bounce[this.cn] - 0.2f);
+        				if (n67 < 1.1f) n67 = 1.1f;
+
+        				this.regz(n56, Math.abs(this.scz[n56] * n67 * trackers.dam[n53]), contO);
+        				this.scz[n56] += Math.abs(this.scz[n56] * n67);
+        				this.skid = 2;
+        				b2 = true;
+        				array7[n56] = true;
+        				if (!trackers.notwall[n53]) control.wall = n53;
+        			}
+
+        			// ========== Local -Z wall (old zy == 90) ==========
+        			if (trackers.zy[n53] == 90
+        					&& localZ > -trackers.radz[n53]
+        							&& (this.scz[n56] > 0.0f || trackers.radz[n53] == 287))
+        			{
+        				for (int n69 = 0; n69 < 4; ++n69) {
+        					if (n56 != n69) {
+        						float dx2 = array[n69]  - trackers.x[n53];
+        						float dz2 = array2[n69] - trackers.z[n53];
+        						float lZ2 = dx2 * sinY + dz2 * cosY;
+        						if (lZ2 <= -trackers.radz[n53]) {
+        							float push = localZ + trackers.radz[n53];
+        							array2[n69] -= push * cosY;
+        							array[n69]  -= push * sinY;
+        						}
+        					}
+        				}
+
+        				localZ = -trackers.radz[n53];
+        				array[n56]  = trackers.x[n53] + (localX * cosY + localZ * sinY);
+        				array2[n56] = trackers.z[n53] + (-localX * sinY + localZ * cosY);
+        				array3[n56] = trackers.y[n53] + localY;
+
+        				if (trackers.skd[n53] != 2) ++this.crank[1][n56];
+        				if (trackers.skd[n53] == 5 && this.m.random() > this.m.random()) ++this.crank[1][n56];
+
+        				if (this.crank[1][n56] > 1) {
+        					contO.sprk(array[n56], array3[n56], array2[n56],
+        							this.scx[n56], this.scy[n56], this.scz[n56], 0);
+        					if (this.im == this.xt.im) {
+        						this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+        					}
+        				}
+
+        				float n73 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
+        				if (n73 > 0.3f) n73 = 0.3f;
+        				if (b3) n73 = 0.0f;
+        				float n74 = n73 + (this.cd.bounce[this.cn] - 0.2f);
+        				if (n74 < 1.1f) n74 = 1.1f;
+
+        				this.regz(n56, -Math.abs(this.scz[n56] * n74 * trackers.dam[n53]), contO);
+        				this.scz[n56] -= Math.abs(this.scz[n56] * n74);
+        				this.skid = 2;
+        				b2 = true;
+        				array7[n56] = true;
+        				if (!trackers.notwall[n53]) control.wall = n53;
+        			}
+
+        			// ========== Local +X wall (old xy == -90) ==========
+        			if (trackers.xy[n53] == -90
+        					&& localX < trackers.radx[n53]
+        							&& (this.scx[n56] < 0.0f || trackers.radx[n53] == 287))
+        			{
+        				for (int n76 = 0; n76 < 4; ++n76) {
+        					if (n56 != n76) {
+        						float dx2 = array[n76]  - trackers.x[n53];
+        						float dz2 = array2[n76] - trackers.z[n53];
+        						float lX2 = dx2 * cosY - dz2 * sinY;
+        						if (lX2 >= trackers.radx[n53]) {
+        							float push = localX - trackers.radx[n53];
+        							array[n76]  -= push * cosY;
+        							array2[n76] -= push * (-sinY);
+        						}
+        					}
+        				}
+
+        				localX = trackers.radx[n53];
+        				array[n56]  = trackers.x[n53] + (localX * cosY + localZ * sinY);
+        				array2[n56] = trackers.z[n53] + (-localX * sinY + localZ * cosY);
+        				array3[n56] = trackers.y[n53] + localY;
+
+        				if (trackers.skd[n53] != 2) ++this.crank[2][n56];
+        				if (trackers.skd[n53] == 5 && this.m.random() > this.m.random()) ++this.crank[2][n56];
+
+        				if (this.crank[2][n56] > 1) {
+        					contO.sprk(array[n56], array3[n56], array2[n56],
+        							this.scx[n56], this.scy[n56], this.scz[n56], 0);
+        					if (this.im == this.xt.im) {
+        						this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+        					}
+        				}
+
+        				float n80 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
+        				if (n80 > 0.3f) n80 = 0.3f;
+        				if (b3) n80 = 0.0f;
+        				float n81 = n80 + (this.cd.bounce[this.cn] - 0.2f);
+        				if (n81 < 1.1f) n81 = 1.1f;
+
+        				this.regx(n56, Math.abs(this.scx[n56] * n81 * trackers.dam[n53]), contO);
+        				this.scx[n56] += Math.abs(this.scx[n56] * n81);
+        				this.skid = 2;
+        				b2 = true;
+        				array7[n56] = true;
+        				if (!trackers.notwall[n53]) control.wall = n53;
+        			}
+
+        			// ========== Local -X wall (old xy == 90) ==========
+        			if (trackers.xy[n53] == 90
+        					&& localX > -trackers.radx[n53]
+        							&& (this.scx[n56] > 0.0f || trackers.radx[n53] == 287))
+        			{
+        				for (int n83 = 0; n83 < 4; ++n83) {
+        					if (n56 != n83) {
+        						float dx2 = array[n83]  - trackers.x[n53];
+        						float dz2 = array2[n83] - trackers.z[n53];
+        						float lX2 = dx2 * cosY - dz2 * sinY;
+        						if (lX2 <= -trackers.radx[n53]) {
+        							float push = localX + trackers.radx[n53];
+        							array[n83]  -= push * cosY;
+        							array2[n83] -= push * (-sinY);
+        						}
+        					}
+        				}
+
+        				localX = -trackers.radx[n53];
+        				array[n56]  = trackers.x[n53] + (localX * cosY + localZ * sinY);
+        				array2[n56] = trackers.z[n53] + (-localX * sinY + localZ * cosY);
+        				array3[n56] = trackers.y[n53] + localY;
+
+        				if (trackers.skd[n53] != 2) ++this.crank[3][n56];
+        				if (trackers.skd[n53] == 5 && this.m.random() > this.m.random()) ++this.crank[3][n56];
+
+        				if (this.crank[3][n56] > 1) {
+        					contO.sprk(array[n56], array3[n56], array2[n56],
+        							this.scx[n56], this.scy[n56], this.scz[n56], 0);
+        					if (this.im == this.xt.im) {
+        						this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+        					}
+        				}
+
+        				float n87 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
+        				if (n87 > 0.3f) n87 = 0.3f;
+        				if (b3) n87 = 0.0f;
+        				float n88 = n87 + (this.cd.bounce[this.cn] - 0.2f);
+        				if (n88 < 1.1f) n88 = 1.1f;
+
+        				this.regx(n56, -Math.abs(this.scx[n56] * n88 * trackers.dam[n53]), contO);
+        				this.scx[n56] -= Math.abs(this.scx[n56] * n88);
+        				this.skid = 2;
+        				b2 = true;
+        				array7[n56] = true;
+        				if (!trackers.notwall[n53]) control.wall = n53;
+        			}
+
+        			// ========== General non-90 zy ramp ==========
+        			if (trackers.zy[n53] != 0 && trackers.zy[n53] != 90 && trackers.zy[n53] != -90) {
+        				final float n90 = 90 + trackers.zy[n53];   // still degrees
+        				float n91 = 1.0f + (50 - Math.abs(trackers.zy[n53])) / 30.0f;
+        				if (n91 < 1.0f) n91 = 1.0f;
+
+        				float n92 = trackers.y[n53] + ((localY) * m.cos(n90) - (localZ) * m.sin(n90));
+        				float n93 = trackers.z[n53] + ((localY) * m.sin(n90) + (localZ) * m.cos(n90));
+
+        				if (n93 > trackers.z[n53] && n93 < trackers.z[n53] + 200) {
+        					this.scy[n56] -= (n93 - trackers.z[n53]) / n91;
+        					n93 = trackers.z[n53];
+        				}
+        				if (n93 > trackers.z[n53] - 30) {
+        					if (trackers.skd[n53] == 2) ++n54;
+        					else ++n51;
+        					this.wtouch = true;
+        					this.gtouch = false;
+
+        					if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
+        						contO.sprk(array[n56], array3[n56], array2[n56],
+        								this.scx[n56], this.scy[n56], this.scz[n56], 1);
+        						if (this.im == this.xt.im) {
+        							this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+        						}
+        					}
+        					if (!b3 && n22 != 0) {
+        						contO.dust(n56, array[n56], array3[n56], array2[n56],
+        								this.scx[n56], this.scz[n56],
+        								1.4f * this.cd.simag[this.cn], 0,
+        								this.capsized && this.mtouch);
+        					}
+        				}
+
+        				array3[n56] = trackers.y[n53] + ((n92 - trackers.y[n53]) * m.cos(-n90)
+        						- (n93 - trackers.z[n53]) * m.sin(-n90));
+
+        				float finalLocalX = localX;
+        				float finalLocalZ = (n93 - trackers.z[n53]);
+        				array[n56]  = trackers.x[n53] + (finalLocalX * cosY + finalLocalZ * sinY);
+        				array2[n56] = trackers.z[n53] + (-finalLocalX * sinY + finalLocalZ * cosY);
+
+        				array7[n56] = true;
+        			}
+
+        			// ========== General non-90 xy ramp ==========
+        			if (trackers.xy[n53] != 0 && trackers.xy[n53] != 90 && trackers.xy[n53] != -90) {
+        				final float n95 = 90 + trackers.xy[n53];   // still degrees
+        				float n96 = 1.0f + (50 - Math.abs(trackers.xy[n53])) / 30.0f;
+        				if (n96 < 1.0f) n96 = 1.0f;
+
+        				float n97 = trackers.y[n53] + ((localY) * m.cos(n95) - (localX) * m.sin(n95));
+        				float n98 = trackers.x[n53] + ((localY) * m.sin(n95) + (localX) * m.cos(n95));
+
+        				if (n98 > trackers.x[n53] && n98 < trackers.x[n53] + 200) {
+        					this.scy[n56] -= (n98 - trackers.x[n53]) / n96;
+        					n98 = trackers.x[n53];
+        				}
+        				if (n98 > trackers.x[n53] - 30) {
+        					if (trackers.skd[n53] == 2) ++n54;
+        					else ++n51;
+        					this.wtouch = true;
+        					this.gtouch = false;
+
+        					if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
+        						contO.sprk(array[n56], array3[n56], array2[n56],
+        								this.scx[n56], this.scy[n56], this.scz[n56], 1);
+        						if (this.im == this.xt.im) {
+        							this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+        						}
+        					}
+        					if (!b3 && n22 != 0) {
+        						contO.dust(n56, array[n56], array3[n56], array2[n56],
+        								this.scx[n56], this.scz[n56],
+        								1.4f * this.cd.simag[this.cn], 0,
+        								this.capsized && this.mtouch);
+        					}
+        				}
+
+        				array3[n56] = trackers.y[n53] + ((n97 - trackers.y[n53]) * m.cos(-n95)
+        						- (n98 - trackers.x[n53]) * m.sin(-n95));
+
+        				float finalLocalX = (n98 - trackers.x[n53]);
+        				float finalLocalZ = localZ;
+        				array[n56]  = trackers.x[n53] + (finalLocalX * cosY + finalLocalZ * sinY);
+        				array2[n56] = trackers.z[n53] + (-finalLocalX * sinY + finalLocalZ * cosY);
+
+        				array7[n56] = true;
+        			}
+        		}
+        	}
+
+        	if (n54 == 4) {
+        		this.mtouch = true;
+        	}
+        	if (n55 == 4) {
+        		n40 = 4;
+        	}
         }
+
         if (n51 == 4) {
             this.mtouch = true;
         }
@@ -1516,30 +1570,54 @@ public class Mad
         for (int n113 = 0; n113 < checkPoints.n; ++n113) {
             if (checkPoints.typ[n113] > 0) {
                 ++n111;
-                if (checkPoints.typ[n113] == 1) {
-                    if (this.clear == n111 + this.nlaps * checkPoints.nsp) {
-                        n112 = 1;
-                    }
-                    if (Math.abs(contO.z - checkPoints.z[n113]) < 60.0f + Math.abs(this.scz[0] + this.scz[1] + this.scz[2] + this.scz[3]) / 4.0f && Math.abs(contO.x - checkPoints.x[n113]) < 700 && Math.abs(contO.y - checkPoints.y[n113] + 350) < 450 && this.clear == n111 + this.nlaps * checkPoints.nsp - 1) {
-                        this.clear = n111 + this.nlaps * checkPoints.nsp;
-                        this.pcleared = n113;
-                        this.focus = -1;
-                    }
+
+                // ------------------------------------------------------------------
+                // 1.  Compute local-space coordinates relative to the checkpoint
+                // ------------------------------------------------------------------
+                float ang = checkPoints.xz[n113];          // yaw of this checkpoint (radians)
+                float dx  = contO.x - checkPoints.x[n113];
+                float dz  = contO.z - checkPoints.z[n113];
+                float dy  = contO.y - checkPoints.y[n113];
+
+                float cos = m.cos(-ang);
+                float sin = m.sin(-ang);
+
+                float localX =  dx * cos - dz * sin;   // across the gate (narrow axis)
+                float localZ =  dx * sin + dz * cos;   // along the gate   (long  axis)
+
+                // ------------------------------------------------------------------
+                // 2.  Same logic that used to be in the typ==1 / typ==2 branches
+                // ------------------------------------------------------------------
+                float halfWidth  = 60.0f + Math.abs(this.scz[0] + this.scz[1] + this.scz[2] + this.scz[3]) / 4.0f;
+                // (you can also average scx if you prefer a more isotropic car-size estimate)
+                float halfLength = 700.0f;
+
+                if (this.clear == n111 + this.nlaps * checkPoints.nsp) {
+                    n112 = 1;
                 }
-                if (checkPoints.typ[n113] == 2) {
-                    if (this.clear == n111 + this.nlaps * checkPoints.nsp) {
-                        n112 = 1;
-                    }
-                    if (Math.abs(contO.x - checkPoints.x[n113]) < 60.0f + Math.abs(this.scx[0] + this.scx[1] + this.scx[2] + this.scx[3]) / 4.0f && Math.abs(contO.z - checkPoints.z[n113]) < 700 && Math.abs(contO.y - checkPoints.y[n113] + 350) < 450 && this.clear == n111 + this.nlaps * checkPoints.nsp - 1) {
-                        this.clear = n111 + this.nlaps * checkPoints.nsp;
-                        this.pcleared = n113;
-                        this.focus = -1;
-                    }
+
+                if (Math.abs(localZ) < halfLength
+                 && Math.abs(localX) < halfWidth
+                 && Math.abs(dy + 350) < 450
+                 && this.clear == n111 + this.nlaps * checkPoints.nsp - 1)
+                {
+                    this.clear   = n111 + this.nlaps * checkPoints.nsp;
+                    this.pcleared = n113;
+                    this.focus    = -1;
                 }
             }
-            if (this.py(contO.x / 100, checkPoints.x[n113] / 100, contO.z / 100, checkPoints.z[n113] / 100) * n112 < n110 || n110 == 0) {
+
+            // ------------------------------------------------------------------
+            // 3.  Focus / nearest-checkpoint selection stays almost unchanged
+            //     (still uses world-space distance; rotation is not needed here)
+            // ------------------------------------------------------------------
+            if (this.py(contO.x / 100, checkPoints.x[n113] / 100,
+                        contO.z / 100, checkPoints.z[n113] / 100) * n112 < n110
+                || n110 == 0)
+            {
                 focus = n113;
-                n110 = this.py(contO.x / 100, checkPoints.x[n113] / 100, contO.z / 100, checkPoints.z[n113] / 100) * n112;
+                n110  = this.py(contO.x / 100, checkPoints.x[n113] / 100,
+                                contO.z / 100, checkPoints.z[n113] / 100) * n112;
             }
         }
         if (this.clear == n111 + this.nlaps * checkPoints.nsp) {
@@ -1623,8 +1701,21 @@ public class Mad
         if (this.fixes != 0) {
             if (this.m.noelec == 0) {
                 for (int n115 = 0; n115 < checkPoints.fn; ++n115) {
-                    if (!checkPoints.roted[n115]) {
-                        if (Math.abs(contO.z - checkPoints.fz[n115]) < 200 && this.py(contO.x / 100, checkPoints.fx[n115] / 100, contO.y / 100, checkPoints.fy[n115] / 100) < 30) {
+                	// Assume checkPoints.arad[n] holds the yaw of the checkpoint in radians
+                	float ang = checkPoints.fxz[n115];
+
+                	// Relative position (world space)
+                	float dx = contO.x - checkPoints.fx[n115];
+                	float dz = contO.z - checkPoints.fz[n115];
+                	float dy = contO.y - checkPoints.fy[n115];   // usually not rotated
+
+                	// Rotate into checkpoint local space (negative angle)
+                	float cos = (float)m.cos(-ang);
+                	float sin = (float)m.sin(-ang);
+
+                	float localX =  dx * cos - dz * sin;
+                	float localZ =  dx * sin + dz * cos;
+                        if (Math.abs(localZ) < 200 && this.py(localX / 100, 0, dy / 100, 0) < 30) {
                             if (contO.dist == 0) {
                                 contO.fcnt = 8;
                             }
@@ -1636,19 +1727,7 @@ public class Mad
                             }
                             this.rpd.fix[this.im] = 300;
                         }
-                    }
-                    else if (Math.abs(contO.x - checkPoints.fx[n115]) < 200 && this.py(contO.z / 100, checkPoints.fz[n115] / 100, contO.y / 100, checkPoints.fy[n115] / 100) < 30) {
-                        if (contO.dist == 0) {
-                            contO.fcnt = 8;
-                        }
-                        else {
-                            if (this.im == this.xt.im && !contO.fix && !this.xt.mutes) {
-                                this.xt.carfixed.play();
-                            }
-                            contO.fix = true;
-                        }
-                        this.rpd.fix[this.im] = 300;
-                    }
+                    
                 }
             }
         }
