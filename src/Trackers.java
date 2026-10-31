@@ -1,11 +1,15 @@
 public class Trackers
 {
-    float[] x;
+    static final int trackerCount = 10000;
+	float[] x;
     float[] y;
     float[] z;
     float[] xy;
     float[] zy;
     float[] xz;
+    float[] cx;
+    float[] cy;
+    float[] cz;
     int[] skd;
     int[] dam;
     boolean[] notwall;
@@ -22,20 +26,23 @@ public class Trackers
     int[][][] sect;
     
     public Trackers() {
-        this.x = new float[10000];
-        this.y = new float[10000];
-        this.z = new float[10000];
-        this.xy = new float[10000];
-        this.zy = new float[10000];
-        this.xz = new float[10000];
-        this.skd = new int[10000];
-        this.dam = new int[10000];
-        this.notwall = new boolean[10000];
-        this.decor = new boolean[10000];
-        this.c = new int[10000][3];
-        this.radx = new float[10000];
-        this.radz = new float[10000];
-        this.rady = new float[10000];
+        this.x = new float[trackerCount];
+        this.y = new float[trackerCount];
+        this.z = new float[trackerCount];
+        this.xy = new float[trackerCount];
+        this.zy = new float[trackerCount];
+        this.xz = new float[trackerCount];
+        this.cx = new float[trackerCount];
+        this.cy = new float[trackerCount];
+        this.cz = new float[trackerCount];
+        this.skd = new int[trackerCount];
+        this.dam = new int[trackerCount];
+        this.notwall = new boolean[trackerCount];
+        this.decor = new boolean[trackerCount];
+        this.c = new int[trackerCount][3];
+        this.radx = new float[trackerCount];
+        this.radz = new float[trackerCount];
+        this.rady = new float[trackerCount];
         this.nt = 0;
         this.sx = 0;
         this.sz = 0;
@@ -61,7 +68,7 @@ public class Trackers
             for (int j = 0; j < this.ncz; ++j) {
                 final int n3 = this.sx + i * 3000 + 1500;
                 final int n4 = this.sz + j * 3000 + 1500;
-                final int[] array = new int[10000];
+                final int[] array = new int[trackerCount];
                 int n5 = 0;
                 for (int k = 0; k < this.nt; ++k) {
                     final float py = this.py(n3, this.x[k], n4, this.z[k]);

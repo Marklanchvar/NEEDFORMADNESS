@@ -1290,7 +1290,7 @@ public class StageMaker extends Applet implements Runnable
                                                             }
                                                         }
                                                         if (this.sp == 31) {
-                                                            if (this.cp.fn >= this.cp.special.length) {
+                                                            if (this.cp.fn >= CheckPoints.chkCount) {
                                                                 this.errd = 5;
                                                             }
                                                             else {
@@ -2320,12 +2320,12 @@ public class StageMaker extends Applet implements Runnable
                 int n60 = 0;
                 int n62;
                 final int n61 = n62 = (int)(this.xnob / this.co.length * 200.0f);
-                final int n63 = (int)(this.t.nt / this.t.skd.length * 200.0f);
+                final int n63 = (int)(this.t.nt / Trackers.trackerCount * 200.0f);
                 if (n63 > n62) {
                     n62 = n63;
                     n60 = 1;
                 }
-                final int n64 = (int)(this.cp.n / this.cp.typ.length * 200.0f);
+                final int n64 = (int)(this.cp.n / CheckPoints.chkCount * 200.0f);
                 if (n64 > n62) {
                     n62 = n64;
                     n60 = 2;
@@ -4756,13 +4756,13 @@ public class StageMaker extends Applet implements Runnable
             System.out.println("" + obj);
             System.out.println("At line: " + string);
             this.errd = 6;
-            if (this.cp.fn >= this.cp.special.length) {
+            if (this.cp.fn >= CheckPoints.chkCount) {
                 this.errd = 5;
             }
-            if (this.t.nt >= this.t.skd.length) {
+            if (this.t.nt >= Trackers.trackerCount) {
                 this.errd = 1;
             }
-            if (this.cp.n >= this.cp.typ.length) {
+            if (this.cp.n >= CheckPoints.chkCount) {
                 this.errd = 2;
             }
             if (this.nob >= this.co.length) {

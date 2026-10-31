@@ -30,18 +30,18 @@ public class ContO
     boolean decor;
     float grounded;
     float grat;
-    int[] keyx;
-    int[] keyz;
+    float[] keyx;
+    float[] keyz;
     float sprkat;
-    int[] txy;
-    int[] tzy;
+    float[] txy;
+    float[] tzy;
     int[][] tc;
-    int[] tradx;
-    int[] tradz;
-    int[] trady;
-    int[] tx;
-    int[] ty;
-    int[] tz;
+    float[] tradx;
+    float[] tradz;
+    float[] trady;
+    float[] tx;
+    float[] ty;
+    float[] tz;
     int[] skd;
     int[] dam;
     boolean[] notwall;
@@ -108,8 +108,8 @@ public class ContO
     	this.decor = false;
     	this.grounded = 1.0f;
     	this.grat = 0;
-    	this.keyx = new int[4];
-    	this.keyz = new int[4];
+    	this.keyx = new float[4];
+    	this.keyz = new float[4];
     	this.sprkat = 0;
     	this.tnt = 0;
     	this.ust = 0;
@@ -256,15 +256,15 @@ public class ContO
     			}
     			if (string.startsWith("tracks")) {
     				final int getvalue4 = this.getvalue("tracks", string, 0);
-    				this.txy = new int[getvalue4];
-    				this.tzy = new int[getvalue4];
+    				this.txy = new float[getvalue4];
+    				this.tzy = new float[getvalue4];
     				this.tc = new int[getvalue4][3];
-    				this.tradx = new int[getvalue4];
-    				this.tradz = new int[getvalue4];
-    				this.trady = new int[getvalue4];
-    				this.tx = new int[getvalue4];
-    				this.ty = new int[getvalue4];
-    				this.tz = new int[getvalue4];
+    				this.tradx = new float[getvalue4];
+    				this.tradz = new float[getvalue4];
+    				this.trady = new float[getvalue4];
+    				this.tx = new float[getvalue4];
+    				this.ty = new float[getvalue4];
+    				this.tz = new float[getvalue4];
     				this.skd = new int[getvalue4];
     				this.dam = new int[getvalue4];
     				this.notwall = new boolean[getvalue4];
@@ -830,8 +830,8 @@ public class ContO
         this.decor = false;
         this.grounded = 1.0f;
         this.grat = 0;
-        this.keyx = new int[4];
-        this.keyz = new int[4];
+        this.keyx = new float[4];
+        this.keyz = new float[4];
         this.sprkat = 0;
         this.tnt = 0;
         this.ust = 0;
@@ -882,19 +882,18 @@ public class ContO
         this.x = x2;
         this.y = y2;
         this.z = z2;
-        this.xz = 0;
+        this.xz = xz2;
         this.xy = 0;
         this.zy = 0;
         for (int j = 0; j < this.npl; ++j) {
             this.p[j].colnum = contO.p[j].colnum;
             this.p[j].master = contO.p[j].master;
-            this.p[j].rot(this.p[j].ox, this.p[j].oz, 0, 0, xz2, this.p[j].n);
             this.p[j].loadprojf();
         }
         if (contO.tnt != 0) { //for every trackers
             for (int k = 0; k < contO.tnt; ++k) {
-            	this.t.xy[this.t.nt] = contO.txy[k] * m.cos(xz2) - contO.tzy[k] * m.sin(xz2);
-            	this.t.zy[this.t.nt] = contO.txy[k] * m.sin(xz2) + contO.tzy[k] * m.cos(xz2);
+            	this.t.xy[this.t.nt] = contO.txy[k];
+            	this.t.zy[this.t.nt] = contO.tzy[k];
             	this.t.xz[this.t.nt] = xz2;
                 for (int l = 0; l < 3; ++l) {
                     this.t.c[this.t.nt][l] = (int)(contO.tc[k][l] + contO.tc[k][l] * (this.m.snap[l] / 100.0f));
@@ -905,8 +904,8 @@ public class ContO
                         this.t.c[this.t.nt][l] = 0;
                     }
                 }
-                this.t.x[this.t.nt] = this.x + (contO.tx[k] * m.cos(xz2) - contO.tz[k] * m.sin(xz2));
-                this.t.z[this.t.nt] = this.z + (contO.tx[k] * m.sin(xz2) + contO.tz[k] * m.cos(xz2));
+                this.t.x[this.t.nt] = this.x + contO.tx[k];
+                this.t.z[this.t.nt] = this.z + contO.tz[k];
                 this.t.y[this.t.nt] = this.y + contO.ty[k];
                 this.t.skd[this.t.nt] = contO.skd[k];
                 this.t.dam[this.t.nt] = contO.dam[k];
@@ -917,9 +916,12 @@ public class ContO
                 else {
                     this.t.decor[this.t.nt] = false;
                 }
-                this.t.radx[this.t.nt] = (contO.tradx[k] * m.cos(xz2) - contO.tradz[k] * m.sin(xz2));
-                this.t.radz[this.t.nt] = (contO.tradx[k] * m.sin(xz2) + contO.tradz[k] * m.cos(xz2));
+                this.t.radx[this.t.nt] = contO.tradx[k];
+                this.t.radz[this.t.nt] = contO.tradz[k];
                 this.t.rady[this.t.nt] = contO.trady[k];
+                this.t.cx[this.t.nt] = this.x;
+                this.t.cz[this.t.nt] = this.z;
+                this.t.cy[this.t.nt] = this.y;
                 final Trackers t = this.t;
                 ++t.nt;
             }
@@ -977,8 +979,8 @@ public class ContO
         this.decor = false;
         this.grounded = 1.0f;
         this.grat = 0;
-        this.keyx = new int[4];
-        this.keyz = new int[4];
+        this.keyx = new float[4];
+        this.keyz = new float[4];
         this.sprkat = 0;
         this.tnt = 0;
         this.ust = 0;

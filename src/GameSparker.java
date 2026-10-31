@@ -1898,6 +1898,7 @@ public class GameSparker extends Applet implements Runnable
                             checkPoints.x[checkPoints.n] = this.getint("set", string, 1);
                             checkPoints.z[checkPoints.n] = this.getint("set", string, 2);
                             checkPoints.y[checkPoints.n] = 0;
+                            checkPoints.xz[checkPoints.n] = this.getint("set", string, 3);
                             checkPoints.typ[checkPoints.n] = 0;
                             if (string.indexOf(")pt") != -1) {
                                 checkPoints.typ[checkPoints.n] = -1;
@@ -1934,6 +1935,7 @@ public class GameSparker extends Applet implements Runnable
                     checkPoints.x[checkPoints.n] = this.getint("chk", string, 1);
                     checkPoints.z[checkPoints.n] = this.getint("chk", string, 2);
                     checkPoints.y[checkPoints.n] = getint7;
+                    checkPoints.xz[checkPoints.n] = this.getint("chk", string, 3);
                     if (this.getint("chk", string, 3) == 0) {
                         checkPoints.typ[checkPoints.n] = 1;
                     }
@@ -1954,6 +1956,7 @@ public class GameSparker extends Applet implements Runnable
                     checkPoints.fx[checkPoints.fn] = this.getint("fix", string, 1);
                     checkPoints.fz[checkPoints.fn] = this.getint("fix", string, 2);
                     checkPoints.fy[checkPoints.fn] = this.getint("fix", string, 3);
+                    checkPoints.fxz[checkPoints.fn] = this.getint("fix", string, 4);
                     array[this.nob].elec = true;
                     if (this.getint("fix", string, 4) != 0) {
                         checkPoints.roted[checkPoints.fn] = true;
