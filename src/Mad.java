@@ -827,11 +827,12 @@ public class Mad
                         this.dcnt = 0;
                     }
                 }
+                int rando = (int) (this.m.random() * 4);
                 if (n22 == 3) {
-                    this.scy[(int)(this.m.random() * 4.0f)] = (float)(-100.0f * this.m.random() * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
+                    this.scy[rando] = (-100.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3F));
                 }
                 if (n22 == 4) {
-                    this.scy[(int)(this.m.random() * 4.0f)] = (float)(-150.0f * this.m.random() * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
+                    this.scy[rando] = (-150.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3F));
                 }
                 n29 += this.scx[n31];
                 n30 += this.scz[n31];
@@ -939,7 +940,8 @@ public class Mad
                     }
                 }
                 if (!array7[n56] && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53] && array3[n56] > trackers.y[n53] - trackers.rady[n53] && array3[n56] < trackers.y[n53] + trackers.rady[n53] && !trackers.decor[n53]) {
-                    if (trackers.xy[n53] == 0 && trackers.zy[n53] == 0 && trackers.y[n53] != 250 && array3[n56] > trackers.y[n53] - 5) {
+
+                	if (trackers.xy[n53] == 0 && trackers.zy[n53] == 0 && trackers.y[n53] != 250 && array3[n56] > trackers.y[n53] - 5) {
                         ++n55;
                         this.wtouch = true;
                         this.gtouch = true;
@@ -1243,6 +1245,8 @@ public class Mad
                 n40 = 4;
             }
         }
+        
+        
         if (n51 == 4) {
             this.mtouch = true;
         }
