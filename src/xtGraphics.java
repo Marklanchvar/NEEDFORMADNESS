@@ -2676,12 +2676,14 @@ public class xtGraphics extends Panel implements Runnable
         array[menuCar].zy = 0;
         array[menuCar].wzy = 0;
         array[menuCar].wxz = 0;
+        
         this.m.trk = false;
         this.m.crs = false;
         this.m.focus_point = 400;
         this.m.cx = 200;
         this.m.cy = 300;
         this.m.cz = 50;
+        this.m.xz = 0;
         this.m.zy = 10;
         this.m.x = array[menuCar].x - m.cx;
         this.m.y = array[menuCar].y - m.cy - m.sin(m.zy) * (array[menuCar].maxR + 400) + array[menuCar].grat;
@@ -3131,6 +3133,11 @@ public class xtGraphics extends Panel implements Runnable
         this.m.cx = 400;
         this.m.cy = 225;
         this.m.cz = 50;
+        this.m.x = 0;
+        this.m.y = 0;
+        this.m.z = 0;
+        this.m.xz = 0;
+        this.m.zy = 0;
     }
     
     public void carselect(final Control control, final ContO[] array, final Mad mad, final int mouseX, final int mouseY, final boolean mouseHold) {
@@ -3655,11 +3662,12 @@ public class xtGraphics extends Panel implements Runnable
         this.m.y = -m.cy - m.sin(m.zy) * (array[this.sc[0]].maxR + 500);
         this.m.z = -m.cz - m.cos(m.zy) * (array[this.sc[0]].maxR + 500);
         this.m.ground = -m.y;
+
+		array[this.sc[0]].x = 0;
+		array[this.sc[0]].z = 0;
         
         if (flipo == 0) {
-            array[this.sc[0]].z = 0;
             array[this.sc[0]].y = -array[this.sc[0]].grat;
-            array[this.sc[0]].x = 0;
             array[this.sc[0]].xz = carrot;
 
         	if (this.mouson >= 0 && this.mouson <= 3) {
@@ -3712,11 +3720,7 @@ public class xtGraphics extends Panel implements Runnable
         			if (this.cfase == 3 && this.cd.lastload == 2) {
         				this.app.mcars.select(this.cd.names[this.sc[0]]);
         			}
-        			array[this.sc[0]].z = 0;
         			array[this.sc[0]].y = -array[this.sc[0]].grat -1100;
-        			array[this.sc[0]].x = 0;
-        			array[this.sc[0]].zy = 0;
-        			array[this.sc[0]].xz = carrot;
         		}
         		array[this.sc[0]].y += 100;
         	}
@@ -4902,7 +4906,7 @@ public class xtGraphics extends Panel implements Runnable
                     else if (this.alocked != this.lalocked) {
                         if (this.alocked != -1) {
                             this.wasay = true;
-                            this.say = " Arrow Locked on >  " + this.plnames[this.alocked] + "";
+                            this.say = " Arrow Locked on >  " + this.cd.names[this.alocked] + "";
                             this.tcnt = -5;
                         }
                         else {
@@ -5281,7 +5285,7 @@ public class xtGraphics extends Panel implements Runnable
                 if (this.alocked != this.lalocked) {
                     if (this.alocked != -1) {
                         this.wasay = false;
-                        this.say = "Now following " + this.plnames[this.alocked] + "!";
+                        this.say = "Now following " + this.cd.names[this.alocked] + "!";
                         this.tcnt = -15;
                     }
                     this.lalocked = this.alocked;
@@ -5562,16 +5566,14 @@ public class xtGraphics extends Panel implements Runnable
                 n9 = 180;
             }
             n7 = (int)(90 + n9 + Math.atan((checkPoints.opz[alocked] - checkPoints.opz[this.im]) / (double)(checkPoints.opx[alocked] - checkPoints.opx[this.im])) / 0.017453292519943295);
-                this.rd.setFont(new Font("Arial", 1, 12));
+            {
+            	this.rd.setFont(new Font("Arial", 1, 12));
                 this.ftm = this.rd.getFontMetrics();
                 this.drawcs(17, "[                                ]", 76, 67, 240, 0);
-                this.drawcs(12, this.plnames[alocked], 0, 0, 0, 0);
-                this.rd.setFont(new Font("Arial", 0, 10));
-                this.ftm = this.rd.getFontMetrics();
-                this.drawcs(24, this.cd.names[this.sc[alocked]], 0, 0, 0, 0);
-                this.rd.setFont(new Font("Arial", 1, 11));
-                this.ftm = this.rd.getFontMetrics();
+                this.drawcs(17, this.cd.names[this.sc[alocked]], 0, 0, 0, 0);
+            }
         }
+
         float k;
         for (k = n7 + this.m.xz; k < 0; k += 360) {}
         while (k > 180) {

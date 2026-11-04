@@ -1886,6 +1886,9 @@ public class GameSparker extends Applet implements Runnable
                     trackers.dam[trackers.nt] = 167;
                     trackers.decor[trackers.nt] = false;
                     trackers.skd[trackers.nt] = 0;
+                    trackers.cx[trackers.nt] = 0;
+                    trackers.cy[trackers.nt] = 0;
+                    trackers.cz[trackers.nt] = 0;
                     ++trackers.nt;
                 }
                 if (string.startsWith("maxl")) {
@@ -1907,6 +1910,9 @@ public class GameSparker extends Applet implements Runnable
                     trackers.dam[trackers.nt] = 167;
                     trackers.decor[trackers.nt] = false;
                     trackers.skd[trackers.nt] = 0;
+                    trackers.cx[trackers.nt] = 0;
+                    trackers.cy[trackers.nt] = 0;
+                    trackers.cz[trackers.nt] = 0;
                     ++trackers.nt;
                 }
                 if (string.startsWith("maxt")) {
@@ -1928,6 +1934,9 @@ public class GameSparker extends Applet implements Runnable
                     trackers.dam[trackers.nt] = 167;
                     trackers.decor[trackers.nt] = false;
                     trackers.skd[trackers.nt] = 0;
+                    trackers.cx[trackers.nt] = 0;
+                    trackers.cy[trackers.nt] = 0;
+                    trackers.cz[trackers.nt] = 0;
                     ++trackers.nt;
                 }
                 if (string.startsWith("maxb")) {
@@ -1949,6 +1958,9 @@ public class GameSparker extends Applet implements Runnable
                     trackers.dam[trackers.nt] = 167;
                     trackers.decor[trackers.nt] = false;
                     trackers.skd[trackers.nt] = 0;
+                    trackers.cx[trackers.nt] = 0;
+                    trackers.cy[trackers.nt] = 0;
+                    trackers.cz[trackers.nt] = 0;
                     ++trackers.nt;
                 }
             }
