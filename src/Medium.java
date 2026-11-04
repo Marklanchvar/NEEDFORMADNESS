@@ -652,9 +652,10 @@ public class Medium
         }
         n += this.bcxz;
         this.xz = -n;
-        this.x = contO.x - this.cx + (-(contO.z - 800 - contO.z) * this.sin(n));
-        this.z = contO.z - this.cz + ((contO.z - 800 - contO.z) * this.cos(n));
-        this.y = contO.y - 250 - this.cy;
+        float dist = contO.maxR + 1000;
+        this.x = contO.x - this.cx + dist * this.sin(n);
+        this.z = contO.z - this.cz - dist * this.cos(n);
+        this.y = contO.y - this.cy - dist * this.sin(20);
     }
     
     public void getfollow(final ContO contO, float cxz, final int n2) {

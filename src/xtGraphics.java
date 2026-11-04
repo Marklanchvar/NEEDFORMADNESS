@@ -2358,7 +2358,7 @@ public class xtGraphics extends Panel implements Runnable
             this.m.w = 800;
             this.m.focus_point = 400;
             this.m.cx = 400;
-            this.m.cy = 250;
+            this.m.cy = 225;
             this.m.cz = 50;
             this.fase = 0;
             if (Math.random() > Math.random()) {
@@ -2681,7 +2681,7 @@ public class xtGraphics extends Panel implements Runnable
         this.m.focus_point = 400;
         this.m.cx = 200;
         this.m.cy = 300;
-        this.m.cz = 0;
+        this.m.cz = 50;
         this.m.zy = 10;
         this.m.x = array[menuCar].x - m.cx;
         this.m.y = array[menuCar].y - m.cy - m.sin(m.zy) * (array[menuCar].maxR + 400) + array[menuCar].grat;
@@ -3650,7 +3650,6 @@ public class xtGraphics extends Panel implements Runnable
         this.m.focus_point = 400;
         this.m.cx = 400;
         this.m.cy = 300;
-        this.m.cz = 0;
         this.m.zy = 10;
         this.m.x = -m.cx;
         this.m.y = -m.cy - m.sin(m.zy) * (array[this.sc[0]].maxR + 500);
