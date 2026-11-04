@@ -224,111 +224,6 @@ public class Medium
         }
     }
     
-    public void defaultMedium() {
-        this.focus_point = 400;
-        this.ground = 250;
-        this.skyline = -300;
-        this.fade = new int[] { 3000, 4500, 6000, 7500, 9000, 10500, 12000, 13500, 15000, 16500, 18000, 19500, 21000, 22500, 24000, 25500 };
-        this.cldd = new int[] { 210, 210, 210, 1, -1000 };
-        this.clds = new int[] { 210, 210, 210 };
-        this.osky = new int[] { 170, 220, 255 };
-        this.csky = new int[] { 170, 220, 255 };
-        this.ogrnd = new int[] { 205, 200, 200 };
-        this.cgrnd = new int[] { 205, 200, 200 };
-        this.texture = new int[] { 0, 0, 0, 50 };
-        this.cpol = new int[] { 215, 210, 210 };
-        this.crgrnd = new int[] { 205, 200, 200 };
-        this.cfade = new int[] { 255, 220, 220 };
-        this.snap = new int[] { 0, 0, 0 };
-        this.origfade = 5000;
-        this.fogd = 1000;
-        this.mgen = (int)(Math.random() * 100000.0);
-        this.lightson = false;
-        this.darksky = false;
-        this.lightn = -1;
-        this.lilo = 217;
-        this.lton = false;
-        this.noelec = 0;
-        this.trk = false;
-        this.crs = false;
-        this.cx = 400;
-        this.cy = 225;
-        this.cz = 50;
-        this.xz = 0;
-        this.zy = 0;
-        this.x = 0;
-        this.y = 0;
-        this.z = 0;
-        this.iw = 0;
-        this.ih = 0;
-        this.w = 800;
-        this.h = 450;
-        this.nsp = 0;
-        this.spx = new float[7];
-        this.spz = new float[7];
-        this.sprad = new int[7];
-        this.td = false;
-        this.bcxz = 0;
-        this.bt = false;
-        this.vxz = 180;
-        this.adv = 500;
-        this.vert = false;
-        this.lastmaf = 0;
-        this.checkpoint = -1;
-        this.lastcheck = false;
-        this.elecr = 0.0f;
-        this.cpflik = false;
-        this.nochekflk = false;
-        this.cntrn = 0;
-        this.diup = new boolean[] { false, false, false };
-        this.rand = new int[] { 0, 0, 0 };
-        this.trn = 0;
-        this.hit = 45000;
-        this.ptr = 0;
-        this.ptcnt = -10;
-        this.nrnd = 0;
-        this.trx = 0L;
-        this.trz = 0L;
-        this.atrx = 0L;
-        this.atrz = 0L;
-        this.fallen = 0;
-        this.fo = 1.0f;
-        this.gofo = (float)(0.33000001311302185 + Math.random() * 1.34);
-        this.fvect = 200;
-        this.ogpx = null;
-        this.ogpz = null;
-        this.pvr = null;
-        this.cgpx = null;
-        this.cgpz = null;
-        this.pmx = null;
-        this.pcv = null;
-        this.sgpx = 0;
-        this.sgpz = 0;
-        this.nrw = 0;
-        this.ncl = 0;
-        this.noc = 0;
-        this.clx = null;
-        this.clz = null;
-        this.cmx = null;
-        this.clax = null;
-        this.clay = null;
-        this.claz = null;
-        this.clc = null;
-        this.nmt = 0;
-        this.mrd = null;
-        this.nmv = null;
-        this.mtx = null;
-        this.mty = null;
-        this.mtz = null;
-        this.mtc = null;
-        this.nst = 0;
-        this.stx = null;
-        this.stz = null;
-        this.stc = null;
-        this.bst = null;
-        this.twn = null;
-    }
-    
     public float random() {
         if (this.cntrn == 0) {
             for (int i = 0; i < 3; ++i) {
@@ -720,7 +615,7 @@ public class Medium
         this.zy += (n7 - this.zy) / 10;
     }
     
-    public void follow(final ContO contO, float cxz, final int n2) {
+    public void follow(final ContO contO, float n, final int n2) {
         this.zy = 10;
         int n3 = 2 + Math.abs(this.bcxz) / 4;
         if (n3 > 20) {
@@ -755,10 +650,10 @@ public class Medium
         else if (this.bcxz != 0) {
             this.bcxz = 0;
         }
-        cxz += this.bcxz;
-        this.xz = -cxz;
-        this.x = contO.x - this.cx + (-(contO.z - 800 - contO.z) * this.sin(cxz));
-        this.z = contO.z - this.cz + ((contO.z - 800 - contO.z) * this.cos(cxz));
+        n += this.bcxz;
+        this.xz = -n;
+        this.x = contO.x - this.cx + (-(contO.z - 800 - contO.z) * this.sin(n));
+        this.z = contO.z - this.cz + ((contO.z - 800 - contO.z) * this.cos(n));
         this.y = contO.y - 250 - this.cy;
     }
     

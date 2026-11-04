@@ -2668,7 +2668,7 @@ public class xtGraphics extends Panel implements Runnable
                 changeCar = 0;
         }
         changeCar++;
-        array[menuCar].z = array[menuCar].maxR;
+        array[menuCar].z = 0;
         array[menuCar].y = 250 - array[menuCar].grat;
         array[menuCar].x = 0;
         array[menuCar].xz = 135F + (changeCar / 100F) * 360F;
@@ -2676,16 +2676,17 @@ public class xtGraphics extends Panel implements Runnable
         array[menuCar].zy = 0;
         array[menuCar].wzy = 0;
         array[menuCar].wxz = 0;
-        this.m.defaultMedium();
         this.m.trk = false;
         this.m.crs = false;
-        this.m.x = -200;
+        this.m.focus_point = 400;
         this.m.cx = 200;
-        this.m.focus_point = 200;
-        this.m.y = (this.cd.flipy[menuCar] - array[menuCar].grat) * .5F;
-        this.m.z = -250;
-        this.m.zy = 0;
-        this.m.ground = 250;
+        this.m.cy = 300;
+        this.m.cz = 0;
+        this.m.zy = 10;
+        this.m.x = array[menuCar].x - m.cx;
+        this.m.y = array[menuCar].y - m.cy - m.sin(m.zy) * (array[menuCar].maxR + 400) + array[menuCar].grat;
+        this.m.z = array[menuCar].z - m.cz - m.cos(m.zy) * (array[menuCar].maxR + 400);
+        this.m.ground = 0;
         this.m.d(this.rd);
         array[menuCar].d(this.rd);
         this.dudeMove();
@@ -3643,17 +3644,25 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         //car display
-        this.m.x = -this.m.cx;
-    	this.m.cx = 400;
-    	this.m.y = m.sin(m.zy) * (-500 - array[this.sc[0]].maxR);
-    	this.m.z = m.cos(m.zy) * (-500 - array[this.sc[0]].maxR);
-    	this.m.xz = 0;
-    	this.m.zy = 10;
-    	this.m.ground = 250 - m.y;
+        
+        this.m.trk = false;
+        this.m.crs = true;
+        this.m.focus_point = 400;
+        this.m.cx = 400;
+        this.m.cy = 300;
+        this.m.cz = 0;
+        this.m.zy = 10;
+        this.m.x = -m.cx;
+        this.m.y = -m.cy - m.sin(m.zy) * (array[this.sc[0]].maxR + 500);
+        this.m.z = -m.cz - m.cos(m.zy) * (array[this.sc[0]].maxR + 500);
+        this.m.ground = -m.y;
+        
         if (flipo == 0) {
-        	array[this.sc[0]].z = 0;
-        	array[this.sc[0]].y = 250 - array[this.sc[0]].grat;
-        	array[this.sc[0]].x = 0;
+            array[this.sc[0]].z = 0;
+            array[this.sc[0]].y = -array[this.sc[0]].grat;
+            array[this.sc[0]].x = 0;
+            array[this.sc[0]].xz = carrot;
+
         	if (this.mouson >= 0 && this.mouson <= 3) {
         		carrot += 2;
         	}
@@ -3663,7 +3672,6 @@ public class xtGraphics extends Panel implements Runnable
         	if (carrot > 360) {
         		carrot -= 360;
         	}
-        	array[this.sc[0]].xz = carrot;
         	array[this.sc[0]].zy = 0;
         	array[this.sc[0]].wzy -= 10;
         	if (array[this.sc[0]].wzy < -180) {
@@ -3706,7 +3714,7 @@ public class xtGraphics extends Panel implements Runnable
         				this.app.mcars.select(this.cd.names[this.sc[0]]);
         			}
         			array[this.sc[0]].z = 0;
-        			array[this.sc[0]].y = 250 - array[this.sc[0]].grat - 1100;
+        			array[this.sc[0]].y = -array[this.sc[0]].grat -1100;
         			array[this.sc[0]].x = 0;
         			array[this.sc[0]].zy = 0;
         			array[this.sc[0]].xz = carrot;
@@ -3715,6 +3723,7 @@ public class xtGraphics extends Panel implements Runnable
         	}
         	--this.flipo;
         }
+
         if (this.cfase == 0 || this.cfase == 3 || this.cfase == 11 || this.cfase == 101) {
             this.basefase = this.cfase;
             if (n7 != -1) {

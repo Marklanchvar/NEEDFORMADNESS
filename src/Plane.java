@@ -680,17 +680,12 @@ public class Plane
         }
         this.rot(plane3DY, plane3DZ, this.m.cy, this.m.cz, this.m.zy, this.n);
 
-        float[] accumulator = {0, 0, 0};
+        av = 0;
         for (int n62 = 0; n62 < this.n; ++n62) {
-
-        	accumulator[0] += plane3DX[n62];
-        	accumulator[1] += plane3DY[n62];
-        	accumulator[2] += plane3DZ[n62];
+        	av += plane3DZ[n62];
         }
-        for (int n62 = 0; n62 < 3; ++n62) {
-        	accumulator[n62] /= n;
-        }
-        this.av = (float) Math.sqrt((this.m.cy - accumulator[1]) * (this.m.cy - accumulator[1]) + (this.m.cx - accumulator[0]) * (this.m.cx - accumulator[0]) + accumulator[2] * accumulator[2] + gr * gr * gr);
+        av /= this.n;
+        av += gr;
         
         int visible = 1;
         final int[] polygon2DX = new int[this.n];

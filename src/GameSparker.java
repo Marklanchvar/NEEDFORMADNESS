@@ -191,7 +191,7 @@ public class GameSparker extends Applet implements Runnable
         final Medium medium = new Medium();
         final Trackers trackers = new Trackers();
         final CheckPoints checkPoints = new CheckPoints();
-        final ContO[] array = new ContO[124];
+        final ContO[] array = new ContO[40 + 16 + 66]; // original cars + carmaker cars + track pieces = 122
         final CarDefine carDefine = new CarDefine(array, medium, trackers, this);
         final xtGraphics xtGraphics = new xtGraphics(medium, carDefine, this.rd, this);
         this.sizebar = xtGraphics.getImage("data/sizebar.gif");
@@ -703,128 +703,6 @@ public class GameSparker extends Applet implements Runnable
                     }
                 }
             }
-            if (xtGraphics.fase == 7001) {
-                for (int n48 = 0; n48 < xtGraphics.nplayers; ++n48) {
-                    if (array3[n48].newedcar == 0 && array3[n48].newcar) {
-                        final float xz2 = array2[n48].xz;
-                        final float xy2 = array2[n48].xy;
-                        final float zy2 = array2[n48].zy;
-                        xtGraphics.colorCar(array[array3[n48].cn], n48);
-                        array2[n48] = new ContO(array[array3[n48].cn], array2[n48].x, array2[n48].y, array2[n48].z, 0);
-                        array2[n48].xz = xz2;
-                        array2[n48].xy = xy2;
-                        array2[n48].zy = zy2;
-                        array3[n48].newedcar = 20;
-                    }
-                }
-                medium.d(this.rd);
-                int n49 = 0;
-                final int[] array21 = new int[200];
-                for (int n50 = 0; n50 < this.nob; ++n50) {
-                    if (array2[n50].dist != 0) {
-                        array21[n49] = n50;
-                        ++n49;
-                    }
-                    else {
-                        array2[n50].d(this.rd);
-                    }
-                }
-                final int[] array22 = new int[n49];
-                final int[] array23 = new int[n49];
-                for (int n51 = 0; n51 < n49; ++n51) {
-                    array22[n51] = 0;
-                }
-                for (int n52 = 0; n52 < n49; ++n52) {
-                    for (int n53 = n52 + 1; n53 < n49; ++n53) {
-                        if (array2[array21[n52]].dist < array2[array21[n53]].dist) {
-                            final int[] array24 = array22;
-                            final int n54 = n52;
-                            ++array24[n54];
-                        }
-                        else {
-                            final int[] array25 = array22;
-                            final int n55 = n53;
-                            ++array25[n55];
-                        }
-                    }
-                    array23[array22[n52]] = n52;
-                }
-                for (int n56 = 0; n56 < n49; ++n56) {
-                    array2[array21[array23[n56]]].d(this.rd);
-                }
-                if (xtGraphics.starcnt == 0) {
-                	for (int n60 = 0; n60 < xtGraphics.nplayers; ++n60) {
-                		for (int n61 = 0; n61 < xtGraphics.nplayers; ++n61) {
-                			if (n61 != n60) {
-                				array3[n60].colide(array2[n60], array3[n61], array2[n61]);
-                			}
-                		}
-                	}
-                	{
-                		for (int n65 = 0; n65 < xtGraphics.nplayers; ++n65) {
-                			array3[n65].drive(this.u[n65], array2[n65], trackers, checkPoints);
-                		}
-                	}
-                	checkPoints.checkstat(array3, array2, record, xtGraphics.nplayers, xtGraphics.im);
-                }
-                else {
-                    if (xtGraphics.starcnt == 130) {
-                        medium.adv = 1900;
-                        medium.zy = 40;
-                        medium.vxz = 70;
-                        this.rd.setColor(Color.WHITE);
-                        this.rd.fillRect(0, 0, 800, 450);
-                        this.repaint();
-                    }
-                    if (xtGraphics.starcnt != 0) {
-                        final xtGraphics xtGraphics3 = xtGraphics;
-                        --xtGraphics3.starcnt;
-                    }
-                }
-                if (xtGraphics.starcnt < 38) {
-                    {
-                        if (this.view == 0) {
-                            medium.getaround(array2[xtGraphics.im]);
-                            this.mvect = 80;
-                        }
-                        if (this.view == 1) {
-                            medium.getfollow(array2[xtGraphics.im], array3[xtGraphics.im].cxz, this.u[0].lookback);
-                            this.mvect = 65 + Math.abs(this.lmxz - medium.xz) / 5 * 100;
-                            if (this.mvect > 90) {
-                                this.mvect = 90;
-                            }
-                            this.lmxz = medium.xz;
-                        }
-                        if (this.view == 2) {
-                            medium.watch(array2[xtGraphics.im], array3[xtGraphics.im].mxz);
-                            this.mvect = 65 + Math.abs(this.lmxz - medium.xz) / 5 * 100;
-                            if (this.mvect > 90) {
-                                this.mvect = 90;
-                            }
-                            this.lmxz = medium.xz;
-                        }
-                        xtGraphics.stat(array3[xtGraphics.im], array2[xtGraphics.im], checkPoints, this.u[0], true);
-                    }
-                    if (this.mouses == 1) {
-                        this.mouses = 0;
-                    }
-                }
-                else {
-                    medium.around(array2[xtGraphics.im], true);
-                    this.mvect = 80;
-                    if (xtGraphics.starcnt == 38) {
-                        this.mouses = 0;
-                        medium.vert = false;
-                        medium.adv = 900;
-                        medium.vxz = 180;
-                        checkPoints.checkstat(array3, array2, record, xtGraphics.nplayers, xtGraphics.im);
-                        medium.follow(array2[xtGraphics.im], array3[xtGraphics.im].cxz, 0);
-                        xtGraphics.stat(array3[xtGraphics.im], array2[xtGraphics.im], checkPoints, this.u[0], true);
-                        this.rd.setColor(Color.WHITE);
-                        this.rd.fillRect(0, 0, 800, 450);
-                    }
-                }
-            }
             if (xtGraphics.fase == -1) {
                 if (n7 == 0) {
                     for (int n67 = 0; n67 < xtGraphics.nplayers; ++n67) {
@@ -834,7 +712,7 @@ public class GameSparker extends Applet implements Runnable
                 }
                 medium.d(this.rd);
                 int n68 = 0;
-                final int[] array26 = new int[200];
+                final int[] array26 = new int[this.nob];
                 for (int n69 = 0; n69 < this.nob; ++n69) {
                     if (array2[n69].dist != 0) {
                         array26[n68] = n69;
@@ -1873,14 +1751,6 @@ public class GameSparker extends Applet implements Runnable
                 }
                 if (string.startsWith("set")) {
                     int getint5 = this.getint("set", string, 0);
-                    if (xtGraphics.nplayers == 8) {
-                        if (getint5 == 47) {
-                            getint5 = 76;
-                        }
-                        if (getint5 == 48) {
-                            getint5 = 77;
-                        }
-                    }
                     boolean b = true;
                     if (getint5 >= 65 && getint5 <= 75 && checkPoints.notb) {
                         b = false;
@@ -2412,7 +2282,7 @@ public class GameSparker extends Applet implements Runnable
     
     public void loadbase(final ContO[] array, final Medium medium, final Trackers trackers, final xtGraphics xtGraphics, final boolean b) {
         final String[] array2 = { "2000tornados", "formula7", "canyenaro", "lescrab", "nimi", "maxrevenge", "leadoxide", "koolkat", "drifter", "policecops", "mustang", "king", "audir8", "masheen", "radicalone", "drmonster" };
-        final String[] array3 = { "road", "froad", "twister2", "twister1", "turn", "offroad", "bumproad", "offturn", "nroad", "nturn", "roblend", "noblend", "rnblend", "roadend", "offroadend", "hpground", "ramp30", "cramp35", "dramp15", "dhilo15", "slide10", "takeoff", "sramp22", "offbump", "offramp", "sofframp", "halfpipe", "spikes", "rail", "thewall", "checkpoint", "fixpoint", "offcheckpoint", "sideoff", "bsideoff", "uprise", "riseroad", "sroad", "soffroad", "tside", "launchpad", "thenet", "speedramp", "offhill", "slider", "uphill", "roll1", "roll2", "roll3", "roll4", "roll5", "roll6", "opile1", "opile2", "aircheckpoint", "tree1", "tree2", "tree3", "tree4", "tree5", "tree6", "tree7", "tree8", "cac1", "cac2", "cac3", "8sroad", "8soffroad" };
+        final String[] array3 = { "road", "froad", "twister2", "twister1", "turn", "offroad", "bumproad", "offturn", "nroad", "nturn", "roblend", "noblend", "rnblend", "roadend", "offroadend", "hpground", "ramp30", "cramp35", "dramp15", "dhilo15", "slide10", "takeoff", "sramp22", "offbump", "offramp", "sofframp", "halfpipe", "spikes", "rail", "thewall", "checkpoint", "fixpoint", "offcheckpoint", "sideoff", "bsideoff", "uprise", "riseroad", "sroad", "soffroad", "tside", "launchpad", "thenet", "speedramp", "offhill", "slider", "uphill", "roll1", "roll2", "roll3", "roll4", "roll5", "roll6", "opile1", "opile2", "aircheckpoint", "tree1", "tree2", "tree3", "tree4", "tree5", "tree6", "tree7", "tree8", "cac1", "cac2", "cac3" };
         int n = 0;
         xtGraphics.dnload += 6;
         try {
@@ -2425,12 +2295,12 @@ public class GameSparker extends Applet implements Runnable
             }
             for (ZipEntry zipEntry = zipInputStream.getNextEntry(); zipEntry != null; zipEntry = zipInputStream.getNextEntry()) {
                 int n2 = 0;
-                for (int i = 0; i < 16; ++i) {
+                for (int i = 0; i < array2.length; ++i) {
                     if (zipEntry.getName().startsWith(array2[i])) {
                         n2 = i;
                     }
                 }
-                for (int j = 0; j < 68; ++j) {
+                for (int j = 0; j < array3.length; ++j) {
                     if (zipEntry.getName().startsWith(array3[j])) {
                         n2 = j + 56;
                     }
