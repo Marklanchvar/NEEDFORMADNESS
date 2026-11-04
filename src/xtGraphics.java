@@ -3645,10 +3645,10 @@ public class xtGraphics extends Panel implements Runnable
         //car display
         this.m.x = -this.m.cx;
     	this.m.cx = 400;
-    	this.m.y = m.sin(m.zy) * (-500 - array[this.sc[0]].maxR);
+    	this.m.y = m.sin(m.zy) * (-500 - array[this.sc[0]].maxR) + (this.cd.flipy[menuCar] - array[menuCar].grat) * .5F;
     	this.m.z = m.cos(m.zy) * (-500 - array[this.sc[0]].maxR);
     	this.m.xz = 0;
-    	this.m.zy = 45;
+    	this.m.zy = 10;
     	this.m.ground = 250 - m.y;
         if (flipo == 0) {
         	array[this.sc[0]].z = 0;
