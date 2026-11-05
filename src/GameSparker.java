@@ -1889,6 +1889,7 @@ public class GameSparker extends Applet implements Runnable
                     trackers.cx[trackers.nt] = 0;
                     trackers.cy[trackers.nt] = 0;
                     trackers.cz[trackers.nt] = 0;
+                    trackers.xz[trackers.nt] = 0;
                     ++trackers.nt;
                 }
                 if (string.startsWith("maxl")) {
@@ -1913,6 +1914,7 @@ public class GameSparker extends Applet implements Runnable
                     trackers.cx[trackers.nt] = 0;
                     trackers.cy[trackers.nt] = 0;
                     trackers.cz[trackers.nt] = 0;
+                    trackers.xz[trackers.nt] = 180;
                     ++trackers.nt;
                 }
                 if (string.startsWith("maxt")) {
@@ -1937,6 +1939,7 @@ public class GameSparker extends Applet implements Runnable
                     trackers.cx[trackers.nt] = 0;
                     trackers.cy[trackers.nt] = 0;
                     trackers.cz[trackers.nt] = 0;
+                    trackers.xz[trackers.nt] = 90;
                     ++trackers.nt;
                 }
                 if (string.startsWith("maxb")) {
@@ -1961,6 +1964,7 @@ public class GameSparker extends Applet implements Runnable
                     trackers.cx[trackers.nt] = 0;
                     trackers.cy[trackers.nt] = 0;
                     trackers.cz[trackers.nt] = 0;
+                    trackers.xz[trackers.nt] = -90;
                     ++trackers.nt;
                 }
             }
@@ -2040,256 +2044,6 @@ public class GameSparker extends Applet implements Runnable
             xtGraphics.fase = 1;
         }
         System.gc();
-    }
-    
-    public boolean loadstagePreview(final int stage, final String name, final ContO[] array, final ContO[] array2, final Medium medium, final CheckPoints checkPoints) {
-        boolean b = true;
-        if (stage < 100) {
-            checkPoints.stage = stage;
-            if (checkPoints.stage < 0) {
-                checkPoints.name = name;
-            }
-        }
-        else {
-            checkPoints.stage = -2;
-            if (this.sgame.getSelectedIndex() == 3 || this.sgame.getSelectedIndex() == 4) {
-                checkPoints.name = this.mstgs.getSelectedItem();
-            }
-            else {
-                final int beginIndex = this.mstgs.getSelectedItem().indexOf(" ") + 1;
-                if (beginIndex > 0) {
-                    checkPoints.name = this.mstgs.getSelectedItem().substring(beginIndex);
-                }
-            }
-        }
-        this.nob = 0;
-        checkPoints.n = 0;
-        checkPoints.nsp = 0;
-        checkPoints.fn = 0;
-        checkPoints.haltall = false;
-        checkPoints.wasted = 0;
-        checkPoints.catchfin = 0;
-        medium.ground = 250;
-        this.view = 0;
-        medium.trx = 0L;
-        medium.trz = 0L;
-        int getint = 0;
-        int getint2 = 100;
-        int getint3 = 0;
-        int getint4 = 100;
-        String string = "";
-        try {
-            DataInputStream dataInputStream;
-            if (checkPoints.stage > 0) {
-                dataInputStream = new DataInputStream(new URL("http://multiplayer.needformadness.com/stages/" + checkPoints.stage + ".txt").openStream());
-            }
-            else {
-                final URL url = new URL(("http://multiplayer.needformadness.com/tracks/" + checkPoints.name + ".radq").replace(' ', '_'));
-                final int contentLength = url.openConnection().getContentLength();
-                final DataInputStream dataInputStream2 = new DataInputStream(url.openStream());
-                final byte[] array3 = new byte[contentLength];
-                dataInputStream2.readFully(array3);
-                ZipInputStream zipInputStream;
-                if (array3[0] == 80 && array3[1] == 75 && array3[2] == 3) {
-                    zipInputStream = new ZipInputStream(new ByteArrayInputStream(array3));
-                }
-                else {
-                    final byte[] buf = new byte[contentLength - 40];
-                    for (int i = 0; i < contentLength - 40; ++i) {
-                        int n = 20;
-                        if (i >= 500) {
-                            n = 40;
-                        }
-                        buf[i] = array3[i + n];
-                    }
-                    zipInputStream = new ZipInputStream(new ByteArrayInputStream(buf));
-                }
-                int j = Integer.valueOf(zipInputStream.getNextEntry().getName());
-                final byte[] array4 = new byte[j];
-                int off = 0;
-                while (j > 0) {
-                    final int read = zipInputStream.read(array4, off, j);
-                    off += read;
-                    j -= read;
-                }
-                zipInputStream.close();
-                dataInputStream2.close();
-                dataInputStream = new DataInputStream(new ByteArrayInputStream(array4));
-            }
-            String line;
-            while ((line = dataInputStream.readLine()) != null) {
-                string = "" + line.trim();
-                if (string.startsWith("snap")) {
-                    medium.setsnap(this.getint("snap", string, 0), this.getint("snap", string, 1), this.getint("snap", string, 2));
-                }
-                if (string.startsWith("sky")) {
-                    medium.setsky(this.getint("sky", string, 0), this.getint("sky", string, 1), this.getint("sky", string, 2));
-                }
-                if (string.startsWith("ground")) {
-                    medium.setgrnd(this.getint("ground", string, 0), this.getint("ground", string, 1), this.getint("ground", string, 2));
-                }
-                if (string.startsWith("polys")) {
-                    medium.setpolys(this.getint("polys", string, 0), this.getint("polys", string, 1), this.getint("polys", string, 2));
-                }
-                if (string.startsWith("fog")) {
-                    medium.setfade(this.getint("fog", string, 0), this.getint("fog", string, 1), this.getint("fog", string, 2));
-                }
-                if (string.startsWith("texture")) {
-                    medium.setexture(this.getint("texture", string, 0), this.getint("texture", string, 1), this.getint("texture", string, 2), this.getint("texture", string, 3));
-                }
-                if (string.startsWith("clouds")) {
-                    medium.setcloads(this.getint("clouds", string, 0), this.getint("clouds", string, 1), this.getint("clouds", string, 2), this.getint("clouds", string, 3), this.getint("clouds", string, 4));
-                }
-                if (string.startsWith("density")) {
-                    medium.fogd = (this.getint("density", string, 0) + 1) * 2 - 1;
-                    if (medium.fogd < 1) {
-                        medium.fogd = 1;
-                    }
-                    if (medium.fogd > 30) {
-                        medium.fogd = 30;
-                    }
-                }
-                if (string.startsWith("fadefrom")) {
-                    medium.fadfrom(this.getint("fadefrom", string, 0));
-                    medium.origfade = medium.fade[0];
-                }
-                if (string.startsWith("lightson")) {
-                    medium.lightson = true;
-                }
-                if (string.startsWith("mountains")) {
-                    medium.mgen = this.getint("mountains", string, 0);
-                }
-                if (string.startsWith("soundtrack")) {
-                    checkPoints.trackname = this.getstring("soundtrack", string, 0);
-                    checkPoints.trackvol = this.getint("soundtrack", string, 1);
-                    checkPoints.trackvol = checkPoints.trackvol > 50 ? (checkPoints.trackvol < 300 ? checkPoints.trackvol : 300) : 50;
-                }
-                if (string.startsWith("set")) {
-                    int getint5 = this.getint("set", string, 0);
-                    getint5 += 46;
-                    array[this.nob] = new ContO(array2[getint5], this.getint("set", string, 1), medium.ground - array2[getint5].grat, this.getint("set", string, 2), this.getint("set", string, 3));
-                    array[this.nob].t.nt = 0;
-                    if (string.indexOf(")p") != -1) {
-                        checkPoints.x[checkPoints.n] = this.getint("chk", string, 1);
-                        checkPoints.z[checkPoints.n] = this.getint("chk", string, 2);
-                        checkPoints.y[checkPoints.n] = 0;
-                        checkPoints.typ[checkPoints.n] = 0;
-                        if (string.indexOf(")pt") != -1) {
-                            checkPoints.typ[checkPoints.n] = -1;
-                        }
-                        if (string.indexOf(")pr") != -1) {
-                            checkPoints.typ[checkPoints.n] = -2;
-                        }
-                        if (string.indexOf(")po") != -1) {
-                            checkPoints.typ[checkPoints.n] = -3;
-                        }
-                        if (string.indexOf(")ph") != -1) {
-                            checkPoints.typ[checkPoints.n] = -4;
-                        }
-                        if (string.indexOf("out") != -1) {
-                            System.out.println("out: " + checkPoints.n);
-                        }
-                        ++checkPoints.n;
-                    }
-                    ++this.nob;
-                }
-                if (string.startsWith("chk")) {
-                    int getint6 = this.getint("chk", string, 0);
-                    getint6 += 46;
-                    float getint7 = medium.ground - array2[getint6].grat;
-                    if (getint6 == 110) {
-                        getint7 = this.getint("chk", string, 4);
-                    }
-                    array[this.nob] = new ContO(array2[getint6], this.getint("chk", string, 1), getint7, this.getint("chk", string, 2), this.getint("chk", string, 3));
-                    checkPoints.x[checkPoints.n] = this.getint("chk", string, 1);
-                    checkPoints.z[checkPoints.n] = this.getint("chk", string, 2);
-                    checkPoints.y[checkPoints.n] = getint7;
-                    if (this.getint("chk", string, 3) == 0) {
-                        checkPoints.typ[checkPoints.n] = 1;
-                    }
-                    else {
-                        checkPoints.typ[checkPoints.n] = 2;
-                    }
-                    checkPoints.pcs = checkPoints.n;
-                    ++checkPoints.n;
-                    array[this.nob].checkpoint = checkPoints.nsp + 1;
-                    ++checkPoints.nsp;
-                    ++this.nob;
-                }
-                if (string.startsWith("fix")) {
-                    int getint8 = this.getint("fix", string, 0);
-                    getint8 += 46;
-                    array[this.nob] = new ContO(array2[getint8], this.getint("fix", string, 1), this.getint("fix", string, 3), this.getint("fix", string, 2), this.getint("fix", string, 4));
-                    checkPoints.fx[checkPoints.fn] = this.getint("fix", string, 1);
-                    checkPoints.fz[checkPoints.fn] = this.getint("fix", string, 2);
-                    checkPoints.fy[checkPoints.fn] = this.getint("fix", string, 3);
-                    array[this.nob].elec = true;
-                    if (this.getint("fix", string, 4) != 0) {
-                        checkPoints.roted[checkPoints.fn] = true;
-                        array[this.nob].roted = true;
-                    }
-                    else {
-                        checkPoints.roted[checkPoints.fn] = false;
-                    }
-                    if (string.indexOf(")s") != -1) {
-                        checkPoints.special[checkPoints.fn] = true;
-                    }
-                    else {
-                        checkPoints.special[checkPoints.fn] = false;
-                    }
-                    ++checkPoints.fn;
-                    ++this.nob;
-                }
-                if (string.startsWith("nlaps")) {
-                    checkPoints.nlaps = this.getint("nlaps", string, 0);
-                    if (checkPoints.nlaps < 1) {
-                        checkPoints.nlaps = 1;
-                    }
-                    if (checkPoints.nlaps > 15) {
-                        checkPoints.nlaps = 15;
-                    }
-                }
-                if (checkPoints.stage > 0 && string.startsWith("name")) {
-                    checkPoints.name = this.getstring("name", string, 0).replace('|', ',');
-                }
-                if (string.startsWith("stagemaker")) {
-                    checkPoints.maker = this.getstring("stagemaker", string, 0);
-                }
-                if (string.startsWith("publish")) {
-                    checkPoints.pubt = this.getint("publish", string, 0);
-                }
-                if (string.startsWith("maxr")) {
-                    getint = this.getint("maxr", string, 1);
-                }
-                if (string.startsWith("maxl")) {
-                    getint2 = this.getint("maxl", string, 1);
-                }
-                if (string.startsWith("maxt")) {
-                    getint3 = this.getint("maxt", string, 1);
-                }
-                if (string.startsWith("maxb")) {
-                    getint4 = this.getint("maxb", string, 1);
-                }
-            }
-            dataInputStream.close();
-            medium.newpolys(getint2, getint - getint2, getint4, getint3 - getint4, null, this.notb);
-            medium.newclouds(getint2, getint, getint4, getint3);
-            medium.newmountains(getint2, getint, getint4, getint3);
-            medium.newstars();
-        }
-        catch (final Exception obj) {
-            b = false;
-            System.out.println("Error in stage " + checkPoints.stage);
-            System.out.println("" + obj);
-            System.out.println("At line: " + string);
-        }
-        if (checkPoints.nsp < 2) {
-            b = false;
-        }
-        medium.trx = (getint2 + getint) / 2;
-        medium.trz = (getint3 + getint4) / 2;
-        System.gc();
-        return b;
     }
     
     public void loadbase(final ContO[] array, final Medium medium, final Trackers trackers, final xtGraphics xtGraphics, final boolean b) {

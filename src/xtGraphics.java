@@ -1513,6 +1513,7 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void inishstageselect(final CheckPoints checkPoints) {
+    	this.m.cy = 225;
         if (checkPoints.stage == -2 && (this.cd.msloaded != 1 || !this.logged)) {
             checkPoints.stage = (int)(Math.random() * 27.0) + 1;
         }
@@ -3721,8 +3722,10 @@ public class xtGraphics extends Panel implements Runnable
         				this.app.mcars.select(this.cd.names[this.sc[0]]);
         			}
         			array[this.sc[0]].y = -array[this.sc[0]].grat -1100;
+        			array[this.sc[0]].zy = 0;
         		}
         		array[this.sc[0]].y += 100;
+    			array[this.sc[0]].xz = carrot;
         	}
         	--this.flipo;
         }
