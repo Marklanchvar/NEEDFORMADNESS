@@ -1,13 +1,13 @@
-public final class UlawUtils
+public final class Utils
 {
     public static final byte[] s2u_lut;
     
     public static final byte linear2ulaw(final byte b) {
-        return UlawUtils.s2u_lut[((b & 0xFF) << 5) + 15];
+        return Utils.s2u_lut[((b & 0xFF) << 5) + 15];
     }
     
     public static final byte linear2ulaw(final int n) {
-        return UlawUtils.s2u_lut[n >> 3];
+        return Utils.s2u_lut[n >> 3];
     }
     
     public static final byte linear2ulawclip(int n) {
@@ -17,7 +17,7 @@ public final class UlawUtils
         if (n > 32767) {
             n = 32767;
         }
-        return UlawUtils.s2u_lut[n >> 3 & 0x1FFF];
+        return Utils.s2u_lut[n >> 3 & 0x1FFF];
     }
     
     static {
