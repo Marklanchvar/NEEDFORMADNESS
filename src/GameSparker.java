@@ -1768,7 +1768,6 @@ public class GameSparker extends Applet implements Runnable
                             checkPoints.x[checkPoints.n] = this.getint("set", string, 1);
                             checkPoints.z[checkPoints.n] = this.getint("set", string, 2);
                             checkPoints.y[checkPoints.n] = 0;
-                            checkPoints.xz[checkPoints.n] = this.getint("set", string, 3);
                             checkPoints.typ[checkPoints.n] = 0;
                             if (string.indexOf(")pt") != -1) {
                                 checkPoints.typ[checkPoints.n] = -1;

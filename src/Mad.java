@@ -759,7 +759,7 @@ public class Mad
                 }
                 if (Math.abs(this.scz[n31] - n27) > n25) {
                     if (this.scz[n31] < n27) {
-                    	this.scz[n31] -= n25;
+                    	this.scz[n31] += n25;
                     }
                     else {
                     	this.scz[n31] -= n25;
