@@ -1122,7 +1122,7 @@ public class GameSparker extends Applet implements Runnable
                     --this.fcscnt;
                 }
             }
-            
+            rd.setColor(medium.lightson ? Color.WHITE : Color.BLACK);
         	rd.drawString("Fase " + xtGraphics.fase, 200, 225);
         	rd.drawString("FlipO " + xtGraphics.flipo, 200, 240);
         	rd.drawString("C-Fase " + xtGraphics.cfase, 200, 255);

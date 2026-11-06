@@ -63,4 +63,13 @@ public class Utils
         }
     }
     
+    public static void rotS(float pointX, float pointY, final float originX, final float originY, final float angle) {
+        if (angle != 0) {
+                final float cloneX = pointX;
+                final float cloneY = pointY;
+                pointX = originX + ((cloneX - originX) * Utils.cos(angle) - (cloneY - originY) * Utils.sin(angle));
+                pointY = originY + ((cloneX - originX) * Utils.sin(angle) + (cloneY - originY) * Utils.cos(angle));
+        }
+    }
+    
 }

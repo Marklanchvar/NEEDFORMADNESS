@@ -1456,14 +1456,10 @@ public class ContO
                     for (int n5 = 0; n5 < 4; ++n5) {
                         array2[n5] = (int) (this.t.y[n3] - this.m.y);
                         if (this.t.zy[n3] != 0) {
-                            final int[] array4 = array2;
-                            final int n6 = n5;
-                            array4[n6] += (int)((array3[n5] - (this.t.z[n3] - this.m.z - this.t.radz[n3])) * Utils.sin(this.t.zy[n3]) / Utils.sin(90 - this.t.zy[n3]) - this.t.radz[n3] * Utils.sin(this.t.zy[n3]) / Utils.sin(90 - this.t.zy[n3]));
+                            array2[n5] += (int)((array3[n5] - (this.t.z[n3] - this.m.z - this.t.radz[n3])) * Utils.sin(this.t.zy[n3]) / Utils.sin(90 - this.t.zy[n3]) - this.t.radz[n3] * Utils.sin(this.t.zy[n3]) / Utils.sin(90 - this.t.zy[n3]));
                         }
                         if (this.t.xy[n3] != 0) {
-                            final int[] array5 = array2;
-                            final int n7 = n5;
-                            array5[n7] += (int)((array[n5] - (this.t.x[n3] - this.m.x - this.t.radx[n3])) * Utils.sin(this.t.xy[n3]) / Utils.sin(90 - this.t.xy[n3]) - this.t.radx[n3] * Utils.sin(this.t.xy[n3]) / Utils.sin(90 - this.t.xy[n3]));
+                            array2[n5] += (int)((array[n5] - (this.t.x[n3] - this.m.x - this.t.radx[n3])) * Utils.sin(this.t.xy[n3]) / Utils.sin(90 - this.t.xy[n3]) - this.t.radx[n3] * Utils.sin(this.t.xy[n3]) / Utils.sin(90 - this.t.xy[n3]));
                         }
                     }
                     break;

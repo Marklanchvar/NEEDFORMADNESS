@@ -543,15 +543,15 @@ public class Mad
             }
         }
         float n11 = 20.0f * this.speed / (154.0f * this.cd.simag[this.cn]);
-        if (n11 > 20.0f) {
-            n11 = 20.0f;
+        if (n11 > 20F) {
+            n11 = 20F;
         }
         contO.wzy -= n11;
-        if (contO.wzy < -30) {
-            contO.wzy += 30;
+        if (contO.wzy < -180) {
+            contO.wzy += 360;
         }
-        if (contO.wzy > 30) {
-            contO.wzy -= 30;
+        if (contO.wzy > 180) {
+            contO.wzy -= 360;
         }
         if (control.right) {
             contO.wxz -= this.cd.turn[this.cn];
@@ -566,7 +566,7 @@ public class Mad
             }
         }
         if (contO.wxz != 0 && !control.left && !control.right) {
-            if (Math.abs(this.speed) < 10.0f) {
+            if (Math.abs(this.speed) < 10F) {
                 if (Math.abs(contO.wxz) == 1) {
                     contO.wxz = 0;
                 }
@@ -687,8 +687,21 @@ public class Mad
         int n22 = 1;
         for (int n23 = 0; n23 < trackers.sect[ncx][ncz].length; ++n23) {
             final int n24 = trackers.sect[ncx][ncz][n23];
+
+            float tXZ = trackers.xz[n24];
+            float tcX = trackers.cx[n24];
+            float tcZ = trackers.cz[n24];
+            
+            if (trackers.xz[n24] != 0F) {
+            	Utils.rotS(contO.x, contO.z, tcX, tcZ, -tXZ);
+            }
+            
             if (Math.abs(trackers.zy[n24]) != 90 && Math.abs(trackers.xy[n24]) != 90 && Math.abs(contO.x - trackers.x[n24]) < trackers.radx[n24] && Math.abs(contO.z - trackers.z[n24]) < trackers.radz[n24] && !trackers.decor[n24]) {
                 n22 = trackers.skd[n24];
+            }
+            
+            if (trackers.xz[n24] != 0F) {
+            	Utils.rotS(contO.x, contO.z, tcX, tcZ, tXZ);
             }
         }
         if (this.mtouch) {
@@ -855,19 +868,19 @@ public class Mad
         else if (this.skid != 2) {
             this.skid = 2;
         }
-        int n40 = 0;
-        final boolean[] array7 = new boolean[4];
-        final boolean[] array8 = new boolean[4];
-        final boolean[] array9 = new boolean[4];
-        float n41 = 0.0f;
+        int speedAccumulator = 0;
+        final boolean[] wheelTracked = new boolean[4];
+        final boolean[] wheelCapsized = new boolean[4];
+        final boolean[] wheelGrounded = new boolean[4];
+        float heightAccumulator = 0.0f;
         for (int n42 = 0; n42 < 4; ++n42) {
-            array9[n42] = (array8[n42] = false);
-            if (array3[n42] > 245.0f) {
-                ++n40;
+            wheelGrounded[n42] = (wheelCapsized[n42] = false);
+            if (array3[n42] > 245F) {
+                ++speedAccumulator;
                 this.wtouch = true;
                 this.gtouch = true;
-                if (!b3 && this.scy[n42] != 7.0f) {
-                    float n43 = this.scy[n42] / 333.33f;
+                if (!b3 && this.scy[n42] != 7F) {
+                    float n43 = this.scy[n42] * .003F;
                     if (n43 > 0.3) {
                         n43 = 0.3f;
                     }
@@ -881,8 +894,8 @@ public class Mad
                     contO.dust(n42, array[n42], array3[n42], array2[n42], this.scx[n42], this.scz[n42], n44 * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
                 }
                 array3[n42] = 250.0f;
-                array9[n42] = true;
-                n41 += array3[n42] - 250.0f;
+                wheelGrounded[n42] = true;
+                heightAccumulator += array3[n42] - 250.0f;
                 float n45 = (Math.abs(Utils.sin(this.pxy)) + Math.abs(Utils.sin(this.pzy))) / 3.0f;
                 if (n45 > 0.4) {
                     n45 = 0.4f;
@@ -893,51 +906,46 @@ public class Mad
                 }
                 this.regy(n42, Math.abs(this.scy[n42] * n46), contO);
                 if (this.scy[n42] > 0.0f) {
-                    final float[] scy4 = this.scy;
-                    final int n47 = n42;
-                    scy4[n47] -= Math.abs(this.scy[n42] * n46);
+                    scy[n42] -= Math.abs(this.scy[n42] * n46);
                 }
                 if (this.capsized) {
-                    array8[n42] = true;
+                    wheelCapsized[n42] = true;
                 }
             }
-            array7[n42] = false;
+            wheelTracked[n42] = false;
         }
-        if (n40 != 0) {
-            final float n48 = n41 / n40;
+        if (speedAccumulator != 0) {
+            final float n48 = heightAccumulator / speedAccumulator;
             for (int n49 = 0; n49 < 4; ++n49) {
-                if (!array9[n49]) {
-                    final float[] array10 = array3;
-                    final int n50 = n49;
-                    array10[n50] -= n48;
+                if (!wheelGrounded[n49]) {
+                    array3[n49] -= n48;
                 }
             }
         }
-        int n51 = 0;
+        int touchingNormal = 0;
         for (int n52 = 0; n52 < trackers.sect[ncx][ncz].length; ++n52) {
             final int n53 = trackers.sect[ncx][ncz][n52];
-            int n54 = 0;
-            int n55 = 0;
+            int touchingRamp = 0;
+            int touchingFlat = 0;
             float tXZ = trackers.xz[n53];
             float tcX = trackers.cx[n53];
             float tcZ = trackers.cz[n53];
+
+            if (trackers.xz[n53] != 0F) {
+            	Utils.rot(array, array2, tcX, tcZ, -tXZ, 4);
+            	Utils.rot(scx, scz, 0, 0, -tXZ, 4);
+            }
             
             for (int n56 = 0; n56 < 4; ++n56) {
-
-                if (trackers.xz[n53] != 0F) {
-                	rot(array, array2, tcX, tcZ, -tXZ, 4);
-                	rot(scx, scz, 0, 0, -tXZ, 4);
-                }
-                
-                if (array8[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53]) {
+            	if (wheelCapsized[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53]) {
                     contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
                     if (this.im == this.xt.im) {
                         this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                     }
                 }
-                if (!array7[n56] && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53] && array3[n56] > trackers.y[n53] - trackers.rady[n53] && array3[n56] < trackers.y[n53] + trackers.rady[n53] && (!trackers.decor[n53])) {
+                if (!wheelTracked[n56] && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53] && array3[n56] > trackers.y[n53] - trackers.rady[n53] && array3[n56] < trackers.y[n53] + trackers.rady[n53] && (!trackers.decor[n53])) {
                     if (trackers.xy[n53] == 0 && trackers.zy[n53] == 0 && trackers.y[n53] != 250 && array3[n56] > trackers.y[n53] - 5) {
-                        ++n55;
+                        ++touchingFlat;
                         this.wtouch = true;
                         this.gtouch = true;
                         if (!b3 && this.scy[n56] != 7.0f) {
@@ -975,7 +983,7 @@ public class Mad
                             final int n61 = n56;
                             scy5[n61] -= Math.abs(this.scy[n56] * n60);
                         }
-                        array7[n56] = true;
+                        wheelTracked[n56] = true;
                     }
                     if (trackers.zy[n53] == -90 && array2[n56] < trackers.z[n53] + trackers.radz[n53] && (this.scz[n56] < 0.0f || trackers.radz[n53] == 287)) {
                         for (int n62 = 0; n62 < 4; ++n62) {
@@ -1019,7 +1027,7 @@ public class Mad
                         scz3[n68] += Math.abs(this.scz[n56] * n67);
                         this.skid = 2;
                         b2 = true;
-                        array7[n56] = true;
+                        wheelTracked[n56] = true;
                         if (!trackers.notwall[n53]) {
                             control.wall = n53;
                         }
@@ -1066,7 +1074,7 @@ public class Mad
                         scz4[n75] -= Math.abs(this.scz[n56] * n74);
                         this.skid = 2;
                         b2 = true;
-                        array7[n56] = true;
+                        wheelTracked[n56] = true;
                         if (!trackers.notwall[n53]) {
                             control.wall = n53;
                         }
@@ -1113,7 +1121,7 @@ public class Mad
                         scx3[n82] += Math.abs(this.scx[n56] * n81);
                         this.skid = 2;
                         b2 = true;
-                        array7[n56] = true;
+                        wheelTracked[n56] = true;
                         if (!trackers.notwall[n53]) {
                             control.wall = n53;
                         }
@@ -1160,7 +1168,7 @@ public class Mad
                         scx4[n89] -= Math.abs(this.scx[n56] * n88);
                         this.skid = 2;
                         b2 = true;
-                        array7[n56] = true;
+                        wheelTracked[n56] = true;
                         if (!trackers.notwall[n53]) {
                             control.wall = n53;
                         }
@@ -1181,10 +1189,10 @@ public class Mad
                         }
                         if (n93 > trackers.z[n53] - 30) {
                             if (trackers.skd[n53] == 2) {
-                                ++n54;
+                                ++touchingRamp;
                             }
                             else {
-                                ++n51;
+                                ++touchingNormal;
                             }
                             this.wtouch = true;
                             this.gtouch = false;
@@ -1200,7 +1208,7 @@ public class Mad
                         }
                         array3[n56] = trackers.y[n53] + ((n92 - trackers.y[n53]) * Utils.cos(-n90) - (n93 - trackers.z[n53]) * Utils.sin(-n90));
                         array2[n56] = trackers.z[n53] + ((n92 - trackers.y[n53]) * Utils.sin(-n90) + (n93 - trackers.z[n53]) * Utils.cos(-n90));
-                        array7[n56] = true;
+                        wheelTracked[n56] = true;
                     }
                     if (trackers.xy[n53] != 0 && trackers.xy[n53] != 90 && trackers.xy[n53] != -90) {
                         final float n95 = 90 + trackers.xy[n53];
@@ -1218,10 +1226,10 @@ public class Mad
                         }
                         if (n98 > trackers.x[n53] - 30) {
                             if (trackers.skd[n53] == 2) {
-                                ++n54;
+                                ++touchingRamp;
                             }
                             else {
-                                ++n51;
+                                ++touchingNormal;
                             }
                             this.wtouch = true;
                             this.gtouch = false;
@@ -1237,25 +1245,24 @@ public class Mad
                         }
                         array3[n56] = trackers.y[n53] + ((n97 - trackers.y[n53]) * Utils.cos(-n95) - (n98 - trackers.x[n53]) * Utils.sin(-n95));
                         array[n56] = trackers.x[n53] + ((n97 - trackers.y[n53]) * Utils.sin(-n95) + (n98 - trackers.x[n53]) * Utils.cos(-n95));
-                        array7[n56] = true;
+                        wheelTracked[n56] = true;
                     }
                 }
+            }
 
-                if (trackers.xz[n53] != 0F) {
-                	rot(array, array2, tcX, tcZ, tXZ, 4);
-                	rot(scx, scz, 0, 0, tXZ, 4);
-                }
-                
+            if (trackers.xz[n53] != 0F) {
+            	Utils.rot(array, array2, tcX, tcZ, tXZ, 4);
+            	Utils.rot(scx, scz, 0, 0, tXZ, 4);
             }
             
-            if (n54 == 4) {
+            if (touchingRamp == 4) {
                 this.mtouch = true;
             }
-            if (n55 == 4) {
-                n40 = 4;
+            if (touchingFlat == 4) {
+                speedAccumulator = 4;
             }
         }
-        if (n51 == 4) {
+        if (touchingNormal == 4) {
             this.mtouch = true;
         }
         for (int n100 = 0; n100 < 4; ++n100) {
@@ -1371,7 +1378,7 @@ public class Mad
         else {
             this.pxy -= a3;
         }
-        if (n40 == 4) {
+        if (speedAccumulator == 4) {
             int n106 = 0;
             while (this.pzy < 360) {
                 this.pzy += 360;
@@ -2314,17 +2321,6 @@ public class Mad
                         scy3[n18] -= this.cd.lift[this.cn];
                     }
                 }
-            }
-        }
-    }
-    
-    public void rot(final float[] array, final float[] array2, final float x, final float z, final float xz, final int n4) {
-        if (xz != 0) {
-            for (int i = 0; i < n4; ++i) {
-                final float n5 = array[i];
-                final float n6 = array2[i];
-                array[i] = x + ((n5 - x) * Utils.cos(xz) - (n6 - z) * Utils.sin(xz));
-                array2[i] = z + ((n5 - x) * Utils.sin(xz) + (n6 - z) * Utils.cos(xz));
             }
         }
     }

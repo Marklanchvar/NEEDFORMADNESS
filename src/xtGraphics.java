@@ -2348,9 +2348,9 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void musicomp(final int n, final Control control) {
+        System.gc();
         this.hipnoload(n, true);
         if (control.handb || control.enter) {
-            System.gc();
             this.m.trk = false;
             this.m.crs = false;
             this.m.ih = 0;
@@ -3657,7 +3657,7 @@ public class xtGraphics extends Panel implements Runnable
         this.m.crs = true;
         this.m.focus_point = 400;
         this.m.cx = 400;
-        this.m.cy = 300;
+        this.m.cy = 250;
         this.m.zy = 10;
         this.m.x = -m.cx;
         this.m.y = -m.cy - Utils.sin(m.zy) * (array[this.sc[0]].maxR + 500);

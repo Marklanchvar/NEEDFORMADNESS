@@ -619,7 +619,7 @@ public class Plane
         Utils.rot(plane3DX, plane3DZ, objectX, objectY, xy, this.n);
         Utils.rot(plane3DZ, plane3DY, objectY, objectZ, zy, this.n);
         Utils.rot(plane3DX, plane3DY, objectX, objectZ, xz, this.n);
-        if ((xy != 0 || zy != 0 || xz != 0) && !this.m.trk) {
+        if (!this.m.trk) {
             this.projf = 1.0f;
             for (int n34 = 0; n34 < 3; ++n34) {
                 for (int n35 = 0; n35 < 3; ++n35) {
@@ -1163,6 +1163,14 @@ public class Plane
             for (int n18 = this.t.sect[ncx][ncz].length - 1; n18 >= 0; --n18) {
                 final int n19 = this.t.sect[ncx][ncz][n18];
                 int n20 = 0;
+                float tXZ = t.xz[n19];
+                float tcX = t.cx[n19];
+                float tcZ = t.cz[n19];
+                
+                if (t.xz[n19] != 0F) {
+                	Utils.rotS(midX, midZ, tcX, tcZ, -tXZ);
+                }
+                
                 if (Math.abs(this.t.zy[n19]) != 90 && Math.abs(this.t.xy[n19]) != 90 && Math.abs(midX - (this.t.x[n19] - this.m.x)) < this.t.radx[n19] && Math.abs(midZ - (this.t.z[n19] - this.m.z)) < this.t.radz[n19] && !this.t.decor[n19]) {
                     ++n20;
                 }
@@ -1177,6 +1185,10 @@ public class Plane
                         }
                     }
                     break;
+                }
+                
+                if (t.xz[n19] != 0F) {
+                	Utils.rotS(midX, midZ, tcX, tcZ, tXZ);
                 }
             }
         }
