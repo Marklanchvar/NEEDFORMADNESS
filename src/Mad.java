@@ -922,12 +922,13 @@ public class Mad
             float tcX = trackers.cx[n53];
             float tcZ = trackers.cz[n53];
             
-            if (trackers.xz[n53] != 0F) {
-            	rot(array, array2, tcX, tcZ, -tXZ, 4);
-            	rot(scx, scz, tcX, tcZ, -tXZ, 4);
-            }
-            
             for (int n56 = 0; n56 < 4; ++n56) {
+
+                if (trackers.xz[n53] != 0F) {
+                	rot(array, array2, tcX, tcZ, -tXZ, 4);
+                	rot(scx, scz, 0, 0, -tXZ, 4);
+                }
+                
                 if (array8[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53]) {
                     contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
                     if (this.im == this.xt.im) {
@@ -1239,11 +1240,12 @@ public class Mad
                         array7[n56] = true;
                     }
                 }
-            }
-            
-            if (trackers.xz[n53] != 0F) {
-            	rot(array, array2, tcX, tcZ, tXZ, 4);
-            	rot(scx, scz, tcX, tcZ, tXZ, 4);
+
+                if (trackers.xz[n53] != 0F) {
+                	rot(array, array2, tcX, tcZ, tXZ, 4);
+                	rot(scx, scz, 0, 0, tXZ, 4);
+                }
+                
             }
             
             if (n54 == 4) {
