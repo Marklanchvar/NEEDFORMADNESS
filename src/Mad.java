@@ -922,12 +922,10 @@ public class Mad
             float tcX = trackers.cx[n53];
             float tcZ = trackers.cz[n53];
             
-            /*
             if (trackers.xz[n53] != 0F) {
             	rot(array, array2, tcX, tcZ, -tXZ, 4);
             	rot(scx, scz, tcX, tcZ, -tXZ, 4);
             }
-            */
             
             for (int n56 = 0; n56 < 4; ++n56) {
                 if (array8[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53]) {
@@ -1243,12 +1241,10 @@ public class Mad
                 }
             }
             
-            /*
             if (trackers.xz[n53] != 0F) {
             	rot(array, array2, tcX, tcZ, tXZ, 4);
             	rot(scx, scz, tcX, tcZ, tXZ, 4);
             }
-            */
             
             if (n54 == 4) {
                 this.mtouch = true;
