@@ -903,11 +903,11 @@ public class CarMaker extends Applet implements Runnable, ActionListener
                             final int n12 = l;
                             array6[n12] += this.o.z - this.m.z;
                         }
-                        this.rot(array, array2, this.o.x - this.m.x, this.o.y - this.m.y, this.o.xy, 6);
-                        this.rot(array2, array3, this.o.y - this.m.y, this.o.z - this.m.z, this.o.zy, 6);
-                        this.rot(array, array3, this.o.x - this.m.x, this.o.z - this.m.z, this.o.xz, 6);
-                        this.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 6);
-                        this.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 6);
+                        Utils.rot(array, array2, this.o.x - this.m.x, this.o.y - this.m.y, this.o.xy, 6);
+                        Utils.rot(array2, array3, this.o.y - this.m.y, this.o.z - this.m.z, this.o.zy, 6);
+                        Utils.rot(array, array3, this.o.x - this.m.x, this.o.z - this.m.z, this.o.xz, 6);
+                        Utils.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 6);
+                        Utils.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 6);
                         final int[] array7 = new int[6];
                         final int[] array8 = new int[6];
                         for (int n13 = 0; n13 < 6; ++n13) {
@@ -4305,10 +4305,10 @@ public class CarMaker extends Applet implements Runnable, ActionListener
                         n3 = a / 20.0f * this.m.random();
                         final float[] oz = this.o.p[i].oz;
                         final int n4 = j;
-                        oz[n4] -= (int)(n3 * this.m.sin(this.o.xz) * this.m.cos(this.o.zy));
+                        oz[n4] -= (int)(n3 * Utils.sin(this.o.xz) * Utils.cos(this.o.zy));
                         final float[] ox = this.o.p[i].ox;
                         final int n5 = j;
-                        ox[n5] += (int)(n3 * this.m.cos(this.o.xz) * this.m.cos(this.o.xy));
+                        ox[n5] += (int)(n3 * Utils.cos(this.o.xz) * Utils.cos(this.o.xy));
                         if (b) {
                             this.actmag += (int)Math.abs(n3);
                         }
@@ -4382,10 +4382,10 @@ public class CarMaker extends Applet implements Runnable, ActionListener
                         n3 = a / 20.0f * this.m.random();
                         final float[] oz = this.o.p[i].oz;
                         final int n4 = j;
-                        oz[n4] += (int)(n3 * this.m.cos(this.o.xz) * this.m.cos(this.o.zy));
+                        oz[n4] += (int)(n3 * Utils.cos(this.o.xz) * Utils.cos(this.o.zy));
                         final float[] ox = this.o.p[i].ox;
                         final int n5 = j;
-                        ox[n5] += (int)(n3 * this.m.sin(this.o.xz) * this.m.cos(this.o.xy));
+                        ox[n5] += (int)(n3 * Utils.sin(this.o.xz) * Utils.cos(this.o.xy));
                         if (b) {
                             this.actmag += (int)Math.abs(n3);
                         }
@@ -4574,8 +4574,8 @@ public class CarMaker extends Applet implements Runnable, ActionListener
             for (int i = 0; i < n4; ++i) {
                 final int n5 = array[i];
                 final int n6 = array2[i];
-                array[i] = (int) (cx + ((n5 - cx) * this.m.cos(xz) - (n6 - cz) * this.m.sin(xz)));
-                array2[i] = (int) (cz + ((n5 - cx) * this.m.sin(xz) + (n6 - cz) * this.m.cos(xz)));
+                array[i] = (int) (cx + ((n5 - cx) * Utils.cos(xz) - (n6 - cz) * Utils.sin(xz)));
+                array2[i] = (int) (cz + ((n5 - cx) * Utils.sin(xz) + (n6 - cz) * Utils.cos(xz)));
             }
         }
     }

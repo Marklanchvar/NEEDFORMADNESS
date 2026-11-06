@@ -642,10 +642,10 @@ public class Record
                             n5 = n2 / 20.0f * this.m.random();
                             final float[] oz = contO.p[k].oz;
                             final int n6 = l;
-                            oz[n6] += (n5 * this.m.sin(i));
+                            oz[n6] += (n5 * Utils.sin(i));
                             final float[] ox = contO.p[k].ox;
                             final int n7 = l;
-                            ox[n7] -= (n5 * this.m.sin(j));
+                            ox[n7] -= (n5 * Utils.sin(j));
                         }
                     }
                     if (n5 != 0.0f) {
@@ -745,10 +745,10 @@ public class Record
                         a2 = a / 20.0f * this.m.random();
                         final float[] oz = contO.p[i].oz;
                         final int n2 = j;
-                        oz[n2] -= (int)(a2 * this.m.sin(contO.xz) * this.m.cos(contO.zy));
+                        oz[n2] -= (int)(a2 * Utils.sin(contO.xz) * Utils.cos(contO.zy));
                         final float[] ox = contO.p[i].ox;
                         final int n3 = j;
-                        ox[n3] += (int)(a2 * this.m.cos(contO.xz) * this.m.cos(contO.xy));
+                        ox[n3] += (int)(a2 * Utils.cos(contO.xz) * Utils.cos(contO.xy));
                     }
                 }
                 if (a2 != 0.0f) {
@@ -813,10 +813,10 @@ public class Record
                         a2 = a / 20.0f * this.m.random();
                         final float[] oz = contO.p[i].oz;
                         final int n2 = j;
-                        oz[n2] += (int)(a2 * this.m.cos(contO.xz) * this.m.cos(contO.zy));
+                        oz[n2] += (int)(a2 * Utils.cos(contO.xz) * Utils.cos(contO.zy));
                         final float[] ox = contO.p[i].ox;
                         final int n3 = j;
-                        ox[n3] += (int)(a2 * this.m.sin(contO.xz) * this.m.cos(contO.xy));
+                        ox[n3] += (int)(a2 * Utils.sin(contO.xz) * Utils.cos(contO.xy));
                     }
                 }
                 if (a2 != 0.0f) {

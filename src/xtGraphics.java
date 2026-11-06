@@ -2687,8 +2687,8 @@ public class xtGraphics extends Panel implements Runnable
         this.m.xz = 0;
         this.m.zy = 10;
         this.m.x = array[menuCar].x - m.cx;
-        this.m.y = array[menuCar].y - m.cy - m.sin(m.zy) * (array[menuCar].maxR + 400) + array[menuCar].grat;
-        this.m.z = array[menuCar].z - m.cz - m.cos(m.zy) * (array[menuCar].maxR + 400);
+        this.m.y = array[menuCar].y - m.cy - Utils.sin(m.zy) * (array[menuCar].maxR + 400) + array[menuCar].grat;
+        this.m.z = array[menuCar].z - m.cz - Utils.cos(m.zy) * (array[menuCar].maxR + 400);
         this.m.ground = 0;
         this.m.d(this.rd);
         array[menuCar].d(this.rd);
@@ -3660,8 +3660,8 @@ public class xtGraphics extends Panel implements Runnable
         this.m.cy = 300;
         this.m.zy = 10;
         this.m.x = -m.cx;
-        this.m.y = -m.cy - m.sin(m.zy) * (array[this.sc[0]].maxR + 500);
-        this.m.z = -m.cz - m.cos(m.zy) * (array[this.sc[0]].maxR + 500);
+        this.m.y = -m.cy - Utils.sin(m.zy) * (array[this.sc[0]].maxR + 500);
+        this.m.z = -m.cz - Utils.cos(m.zy) * (array[this.sc[0]].maxR + 500);
         this.m.ground = -m.y;
 
 		array[this.sc[0]].x = 0;
@@ -5623,7 +5623,7 @@ public class xtGraphics extends Panel implements Runnable
                 }
             }
         }
-        this.rot(array, array3, n3, n5, this.ana, 7);
+        Utils.rot(array, array3, n3, n5, this.ana, 7);
         final int abs = (int) Math.abs(this.ana);
         if (!b) {
             if (abs > 7 || n2 > 0 || n2 == -2 || this.cntan != 0) {
@@ -5804,7 +5804,7 @@ public class xtGraphics extends Panel implements Runnable
             }
             final int[] array = { (int)(96.0f - (checkPoints.opx[this.im] - checkPoints.x[i]) / checkPoints.prox), (int)(96.0f - (checkPoints.opx[this.im] - checkPoints.x[n]) / checkPoints.prox) };
             final int[] array2 = { (int)(141.0f - (checkPoints.z[i] - checkPoints.opz[this.im]) / checkPoints.prox), (int)(141.0f - (checkPoints.z[n] - checkPoints.opz[this.im]) / checkPoints.prox) };
-            this.rot(array, array2, 96, 141, mad.cxz, 2);
+            Utils.rot(array, array2, 96, 141, mad.cxz, 2);
             this.rd.drawLine(array[0], array2[0], array[1], array2[1]);
             if (b) {
                 break;
@@ -5817,7 +5817,7 @@ public class xtGraphics extends Panel implements Runnable
                 array3[j] = (int)(96.0f - (checkPoints.opx[this.im] - checkPoints.opx[j]) / checkPoints.prox);
                 array4[j] = (int)(141.0f - (checkPoints.opz[j] - checkPoints.opz[this.im]) / checkPoints.prox);
             }
-            this.rot(array3, array4, 96, 141, mad.cxz, this.nplayers);
+            Utils.rot(array3, array4, 96, 141, mad.cxz, this.nplayers);
             int n2 = 0;
             int n3 = (int)(80.0f + 80.0f * (this.m.snap[1] / 100.0f));
             if (n3 > 255) {
@@ -6283,8 +6283,8 @@ public class xtGraphics extends Panel implements Runnable
             for (int i = 0; i < n4; ++i) {
                 final int n5 = array[i];
                 final int n6 = array2[i];
-                array[i] = (int) (n + ((n5 - n) * this.m.cos(cxz) - (n6 - n2) * this.m.sin(cxz)));
-                array2[i] = (int) (n2 + ((n5 - n) * this.m.sin(cxz) + (n6 - n2) * this.m.cos(cxz)));
+                array[i] = (int) (n + ((n5 - n) * Utils.cos(cxz) - (n6 - n2) * Utils.sin(cxz)));
+                array2[i] = (int) (n2 + ((n5 - n) * Utils.sin(cxz) + (n6 - n2) * Utils.cos(cxz)));
             }
         }
     }

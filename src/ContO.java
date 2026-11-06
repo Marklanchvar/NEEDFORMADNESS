@@ -1261,9 +1261,9 @@ public class ContO
         if (this.dist != 0) {
             this.dist = 0;
         }
-        final float n = this.m.cx + ((this.x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
-        final float n2 = this.m.cz + ((this.x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
-        final float n3 = this.m.cz + ((this.y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n2 - this.m.cz) * this.m.cos(this.m.zy));
+        final float n = this.m.cx + ((this.x - this.m.x - this.m.cx) * Utils.cos(this.m.xz) - (this.z - this.m.z - this.m.cz) * Utils.sin(this.m.xz));
+        final float n2 = this.m.cz + ((this.x - this.m.x - this.m.cx) * Utils.sin(this.m.xz) + (this.z - this.m.z - this.m.cz) * Utils.cos(this.m.xz));
+        final float n3 = this.m.cz + ((this.y - this.m.y - this.m.cy) * Utils.sin(this.m.zy) + (n2 - this.m.cz) * Utils.cos(this.m.zy));
         int n4 = this.xs(n + this.maxR, n3) - this.xs(n - this.maxR, n3);
         if (this.xs(n + this.maxR * 2, n3) > this.m.iw && this.xs(n - this.maxR * 2, n3) < this.m.w && n3 > -this.maxR && (n3 < this.m.fade[this.disline] + this.maxR || this.m.trk) && (n4 > this.disp || this.m.trk) && (!this.decor || !this.m.trk)) {
             if (this.shadow) {
@@ -1299,8 +1299,8 @@ public class ContO
                             }
                         }
                         else {
-                            final float n6 = this.m.cy + ((this.m.ground - this.m.cy) * this.m.cos(this.m.zy) - (n2 - this.m.cz) * this.m.sin(this.m.zy));
-                            final float n7 = this.m.cz + ((this.m.ground - this.m.cy) * this.m.sin(this.m.zy) + (n2 - this.m.cz) * this.m.cos(this.m.zy));
+                            final float n6 = this.m.cy + ((this.m.ground - this.m.cy) * Utils.cos(this.m.zy) - (n2 - this.m.cz) * Utils.sin(this.m.zy));
+                            final float n7 = this.m.cz + ((this.m.ground - this.m.cy) * Utils.sin(this.m.zy) + (n2 - this.m.cz) * Utils.cos(this.m.zy));
                             if (this.ys(n6 + this.maxR, n7) > 0 && this.ys(n6 - this.maxR, n7) < this.m.h) {
                                 for (int k = 0; k < this.npl; ++k) {
                                     this.p[k].s(graphics2D, this.x - this.m.x, this.y - this.m.y, this.z - this.m.z, this.xz, this.xy, this.zy, 1);
@@ -1319,7 +1319,7 @@ public class ContO
                     }
                 }
             }
-            final float n8 = this.m.cy + ((this.y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n2 - this.m.cz) * this.m.sin(this.m.zy));
+            final float n8 = this.m.cy + ((this.y - this.m.y - this.m.cy) * Utils.cos(this.m.zy) - (n2 - this.m.cz) * Utils.sin(this.m.zy));
             if (this.ys(n8 + this.maxR, n3) > this.m.ih && this.ys(n8 - this.maxR, n3) < this.m.h) {
                 if (this.elec && this.m.noelec == 0) {
                     this.electrify(graphics2D);
@@ -1425,7 +1425,7 @@ public class ContO
         array3[2] = (int)((this.keyz[3] - 30) * n2 * 1.2 + this.z - this.m.z);
         array[3] = (int)(this.keyx[2] * 1.2 + this.x - this.m.x);
         array3[3] = (int)((this.keyz[2] - 30) * n2 * 1.2 + this.z - this.m.z);
-        this.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 4);
+        Utils.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 4);
         for (int j = 0; j < 4; ++j) {
             array2[j] = (int) this.m.ground;
         }
@@ -1458,20 +1458,20 @@ public class ContO
                         if (this.t.zy[n3] != 0) {
                             final int[] array4 = array2;
                             final int n6 = n5;
-                            array4[n6] += (int)((array3[n5] - (this.t.z[n3] - this.m.z - this.t.radz[n3])) * this.m.sin(this.t.zy[n3]) / this.m.sin(90 - this.t.zy[n3]) - this.t.radz[n3] * this.m.sin(this.t.zy[n3]) / this.m.sin(90 - this.t.zy[n3]));
+                            array4[n6] += (int)((array3[n5] - (this.t.z[n3] - this.m.z - this.t.radz[n3])) * Utils.sin(this.t.zy[n3]) / Utils.sin(90 - this.t.zy[n3]) - this.t.radz[n3] * Utils.sin(this.t.zy[n3]) / Utils.sin(90 - this.t.zy[n3]));
                         }
                         if (this.t.xy[n3] != 0) {
                             final int[] array5 = array2;
                             final int n7 = n5;
-                            array5[n7] += (int)((array[n5] - (this.t.x[n3] - this.m.x - this.t.radx[n3])) * this.m.sin(this.t.xy[n3]) / this.m.sin(90 - this.t.xy[n3]) - this.t.radx[n3] * this.m.sin(this.t.xy[n3]) / this.m.sin(90 - this.t.xy[n3]));
+                            array5[n7] += (int)((array[n5] - (this.t.x[n3] - this.m.x - this.t.radx[n3])) * Utils.sin(this.t.xy[n3]) / Utils.sin(90 - this.t.xy[n3]) - this.t.radx[n3] * Utils.sin(this.t.xy[n3]) / Utils.sin(90 - this.t.xy[n3]));
                         }
                     }
                     break;
                 }
             }
         }
-        this.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 4);
-        this.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 4);
+        Utils.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 4);
+        Utils.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 4);
         boolean b2 = true;
         int n8 = 0;
         int n9 = 0;
@@ -1555,11 +1555,11 @@ public class ContO
                 array2[l] = (int) (this.grat + this.y - this.m.y);
                 array3[l] = (int) (this.keyz[l] + this.z - this.m.z);
             }
-            this.rot(array, array2, this.x - this.m.x, this.y - this.m.y, this.xy, 4);
-            this.rot(array2, array3, this.y - this.m.y, this.z - this.m.y, this.zy, 4);
-            this.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 4);
-            this.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 4);
-            this.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 4);
+            Utils.rot(array, array2, this.x - this.m.x, this.y - this.m.y, this.xy, 4);
+            Utils.rot(array2, array3, this.y - this.m.y, this.z - this.m.y, this.zy, 4);
+            Utils.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 4);
+            Utils.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 4);
+            Utils.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 4);
             int abs = 0;
             int abs2 = 0;
             int py = 0;
@@ -1583,10 +1583,10 @@ public class ContO
             if (abs2 < n3) {
                 abs2 = n3;
             }
-            final float n4 = this.m.cx + ((this.x - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.z - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
-            final float n5 = this.m.cz + ((this.x - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.z - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
-            final float n6 = this.m.cy + ((this.y - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n5 - this.m.cz) * this.m.sin(this.m.zy));
-            final float n7 = this.m.cz + ((this.y - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n5 - this.m.cz) * this.m.cos(this.m.zy));
+            final float n4 = this.m.cx + ((this.x - this.m.x - this.m.cx) * Utils.cos(this.m.xz) - (this.z - this.m.z - this.m.cz) * Utils.sin(this.m.xz));
+            final float n5 = this.m.cz + ((this.x - this.m.x - this.m.cx) * Utils.sin(this.m.xz) + (this.z - this.m.z - this.m.cz) * Utils.cos(this.m.xz));
+            final float n6 = this.m.cy + ((this.y - this.m.y - this.m.cy) * Utils.cos(this.m.zy) - (n5 - this.m.cz) * Utils.sin(this.m.zy));
+            final float n7 = this.m.cz + ((this.y - this.m.y - this.m.cy) * Utils.sin(this.m.zy) + (n5 - this.m.cz) * Utils.cos(this.m.zy));
             array[0] = this.xs((int)(n4 - abs / 0.8 - this.m.random() * (abs / 2.4)), n7);
             array2[0] = this.ys((int)(n6 - abs2 / 1.92 - this.m.random() * (abs2 / 5.67)), n7);
             array[1] = this.xs((int)(n4 - abs / 0.8 - this.m.random() * (abs / 2.4)), n7);
@@ -1604,19 +1604,19 @@ public class ContO
             array[7] = this.xs((int)(n4 - abs / 1.92 - this.m.random() * (abs / 5.67)), n7);
             array2[7] = this.ys((int)(n6 - abs2 / 0.8 - this.m.random() * (abs2 / 2.4)), n7);
             if (this.fcnt == 3) {
-                this.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), 22, 8);
+                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), 22, 8);
             }
             if (this.fcnt == 4) {
-                this.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), 22, 8);
+                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), 22, 8);
             }
             if (this.fcnt == 5) {
-                this.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), 0, 8);
+                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), 0, 8);
             }
             if (this.fcnt == 6) {
-                this.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), -22, 8);
+                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), -22, 8);
             }
             if (this.fcnt == 7) {
-                this.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), -22, 8);
+                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), -22, 8);
             }
             int r2 = (int)(191.0f + 191.0f * (this.m.snap[0] / 350.0f));
             if (r2 > 255) {
@@ -1724,10 +1724,10 @@ public class ContO
             array[7] = this.x - this.m.x - 504;
             array2[7] = this.y - this.m.y - this.edl[i] + 5 + (int)(this.m.random() * 5.0f);
             if (this.roted) {
-                this.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 8);
+                Utils.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 8);
             }
-            this.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 8);
-            this.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 8);
+            Utils.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 8);
+            Utils.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 8);
             boolean b = true;
             int n5 = 0;
             int n6 = 0;
@@ -1941,10 +1941,10 @@ public class ContO
                 }
                 this.smag[n][6] = this.smag[n][7];
             }
-            final float n8 = this.m.cx + ((this.sx[n] - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.sz[n] - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
-            final float n9 = this.m.cz + ((this.sx[n] - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.sz[n] - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
-            final float n10 = this.m.cy + ((this.sy[n] - this.m.y - this.m.cy - this.smag[n][7]) * this.m.cos(this.m.zy) - (n9 - this.m.cz) * this.m.sin(this.m.zy));
-            final float n11 = this.m.cz + ((this.sy[n] - this.m.y - this.m.cy - this.smag[n][7]) * this.m.sin(this.m.zy) + (n9 - this.m.cz) * this.m.cos(this.m.zy));
+            final float n8 = this.m.cx + ((this.sx[n] - this.m.x - this.m.cx) * Utils.cos(this.m.xz) - (this.sz[n] - this.m.z - this.m.cz) * Utils.sin(this.m.xz));
+            final float n9 = this.m.cz + ((this.sx[n] - this.m.x - this.m.cx) * Utils.sin(this.m.xz) + (this.sz[n] - this.m.z - this.m.cz) * Utils.cos(this.m.xz));
+            final float n10 = this.m.cy + ((this.sy[n] - this.m.y - this.m.cy - this.smag[n][7]) * Utils.cos(this.m.zy) - (n9 - this.m.cz) * Utils.sin(this.m.zy));
+            final float n11 = this.m.cz + ((this.sy[n] - this.m.y - this.m.cy - this.smag[n][7]) * Utils.sin(this.m.zy) + (n9 - this.m.cz) * Utils.cos(this.m.zy));
             final float[] sx = this.sx;
             sx[n] += this.scx[n] / (this.stg[n] + 1);
             final float[] sz = this.sz;
@@ -2026,9 +2026,9 @@ public class ContO
     
     public void sprk(final float n, final float n2, final float n3, final float rcx, final float rcy, final float rcz, final int n4) {
         if (n4 != 1) {
-            this.srx = (int)(n - this.sprkat * this.m.sin(this.xz));
-            this.sry = (int)(n2 - this.sprkat * this.m.cos(this.zy) * this.m.cos(this.xy));
-            this.srz = (int)(n3 + this.sprkat * this.m.cos(this.xz));
+            this.srx = (int)(n - this.sprkat * Utils.sin(this.xz));
+            this.sry = (int)(n2 - this.sprkat * Utils.cos(this.zy) * Utils.cos(this.xy));
+            this.srz = (int)(n3 + this.sprkat * Utils.cos(this.xz));
             this.sprk = 1;
         }
         else {
@@ -2126,14 +2126,14 @@ public class ContO
                 final float[] rz = this.rz;
                 final int n9 = j;
                 rz[n9] += (int)this.vrz[j];
-                final float n10 = this.m.cx + ((this.rx[j] - this.m.x - this.m.cx) * this.m.cos(this.m.xz) - (this.rz[j] - this.m.z - this.m.cz) * this.m.sin(this.m.xz));
-                final float n11 = this.m.cz + ((this.rx[j] - this.m.x - this.m.cx) * this.m.sin(this.m.xz) + (this.rz[j] - this.m.z - this.m.cz) * this.m.cos(this.m.xz));
-                final float n12 = this.m.cy + ((this.ry[j] - this.m.y - this.m.cy) * this.m.cos(this.m.zy) - (n11 - this.m.cz) * this.m.sin(this.m.zy));
-                final float n13 = this.m.cz + ((this.ry[j] - this.m.y - this.m.cy) * this.m.sin(this.m.zy) + (n11 - this.m.cz) * this.m.cos(this.m.zy));
-                final float n14 = this.m.cx + ((this.rx[j] - this.m.x - this.m.cx + this.vrx[j]) * this.m.cos(this.m.xz) - (this.rz[j] - this.m.z - this.m.cz + this.vrz[j]) * this.m.sin(this.m.xz));
-                final float n15 = this.m.cz + ((this.rx[j] - this.m.x - this.m.cx + this.vrx[j]) * this.m.sin(this.m.xz) + (this.rz[j] - this.m.z - this.m.cz + this.vrz[j]) * this.m.cos(this.m.xz));
-                final float n16 = this.m.cy + ((this.ry[j] - this.m.y - this.m.cy + this.vry[j]) * this.m.cos(this.m.zy) - (n15 - this.m.cz) * this.m.sin(this.m.zy));
-                final float n17 = this.m.cz + ((this.ry[j] - this.m.y - this.m.cy + this.vry[j]) * this.m.sin(this.m.zy) + (n15 - this.m.cz) * this.m.cos(this.m.zy));
+                final float n10 = this.m.cx + ((this.rx[j] - this.m.x - this.m.cx) * Utils.cos(this.m.xz) - (this.rz[j] - this.m.z - this.m.cz) * Utils.sin(this.m.xz));
+                final float n11 = this.m.cz + ((this.rx[j] - this.m.x - this.m.cx) * Utils.sin(this.m.xz) + (this.rz[j] - this.m.z - this.m.cz) * Utils.cos(this.m.xz));
+                final float n12 = this.m.cy + ((this.ry[j] - this.m.y - this.m.cy) * Utils.cos(this.m.zy) - (n11 - this.m.cz) * Utils.sin(this.m.zy));
+                final float n13 = this.m.cz + ((this.ry[j] - this.m.y - this.m.cy) * Utils.sin(this.m.zy) + (n11 - this.m.cz) * Utils.cos(this.m.zy));
+                final float n14 = this.m.cx + ((this.rx[j] - this.m.x - this.m.cx + this.vrx[j]) * Utils.cos(this.m.xz) - (this.rz[j] - this.m.z - this.m.cz + this.vrz[j]) * Utils.sin(this.m.xz));
+                final float n15 = this.m.cz + ((this.rx[j] - this.m.x - this.m.cx + this.vrx[j]) * Utils.sin(this.m.xz) + (this.rz[j] - this.m.z - this.m.cz + this.vrz[j]) * Utils.cos(this.m.xz));
+                final float n16 = this.m.cy + ((this.ry[j] - this.m.y - this.m.cy + this.vry[j]) * Utils.cos(this.m.zy) - (n15 - this.m.cz) * Utils.sin(this.m.zy));
+                final float n17 = this.m.cz + ((this.ry[j] - this.m.y - this.m.cy + this.vry[j]) * Utils.sin(this.m.zy) + (n15 - this.m.cz) * Utils.cos(this.m.zy));
                 final int xs = this.xs(n10, n13);
                 final int ys = this.ys(n12, n13);
                 final int xs2 = this.xs(n14, n17);
@@ -2232,8 +2232,8 @@ public class ContO
             for (int i = 0; i < n4; ++i) {
                 final float n5 = array[i];
                 final float n6 = array3[i];
-                array[i] = (f + ((n5 - f) * this.m.cos(xz2) - (n6 - g) * this.m.sin(xz2)));
-                array3[i] = (g + ((n5 - f) * this.m.sin(xz2) + (n6 - g) * this.m.cos(xz2)));
+                array[i] = (f + ((n5 - f) * Utils.cos(xz2) - (n6 - g) * Utils.sin(xz2)));
+                array3[i] = (g + ((n5 - f) * Utils.sin(xz2) + (n6 - g) * Utils.cos(xz2)));
             }
         }
     }
@@ -2242,8 +2242,8 @@ public class ContO
             for (int i = 0; i < n4; ++i) {
                 final int n5 = array[i];
                 final int n6 = array3[i];
-                array[i] = (int) (f + ((n5 - f) * this.m.cos(xz2) - (n6 - g) * this.m.sin(xz2)));
-                array3[i] = (int) (g + ((n5 - f) * this.m.sin(xz2) + (n6 - g) * this.m.cos(xz2)));
+                array[i] = (int) (f + ((n5 - f) * Utils.cos(xz2) - (n6 - g) * Utils.sin(xz2)));
+                array3[i] = (int) (g + ((n5 - f) * Utils.sin(xz2) + (n6 - g) * Utils.cos(xz2)));
             }
         }
     }
@@ -2252,8 +2252,8 @@ public class ContO
         if (xz2 != 0) {
                 final float n5 = array;
                 final float n6 = array3;
-                array = (int) (f + ((n5 - f) * this.m.cos(xz2) - (n6 - g) * this.m.sin(xz2)));
-                array3 = (int) (g + ((n5 - f) * this.m.sin(xz2) + (n6 - g) * this.m.cos(xz2)));
+                array = (int) (f + ((n5 - f) * Utils.cos(xz2) - (n6 - g) * Utils.sin(xz2)));
+                array3 = (int) (g + ((n5 - f) * Utils.sin(xz2) + (n6 - g) * Utils.cos(xz2)));
         }
     }
 }

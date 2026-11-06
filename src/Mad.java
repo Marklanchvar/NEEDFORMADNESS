@@ -355,8 +355,8 @@ public class Mad
                     if (this.ucomp < 20.0f) {
                         this.ucomp += (float)(0.5 * this.cd.airs[this.cn]);
                     }
-                    n4 = -this.cd.airc[this.cn] * this.m.sin(contO.xz) * n2;
-                    n5 = this.cd.airc[this.cn] * this.m.cos(contO.xz) * n2;
+                    n4 = -this.cd.airc[this.cn] * Utils.sin(contO.xz) * n2;
+                    n5 = this.cd.airc[this.cn] * Utils.cos(contO.xz) * n2;
                 }
                 else if (this.ucomp != 0.0f && this.ucomp > -2.0f) {
                     this.ucomp -= (float)(0.5 * this.cd.airs[this.cn]);
@@ -387,8 +387,8 @@ public class Mad
                     if (this.lcomp < 20.0f) {
                         this.lcomp += 2.0f * this.cd.airs[this.cn];
                     }
-                    n4 = -this.cd.airc[this.cn] * this.m.cos(contO.xz) * n;
-                    n5 = -this.cd.airc[this.cn] * this.m.sin(contO.xz) * n;
+                    n4 = -this.cd.airc[this.cn] * Utils.cos(contO.xz) * n;
+                    n5 = -this.cd.airc[this.cn] * Utils.sin(contO.xz) * n;
                 }
                 else if (this.lcomp > 0.0f) {
                     this.lcomp -= 2.0f * this.cd.airs[this.cn];
@@ -400,18 +400,18 @@ public class Mad
                     if (this.rcomp < 20.0f) {
                         this.rcomp += 2.0f * this.cd.airs[this.cn];
                     }
-                    n4 = this.cd.airc[this.cn] * this.m.cos(contO.xz) * n;
-                    n5 = this.cd.airc[this.cn] * this.m.sin(contO.xz) * n;
+                    n4 = this.cd.airc[this.cn] * Utils.cos(contO.xz) * n;
+                    n5 = this.cd.airc[this.cn] * Utils.sin(contO.xz) * n;
                 }
                 else if (this.rcomp > 0.0f) {
                     this.rcomp -= 2.0f * this.cd.airs[this.cn];
                 }
-                this.pzy += ((this.dcomp - this.ucomp) * this.m.cos(this.pxy));
+                this.pzy += ((this.dcomp - this.ucomp) * Utils.cos(this.pxy));
                 if (zyinv) {
-                    contO.xz += ((this.dcomp - this.ucomp) * this.m.sin(this.pxy));
+                    contO.xz += ((this.dcomp - this.ucomp) * Utils.sin(this.pxy));
                 }
                 else {
-                    contO.xz -= ((this.dcomp - this.ucomp) * this.m.sin(this.pxy));
+                    contO.xz -= ((this.dcomp - this.ucomp) * Utils.sin(this.pxy));
                 }
                 this.pxy += (this.rcomp - this.lcomp);
             }
@@ -531,12 +531,12 @@ public class Mad
                         }
                         this.pd = false;
                     }
-                    this.pzy += ((this.dcomp - this.ucomp) * this.m.cos(this.pxy));
+                    this.pzy += ((this.dcomp - this.ucomp) * Utils.cos(this.pxy));
                     if (zyinv) {
-                        contO.xz += ((this.dcomp - this.ucomp) * this.m.sin(this.pxy));
+                        contO.xz += ((this.dcomp - this.ucomp) * Utils.sin(this.pxy));
                     }
                     else {
-                        contO.xz -= ((this.dcomp - this.ucomp) * this.m.sin(this.pxy));
+                        contO.xz -= ((this.dcomp - this.ucomp) * Utils.sin(this.pxy));
                     }
                     this.pxy += (this.rcomp - this.lcomp);
                 }
@@ -645,9 +645,9 @@ public class Mad
             array2[n13] = (float)(contO.z + contO.keyz[n13]);
             this.scy[n13] += 7F;
         }
-        this.rot(array, array3, contO.x, contO.y, this.pxy, 4);
-        this.rot(array3, array2, contO.y, contO.z, this.pzy, 4);
-        this.rot(array, array2, contO.x, contO.z, contO.xz, 4);
+        Utils.rot(array, array3, contO.x, contO.y, this.pxy, 4);
+        Utils.rot(array3, array2, contO.y, contO.z, this.pzy, 4);
+        Utils.rot(array, array2, contO.x, contO.z, contO.xz, 4);
         boolean b3 = false;
         final float n15 = ((this.scx[0] + this.scx[1] + this.scx[2] + this.scx[3]) / 4.0f);
         final float n16 = ((this.scz[0] + this.scz[1] + this.scz[2] + this.scz[3]) / 4.0f);
@@ -711,9 +711,9 @@ public class Mad
             if (n22 == 2) {
                 n25 *= (float)0.55;
             }
-            float n26 = -(this.speed * this.m.sin(contO.xz) * this.m.cos(this.pzy));
-            float n27 = (this.speed * this.m.cos(contO.xz) * this.m.cos(this.pzy));
-            float n28 = -(this.speed * this.m.sin(this.pzy));
+            float n26 = -(this.speed * Utils.sin(contO.xz) * Utils.cos(this.pzy));
+            float n27 = (this.speed * Utils.cos(contO.xz) * Utils.cos(this.pzy));
+            float n28 = -(this.speed * Utils.sin(this.pzy));
             if (this.capsized || this.dest || checkPoints.haltall) {
                 n26 = 0;
                 n27 = 0;
@@ -831,17 +831,17 @@ public class Mad
             else {
                 n39 = 1;
             }
-            this.mxz = (m.acos((float) (n30 / Math.sqrt(n29 * n29 + n30 * n30))) * n39);
+            this.mxz = (Utils.acos((float) (n30 / Math.sqrt(n29 * n29 + n30 * n30))) * n39);
             this.mxz = Float.isNaN(mxz) ? 0F : mxz;
             if (this.skid == 2) {
                 if (!this.capsized) {
                     n29 /= 4F;
                     n30 /= 4F;
                     if (b) {
-                        this.speed = -((float)Math.sqrt(n29 * n29 + n30 * n30) * this.m.cos(this.mxz - contO.xz));
+                        this.speed = -((float)Math.sqrt(n29 * n29 + n30 * n30) * Utils.cos(this.mxz - contO.xz));
                     }
                     else {
-                        this.speed = (float)Math.sqrt(n29 * n29 + n30 * n30) * this.m.cos(this.mxz - contO.xz);
+                        this.speed = (float)Math.sqrt(n29 * n29 + n30 * n30) * Utils.cos(this.mxz - contO.xz);
                     }
                 }
                 this.skid = 0;
@@ -883,7 +883,7 @@ public class Mad
                 array3[n42] = 250.0f;
                 array9[n42] = true;
                 n41 += array3[n42] - 250.0f;
-                float n45 = (Math.abs(this.m.sin(this.pxy)) + Math.abs(this.m.sin(this.pzy))) / 3.0f;
+                float n45 = (Math.abs(Utils.sin(this.pxy)) + Math.abs(Utils.sin(this.pzy))) / 3.0f;
                 if (n45 > 0.4) {
                     n45 = 0.4f;
                 }
@@ -961,7 +961,7 @@ public class Mad
                                 this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
-                        float n59 = (Math.abs(this.m.sin(this.pxy)) + Math.abs(this.m.sin(this.pzy))) / 3.0f;
+                        float n59 = (Math.abs(Utils.sin(this.pxy)) + Math.abs(Utils.sin(this.pzy))) / 3.0f;
                         if (n59 > 0.4) {
                             n59 = 0.4f;
                         }
@@ -1002,7 +1002,7 @@ public class Mad
                                 this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
-                        float n66 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
+                        float n66 = (Math.abs(Utils.cos(this.pxy)) + Math.abs(Utils.cos(this.pzy))) / 4.0f;
                         if (n66 > 0.3) {
                             n66 = 0.3f;
                         }
@@ -1049,7 +1049,7 @@ public class Mad
                                 this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
-                        float n73 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
+                        float n73 = (Math.abs(Utils.cos(this.pxy)) + Math.abs(Utils.cos(this.pzy))) / 4.0f;
                         if (n73 > 0.3) {
                             n73 = 0.3f;
                         }
@@ -1096,7 +1096,7 @@ public class Mad
                                 this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
-                        float n80 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
+                        float n80 = (Math.abs(Utils.cos(this.pxy)) + Math.abs(Utils.cos(this.pzy))) / 4.0f;
                         if (n80 > 0.3) {
                             n80 = 0.3f;
                         }
@@ -1143,7 +1143,7 @@ public class Mad
                                 this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
-                        float n87 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
+                        float n87 = (Math.abs(Utils.cos(this.pxy)) + Math.abs(Utils.cos(this.pzy))) / 4.0f;
                         if (n87 > 0.3) {
                             n87 = 0.3f;
                         }
@@ -1171,8 +1171,8 @@ public class Mad
                         if (n91 < 1.0f) {
                             n91 = 1.0f;
                         }
-                        final float n92 = trackers.y[n53] + ((array3[n56] - trackers.y[n53]) * this.m.cos(n90) - (array2[n56] - trackers.z[n53]) * this.m.sin(n90));
-                        float n93 = trackers.z[n53] + ((array3[n56] - trackers.y[n53]) * this.m.sin(n90) + (array2[n56] - trackers.z[n53]) * this.m.cos(n90));
+                        final float n92 = trackers.y[n53] + ((array3[n56] - trackers.y[n53]) * Utils.cos(n90) - (array2[n56] - trackers.z[n53]) * Utils.sin(n90));
+                        float n93 = trackers.z[n53] + ((array3[n56] - trackers.y[n53]) * Utils.sin(n90) + (array2[n56] - trackers.z[n53]) * Utils.cos(n90));
                         if (n93 > trackers.z[n53] && n93 < trackers.z[n53] + 200) {
                             final float[] scy6 = this.scy;
                             final int n94 = n56;
@@ -1198,8 +1198,8 @@ public class Mad
                                 contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
                             }
                         }
-                        array3[n56] = trackers.y[n53] + ((n92 - trackers.y[n53]) * this.m.cos(-n90) - (n93 - trackers.z[n53]) * this.m.sin(-n90));
-                        array2[n56] = trackers.z[n53] + ((n92 - trackers.y[n53]) * this.m.sin(-n90) + (n93 - trackers.z[n53]) * this.m.cos(-n90));
+                        array3[n56] = trackers.y[n53] + ((n92 - trackers.y[n53]) * Utils.cos(-n90) - (n93 - trackers.z[n53]) * Utils.sin(-n90));
+                        array2[n56] = trackers.z[n53] + ((n92 - trackers.y[n53]) * Utils.sin(-n90) + (n93 - trackers.z[n53]) * Utils.cos(-n90));
                         array7[n56] = true;
                     }
                     if (trackers.xy[n53] != 0 && trackers.xy[n53] != 90 && trackers.xy[n53] != -90) {
@@ -1208,8 +1208,8 @@ public class Mad
                         if (n96 < 1.0f) {
                             n96 = 1.0f;
                         }
-                        final float n97 = trackers.y[n53] + ((array3[n56] - trackers.y[n53]) * this.m.cos(n95) - (array[n56] - trackers.x[n53]) * this.m.sin(n95));
-                        float n98 = trackers.x[n53] + ((array3[n56] - trackers.y[n53]) * this.m.sin(n95) + (array[n56] - trackers.x[n53]) * this.m.cos(n95));
+                        final float n97 = trackers.y[n53] + ((array3[n56] - trackers.y[n53]) * Utils.cos(n95) - (array[n56] - trackers.x[n53]) * Utils.sin(n95));
+                        float n98 = trackers.x[n53] + ((array3[n56] - trackers.y[n53]) * Utils.sin(n95) + (array[n56] - trackers.x[n53]) * Utils.cos(n95));
                         if (n98 > trackers.x[n53] && n98 < trackers.x[n53] + 200) {
                             final float[] scy7 = this.scy;
                             final int n99 = n56;
@@ -1235,8 +1235,8 @@ public class Mad
                                 contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
                             }
                         }
-                        array3[n56] = trackers.y[n53] + ((n97 - trackers.y[n53]) * this.m.cos(-n95) - (n98 - trackers.x[n53]) * this.m.sin(-n95));
-                        array[n56] = trackers.x[n53] + ((n97 - trackers.y[n53]) * this.m.sin(-n95) + (n98 - trackers.x[n53]) * this.m.cos(-n95));
+                        array3[n56] = trackers.y[n53] + ((n97 - trackers.y[n53]) * Utils.cos(-n95) - (n98 - trackers.x[n53]) * Utils.sin(-n95));
+                        array[n56] = trackers.x[n53] + ((n97 - trackers.y[n53]) * Utils.sin(-n95) + (n98 - trackers.x[n53]) * Utils.cos(-n95));
                         array7[n56] = true;
                     }
                 }
@@ -1283,7 +1283,7 @@ public class Mad
                 a = n102;
             }
             else {
-                a = m.acos(a5) * n102;
+                a = Utils.acos(a5) * n102;
             }
         }
         if (this.scy[3] != this.scy[1]) {
@@ -1299,7 +1299,7 @@ public class Mad
                 a2 = n103;
             }
             else {
-                a2 = m.acos(a6) * n103;
+                a2 = Utils.acos(a6) * n103;
             }
         }
         if (this.scy[1] != this.scy[0]) {
@@ -1315,7 +1315,7 @@ public class Mad
                 a3 = n104;
             }
             else {
-                a3 = m.acos(a7) * n104;
+                a3 = Utils.acos(a7) * n104;
             }
         }
         if (this.scy[3] != this.scy[2]) {
@@ -1331,7 +1331,7 @@ public class Mad
                 a4 = n105;
             }
             else {
-                a4 = m.acos(a8) * n105;
+                a4 = Utils.acos(a8) * n105;
             }
         }
         if (b2) {
@@ -1424,7 +1424,7 @@ public class Mad
         else {
             this.cntouch = 0;
         }
-        contO.y = ((array3[0] + array3[1] + array3[2] + array3[3]) / 4.0f - grat * this.m.cos(this.pzy) * this.m.cos(this.pxy) + n6);
+        contO.y = ((array3[0] + array3[1] + array3[2] + array3[3]) / 4.0f - grat * Utils.cos(this.pzy) * Utils.cos(this.pxy) + n6);
         int n107;
         if (zyinv) {
             n107 = -1;
@@ -1432,8 +1432,8 @@ public class Mad
         else {
             n107 = 1;
         }
-        contO.x = ((array[0] - contO.keyx[0] * this.m.cos(contO.xz) + n107 * contO.keyz[0] * this.m.sin(contO.xz) + array[1] - contO.keyx[1] * this.m.cos(contO.xz) + n107 * contO.keyz[1] * this.m.sin(contO.xz) + array[2] - contO.keyx[2] * this.m.cos(contO.xz) + n107 * contO.keyz[2] * this.m.sin(contO.xz) + array[3] - contO.keyx[3] * this.m.cos(contO.xz) + n107 * contO.keyz[3] * this.m.sin(contO.xz)) / 4.0f + grat * this.m.sin(this.pxy) * this.m.cos(contO.xz) - grat * this.m.sin(this.pzy) * this.m.sin(contO.xz) + n4);
-        contO.z = ((array2[0] - n107 * contO.keyz[0] * this.m.cos(contO.xz) - contO.keyx[0] * this.m.sin(contO.xz) + array2[1] - n107 * contO.keyz[1] * this.m.cos(contO.xz) - contO.keyx[1] * this.m.sin(contO.xz) + array2[2] - n107 * contO.keyz[2] * this.m.cos(contO.xz) - contO.keyx[2] * this.m.sin(contO.xz) + array2[3] - n107 * contO.keyz[3] * this.m.cos(contO.xz) - contO.keyx[3] * this.m.sin(contO.xz)) / 4.0f + grat * this.m.sin(this.pxy) * this.m.sin(contO.xz) - grat * this.m.sin(this.pzy) * this.m.cos(contO.xz) + n5);
+        contO.x = ((array[0] - contO.keyx[0] * Utils.cos(contO.xz) + n107 * contO.keyz[0] * Utils.sin(contO.xz) + array[1] - contO.keyx[1] * Utils.cos(contO.xz) + n107 * contO.keyz[1] * Utils.sin(contO.xz) + array[2] - contO.keyx[2] * Utils.cos(contO.xz) + n107 * contO.keyz[2] * Utils.sin(contO.xz) + array[3] - contO.keyx[3] * Utils.cos(contO.xz) + n107 * contO.keyz[3] * Utils.sin(contO.xz)) / 4.0f + grat * Utils.sin(this.pxy) * Utils.cos(contO.xz) - grat * Utils.sin(this.pzy) * Utils.sin(contO.xz) + n4);
+        contO.z = ((array2[0] - n107 * contO.keyz[0] * Utils.cos(contO.xz) - contO.keyx[0] * Utils.sin(contO.xz) + array2[1] - n107 * contO.keyz[1] * Utils.cos(contO.xz) - contO.keyx[1] * Utils.sin(contO.xz) + array2[2] - n107 * contO.keyz[2] * Utils.cos(contO.xz) - contO.keyx[2] * Utils.sin(contO.xz) + array2[3] - n107 * contO.keyz[3] * Utils.cos(contO.xz) - contO.keyx[3] * Utils.sin(contO.xz)) / 4.0f + grat * Utils.sin(this.pxy) * Utils.sin(contO.xz) - grat * Utils.sin(this.pzy) * Utils.cos(contO.xz) + n5);
         if (Math.abs(this.speed) > 10.0f || !this.mtouch) {
             if (Math.abs(this.pxy - contO.xy) >= 4) {
                 if (this.pxy > contO.xy) {
@@ -1926,8 +1926,8 @@ public class Mad
                     for (int l = 0; l < contO.p[k].n; ++l) {
                         if (contO.p[k].wz == 0 && this.py(contO.keyx[n], contO.p[k].ox[l], contO.keyz[n], contO.p[k].oz[l]) < this.cd.clrad[this.cn]) {
                             n5 = a / 20.0f * this.m.random();
-                            contO.p[k].oz[l] += (n5 * this.m.sin(i));
-                            contO.p[k].ox[l] -= (n5 * this.m.sin(j));
+                            contO.p[k].oz[l] += (n5 * Utils.sin(i));
+                            contO.p[k].ox[l] -= (n5 * Utils.sin(j));
                                 this.hitmag += Math.abs(n5);
                                 n2 += Math.abs(n5);
                         }
@@ -2036,8 +2036,8 @@ public class Mad
                 for (int j = 0; j < contO.p[i].n; ++j) {
                     if (contO.p[i].wz == 0 && this.py(contO.keyx[n], contO.p[i].ox[j], contO.keyz[n], contO.p[i].oz[j]) < this.cd.clrad[this.cn]) {
                         a = n2 / 20.0f * this.m.random();
-                        contO.p[i].oz[j] -= (a * this.m.sin(contO.xz) * this.m.cos(contO.zy));
-                        contO.p[i].ox[j] += (a * this.m.cos(contO.xz) * this.m.cos(contO.xy));
+                        contO.p[i].oz[j] -= (a * Utils.sin(contO.xz) * Utils.cos(contO.zy));
+                        contO.p[i].ox[j] += (a * Utils.cos(contO.xz) * Utils.cos(contO.xy));
                             this.hitmag += Math.abs(a);
                             n3 += Math.abs(a);
                     }
@@ -2107,8 +2107,8 @@ public class Mad
                 for (int j = 0; j < contO.p[i].n; ++j) {
                     if (contO.p[i].wz == 0 && this.py(contO.keyx[n], contO.p[i].ox[j], contO.keyz[n], contO.p[i].oz[j]) < this.cd.clrad[this.cn]) {
                         a = n2 / 20.0f * this.m.random();
-                        contO.p[i].oz[j] += (a * this.m.cos(contO.xz) * this.m.cos(contO.zy));
-                        contO.p[i].ox[j] += (a * this.m.sin(contO.xz) * this.m.cos(contO.xy));
+                        contO.p[i].oz[j] += (a * Utils.cos(contO.xz) * Utils.cos(contO.zy));
+                        contO.p[i].ox[j] += (a * Utils.sin(contO.xz) * Utils.cos(contO.xy));
                             this.hitmag += Math.abs(a);
                             n3 += Math.abs(a);
                     }
@@ -2183,12 +2183,12 @@ public class Mad
             }
             array6[i] = (float)(contO2.z + contO2.keyz[i]);
         }
-        this.rot(array, array2, contO.x, contO.y, contO.xy, 4);
-        this.rot(array2, array3, contO.y, contO.z, contO.zy, 4);
-        this.rot(array, array3, contO.x, contO.z, contO.xz, 4);
-        this.rot(array4, array5, contO2.x, contO2.y, contO2.xy, 4);
-        this.rot(array5, array6, contO2.y, contO2.z, contO2.zy, 4);
-        this.rot(array4, array6, contO2.x, contO2.z, contO2.xz, 4);
+        Utils.rot(array, array2, contO.x, contO.y, contO.xy, 4);
+        Utils.rot(array2, array3, contO.y, contO.z, contO.zy, 4);
+        Utils.rot(array, array3, contO.x, contO.z, contO.xz, 4);
+        Utils.rot(array4, array5, contO2.x, contO2.y, contO2.xy, 4);
+        Utils.rot(array5, array6, contO2.y, contO2.z, contO2.zy, 4);
+        Utils.rot(array4, array6, contO2.x, contO2.z, contO2.xz, 4);
         if (this.rpy((float)contO.x, (float)contO2.x, (float)contO.y, (float)contO2.y, (float)contO.z, (float)contO2.z) < (contO.maxR * contO.maxR + contO2.maxR * contO2.maxR) * 1.5) {
             if (!this.caught[mad.im] && (this.speed != 0.0f || mad.speed != 0.0f)) {
                 if (Math.abs(this.power * this.speed * this.cd.moment[this.cn]) != Math.abs(mad.power * mad.speed * this.cd.moment[mad.cn])) {
@@ -2323,8 +2323,8 @@ public class Mad
             for (int i = 0; i < n4; ++i) {
                 final float n5 = array[i];
                 final float n6 = array2[i];
-                array[i] = x + ((n5 - x) * this.m.cos(xz) - (n6 - z) * this.m.sin(xz));
-                array2[i] = z + ((n5 - x) * this.m.sin(xz) + (n6 - z) * this.m.cos(xz));
+                array[i] = x + ((n5 - x) * Utils.cos(xz) - (n6 - z) * Utils.sin(xz));
+                array2[i] = z + ((n5 - x) * Utils.sin(xz) + (n6 - z) * Utils.cos(xz));
             }
         }
     }

@@ -1823,8 +1823,8 @@ public class Control
                     this.up = true;
                     int n31 = 0;
                     final int n32 = (int)(this.pys(contO.x, checkPoints.opx[this.acr], contO.z, checkPoints.opz[this.acr]) / 2.0f * this.aim);
-                    final int n33 = (int)(checkPoints.opx[this.acr] - n32 * this.m.sin(checkPoints.omxz[this.acr]));
-                    final int n34 = (int)(checkPoints.opz[this.acr] + n32 * this.m.cos(checkPoints.omxz[this.acr]));
+                    final int n33 = (int)(checkPoints.opx[this.acr] - n32 * Utils.sin(checkPoints.omxz[this.acr]));
+                    final int n34 = (int)(checkPoints.opz[this.acr] + n32 * Utils.cos(checkPoints.omxz[this.acr]));
                     if (n33 - contO.x >= 0) {
                         n31 = 180;
                     }
