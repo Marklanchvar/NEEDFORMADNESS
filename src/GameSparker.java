@@ -1805,7 +1805,7 @@ public class GameSparker extends Applet implements Runnable
                     checkPoints.x[checkPoints.n] = this.getint("chk", string, 1);
                     checkPoints.z[checkPoints.n] = this.getint("chk", string, 2);
                     checkPoints.y[checkPoints.n] = getint7;
-                    checkPoints.xz[checkPoints.n] = this.getint("chk", string, 3);
+                    //checkPoints.xz[checkPoints.n] = this.getint("chk", string, 3);
                     if (this.getint("chk", string, 3) == 0) {
                         checkPoints.typ[checkPoints.n] = 1;
                     }
@@ -1826,7 +1826,7 @@ public class GameSparker extends Applet implements Runnable
                     checkPoints.fx[checkPoints.fn] = this.getint("fix", string, 1);
                     checkPoints.fz[checkPoints.fn] = this.getint("fix", string, 2);
                     checkPoints.fy[checkPoints.fn] = this.getint("fix", string, 3);
-                    checkPoints.fxz[checkPoints.fn] = this.getint("fix", string, 4);
+                    //checkPoints.fxz[checkPoints.fn] = this.getint("fix", string, 4);
                     array[this.nob].elec = true;
                     if (this.getint("fix", string, 4) != 0) {
                         checkPoints.roted[checkPoints.fn] = true;
@@ -1914,7 +1914,7 @@ public class GameSparker extends Applet implements Runnable
                     trackers.cx[trackers.nt] = 0;
                     trackers.cy[trackers.nt] = 0;
                     trackers.cz[trackers.nt] = 0;
-                    trackers.xz[trackers.nt] = 180;
+                    trackers.xz[trackers.nt] = 0;
                     ++trackers.nt;
                 }
                 if (string.startsWith("maxt")) {
@@ -1939,7 +1939,7 @@ public class GameSparker extends Applet implements Runnable
                     trackers.cx[trackers.nt] = 0;
                     trackers.cy[trackers.nt] = 0;
                     trackers.cz[trackers.nt] = 0;
-                    trackers.xz[trackers.nt] = 90;
+                    trackers.xz[trackers.nt] = 0;
                     ++trackers.nt;
                 }
                 if (string.startsWith("maxb")) {
@@ -1964,7 +1964,7 @@ public class GameSparker extends Applet implements Runnable
                     trackers.cx[trackers.nt] = 0;
                     trackers.cy[trackers.nt] = 0;
                     trackers.cz[trackers.nt] = 0;
-                    trackers.xz[trackers.nt] = -90;
+                    trackers.xz[trackers.nt] = 0;
                     ++trackers.nt;
                 }
             }

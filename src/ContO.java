@@ -286,8 +286,7 @@ public class ContO
     					this.tradz[this.tnt] = 0;
     					this.tc[this.tnt][0] = 0;
     					this.tc[this.tnt][1] = 0;
-    					this.tc[this.tnt][2] = 0;
-    				}
+    					this.tc[this.tnt][2] = 0;    				}
     				if (n2 != 0) {
     					if (string.startsWith("c")) {
     						this.tc[this.tnt][0] = this.getvalue("c", string, 0);
@@ -910,12 +909,7 @@ public class ContO
                 this.t.skd[this.t.nt] = contO.skd[k];
                 this.t.dam[this.t.nt] = contO.dam[k];
                 this.t.notwall[this.t.nt] = contO.notwall[k];
-                if (this.decor) {
-                    this.t.decor[this.t.nt] = true;
-                }
-                else {
-                    this.t.decor[this.t.nt] = false;
-                }
+                this.t.decor[this.t.nt] = this.decor;
                 this.t.radx[this.t.nt] = contO.tradx[k];
                 this.t.radz[this.t.nt] = contO.tradz[k];
                 this.t.rady[this.t.nt] = contO.trady[k];

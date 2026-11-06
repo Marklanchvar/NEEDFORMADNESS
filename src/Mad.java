@@ -542,16 +542,16 @@ public class Mad
                 }
             }
         }
-        float n11 = this.speed / (7.7F * this.cd.simag[this.cn]);
-        if (n11 > 20) {
-            n11 = 20;
+        float n11 = 20.0f * this.speed / (154.0f * this.cd.simag[this.cn]);
+        if (n11 > 20.0f) {
+            n11 = 20.0f;
         }
         contO.wzy -= n11;
-        if (contO.wzy < -360) {
-            contO.wzy += 360;
+        if (contO.wzy < -30) {
+            contO.wzy += 30;
         }
-        if (contO.wzy > 360) {
-            contO.wzy -= 360;
+        if (contO.wzy > 30) {
+            contO.wzy -= 30;
         }
         if (control.right) {
             contO.wxz -= this.cd.turn[this.cn];
@@ -589,7 +589,7 @@ public class Mad
                 }
             }
         }
-        float n12 = 3600.0f / (this.speed * this.speed);
+        float n12 = (3600F / (this.speed * this.speed));
         if (n12 < 5) {
             n12 = 5;
         }
@@ -636,50 +636,48 @@ public class Mad
                 }
             }
         }
-        final float[] wheelX = new float[4];
-        final float[] wheelZ = new float[4];
-        final float[] wheelY = new float[4];
+        final float[] array = new float[4];
+        final float[] array2 = new float[4];
+        final float[] array3 = new float[4];
         for (int n13 = 0; n13 < 4; ++n13) {
-            wheelX[n13] = (float)(contO.keyx[n13] + contO.x);
-            wheelY[n13] = (float)(grat + contO.y);
-            wheelZ[n13] = (float)(contO.z + contO.keyz[n13]);
-            final float[] scy = this.scy;
-            final int n14 = n13;
-            scy[n14] += 7.0f;
+            array[n13] = (float)(contO.keyx[n13] + contO.x);
+            array3[n13] = (float)(grat + contO.y);
+            array2[n13] = (float)(contO.z + contO.keyz[n13]);
+            this.scy[n13] += 7F;
         }
-        this.rot(wheelX, wheelY, contO.x, contO.y, this.pxy, 4);
-        this.rot(wheelY, wheelZ, contO.y, contO.z, this.pzy, 4);
-        this.rot(wheelX, wheelZ, contO.x, contO.z, contO.xz, 4);
+        this.rot(array, array3, contO.x, contO.y, this.pxy, 4);
+        this.rot(array3, array2, contO.y, contO.z, this.pzy, 4);
+        this.rot(array, array2, contO.x, contO.z, contO.xz, 4);
         boolean b3 = false;
         final float n15 = ((this.scx[0] + this.scx[1] + this.scx[2] + this.scx[3]) / 4.0f);
         final float n16 = ((this.scz[0] + this.scz[1] + this.scz[2] + this.scz[3]) / 4.0f);
         for (int n17 = 0; n17 < 4; ++n17) {
             if (this.scx[n17] - n15 > 200.0f) {
-                this.scx[n17] = (200 + n15);
+                this.scx[n17] = (float)(200 + n15);
             }
             if (this.scx[n17] - n15 < -200.0f) {
-                this.scx[n17] = (n15 - 200);
+                this.scx[n17] = (float)(n15 - 200);
             }
             if (this.scz[n17] - n16 > 200.0f) {
-                this.scz[n17] = (200 + n16);
+                this.scz[n17] = (float)(200 + n16);
             }
             if (this.scz[n17] - n16 < -200.0f) {
-                this.scz[n17] = (n16 - 200);
+                this.scz[n17] = (float)(n16 - 200);
             }
         }
         for (int n18 = 0; n18 < 4; ++n18) {
-            wheelY[n18] += this.scy[n18];
-            wheelX[n18] += (this.scx[0] + this.scx[1] + this.scx[2] + this.scx[3]) / 4.0f;
-            wheelZ[n18] += (this.scz[0] + this.scz[1] + this.scz[2] + this.scz[3]) / 4.0f;
+            array3[n18] += this.scy[n18];
+            array[n18] += (this.scx[0] + this.scx[1] + this.scx[2] + this.scx[3]) / 4.0f;
+            array2[n18] += (this.scz[0] + this.scz[1] + this.scz[2] + this.scz[3]) / 4.0f;
         }
-        int ncx = (int) ((contO.x - trackers.sx) / 3000);
+        int ncx = Math.round((contO.x - trackers.sx) / 3000);
         if (ncx > trackers.ncx) {
             ncx = trackers.ncx;
         }
         if (ncx < 0) {
             ncx = 0;
         }
-        int ncz = (int) ((contO.z - trackers.sz) / 3000);
+        int ncz = Math.round((contO.z - trackers.sz) / 3000);
         if (ncz > trackers.ncz) {
             ncz = trackers.ncz;
         }
@@ -708,10 +706,10 @@ public class Mad
                 this.skid = 2;
             }
             if (n22 == 1) {
-                n25 *= 0.75F;
+                n25 *= 0.75;
             }
             if (n22 == 2) {
-                n25 *= 0.55F;
+                n25 *= (float)0.55;
             }
             float n26 = -(this.speed * this.m.sin(contO.xz) * this.m.cos(this.pzy));
             float n27 = (this.speed * this.m.cos(contO.xz) * this.m.cos(this.pzy));
@@ -750,14 +748,10 @@ public class Mad
             for (int n31 = 0; n31 < 4; ++n31) {
                 if (Math.abs(this.scx[n31] - n26) > n25) {
                     if (this.scx[n31] < n26) {
-                        final float[] scx = this.scx;
-                        final int n32 = n31;
-                        scx[n32] += n25;
+                    	this.scx[n31] += n25;
                     }
                     else {
-                        final float[] scx2 = this.scx;
-                        final int n33 = n31;
-                        scx2[n33] -= n25;
+                    	this.scx[n31] -= n25;
                     }
                 }
                 else {
@@ -765,14 +759,10 @@ public class Mad
                 }
                 if (Math.abs(this.scz[n31] - n27) > n25) {
                     if (this.scz[n31] < n27) {
-                        final float[] scz = this.scz;
-                        final int n34 = n31;
-                        scz[n34] += n25;
+                    	this.scz[n31] -= n25;
                     }
                     else {
-                        final float[] scz2 = this.scz;
-                        final int n35 = n31;
-                        scz2[n35] -= n25;
+                    	this.scz[n31] -= n25;
                     }
                 }
                 else {
@@ -780,14 +770,10 @@ public class Mad
                 }
                 if (Math.abs(this.scy[n31] - n28) > n25) {
                     if (this.scy[n31] < n28) {
-                        final float[] scy2 = this.scy;
-                        final int n36 = n31;
-                        scy2[n36] += n25;
+                        this.scy[n31] += n25;
                     }
                     else {
-                        final float[] scy3 = this.scy;
-                        final int n37 = n31;
-                        scy3[n37] -= n25;
+                    	this.scy[n31] -= n25;
                     }
                 }
                 else {
@@ -806,7 +792,7 @@ public class Mad
                             n38 = 1.2f;
                         }
                         if (this.m.random() > 0.65) {
-                            contO.dust(n31, wheelX[n31], wheelY[n31], wheelZ[n31], this.scx[n31], this.scz[n31], n38 * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
+                            contO.dust(n31, array[n31], array3[n31], array2[n31], this.scx[n31], this.scz[n31], n38 * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
                             if (this.im == this.xt.im && !this.capsized) {
                                 this.xt.skid(n22, (float)Math.sqrt(this.scx[n31] * this.scx[n31] + this.scz[n31] * this.scz[n31]));
                             }
@@ -814,10 +800,10 @@ public class Mad
                     }
                     else {
                         if (n22 == 1 && this.m.random() > 0.8) {
-                            contO.dust(n31, wheelX[n31], wheelY[n31], wheelZ[n31], this.scx[n31], this.scz[n31], 1.1f * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
+                            contO.dust(n31, array[n31], array3[n31], array2[n31], this.scx[n31], this.scz[n31], 1.1f * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
                         }
                         if ((n22 == 2 || n22 == 3) && this.m.random() > 0.6) {
-                            contO.dust(n31, wheelX[n31], wheelY[n31], wheelZ[n31], this.scx[n31], this.scz[n31], 1.15f * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
+                            contO.dust(n31, array[n31], array3[n31], array2[n31], this.scx[n31], this.scz[n31], 1.15f * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
                         }
                     }
                 }
@@ -827,12 +813,12 @@ public class Mad
                         this.dcnt = 0;
                     }
                 }
-                int rando = (int) (this.m.random() * 4);
+                int randy = (int) (this.m.random() * 4F);
                 if (n22 == 3) {
-                    this.scy[rando] = (-100.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3F));
+                    this.scy[randy] = (float)(-100.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
                 }
                 if (n22 == 4) {
-                    this.scy[rando] = (-150.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3F));
+                    this.scy[randy] = (float)(-150.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
                 }
                 n29 += this.scx[n31];
                 n30 += this.scz[n31];
@@ -845,12 +831,12 @@ public class Mad
             else {
                 n39 = 1;
             }
-            this.mxz = (float) (Math.acos(n30 / Math.sqrt(n29 * n29 + n30 * n30)) / 0.017453292519943295 * n39);
-            if (Float.isNaN(mxz)) mxz = 0;
+            this.mxz = (m.acos((float) (n30 / Math.sqrt(n29 * n29 + n30 * n30))) * n39);
+            this.mxz = Float.isNaN(mxz) ? 0F : mxz;
             if (this.skid == 2) {
                 if (!this.capsized) {
-                    n29 /= 4.0f;
-                    n30 /= 4.0f;
+                    n29 /= 4F;
+                    n30 /= 4F;
                     if (b) {
                         this.speed = -((float)Math.sqrt(n29 * n29 + n30 * n30) * this.m.cos(this.mxz - contO.xz));
                     }
@@ -876,7 +862,7 @@ public class Mad
         float n41 = 0.0f;
         for (int n42 = 0; n42 < 4; ++n42) {
             array9[n42] = (array8[n42] = false);
-            if (wheelY[n42] > 245.0f) {
+            if (array3[n42] > 245.0f) {
                 ++n40;
                 this.wtouch = true;
                 this.gtouch = true;
@@ -892,11 +878,11 @@ public class Mad
                     else {
                         n44 = (float)(n43 + 1.2);
                     }
-                    contO.dust(n42, wheelX[n42], wheelY[n42], wheelZ[n42], this.scx[n42], this.scz[n42], n44 * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
+                    contO.dust(n42, array[n42], array3[n42], array2[n42], this.scx[n42], this.scz[n42], n44 * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
                 }
-                wheelY[n42] = 250.0f;
+                array3[n42] = 250.0f;
                 array9[n42] = true;
-                n41 += wheelY[n42] - 250.0f;
+                n41 += array3[n42] - 250.0f;
                 float n45 = (Math.abs(this.m.sin(this.pxy)) + Math.abs(this.m.sin(this.pzy))) / 3.0f;
                 if (n45 > 0.4) {
                     n45 = 0.4f;
@@ -921,7 +907,7 @@ public class Mad
             final float n48 = n41 / n40;
             for (int n49 = 0; n49 < 4; ++n49) {
                 if (!array9[n49]) {
-                    final float[] array10 = wheelY;
+                    final float[] array10 = array3;
                     final int n50 = n49;
                     array10[n50] -= n48;
                 }
@@ -932,23 +918,26 @@ public class Mad
             final int n53 = trackers.sect[ncx][ncz][n52];
             int n54 = 0;
             int n55 = 0;
-            final float tXZ = trackers.xz[n53];
-            final float tcX = trackers.cx[n53];
-            final float tcZ = trackers.cz[n53];
-            if (trackers.xz[n53] != 0) {
-            	rot(wheelX, wheelZ, tcX, tcZ, -tXZ, 4);
+            float tXZ = trackers.xz[n53];
+            float tcX = trackers.cx[n53];
+            float tcZ = trackers.cz[n53];
+            
+            /*
+            if (trackers.xz[n53] != 0F) {
+            	rot(array, array2, tcX, tcZ, -tXZ, 4);
             	rot(scx, scz, tcX, tcZ, -tXZ, 4);
             }
+            */
+            
             for (int n56 = 0; n56 < 4; ++n56) {
-                if (array8[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && wheelX[n56] > trackers.x[n53] - trackers.radx[n53] && wheelX[n56] < trackers.x[n53] + trackers.radx[n53] && wheelZ[n56] > trackers.z[n53] - trackers.radz[n53] && wheelZ[n56] < trackers.z[n53] + trackers.radz[n53]) {
-                    contO.sprk(wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
+                if (array8[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53]) {
+                    contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
                     if (this.im == this.xt.im) {
-                        this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+                        this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                     }
                 }
-                if (!array7[n56] && wheelX[n56] > trackers.x[n53] - trackers.radx[n53] && wheelX[n56] < trackers.x[n53] + trackers.radx[n53] && wheelZ[n56] > trackers.z[n53] - trackers.radz[n53] && wheelZ[n56] < trackers.z[n53] + trackers.radz[n53] && wheelY[n56] > trackers.y[n53] - trackers.rady[n53] && wheelY[n56] < trackers.y[n53] + trackers.rady[n53] && !trackers.decor[n53]) {
-
-                	if (trackers.xy[n53] == 0 && trackers.zy[n53] == 0 && trackers.y[n53] != 250 && wheelY[n56] > trackers.y[n53] - 5) {
+                if (!array7[n56] && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53] && array3[n56] > trackers.y[n53] - trackers.rady[n53] && array3[n56] < trackers.y[n53] + trackers.rady[n53] && (!trackers.decor[n53])) {
+                    if (trackers.xy[n53] == 0 && trackers.zy[n53] == 0 && trackers.y[n53] != 250 && array3[n56] > trackers.y[n53] - 5) {
                         ++n55;
                         this.wtouch = true;
                         this.gtouch = true;
@@ -964,13 +953,13 @@ public class Mad
                             else {
                                 n58 = (float)(n57 + 1.2);
                             }
-                            contO.dust(n56, wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scz[n56], n58 * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
+                            contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], n58 * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
                         }
-                        wheelY[n56] = trackers.y[n53];
+                        array3[n56] = (float)trackers.y[n53];
                         if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
-                            contO.sprk(wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
+                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
                             if (this.im == this.xt.im) {
-                                this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+                                this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
                         float n59 = (Math.abs(this.m.sin(this.pxy)) + Math.abs(this.m.sin(this.pzy))) / 3.0f;
@@ -989,23 +978,29 @@ public class Mad
                         }
                         array7[n56] = true;
                     }
-                    if (trackers.zy[n53] == -90 && wheelZ[n56] < trackers.z[n53] + trackers.radz[n53] && (this.scz[n56] < 0.0f || trackers.radz[n53] == 287)) {
+                    if (trackers.zy[n53] == -90 && array2[n56] < trackers.z[n53] + trackers.radz[n53] && (this.scz[n56] < 0.0f || trackers.radz[n53] == 287)) {
                         for (int n62 = 0; n62 < 4; ++n62) {
-                            if (n56 != n62 && wheelZ[n62] >= trackers.z[n53] + trackers.radz[n53]) {
-                                wheelZ[n62] -= wheelZ[n56] - (trackers.z[n53] + trackers.radz[n53]);
+                            if (n56 != n62 && array2[n62] >= trackers.z[n53] + trackers.radz[n53]) {
+                                final float[] array11 = array2;
+                                final int n63 = n62;
+                                array11[n63] -= array2[n56] - (trackers.z[n53] + trackers.radz[n53]);
                             }
                         }
-                        wheelZ[n56] = (float)(trackers.z[n53] + trackers.radz[n53]);
+                        array2[n56] = (float)(trackers.z[n53] + trackers.radz[n53]);
                         if (trackers.skd[n53] != 2) {
-                            ++this.crank[0][n56];
+                            final int[] array12 = this.crank[0];
+                            final int n64 = n56;
+                            ++array12[n64];
                         }
                         if (trackers.skd[n53] == 5 && this.m.random() > this.m.random()) {
-                            ++this.crank[0][n56];
+                            final int[] array13 = this.crank[0];
+                            final int n65 = n56;
+                            ++array13[n65];
                         }
                         if (this.crank[0][n56] > 1) {
-                            contO.sprk(wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
+                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
                             if (this.im == this.xt.im) {
-                                this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+                                this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
                         float n66 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
@@ -1020,7 +1015,9 @@ public class Mad
                             n67 = 1.1f;
                         }
                         this.regz(n56, Math.abs(this.scz[n56] * n67 * trackers.dam[n53]), contO);
-                        this.scz[n56] += Math.abs(this.scz[n56] * n67);
+                        final float[] scz3 = this.scz;
+                        final int n68 = n56;
+                        scz3[n68] += Math.abs(this.scz[n56] * n67);
                         this.skid = 2;
                         b2 = true;
                         array7[n56] = true;
@@ -1028,15 +1025,15 @@ public class Mad
                             control.wall = n53;
                         }
                     }
-                    if (trackers.zy[n53] == 90 && wheelZ[n56] > trackers.z[n53] - trackers.radz[n53] && (this.scz[n56] > 0.0f || trackers.radz[n53] == 287)) {
+                    if (trackers.zy[n53] == 90 && array2[n56] > trackers.z[n53] - trackers.radz[n53] && (this.scz[n56] > 0.0f || trackers.radz[n53] == 287)) {
                         for (int n69 = 0; n69 < 4; ++n69) {
-                            if (n56 != n69 && wheelZ[n69] <= trackers.z[n53] - trackers.radz[n53]) {
-                                final float[] array14 = wheelZ;
+                            if (n56 != n69 && array2[n69] <= trackers.z[n53] - trackers.radz[n53]) {
+                                final float[] array14 = array2;
                                 final int n70 = n69;
-                                array14[n70] -= wheelZ[n56] - (trackers.z[n53] - trackers.radz[n53]);
+                                array14[n70] -= array2[n56] - (trackers.z[n53] - trackers.radz[n53]);
                             }
                         }
-                        wheelZ[n56] = (float)(trackers.z[n53] - trackers.radz[n53]);
+                        array2[n56] = (float)(trackers.z[n53] - trackers.radz[n53]);
                         if (trackers.skd[n53] != 2) {
                             final int[] array15 = this.crank[1];
                             final int n71 = n56;
@@ -1048,9 +1045,9 @@ public class Mad
                             ++array16[n72];
                         }
                         if (this.crank[1][n56] > 1) {
-                            contO.sprk(wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
+                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
                             if (this.im == this.xt.im) {
-                                this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+                                this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
                         float n73 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
@@ -1075,15 +1072,15 @@ public class Mad
                             control.wall = n53;
                         }
                     }
-                    if (trackers.xy[n53] == -90 && wheelX[n56] < trackers.x[n53] + trackers.radx[n53] && (this.scx[n56] < 0.0f || trackers.radx[n53] == 287)) {
+                    if (trackers.xy[n53] == -90 && array[n56] < trackers.x[n53] + trackers.radx[n53] && (this.scx[n56] < 0.0f || trackers.radx[n53] == 287)) {
                         for (int n76 = 0; n76 < 4; ++n76) {
-                            if (n56 != n76 && wheelX[n76] >= trackers.x[n53] + trackers.radx[n53]) {
-                                final float[] array17 = wheelX;
+                            if (n56 != n76 && array[n76] >= trackers.x[n53] + trackers.radx[n53]) {
+                                final float[] array17 = array;
                                 final int n77 = n76;
-                                array17[n77] -= wheelX[n56] - (trackers.x[n53] + trackers.radx[n53]);
+                                array17[n77] -= array[n56] - (trackers.x[n53] + trackers.radx[n53]);
                             }
                         }
-                        wheelX[n56] = (float)(trackers.x[n53] + trackers.radx[n53]);
+                        array[n56] = (float)(trackers.x[n53] + trackers.radx[n53]);
                         if (trackers.skd[n53] != 2) {
                             final int[] array18 = this.crank[2];
                             final int n78 = n56;
@@ -1095,9 +1092,9 @@ public class Mad
                             ++array19[n79];
                         }
                         if (this.crank[2][n56] > 1) {
-                            contO.sprk(wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
+                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
                             if (this.im == this.xt.im) {
-                                this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+                                this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
                         float n80 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
@@ -1122,15 +1119,15 @@ public class Mad
                             control.wall = n53;
                         }
                     }
-                    if (trackers.xy[n53] == 90 && wheelX[n56] > trackers.x[n53] - trackers.radx[n53] && (this.scx[n56] > 0.0f || trackers.radx[n53] == 287)) {
+                    if (trackers.xy[n53] == 90 && array[n56] > trackers.x[n53] - trackers.radx[n53] && (this.scx[n56] > 0.0f || trackers.radx[n53] == 287)) {
                         for (int n83 = 0; n83 < 4; ++n83) {
-                            if (n56 != n83 && wheelX[n83] <= trackers.x[n53] - trackers.radx[n53]) {
-                                final float[] array20 = wheelX;
+                            if (n56 != n83 && array[n83] <= trackers.x[n53] - trackers.radx[n53]) {
+                                final float[] array20 = array;
                                 final int n84 = n83;
-                                array20[n84] -= wheelX[n56] - (trackers.x[n53] - trackers.radx[n53]);
+                                array20[n84] -= array[n56] - (trackers.x[n53] - trackers.radx[n53]);
                             }
                         }
-                        wheelX[n56] = (float)(trackers.x[n53] - trackers.radx[n53]);
+                        array[n56] = (float)(trackers.x[n53] - trackers.radx[n53]);
                         if (trackers.skd[n53] != 2) {
                             final int[] array21 = this.crank[3];
                             final int n85 = n56;
@@ -1142,9 +1139,9 @@ public class Mad
                             ++array22[n86];
                         }
                         if (this.crank[3][n56] > 1) {
-                            contO.sprk(wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
+                            contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
                             if (this.im == this.xt.im) {
-                                this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+                                this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                             }
                         }
                         float n87 = (Math.abs(this.m.cos(this.pxy)) + Math.abs(this.m.cos(this.pzy))) / 4.0f;
@@ -1175,8 +1172,8 @@ public class Mad
                         if (n91 < 1.0f) {
                             n91 = 1.0f;
                         }
-                        final float n92 = trackers.y[n53] + ((wheelY[n56] - trackers.y[n53]) * this.m.cos(n90) - (wheelZ[n56] - trackers.z[n53]) * this.m.sin(n90));
-                        float n93 = trackers.z[n53] + ((wheelY[n56] - trackers.y[n53]) * this.m.sin(n90) + (wheelZ[n56] - trackers.z[n53]) * this.m.cos(n90));
+                        final float n92 = trackers.y[n53] + ((array3[n56] - trackers.y[n53]) * this.m.cos(n90) - (array2[n56] - trackers.z[n53]) * this.m.sin(n90));
+                        float n93 = trackers.z[n53] + ((array3[n56] - trackers.y[n53]) * this.m.sin(n90) + (array2[n56] - trackers.z[n53]) * this.m.cos(n90));
                         if (n93 > trackers.z[n53] && n93 < trackers.z[n53] + 200) {
                             final float[] scy6 = this.scy;
                             final int n94 = n56;
@@ -1193,17 +1190,17 @@ public class Mad
                             this.wtouch = true;
                             this.gtouch = false;
                             if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
-                                contO.sprk(wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
+                                contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
                                 if (this.im == this.xt.im) {
-                                    this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+                                    this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                                 }
                             }
                             if (!b3 && n22 != 0) {
-                                contO.dust(n56, wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
+                                contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
                             }
                         }
-                        wheelY[n56] = trackers.y[n53] + ((n92 - trackers.y[n53]) * this.m.cos(-n90) - (n93 - trackers.z[n53]) * this.m.sin(-n90));
-                        wheelZ[n56] = trackers.z[n53] + ((n92 - trackers.y[n53]) * this.m.sin(-n90) + (n93 - trackers.z[n53]) * this.m.cos(-n90));
+                        array3[n56] = trackers.y[n53] + ((n92 - trackers.y[n53]) * this.m.cos(-n90) - (n93 - trackers.z[n53]) * this.m.sin(-n90));
+                        array2[n56] = trackers.z[n53] + ((n92 - trackers.y[n53]) * this.m.sin(-n90) + (n93 - trackers.z[n53]) * this.m.cos(-n90));
                         array7[n56] = true;
                     }
                     if (trackers.xy[n53] != 0 && trackers.xy[n53] != 90 && trackers.xy[n53] != -90) {
@@ -1212,8 +1209,8 @@ public class Mad
                         if (n96 < 1.0f) {
                             n96 = 1.0f;
                         }
-                        final float n97 = trackers.y[n53] + ((wheelY[n56] - trackers.y[n53]) * this.m.cos(n95) - (wheelX[n56] - trackers.x[n53]) * this.m.sin(n95));
-                        float n98 = trackers.x[n53] + ((wheelY[n56] - trackers.y[n53]) * this.m.sin(n95) + (wheelX[n56] - trackers.x[n53]) * this.m.cos(n95));
+                        final float n97 = trackers.y[n53] + ((array3[n56] - trackers.y[n53]) * this.m.cos(n95) - (array[n56] - trackers.x[n53]) * this.m.sin(n95));
+                        float n98 = trackers.x[n53] + ((array3[n56] - trackers.y[n53]) * this.m.sin(n95) + (array[n56] - trackers.x[n53]) * this.m.cos(n95));
                         if (n98 > trackers.x[n53] && n98 < trackers.x[n53] + 200) {
                             final float[] scy7 = this.scy;
                             final int n99 = n56;
@@ -1230,26 +1227,29 @@ public class Mad
                             this.wtouch = true;
                             this.gtouch = false;
                             if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
-                                contO.sprk(wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
+                                contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
                                 if (this.im == this.xt.im) {
-                                    this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
+                                    this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                                 }
                             }
                             if (!b3 && n22 != 0) {
-                                contO.dust(n56, wheelX[n56], wheelY[n56], wheelZ[n56], this.scx[n56], this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
+                                contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
                             }
                         }
-                        wheelY[n56] = trackers.y[n53] + ((n97 - trackers.y[n53]) * this.m.cos(-n95) - (n98 - trackers.x[n53]) * this.m.sin(-n95));
-                        wheelX[n56] = trackers.x[n53] + ((n97 - trackers.y[n53]) * this.m.sin(-n95) + (n98 - trackers.x[n53]) * this.m.cos(-n95));
+                        array3[n56] = trackers.y[n53] + ((n97 - trackers.y[n53]) * this.m.cos(-n95) - (n98 - trackers.x[n53]) * this.m.sin(-n95));
+                        array[n56] = trackers.x[n53] + ((n97 - trackers.y[n53]) * this.m.sin(-n95) + (n98 - trackers.x[n53]) * this.m.cos(-n95));
                         array7[n56] = true;
                     }
                 }
             }
             
-            if (trackers.xz[n53] != 0) {
-            	rot(wheelX, wheelZ, tcX, tcZ, tXZ, 4);
+            /*
+            if (trackers.xz[n53] != 0F) {
+            	rot(array, array2, tcX, tcZ, tXZ, 4);
             	rot(scx, scz, tcX, tcZ, tXZ, 4);
             }
+            */
+            
             if (n54 == 4) {
                 this.mtouch = true;
             }
@@ -1257,8 +1257,6 @@ public class Mad
                 n40 = 4;
             }
         }
-        
-        
         if (n51 == 4) {
             this.mtouch = true;
         }
@@ -1282,12 +1280,12 @@ public class Mad
             else {
                 n102 = 1;
             }
-            final double a5 = Math.sqrt((wheelZ[0] - wheelZ[2]) * (wheelZ[0] - wheelZ[2]) + (wheelY[0] - wheelY[2]) * (wheelY[0] - wheelY[2]) + (wheelX[0] - wheelX[2]) * (wheelX[0] - wheelX[2])) / (Math.abs(contO.keyz[0]) + Math.abs(contO.keyz[2]));
+            final float a5 = (float) (Math.sqrt((array2[0] - array2[2]) * (array2[0] - array2[2]) + (array3[0] - array3[2]) * (array3[0] - array3[2]) + (array[0] - array[2]) * (array[0] - array[2])) / (Math.abs(contO.keyz[0]) + Math.abs(contO.keyz[2])));
             if (a5 >= 0.9998) {
                 a = n102;
             }
             else {
-                a = (float) (Math.acos(a5) / 0.017453292519943295 * n102);
+                a = m.acos(a5) * n102;
             }
         }
         if (this.scy[3] != this.scy[1]) {
@@ -1298,12 +1296,12 @@ public class Mad
             else {
                 n103 = 1;
             }
-            final double a6 = Math.sqrt((wheelZ[1] - wheelZ[3]) * (wheelZ[1] - wheelZ[3]) + (wheelY[1] - wheelY[3]) * (wheelY[1] - wheelY[3]) + (wheelX[1] - wheelX[3]) * (wheelX[1] - wheelX[3])) / (Math.abs(contO.keyz[1]) + Math.abs(contO.keyz[3]));
+            final float a6 = (float) (Math.sqrt((array2[1] - array2[3]) * (array2[1] - array2[3]) + (array3[1] - array3[3]) * (array3[1] - array3[3]) + (array[1] - array[3]) * (array[1] - array[3])) / (Math.abs(contO.keyz[1]) + Math.abs(contO.keyz[3])));
             if (a6 >= 0.9998) {
                 a2 = n103;
             }
             else {
-                a2 = (float) (Math.acos(a6) / 0.017453292519943295 * n103);
+                a2 = m.acos(a6) * n103;
             }
         }
         if (this.scy[1] != this.scy[0]) {
@@ -1314,12 +1312,12 @@ public class Mad
             else {
                 n104 = 1;
             }
-            final double a7 = Math.sqrt((wheelZ[0] - wheelZ[1]) * (wheelZ[0] - wheelZ[1]) + (wheelY[0] - wheelY[1]) * (wheelY[0] - wheelY[1]) + (wheelX[0] - wheelX[1]) * (wheelX[0] - wheelX[1])) / (Math.abs(contO.keyx[0]) + Math.abs(contO.keyx[1]));
+            final float a7 = (float) (Math.sqrt((array2[0] - array2[1]) * (array2[0] - array2[1]) + (array3[0] - array3[1]) * (array3[0] - array3[1]) + (array[0] - array[1]) * (array[0] - array[1])) / (Math.abs(contO.keyx[0]) + Math.abs(contO.keyx[1])));
             if (a7 >= 0.9998) {
                 a3 = n104;
             }
             else {
-                a3 = (float) (Math.acos(a7) / 0.017453292519943295 * n104);
+                a3 = m.acos(a7) * n104;
             }
         }
         if (this.scy[3] != this.scy[2]) {
@@ -1330,12 +1328,12 @@ public class Mad
             else {
                 n105 = 1;
             }
-            final double a8 = Math.sqrt((wheelZ[2] - wheelZ[3]) * (wheelZ[2] - wheelZ[3]) + (wheelY[2] - wheelY[3]) * (wheelY[2] - wheelY[3]) + (wheelX[2] - wheelX[3]) * (wheelX[2] - wheelX[3])) / (Math.abs(contO.keyx[2]) + Math.abs(contO.keyx[3]));
+            final float a8 = (float) (Math.sqrt((array2[2] - array2[3]) * (array2[2] - array2[3]) + (array3[2] - array3[3]) * (array3[2] - array3[3]) + (array[2] - array[3]) * (array[2] - array[3])) / (Math.abs(contO.keyx[2]) + Math.abs(contO.keyx[3])));
             if (a8 >= 0.9998) {
                 a4 = n105;
             }
             else {
-                a4 = (float) (Math.acos(a8) / 0.017453292519943295 * n105);
+                a4 = m.acos(a8) * n105;
             }
         }
         if (b2) {
@@ -1428,7 +1426,7 @@ public class Mad
         else {
             this.cntouch = 0;
         }
-        contO.y = ((wheelY[0] + wheelY[1] + wheelY[2] + wheelY[3]) / 4.0f - grat * this.m.cos(this.pzy) * this.m.cos(this.pxy) + n6);
+        contO.y = ((array3[0] + array3[1] + array3[2] + array3[3]) / 4.0f - grat * this.m.cos(this.pzy) * this.m.cos(this.pxy) + n6);
         int n107;
         if (zyinv) {
             n107 = -1;
@@ -1436,8 +1434,8 @@ public class Mad
         else {
             n107 = 1;
         }
-        contO.x = ((wheelX[0] - contO.keyx[0] * this.m.cos(contO.xz) + n107 * contO.keyz[0] * this.m.sin(contO.xz) + wheelX[1] - contO.keyx[1] * this.m.cos(contO.xz) + n107 * contO.keyz[1] * this.m.sin(contO.xz) + wheelX[2] - contO.keyx[2] * this.m.cos(contO.xz) + n107 * contO.keyz[2] * this.m.sin(contO.xz) + wheelX[3] - contO.keyx[3] * this.m.cos(contO.xz) + n107 * contO.keyz[3] * this.m.sin(contO.xz)) / 4.0f + grat * this.m.sin(this.pxy) * this.m.cos(contO.xz) - grat * this.m.sin(this.pzy) * this.m.sin(contO.xz) + n4);
-        contO.z = ((wheelZ[0] - n107 * contO.keyz[0] * this.m.cos(contO.xz) - contO.keyx[0] * this.m.sin(contO.xz) + wheelZ[1] - n107 * contO.keyz[1] * this.m.cos(contO.xz) - contO.keyx[1] * this.m.sin(contO.xz) + wheelZ[2] - n107 * contO.keyz[2] * this.m.cos(contO.xz) - contO.keyx[2] * this.m.sin(contO.xz) + wheelZ[3] - n107 * contO.keyz[3] * this.m.cos(contO.xz) - contO.keyx[3] * this.m.sin(contO.xz)) / 4.0f + grat * this.m.sin(this.pxy) * this.m.sin(contO.xz) - grat * this.m.sin(this.pzy) * this.m.cos(contO.xz) + n5);
+        contO.x = ((array[0] - contO.keyx[0] * this.m.cos(contO.xz) + n107 * contO.keyz[0] * this.m.sin(contO.xz) + array[1] - contO.keyx[1] * this.m.cos(contO.xz) + n107 * contO.keyz[1] * this.m.sin(contO.xz) + array[2] - contO.keyx[2] * this.m.cos(contO.xz) + n107 * contO.keyz[2] * this.m.sin(contO.xz) + array[3] - contO.keyx[3] * this.m.cos(contO.xz) + n107 * contO.keyz[3] * this.m.sin(contO.xz)) / 4.0f + grat * this.m.sin(this.pxy) * this.m.cos(contO.xz) - grat * this.m.sin(this.pzy) * this.m.sin(contO.xz) + n4);
+        contO.z = ((array2[0] - n107 * contO.keyz[0] * this.m.cos(contO.xz) - contO.keyx[0] * this.m.sin(contO.xz) + array2[1] - n107 * contO.keyz[1] * this.m.cos(contO.xz) - contO.keyx[1] * this.m.sin(contO.xz) + array2[2] - n107 * contO.keyz[2] * this.m.cos(contO.xz) - contO.keyx[2] * this.m.sin(contO.xz) + array2[3] - n107 * contO.keyz[3] * this.m.cos(contO.xz) - contO.keyx[3] * this.m.sin(contO.xz)) / 4.0f + grat * this.m.sin(this.pxy) * this.m.sin(contO.xz) - grat * this.m.sin(this.pzy) * this.m.cos(contO.xz) + n5);
         if (Math.abs(this.speed) > 10.0f || !this.mtouch) {
             if (Math.abs(this.pxy - contO.xy) >= 4) {
                 if (this.pxy > contO.xy) {
@@ -1482,9 +1480,6 @@ public class Mad
                 this.tilt = 0.0f;
             }
             contO.xy += this.tilt;
-            if (this.gtouch) {
-                //contO.y -= (this.tilt / 1.5); // no
-            }
         }
         else if (this.tilt != 0.0f) {
             this.tilt = 0.0f;
@@ -1560,8 +1555,18 @@ public class Mad
         }
         if (this.clear == n111 + this.nlaps * checkPoints.nsp) {
             ++this.nlaps;
+            if (this.im == this.xt.im) {
+                if (this.xt.laptime < this.xt.fastestlap || this.xt.fastestlap == 0) {
+                    this.xt.fastestlap = this.xt.laptime;
+                }
+                this.xt.laptime = 0;
+            }
         }
         if (this.im == this.xt.im) {
+            if (this.xt.starcnt == 0) {
+                final xtGraphics xt = this.xt;
+                ++xt.laptime;
+            }
             this.m.checkpoint = this.clear;
             while (this.m.checkpoint >= checkPoints.nsp) {
                 final Medium m = this.m;
@@ -1757,7 +1762,10 @@ public class Mad
                         if (this.im == this.xt.im && this.powerup > this.rpd.powered && this.rpd.wasted == 0 && (this.powerup > 60.0f || checkPoints.stage == 1 || checkPoints.stage == 2)) {
                             this.rpdcatch = 30;
                             if (this.rpd.hcaught) {
-                                this.rpd.powered = (int) this.powerup;
+                                this.rpd.powered = (int)this.powerup;
+                            }
+                            if (this.powerup > this.xt.beststunt) {
+                                this.xt.beststunt = (int)this.powerup;
                             }
                         }
                         if (this.power > 98.0f) {
