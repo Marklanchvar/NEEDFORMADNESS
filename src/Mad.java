@@ -684,7 +684,7 @@ public class Mad
         if (ncz < 0) {
             ncz = 0;
         }
-        int n22 = 1;
+        int surfaceType = 1;
         for (int n23 = 0; n23 < trackers.sect[ncx][ncz].length; ++n23) {
             final int n24 = trackers.sect[ncx][ncz][n23];
 
@@ -697,7 +697,7 @@ public class Mad
             }
             
             if (Math.abs(trackers.zy[n24]) != 90 && Math.abs(trackers.xy[n24]) != 90 && Math.abs(contO.x - trackers.x[n24]) < trackers.radx[n24] && Math.abs(contO.z - trackers.z[n24]) < trackers.radz[n24] && !trackers.decor[n24]) {
-                n22 = trackers.skd[n24];
+                surfaceType = trackers.skd[n24];
             }
             
             if (trackers.xz[n24] != 0F) {
@@ -718,10 +718,10 @@ public class Mad
             else if (this.skid == 1) {
                 this.skid = 2;
             }
-            if (n22 == 1) {
+            if (surfaceType == 1) {
                 n25 *= 0.75;
             }
-            if (n22 == 2) {
+            if (surfaceType == 2) {
                 n25 *= (float)0.55;
             }
             float n26 = -(this.speed * Utils.sin(contO.xz) * Utils.cos(this.pzy));
@@ -799,23 +799,23 @@ public class Mad
                     else if (this.dcnt != 0) {
                         this.dcnt = 0;
                     }
-                    if (this.dcnt > 40.0f * n25 / this.cd.grip[this.cn] || this.capsized) {
-                        float n38 = 1.0f;
-                        if (n22 != 0) {
+                    if (this.dcnt > 40F * n25 / this.cd.grip[this.cn] || this.capsized) {
+                        float n38 = 1F;
+                        if (surfaceType != 0) {
                             n38 = 1.2f;
                         }
-                        if (this.m.random() > 0.65) {
+                        if (true /* this.m.random() > 0.65 */) {
                             contO.dust(n31, array[n31], array3[n31], array2[n31], this.scx[n31], this.scz[n31], n38 * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
                             if (this.im == this.xt.im && !this.capsized) {
-                                this.xt.skid(n22, (float)Math.sqrt(this.scx[n31] * this.scx[n31] + this.scz[n31] * this.scz[n31]));
+                                this.xt.skid(surfaceType, (float)Math.sqrt(this.scx[n31] * this.scx[n31] + this.scz[n31] * this.scz[n31]));
                             }
                         }
                     }
                     else {
-                        if (n22 == 1 && this.m.random() > 0.8) {
+                        if (surfaceType == 1 && this.m.random() > 0.8) {
                             contO.dust(n31, array[n31], array3[n31], array2[n31], this.scx[n31], this.scz[n31], 1.1f * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
                         }
-                        if ((n22 == 2 || n22 == 3) && this.m.random() > 0.6) {
+                        if ((surfaceType == 2 || surfaceType == 3) && this.m.random() > 0.6) {
                             contO.dust(n31, array[n31], array3[n31], array2[n31], this.scx[n31], this.scz[n31], 1.15f * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
                         }
                     }
@@ -827,10 +827,10 @@ public class Mad
                     }
                 }
                 int randy = (int) (this.m.random() * 4F);
-                if (n22 == 3) {
+                if (surfaceType == 3) {
                     this.scy[randy] = (float)(-100.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
                 }
-                if (n22 == 4) {
+                if (surfaceType == 4) {
                     this.scy[randy] = (float)(-150.0f * (this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
                 }
                 n29 += this.scx[n31];
@@ -860,7 +860,7 @@ public class Mad
                 this.skid = 0;
             }
             if (this.capsized && n29 == 0.0f && n30 == 0.0f) {
-                n22 = 0;
+                surfaceType = 0;
             }
             this.mtouch = false;
             b3 = true;
@@ -885,7 +885,7 @@ public class Mad
                         n43 = 0.3f;
                     }
                     float n44;
-                    if (n22 == 0) {
+                    if (surfaceType == 0) {
                         n44 = (float)(n43 + 1.1);
                     }
                     else {
@@ -954,7 +954,7 @@ public class Mad
                                 n57 = 0.3f;
                             }
                             float n58;
-                            if (n22 == 0) {
+                            if (surfaceType == 0) {
                                 n58 = (float)(n57 + 1.1);
                             }
                             else {
@@ -1202,7 +1202,7 @@ public class Mad
                                     this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                                 }
                             }
-                            if (!b3 && n22 != 0) {
+                            if (!b3 && surfaceType != 0) {
                                 contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
                             }
                         }
@@ -1239,7 +1239,7 @@ public class Mad
                                     this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
                                 }
                             }
-                            if (!b3 && n22 != 0) {
+                            if (!b3 && surfaceType != 0) {
                                 contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
                             }
                         }
@@ -1489,11 +1489,11 @@ public class Mad
         else if (this.tilt != 0.0f) {
             this.tilt = 0.0f;
         }
-        if (this.wtouch && n22 == 2) {
+        if (this.wtouch && surfaceType == 2) {
             contO.zy += ((this.m.random() * 6.0f * this.speed / this.cd.swits[this.cn][2] - 3.0f * this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
             contO.xy += ((this.m.random() * 6.0f * this.speed / this.cd.swits[this.cn][2] - 3.0f * this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
         }
-        if (this.wtouch && n22 == 1) {
+        if (this.wtouch && surfaceType == 1) {
             contO.zy += ((this.m.random() * 4.0f * this.speed / this.cd.swits[this.cn][2] - 2.0f * this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
             contO.xy += ((this.m.random() * 4.0f * this.speed / this.cd.swits[this.cn][2] - 2.0f * this.speed / this.cd.swits[this.cn][2]) * (this.cd.bounce[this.cn] - 0.3));
         }
