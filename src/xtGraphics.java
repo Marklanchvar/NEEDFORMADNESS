@@ -100,8 +100,6 @@ public class xtGraphics extends Panel implements Runnable
     Thread runner;
     int runtyp;
     int exitm;
-    Image odmg;
-    Image opwr;
     Image opos;
     Image osped;
     Image owas;
@@ -891,10 +889,10 @@ public class xtGraphics extends Panel implements Runnable
                     this.ocntdn[0] = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("damage.gif")) {
-                    this.odmg = this.loadimage(b, mediaTracker, defaultToolkit);
+                    this.dmg = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("power.gif")) {
-                    this.opwr = this.loadimage(b, mediaTracker, defaultToolkit);
+                    this.pwr = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("position.gif")) {
                     this.opos = this.loadimage(b, mediaTracker, defaultToolkit);
@@ -2520,7 +2518,7 @@ public class xtGraphics extends Panel implements Runnable
             }
             this.rd.setColor(Color.BLACK);
             this.rd.drawImage(this.stunts, 105, 175, null);
-            this.rd.drawImage(this.opwr, 540, 253, null);
+            this.rd.drawImage(this.pwr, 540, 253, null);
             this.rd.setFont(new Font("Arial", 1, 13));
             this.rd.drawString("To perform stunts. When your car is in the AIR:", 125, 310);
             this.rd.drawString("Press combo Spacebar + Arrow Keys", 125, 330);
@@ -5729,21 +5727,21 @@ public class xtGraphics extends Panel implements Runnable
                 this.dmcnt = 0;
             }
         }
-        int r = (int)(n5 + n5 * (this.m.snap[0] / 100.0f));
+        int r = (int)(n5 * 2);
         if (r > 255) {
             r = 255;
         }
         if (r < 0) {
             r = 0;
         }
-        int g = (int)(n6 + n6 * (this.m.snap[1] / 100.0f));
+        int g = (int)(n6 * 2);
         if (g > 255) {
             g = 255;
         }
         if (g < 0) {
             g = 0;
         }
-        int b2 = (int)(n7 + n7 * (this.m.snap[2] / 100.0f));
+        int b2 = (int)(n7 * 2);
         if (b2 > 255) {
             b2 = 255;
         }
@@ -5771,21 +5769,21 @@ public class xtGraphics extends Panel implements Runnable
             n9 = 244;
             n10 = 244;
         }
-        int r2 = (int)(n8 + n8 * (this.m.snap[0] / 100.0f));
+        int r2 = n8;
         if (r2 > 255) {
             r2 = 255;
         }
         if (r2 < 0) {
             r2 = 0;
         }
-        int g2 = (int)(n9 + n9 * (this.m.snap[1] / 100.0f));
+        int g2 = n9;
         if (g2 > 255) {
             g2 = 255;
         }
         if (g2 < 0) {
             g2 = 0;
         }
-        int b3 = (int)(n10 + n10 * (this.m.snap[2] / 100.0f));
+        int b3 = n10;
         if (b3 > 255) {
             b3 = 255;
         }
@@ -6665,8 +6663,6 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void snap(final int n) {
-        this.dmg = this.loadsnap(this.odmg);
-        this.pwr = this.loadsnap(this.opwr);
         this.was = this.loadsnap(this.owas);
         this.lap = this.loadsnap(this.olap);
         this.pos = this.loadsnap(this.opos);

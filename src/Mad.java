@@ -692,16 +692,8 @@ public class Mad
             float tcX = trackers.cx[n24];
             float tcZ = trackers.cz[n24];
             
-            if (trackers.xz[n24] != 0F) {
-            	Utils.rot(contO.x, contO.z, tcX, tcZ, -tXZ);
-            }
-            
             if (Math.abs(trackers.zy[n24]) != 90 && Math.abs(trackers.xy[n24]) != 90 && Math.abs(contO.x - trackers.x[n24]) < trackers.radx[n24] && Math.abs(contO.z - trackers.z[n24]) < trackers.radz[n24] && !trackers.decor[n24]) {
                 surfaceType = trackers.skd[n24];
-            }
-            
-            if (trackers.xz[n24] != 0F) {
-            	Utils.rot(contO.x, contO.z, tcX, tcZ, tXZ);
             }
         }
         if (this.mtouch) {
@@ -1773,8 +1765,8 @@ public class Mad
                                 this.xt.beststunt = (int)this.powerup;
                             }
                         }
-                        if (this.power > 98.0f) {
-                            this.power = 98.0f;
+                        if (this.power > 98F) {
+                            this.power = 98F;
                             if (this.powerup > 150.0f) {
                                 this.xtpower = 200;
                             }
