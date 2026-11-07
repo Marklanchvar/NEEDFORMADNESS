@@ -5127,7 +5127,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.rd.drawString("" + checkPoints.wasted + " / " + (this.nplayers - 1) + "", 150, 18);
                 this.rd.drawImage(this.pos, 42, 27, null);
                 this.rd.drawImage(this.rank[checkPoints.pos[mad.im]], 110, 28, null);
-                this.drawstat(this.cd.maxmag[mad.cn], mad.hitmag, mad.newcar, mad.power);
+                this.drawstat(checkPoints.magdam[mad.cn], mad.newcar, checkPoints.magpow[mad.cn]);
                 if (control.radar && checkPoints.stage != 10) {
 
 
@@ -5214,103 +5214,6 @@ public class xtGraphics extends Panel implements Runnable
                                 this.rd.fillRect(700, 74 + 30 * n30, barWidth, 5);
                                 this.rd.setColor(new Color(0, 0, 0));
                                 this.rd.drawRect(700, 74 + 30 * n30, 60, 5);
-                                boolean b8 = false;
-                                if (this.im != n32 && lxm > 661 && lxm < 775 && lym > 58 + 30 * n30 && lym < 83 + 30 * n30) {
-                                    b8 = true;
-                                    if (b) {
-                                        if (!this.onlock) {
-                                            if (this.alocked != n32) {
-                                                this.alocked = n32;
-                                            }
-                                            else {
-                                                this.alocked = -1;
-                                            }
-                                        }
-                                        this.onlock = true;
-                                    }
-                                    else if (this.onlock) {
-                                        this.onlock = false;
-                                    }
-                                }
-                                if (this.alocked == n32) {
-                                    int r3 = (int)(159.0f + 159.0f * (this.m.snap[0] * .01F));
-                                    if (r3 > 255) {
-                                        r3 = 255;
-                                    }
-                                    if (r3 < 0) {
-                                        r3 = 0;
-                                    }
-                                    int g3 = (int)(207.0f + 207.0f * (this.m.snap[1] * .01F));
-                                    if (g3 > 255) {
-                                        g3 = 255;
-                                    }
-                                    if (g3 < 0) {
-                                        g3 = 0;
-                                    }
-                                    int b9 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
-                                    if (b9 > 255) {
-                                        b9 = 255;
-                                    }
-                                    if (b9 < 0) {
-                                        b9 = 0;
-                                    }
-                                    this.rd.setColor(new Color(r3, g3, b9));
-                                    this.rd.drawRect(661, 58 + 30 * n30, 114, 25);
-                                    this.rd.drawRect(662, 59 + 30 * n30, 112, 23);
-                                }
-                                if (b8 && !this.onlock) {
-                                    int r4;
-                                    int g4;
-                                    int b10;
-                                    if (this.alocked == n32) {
-                                        r4 = (int)(120.0f + 120.0f * (this.m.snap[0] * .01F));
-                                        if (r4 > 255) {
-                                            r4 = 255;
-                                        }
-                                        if (r4 < 0) {
-                                            r4 = 0;
-                                        }
-                                        g4 = (int)(114.0f + 114.0f * (this.m.snap[1] * .01F));
-                                        if (g4 > 255) {
-                                            g4 = 255;
-                                        }
-                                        if (g4 < 0) {
-                                            g4 = 0;
-                                        }
-                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
-                                        if (b10 > 255) {
-                                            b10 = 255;
-                                        }
-                                        if (b10 < 0) {
-                                            b10 = 0;
-                                        }
-                                    }
-                                    else {
-                                        r4 = (int)(140.0f + 140.0f * (this.m.snap[0] * .01F));
-                                        if (r4 > 255) {
-                                            r4 = 255;
-                                        }
-                                        if (r4 < 0) {
-                                            r4 = 0;
-                                        }
-                                        g4 = (int)(160.0f + 160.0f * (this.m.snap[1] * .01F));
-                                        if (g4 > 255) {
-                                            g4 = 255;
-                                        }
-                                        if (g4 < 0) {
-                                            g4 = 0;
-                                        }
-                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
-                                        if (b10 > 255) {
-                                            b10 = 255;
-                                        }
-                                        if (b10 < 0) {
-                                            b10 = 0;
-                                        }
-                                    }
-                                    this.rd.setColor(new Color(r4, g4, b10));
-                                    this.rd.drawRect(660, 57 + 30 * n30, 116, 27);
-                                }
                                 n31 = 1;
                             }
                         }
@@ -5693,13 +5596,10 @@ public class xtGraphics extends Panel implements Runnable
         }
     }
     
-    public void drawstat(final int maxMag, int hitMag, final boolean newCar, final float power) {
+    public void drawstat(final float magDam, final boolean newCar, final float magPow) {
         final int[] barX = new int[4];
         final int[] barY = new int[4];
-        if (hitMag > maxMag) {
-            hitMag = maxMag;
-        }
-        final int damBar = (int)(98 * (hitMag / (float)maxMag));
+        final int damBar = (int)(98 * magDam);
         barX[0] = 662;
         barY[0] = 11;
         barX[1] = 662;
@@ -5756,15 +5656,15 @@ public class xtGraphics extends Panel implements Runnable
         barY[0] = 31;
         barX[1] = 662;
         barY[1] = 40;
-        barX[2] = (int)(662 + power * .98F);
+        barX[2] = (int)(662 + magPow * .98F);
         barY[2] = 40;
-        barX[3] = (int)(662 + power * .98F);
+        barX[3] = (int)(662 + magPow * .98F);
         barY[3] = 31;
         int powRed = 128;
-        if (power == 100F) {
+        if (magPow == 100F) {
             powRed = 64;
         }
-        int powGreen = (int)(190 + power * 0.3626);
+        int powGreen = (int)(190 + magPow * 0.3626);
         int powBlue = 244;
         if (this.auscnt < 45 && this.aflk) {
             powRed = 128;
