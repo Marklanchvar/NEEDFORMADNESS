@@ -100,6 +100,8 @@ public class xtGraphics extends Panel implements Runnable
     Thread runner;
     int runtyp;
     int exitm;
+    Image odmg;
+    Image opwr;
     Image opos;
     Image osped;
     Image owas;
@@ -272,7 +274,7 @@ public class xtGraphics extends Panel implements Runnable
     int lalocked;
     int cntflock;
     boolean onlock;
-    int ana;
+    float ana;
     int cntan;
     int cntovn;
     boolean flk;
@@ -889,10 +891,10 @@ public class xtGraphics extends Panel implements Runnable
                     this.ocntdn[0] = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("damage.gif")) {
-                    this.dmg = this.loadimage(b, mediaTracker, defaultToolkit);
+                    this.odmg = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("power.gif")) {
-                    this.pwr = this.loadimage(b, mediaTracker, defaultToolkit);
+                    this.opwr = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("position.gif")) {
                     this.opos = this.loadimage(b, mediaTracker, defaultToolkit);
@@ -1232,7 +1234,7 @@ public class xtGraphics extends Panel implements Runnable
         this.drawcs(358, "Loading game, please wait.", 0, 0, 0, 3);
         this.rd.setColor(Color.WHITE);
         this.rd.fillRect(295, 398, 210, 17);
-        this.shload += (this.dnload + 10.0f - this.shload) / 100.0f;
+        this.shload += (this.dnload + 10.0f - this.shload) * .01F;
         if (this.shload > this.kbload) {
             this.shload = (float)this.kbload;
         }
@@ -1993,21 +1995,21 @@ public class xtGraphics extends Panel implements Runnable
                 }
             }
         }
-        int r = (int)(230.0f - 230.0f * (array[0] / 100.0f));
+        int r = (int)(230.0f - 230.0f * (array[0] * .01F));
         if (r > 255) {
             r = 255;
         }
         if (r < 0) {
             r = 0;
         }
-        int g = (int)(230.0f - 230.0f * (array[1] / 100.0f));
+        int g = (int)(230.0f - 230.0f * (array[1] * .01F));
         if (g > 255) {
             g = 255;
         }
         if (g < 0) {
             g = 0;
         }
-        int b2 = (int)(230.0f - 230.0f * (array[2] / 100.0f));
+        int b2 = (int)(230.0f - 230.0f * (array[2] * .01F));
         if (b2 > 255) {
             b2 = 255;
         }
@@ -2052,21 +2054,21 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.setComposite(AlphaComposite.getInstance(3, 0.7f));
             this.rd.drawImage(this.tips, 192, 67, null);
             this.rd.setComposite(AlphaComposite.getInstance(3, 1.0f));
-            int r2 = (int)(80.0f - 80.0f * (array[0] / 100.0f));
+            int r2 = (int)(80.0f - 80.0f * (array[0] * .01F));
             if (r2 > 255) {
                 r2 = 255;
             }
             if (r2 < 0) {
                 r2 = 0;
             }
-            int g2 = (int)(80.0f - 80.0f * (array[1] / 100.0f));
+            int g2 = (int)(80.0f - 80.0f * (array[1] * .01F));
             if (g2 > 255) {
                 g2 = 255;
             }
             if (g2 < 0) {
                 g2 = 0;
             }
-            int b3 = (int)(80.0f - 80.0f * (array[2] / 100.0f));
+            int b3 = (int)(80.0f - 80.0f * (array[2] * .01F));
             if (b3 > 255) {
                 b3 = 255;
             }
@@ -2518,7 +2520,7 @@ public class xtGraphics extends Panel implements Runnable
             }
             this.rd.setColor(Color.BLACK);
             this.rd.drawImage(this.stunts, 105, 175, null);
-            this.rd.drawImage(this.pwr, 540, 253, null);
+            this.rd.drawImage(this.opwr, 540, 253, null);
             this.rd.setFont(new Font("Arial", 1, 13));
             this.rd.drawString("To perform stunts. When your car is in the AIR:", 125, 310);
             this.rd.drawString("Press combo Spacebar + Arrow Keys", 125, 330);
@@ -4881,7 +4883,7 @@ public class xtGraphics extends Panel implements Runnable
                         int n31 = 0;
                         for (int n32 = 0; n32 < this.nplayers; ++n32) {
                             if (checkPoints.pos[n32] == n30 && checkPoints.dested[n32] == 0 && n31 == 0) {
-                                int b5 = (int)(100.0f + 100.0f * (this.m.snap[2] / 100.0f));
+                                int b5 = (int)(100.0f + 100.0f * (this.m.snap[2] * .01F));
                                 if (b5 > 255) {
                                     b5 = 255;
                                 }
@@ -4922,15 +4924,15 @@ public class xtGraphics extends Panel implements Runnable
                                     n38 = (int)(244.0f - 233.0f * ((barWidth - 20) / 40.0f));
                                 }
 
-                                int r2 = (int)(n37 + n37 * (this.m.snap[0] / 100.0f));
+                                int r2 = (int)(n37 + n37 * (this.m.snap[0] * .01F));
                                 if (r2 > 255) r2 = 255;
                                 if (r2 < 0)   r2 = 0;
 
-                                int g2 = (int)(n38 + n38 * (this.m.snap[1] / 100.0f));
+                                int g2 = (int)(n38 + n38 * (this.m.snap[1] * .01F));
                                 if (g2 > 255) g2 = 255;
                                 if (g2 < 0)   g2 = 0;
 
-                                int b7 = (int)(n39 + n39 * (this.m.snap[2] / 100.0f));
+                                int b7 = (int)(n39 + n39 * (this.m.snap[2] * .01F));
                                 if (b7 > 255) b7 = 255;
                                 if (b7 < 0)   b7 = 0;
 
@@ -4957,21 +4959,21 @@ public class xtGraphics extends Panel implements Runnable
                                     }
                                 }
                                 if (this.alocked == n32) {
-                                    int r3 = (int)(159.0f + 159.0f * (this.m.snap[0] / 100.0f));
+                                    int r3 = (int)(159.0f + 159.0f * (this.m.snap[0] * .01F));
                                     if (r3 > 255) {
                                         r3 = 255;
                                     }
                                     if (r3 < 0) {
                                         r3 = 0;
                                     }
-                                    int g3 = (int)(207.0f + 207.0f * (this.m.snap[1] / 100.0f));
+                                    int g3 = (int)(207.0f + 207.0f * (this.m.snap[1] * .01F));
                                     if (g3 > 255) {
                                         g3 = 255;
                                     }
                                     if (g3 < 0) {
                                         g3 = 0;
                                     }
-                                    int b9 = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
+                                    int b9 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
                                     if (b9 > 255) {
                                         b9 = 255;
                                     }
@@ -4987,21 +4989,21 @@ public class xtGraphics extends Panel implements Runnable
                                     int g4;
                                     int b10;
                                     if (this.alocked == n32) {
-                                        r4 = (int)(120.0f + 120.0f * (this.m.snap[0] / 100.0f));
+                                        r4 = (int)(120.0f + 120.0f * (this.m.snap[0] * .01F));
                                         if (r4 > 255) {
                                             r4 = 255;
                                         }
                                         if (r4 < 0) {
                                             r4 = 0;
                                         }
-                                        g4 = (int)(114.0f + 114.0f * (this.m.snap[1] / 100.0f));
+                                        g4 = (int)(114.0f + 114.0f * (this.m.snap[1] * .01F));
                                         if (g4 > 255) {
                                             g4 = 255;
                                         }
                                         if (g4 < 0) {
                                             g4 = 0;
                                         }
-                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
+                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
                                         if (b10 > 255) {
                                             b10 = 255;
                                         }
@@ -5010,21 +5012,21 @@ public class xtGraphics extends Panel implements Runnable
                                         }
                                     }
                                     else {
-                                        r4 = (int)(140.0f + 140.0f * (this.m.snap[0] / 100.0f));
+                                        r4 = (int)(140.0f + 140.0f * (this.m.snap[0] * .01F));
                                         if (r4 > 255) {
                                             r4 = 255;
                                         }
                                         if (r4 < 0) {
                                             r4 = 0;
                                         }
-                                        g4 = (int)(160.0f + 160.0f * (this.m.snap[1] / 100.0f));
+                                        g4 = (int)(160.0f + 160.0f * (this.m.snap[1] * .01F));
                                         if (g4 > 255) {
                                             g4 = 255;
                                         }
                                         if (g4 < 0) {
                                             g4 = 0;
                                         }
-                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
+                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
                                         if (b10 > 255) {
                                             b10 = 255;
                                         }
@@ -5155,7 +5157,7 @@ public class xtGraphics extends Panel implements Runnable
                         int n31 = 0;
                         for (int n32 = 0; n32 < this.nplayers; ++n32) {
                             if (checkPoints.pos[n32] == n30 && checkPoints.dested[n32] == 0 && n31 == 0) {
-                                int b5 = (int)(100.0f + 100.0f * (this.m.snap[2] / 100.0f));
+                                int b5 = (int)(100.0f + 100.0f * (this.m.snap[2] * .01F));
                                 if (b5 > 255) {
                                     b5 = 255;
                                 }
@@ -5196,15 +5198,15 @@ public class xtGraphics extends Panel implements Runnable
                                     n38 = (int)(244.0f - 233.0f * ((barWidth - 20) / 40.0f));
                                 }
 
-                                int r2 = (int)(n37 + n37 * (this.m.snap[0] / 100.0f));
+                                int r2 = (int)(n37 + n37 * (this.m.snap[0] * .01F));
                                 if (r2 > 255) r2 = 255;
                                 if (r2 < 0)   r2 = 0;
 
-                                int g2 = (int)(n38 + n38 * (this.m.snap[1] / 100.0f));
+                                int g2 = (int)(n38 + n38 * (this.m.snap[1] * .01F));
                                 if (g2 > 255) g2 = 255;
                                 if (g2 < 0)   g2 = 0;
 
-                                int b7 = (int)(n39 + n39 * (this.m.snap[2] / 100.0f));
+                                int b7 = (int)(n39 + n39 * (this.m.snap[2] * .01F));
                                 if (b7 > 255) b7 = 255;
                                 if (b7 < 0)   b7 = 0;
 
@@ -5231,21 +5233,21 @@ public class xtGraphics extends Panel implements Runnable
                                     }
                                 }
                                 if (this.alocked == n32) {
-                                    int r3 = (int)(159.0f + 159.0f * (this.m.snap[0] / 100.0f));
+                                    int r3 = (int)(159.0f + 159.0f * (this.m.snap[0] * .01F));
                                     if (r3 > 255) {
                                         r3 = 255;
                                     }
                                     if (r3 < 0) {
                                         r3 = 0;
                                     }
-                                    int g3 = (int)(207.0f + 207.0f * (this.m.snap[1] / 100.0f));
+                                    int g3 = (int)(207.0f + 207.0f * (this.m.snap[1] * .01F));
                                     if (g3 > 255) {
                                         g3 = 255;
                                     }
                                     if (g3 < 0) {
                                         g3 = 0;
                                     }
-                                    int b9 = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
+                                    int b9 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
                                     if (b9 > 255) {
                                         b9 = 255;
                                     }
@@ -5261,21 +5263,21 @@ public class xtGraphics extends Panel implements Runnable
                                     int g4;
                                     int b10;
                                     if (this.alocked == n32) {
-                                        r4 = (int)(120.0f + 120.0f * (this.m.snap[0] / 100.0f));
+                                        r4 = (int)(120.0f + 120.0f * (this.m.snap[0] * .01F));
                                         if (r4 > 255) {
                                             r4 = 255;
                                         }
                                         if (r4 < 0) {
                                             r4 = 0;
                                         }
-                                        g4 = (int)(114.0f + 114.0f * (this.m.snap[1] / 100.0f));
+                                        g4 = (int)(114.0f + 114.0f * (this.m.snap[1] * .01F));
                                         if (g4 > 255) {
                                             g4 = 255;
                                         }
                                         if (g4 < 0) {
                                             g4 = 0;
                                         }
-                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
+                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
                                         if (b10 > 255) {
                                             b10 = 255;
                                         }
@@ -5284,21 +5286,21 @@ public class xtGraphics extends Panel implements Runnable
                                         }
                                     }
                                     else {
-                                        r4 = (int)(140.0f + 140.0f * (this.m.snap[0] / 100.0f));
+                                        r4 = (int)(140.0f + 140.0f * (this.m.snap[0] * .01F));
                                         if (r4 > 255) {
                                             r4 = 255;
                                         }
                                         if (r4 < 0) {
                                             r4 = 0;
                                         }
-                                        g4 = (int)(160.0f + 160.0f * (this.m.snap[1] / 100.0f));
+                                        g4 = (int)(160.0f + 160.0f * (this.m.snap[1] * .01F));
                                         if (g4 > 255) {
                                             g4 = 255;
                                         }
                                         if (g4 < 0) {
                                             g4 = 0;
                                         }
-                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
+                                        b10 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
                                         if (b10 > 255) {
                                             b10 = 255;
                                         }
@@ -5691,31 +5693,31 @@ public class xtGraphics extends Panel implements Runnable
         }
     }
     
-    public void drawstat(final int n, int n2, final boolean b, final float n3) {
-        final int[] array = new int[4];
-        final int[] array2 = new int[4];
-        if (n2 > n) {
-            n2 = n;
+    public void drawstat(final int maxMag, int hitMag, final boolean newCar, final float power) {
+        final int[] barX = new int[4];
+        final int[] barY = new int[4];
+        if (hitMag > maxMag) {
+            hitMag = maxMag;
         }
-        final int n4 = (int)(98.0f * (n2 / (float)n));
-        array[0] = 662;
-        array2[0] = 11;
-        array[1] = 662;
-        array2[1] = 20;
-        array[2] = 662 + n4;
-        array2[2] = 20;
-        array[3] = 662 + n4;
-        array2[3] = 11;
-        final int n5 = 244;
-        int n6 = 244;
-        final int n7 = 11;
-        if (n4 > 33) {
-            n6 = (int)(244.0f - 233.0f * ((n4 - 33) / 65.0f));
+        final int damBar = (int)(98 * (hitMag / (float)maxMag));
+        barX[0] = 662;
+        barY[0] = 11;
+        barX[1] = 662;
+        barY[1] = 20;
+        barX[2] = 662 + damBar;
+        barY[2] = 20;
+        barX[3] = 662 + damBar;
+        barY[3] = 11;
+        final int damRed = 244;
+        int damGreen = 244;
+        final int damBlue = 11;
+        if (damBar > 33) {
+            damGreen = (int)(244 - 233 * ((damBar - 33) / 65F));
         }
-        if (n4 > 70) {
+        if (damBar > 70) {
             if (this.dmcnt < 10) {
                 if (this.dmflk) {
-                    n6 = 170;
+                    damGreen = 170;
                     this.dmflk = false;
                 }
                 else {
@@ -5723,25 +5725,25 @@ public class xtGraphics extends Panel implements Runnable
                 }
             }
             ++this.dmcnt;
-            if (this.dmcnt > 167.0 - n4 * 1.5) {
+            if (this.dmcnt > 167 - damBar * 1.5F) {
                 this.dmcnt = 0;
             }
         }
-        int r = (int)(n5 * 2);
+        int r = (int)(damRed + damRed * (this.m.snap[0] * .01F));
         if (r > 255) {
             r = 255;
         }
         if (r < 0) {
             r = 0;
         }
-        int g = (int)(n6 * 2);
+        int g = (int)(damGreen + damGreen * (this.m.snap[1] * .01F));
         if (g > 255) {
             g = 255;
         }
         if (g < 0) {
             g = 0;
         }
-        int b2 = (int)(n7 * 2);
+        int b2 = (int)(damBlue + damBlue * (this.m.snap[2] * .01F));
         if (b2 > 255) {
             b2 = 255;
         }
@@ -5749,41 +5751,41 @@ public class xtGraphics extends Panel implements Runnable
             b2 = 0;
         }
         this.rd.setColor(new Color(r, g, b2));
-        this.rd.fillPolygon(array, array2, 4);
-        array[0] = 662;
-        array2[0] = 31;
-        array[1] = 662;
-        array2[1] = 40;
-        array[2] = (int)(662.0f + n3);
-        array2[2] = 40;
-        array[3] = (int)(662.0f + n3);
-        array2[3] = 31;
-        int n8 = 128;
-        if (n3 == 98.0f) {
-            n8 = 64;
+        this.rd.fillPolygon(barX, barY, 4);
+        barX[0] = 662;
+        barY[0] = 31;
+        barX[1] = 662;
+        barY[1] = 40;
+        barX[2] = (int)(662 + power * .98F);
+        barY[2] = 40;
+        barX[3] = (int)(662 + power * .98F);
+        barY[3] = 31;
+        int powRed = 128;
+        if (power == 100F) {
+            powRed = 64;
         }
-        int n9 = (int)(190.0 + n3 * 0.37);
-        int n10 = 244;
+        int powGreen = (int)(190 + power * 0.3626);
+        int powBlue = 244;
         if (this.auscnt < 45 && this.aflk) {
-            n8 = 128;
-            n9 = 244;
-            n10 = 244;
+            powRed = 128;
+            powGreen = 244;
+            powBlue = 244;
         }
-        int r2 = n8;
+        int r2 = (int)(powRed + powRed * (this.m.snap[0] * .01F));
         if (r2 > 255) {
             r2 = 255;
         }
         if (r2 < 0) {
             r2 = 0;
         }
-        int g2 = n9;
+        int g2 = (int)(powGreen + powGreen * (this.m.snap[1] * .01F));
         if (g2 > 255) {
             g2 = 255;
         }
         if (g2 < 0) {
             g2 = 0;
         }
-        int b3 = n10;
+        int b3 = (int)(powBlue + powBlue * (this.m.snap[2] * .01F));
         if (b3 > 255) {
             b3 = 255;
         }
@@ -5791,7 +5793,7 @@ public class xtGraphics extends Panel implements Runnable
             b3 = 0;
         }
         this.rd.setColor(new Color(r2, g2, b3));
-        this.rd.fillPolygon(array, array2, 4);
+        this.rd.fillPolygon(barX, barY, 4);
     }
     
     public void drawhi(final Image image, final int n) {
@@ -5810,21 +5812,21 @@ public class xtGraphics extends Panel implements Runnable
     
     public void drawcs(final int n, final String str, int r, int g, int b, final int n2) {
         if (n2 != 3 && n2 != 4 && n2 != 5) {
-            r += (int)(r * (this.m.snap[0] / 100.0f));
+            r += (int)(r * (this.m.snap[0] * .01F));
             if (r > 255) {
                 r = 255;
             }
             if (r < 0) {
                 r = 0;
             }
-            g += (int)(g * (this.m.snap[1] / 100.0f));
+            g += (int)(g * (this.m.snap[1] * .01F));
             if (g > 255) {
                 g = 255;
             }
             if (g < 0) {
                 g = 0;
             }
-            b += (int)(b * (this.m.snap[2] / 100.0f));
+            b += (int)(b * (this.m.snap[2] * .01F));
             if (b > 255) {
                 b = 255;
             }
@@ -5833,21 +5835,21 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         if (n2 == 4) {
-            r -= (int)(r * (this.m.snap[0] / 100.0f));
+            r -= (int)(r * (this.m.snap[0] * .01F));
             if (r > 255) {
                 r = 255;
             }
             if (r < 0) {
                 r = 0;
             }
-            g -= (int)(g * (this.m.snap[1] / 100.0f));
+            g -= (int)(g * (this.m.snap[1] * .01F));
             if (g > 255) {
                 g = 255;
             }
             if (g < 0) {
                 g = 0;
             }
-            b -= (int)(b * (this.m.snap[2] / 100.0f));
+            b -= (int)(b * (this.m.snap[2] * .01F));
             if (b > 255) {
                 b = 255;
             }
@@ -5891,29 +5893,31 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void arrow(final int n, final int n2, final CheckPoints checkPoints, final boolean b) {
-        final int[] array = new int[7];
-        final int[] array2 = new int[7];
-        final int[] array3 = new int[7];
-        final int n3 = 400;
-        final int n4 = -90;
-        final int n5 = 700;
+        final float[] arrowX = new float[7];
+        final float[] arrowY = new float[7];
+        final float[] arrowZ = new float[7];
+        final int[] arrow2DX = new int[7];
+        final int[] arrow2DY = new int[7];
+        final int offsetX = 400;
+        final int offsetY = -90;
+        final int offsetZ = 700;
         for (int i = 0; i < 7; ++i) {
-            array2[i] = n4;
+            arrowY[i] = offsetY;
         }
-        array[0] = n3;
-        array3[0] = n5 + 110;
-        array[1] = n3 - 35;
-        array3[1] = n5 + 50;
-        array[2] = n3 - 15;
-        array3[2] = n5 + 50;
-        array[3] = n3 - 15;
-        array3[3] = n5 - 50;
-        array[4] = n3 + 15;
-        array3[4] = n5 - 50;
-        array[5] = n3 + 15;
-        array3[5] = n5 + 50;
-        array[6] = n3 + 35;
-        array3[6] = n5 + 50;
+        arrowX[0] = offsetX;
+        arrowZ[0] = offsetZ + 110;
+        arrowX[1] = offsetX - 35;
+        arrowZ[1] = offsetZ + 50;
+        arrowX[2] = offsetX - 15;
+        arrowZ[2] = offsetZ + 50;
+        arrowX[3] = offsetX - 15;
+        arrowZ[3] = offsetZ - 50;
+        arrowX[4] = offsetX + 15;
+        arrowZ[4] = offsetZ - 50;
+        arrowX[5] = offsetX + 15;
+        arrowZ[5] = offsetZ + 50;
+        arrowX[6] = offsetX + 35;
+        arrowZ[6] = offsetZ + 50;
         int n7;
         if (!b) {
             int n6 = 0;
@@ -5976,7 +5980,7 @@ public class xtGraphics extends Panel implements Runnable
         }
         if (Math.abs(this.ana - k) < 180) {
             if (Math.abs(this.ana - k) < 10) {
-                this.ana = (int) k;
+                this.ana = k;
             }
             else if (this.ana < k) {
                 this.ana += 10;
@@ -5999,22 +6003,22 @@ public class xtGraphics extends Panel implements Runnable
                 }
             }
         }
-        Utils.rot(array, array3, n3, n5, this.ana, 7);
+        Utils.rot(arrowX, arrowZ, offsetX, offsetZ, this.ana, 7);
+        for (int i = 0; i < 7; i++) {
+        	arrow2DX[i] = Utils.xs(arrowX[i], arrowZ[i]);
+        	arrow2DY[i] = Utils.ys(arrowY[i], arrowZ[i]);
+        }
         final int abs = (int) Math.abs(this.ana);
         if (!b) {
             if (abs > 7 || n2 > 0 || n2 == -2 || this.cntan != 0) {
-                for (int l = 0; l < 7; ++l) {
-                    array[l] = Utils.xs(array[l], array3[l]);
-                    array2[l] = Utils.ys(array2[l], array3[l]);
-                }
-                int r = (int)(190.0f + 190.0f * (this.m.snap[0] / 100.0f));
+                int r = (int)(190.0f + 190.0f * (this.m.snap[0] * .01F));
                 if (r > 255) {
                     r = 255;
                 }
                 if (r < 0) {
                     r = 0;
                 }
-                int g = (int)(255.0f + 255.0f * (this.m.snap[1] / 100.0f));
+                int g = (int)(255.0f + 255.0f * (this.m.snap[1] * .01F));
                 if (g > 255) {
                     g = 255;
                 }
@@ -6029,7 +6033,7 @@ public class xtGraphics extends Panel implements Runnable
                         b2 = (b2 * abs + this.m.csky[2] * (45 - abs)) / 45;
                     }
                     if (abs >= 90) {
-                        int n10 = (int)(255.0f + 255.0f * (this.m.snap[0] / 100.0f));
+                        int n10 = (int)(255.0f + 255.0f * (this.m.snap[0] * .01F));
                         if (n10 > 255) {
                             n10 = 255;
                         }
@@ -6043,7 +6047,7 @@ public class xtGraphics extends Panel implements Runnable
                     }
                 }
                 else if (this.flk) {
-                    r = (int)(255.0f + 255.0f * (this.m.snap[0] / 100.0f));
+                    r = (int)(255.0f + 255.0f * (this.m.snap[0] * .01F));
                     if (r > 255) {
                         r = 255;
                     }
@@ -6053,14 +6057,14 @@ public class xtGraphics extends Panel implements Runnable
                     this.flk = false;
                 }
                 else {
-                    r = (int)(255.0f + 255.0f * (this.m.snap[0] / 100.0f));
+                    r = (int)(255.0f + 255.0f * (this.m.snap[0] * .01F));
                     if (r > 255) {
                         r = 255;
                     }
                     if (r < 0) {
                         r = 0;
                     }
-                    g = (int)(220.0f + 220.0f * (this.m.snap[1] / 100.0f));
+                    g = (int)(220.0f + 220.0f * (this.m.snap[1] * .01F));
                     if (g > 255) {
                         g = 255;
                     }
@@ -6070,15 +6074,15 @@ public class xtGraphics extends Panel implements Runnable
                     this.flk = true;
                 }
                 this.rd.setColor(new Color(r, g, b2));
-                this.rd.fillPolygon(array, array2, 7);
-                int r2 = (int)(115.0f + 115.0f * (this.m.snap[0] / 100.0f));
+                this.rd.fillPolygon(arrow2DX, arrow2DY, 7);
+                int r2 = (int)(115.0f + 115.0f * (this.m.snap[0] * .01F));
                 if (r2 > 255) {
                     r2 = 255;
                 }
                 if (r2 < 0) {
                     r2 = 0;
                 }
-                int g2 = (int)(170.0f + 170.0f * (this.m.snap[1] / 100.0f));
+                int g2 = (int)(170.0f + 170.0f * (this.m.snap[1] * .01F));
                 if (g2 > 255) {
                     g2 = 255;
                 }
@@ -6094,7 +6098,7 @@ public class xtGraphics extends Panel implements Runnable
                     }
                 }
                 else if (this.flk) {
-                    r2 = (int)(255.0f + 255.0f * (this.m.snap[0] / 100.0f));
+                    r2 = (int)(255.0f + 255.0f * (this.m.snap[0] * .01F));
                     if (r2 > 255) {
                         r2 = 255;
                     }
@@ -6104,30 +6108,26 @@ public class xtGraphics extends Panel implements Runnable
                     g2 = 0;
                 }
                 this.rd.setColor(new Color(r2, g2, b3));
-                this.rd.drawPolygon(array, array2, 7);
+                this.rd.drawPolygon(arrow2DX, arrow2DY, 7);
             }
         }
         else {
             int n11 = 0;
-            for (int n12 = 0; n12 < 7; ++n12) {
-                array[n12] = Utils.xs(array[n12], array3[n12]);
-                array2[n12] = Utils.ys(array2[n12], array3[n12]) + n11;
-            }
-            int r3 = (int)(159.0f + 159.0f * (this.m.snap[0] / 100.0f));
+            int r3 = (int)(159.0f + 159.0f * (this.m.snap[0] * .01F));
             if (r3 > 255) {
                 r3 = 255;
             }
             if (r3 < 0) {
                 r3 = 0;
             }
-            int g3 = (int)(207.0f + 207.0f * (this.m.snap[1] / 100.0f));
+            int g3 = (int)(207.0f + 207.0f * (this.m.snap[1] * .01F));
             if (g3 > 255) {
                 g3 = 255;
             }
             if (g3 < 0) {
                 g3 = 0;
             }
-            int b4 = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
+            int b4 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
             if (b4 > 255) {
                 b4 = 255;
             }
@@ -6135,22 +6135,22 @@ public class xtGraphics extends Panel implements Runnable
                 b4 = 0;
             }
             this.rd.setColor(new Color(r3, g3, b4));
-            this.rd.fillPolygon(array, array2, 7);
-            int r4 = (int)(120.0f + 120.0f * (this.m.snap[0] / 100.0f));
+            this.rd.fillPolygon(arrow2DX, arrow2DY, 7);
+            int r4 = (int)(120.0f + 120.0f * (this.m.snap[0] * .01F));
             if (r4 > 255) {
                 r4 = 255;
             }
             if (r4 < 0) {
                 r4 = 0;
             }
-            int g4 = (int)(114.0f + 114.0f * (this.m.snap[1] / 100.0f));
+            int g4 = (int)(114.0f + 114.0f * (this.m.snap[1] * .01F));
             if (g4 > 255) {
                 g4 = 255;
             }
             if (g4 < 0) {
                 g4 = 0;
             }
-            int b5 = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
+            int b5 = (int)(255.0f + 255.0f * (this.m.snap[2] * .01F));
             if (b5 > 255) {
                 b5 = 255;
             }
@@ -6158,7 +6158,7 @@ public class xtGraphics extends Panel implements Runnable
                 b5 = 0;
             }
             this.rd.setColor(new Color(r4, g4, b5));
-            this.rd.drawPolygon(array, array2, 7);
+            this.rd.drawPolygon(arrow2DX, arrow2DY, 7);
         }
     }
     
@@ -6195,14 +6195,14 @@ public class xtGraphics extends Panel implements Runnable
             }
             Utils.rot(array3, array4, 96, 141, mad.cxz, this.nplayers);
             int n2 = 0;
-            int n3 = (int)(80.0f + 80.0f * (this.m.snap[1] / 100.0f));
+            int n3 = (int)(80.0f + 80.0f * (this.m.snap[1] * .01F));
             if (n3 > 255) {
                 n3 = 255;
             }
             if (n3 < 0) {
                 n3 = 0;
             }
-            int n4 = (int)(159.0f + 159.0f * (this.m.snap[2] / 100.0f));
+            int n4 = (int)(159.0f + 159.0f * (this.m.snap[2] * .01F));
             if (n4 > 255) {
                 n4 = 255;
             }
@@ -6233,7 +6233,7 @@ public class xtGraphics extends Panel implements Runnable
                 }
             }
         }
-        int r = (int)(159.0f + 159.0f * (this.m.snap[0] / 100.0f));
+        int r = (int)(159.0f + 159.0f * (this.m.snap[0] * .01F));
         if (r > 255) {
             r = 255;
         }
@@ -6663,6 +6663,8 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void snap(final int n) {
+        this.dmg = this.loadsnap(this.odmg);
+        this.pwr = this.loadsnap(this.opwr);
         this.was = this.loadsnap(this.owas);
         this.lap = this.loadsnap(this.olap);
         this.pos = this.loadsnap(this.opos);
@@ -6753,21 +6755,21 @@ public class xtGraphics extends Panel implements Runnable
             final Color color = new Color(array[width * height - 1]);
             final Color color2 = new Color(array[i]);
             if (color2.getRed() != color2.getGreen() && color2.getGreen() != color2.getBlue()) {
-                int n = (int)(color2.getRed() + color2.getRed() * (this.m.snap[0] / 100.0f));
+                int n = (int)(color2.getRed() + color2.getRed() * (this.m.snap[0] * .01F));
                 if (n > 255) {
                     n = 255;
                 }
                 if (n < 0) {
                     n = 0;
                 }
-                int n2 = (int)(color2.getGreen() + color2.getGreen() * (this.m.snap[1] / 100.0f));
+                int n2 = (int)(color2.getGreen() + color2.getGreen() * (this.m.snap[1] * .01F));
                 if (n2 > 255) {
                     n2 = 255;
                 }
                 if (n2 < 0) {
                     n2 = 0;
                 }
-                int n3 = (int)(color2.getBlue() + color2.getBlue() * (this.m.snap[2] / 100.0f));
+                int n3 = (int)(color2.getBlue() + color2.getBlue() * (this.m.snap[2] * .01F));
                 if (n3 > 255) {
                     n3 = 255;
                 }
@@ -6853,21 +6855,21 @@ public class xtGraphics extends Panel implements Runnable
                     }
                 }
                 else {
-                    r = (int)(color.getRed() - color.getRed() * (array2[0] / 100.0f));
+                    r = (int)(color.getRed() - color.getRed() * (array2[0] * .01F));
                     if (r > 255) {
                         r = 255;
                     }
                     if (r < 0) {
                         r = 0;
                     }
-                    g = (int)(color.getGreen() - color.getGreen() * (array2[1] / 100.0f));
+                    g = (int)(color.getGreen() - color.getGreen() * (array2[1] * .01F));
                     if (g > 255) {
                         g = 255;
                     }
                     if (g < 0) {
                         g = 0;
                     }
-                    b = (int)(color.getBlue() - color.getBlue() * (array2[2] / 100.0f));
+                    b = (int)(color.getBlue() - color.getBlue() * (array2[2] * .01F));
                     if (b > 255) {
                         b = 255;
                     }
@@ -7528,31 +7530,6 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawImage(image, n + 7, n2 + 7, null);
         }
         return b3;
-    }
-    
-    public void drawWarning() {
-        this.rd.setColor(Color.BLACK);
-        this.rd.fillRect(0, 0, 800, 450);
-        this.rd.setFont(new Font("Arial", 1, 22));
-        this.ftm = this.rd.getFontMetrics();
-        this.drawcs(100, "Warning!", 255, 0, 0, 3);
-        this.rd.setFont(new Font("Arial", 1, 18));
-        this.ftm = this.rd.getFontMetrics();
-        this.drawcs(150, "Bad language and flooding is strictly prohibited in this game!", 255, 255, 255, 3);
-        this.rd.setFont(new Font("Arial", 1, 13));
-        this.ftm = this.rd.getFontMetrics();
-        if (this.warning < 210) {
-            this.drawcs(200, "If you continue typing bad language or flooding your game will shut down.", 200, 200, 200, 3);
-        }
-        if (this.warning > 210) {
-            this.drawcs(200, "Sorry. This was your second warring your game has shut down.", 200, 200, 200, 3);
-        }
-        if (this.warning > 250) {
-            this.stopallnow();
-            this.runtyp = 0;
-            this.app.repaint();
-            this.app.gamer.interrupt();
-        }
     }
     
     public int getvalue(final String s, final int n) {

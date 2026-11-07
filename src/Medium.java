@@ -615,7 +615,7 @@ public class Medium
         this.zy += (n7 - this.zy) / 10;
     }
     
-    public void follow(final ContO contO, float n, final int n2) {
+    public void follow(final ContO contO, float n, final int n2, int view) {
         this.zy = 10;
         int n3 = 2 + Math.abs(this.bcxz) / 4;
         if (n3 > 20) {
@@ -652,10 +652,10 @@ public class Medium
         }
         n += this.bcxz;
         this.xz = -n;
-        float dist = contO.maxR + 1000;
-        this.x = contO.x - this.cx + dist * Utils.sin(n);
-        this.z = contO.z - this.cz - dist * Utils.cos(n);
-        this.y = contO.y - this.cy - dist * Utils.sin(20);
+        float[] dist = {500, 250, 1000};
+        this.x = contO.x - this.cx + (contO.maxR + dist[view % 3]) * Utils.sin(n);
+        this.z = contO.z - this.cz - (contO.maxR + dist[view % 3]) * Utils.cos(n);
+        this.y = contO.y - this.cy - (contO.maxR + dist[view % 3]) * Utils.sin(20);
     }
     
     public void getfollow(final ContO contO, float cxz, final int n2) {

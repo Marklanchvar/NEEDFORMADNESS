@@ -644,9 +644,8 @@ public class GameSparker extends Applet implements Runnable
                     }
                 }
                 if (xtGraphics.starcnt < 38) {
-                    if (this.view == 0) {
-                        medium.follow(array2[0], array3[0].cxz, this.u[0].lookback);
-                        xtGraphics.stat(array3[0], array2[0], checkPoints, this.u[0], true);
+                    if (this.view >= 0 && this.view <= 2) {
+                        medium.follow(array2[0], array3[0].cxz, this.u[0].lookback, this.view);
                         if (array3[0].outshakedam > 0) {
                             this.shaka = array3[0].outshakedam / 20;
                             if (this.shaka > 25) {
@@ -659,31 +658,22 @@ public class GameSparker extends Applet implements Runnable
                         }
                         this.lmxz = medium.xz;
                     }
-                    if (this.view == 1) {
+                    if (this.view == 3) {
                         medium.around(array2[0], false);
-                        xtGraphics.stat(array3[0], array2[0], checkPoints, this.u[0], false);
                         this.mvect = 80;
                     }
-                    if (this.view == 2) {
+                    if (this.view == 4) {
                         medium.watch(array2[0], array3[0].mxz);
-                        xtGraphics.stat(array3[0], array2[0], checkPoints, this.u[0], false);
                         this.mvect = 65 + Math.abs(this.lmxz - medium.xz) / 5 * 100;
                         if (this.mvect > 90) {
                             this.mvect = 90;
                         }
                         this.lmxz = medium.xz;
                     }
-                    if (this.mouses == 1) {
-                        this.u[0].enter = true;
-                        this.mouses = 0;
-                    }
+                    xtGraphics.stat(array3[0], array2[0], checkPoints, this.u[0], false);
                 }
                 else {
-                    int n47 = 3;
-                    if (xtGraphics.nplayers == 1) {
-                        n47 = 0;
-                    }
-                    medium.around(array2[n47], true);
+                    medium.around(array2[0], true);
                     this.mvect = 80;
                     if (this.u[0].enter || this.u[0].handb) {
                         xtGraphics.starcnt = 38;
@@ -696,7 +686,7 @@ public class GameSparker extends Applet implements Runnable
                         medium.adv = 900;
                         medium.vxz = 180;
                         checkPoints.checkstat(array3, array2, record, xtGraphics.nplayers, xtGraphics.im);
-                        medium.follow(array2[0], array3[0].cxz, 0);
+                        medium.follow(array2[0], array3[0].cxz, 0, view);
                         xtGraphics.stat(array3[0], array2[0], checkPoints, this.u[0], true);
                         this.rd.setColor(new Color(255, 255, 255));
                         this.rd.fillRect(0, 0, 800, 450);
@@ -1151,7 +1141,7 @@ public class GameSparker extends Applet implements Runnable
             				actat = 5;
             			}
             		}
-            		if (xtGraphics.starcnt == 0 && isGaming) medium.adjstfade((actat * 10 + 5) / (isGaming ? 47F : 35F));
+            		if (xtGraphics.starcnt == 0 && isGaming) medium.adjstfade(actat);
             		lastTime = endTime;
             		nfr = 0;
             	}
@@ -2454,40 +2444,20 @@ public class GameSparker extends Applet implements Runnable
                     this.u[0].lookback = 1;
                 }
                 if (n == 77 || n == 109) {
-                    if (this.u[0].mutem) {
-                        this.u[0].mutem = false;
-                    }
-                    else {
-                        this.u[0].mutem = true;
-                    }
+                    	this.u[0].mutem = !this.u[0].mutem;
                 }
                 if (n == 78 || n == 110) {
-                    if (this.u[0].mutes) {
-                        this.u[0].mutes = false;
-                    }
-                    else {
-                        this.u[0].mutes = true;
-                    }
+                        this.u[0].mutes = !this.u[0].mutes;
                 }
                 if (n == 97 || n == 65) {
-                    if (this.u[0].arrace) {
-                        this.u[0].arrace = false;
-                    }
-                    else {
-                        this.u[0].arrace = true;
-                    }
+                        this.u[0].arrace = !this.u[0].arrace;
                 }
                 if (n == 115 || n == 83) {
-                    if (this.u[0].radar) {
-                        this.u[0].radar = false;
-                    }
-                    else {
-                        this.u[0].radar = true;
-                    }
+                        this.u[0].radar = !this.u[0].radar;
                 }
                 if (n == 118 || n == 86) {
                     ++this.view;
-                    if (this.view == 3) {
+                    if (this.view == 5) {
                         this.view = 0;
                     }
                 }

@@ -1,6 +1,10 @@
 public class Utils
 {
 	Medium m;
+	
+	public static int clamp255(int value) {
+	    return value > 255 ? 255 : (value < 0 ? 0 : value);
+	}
 
     public static float cos(float i) {
         while (i >= 360) {
