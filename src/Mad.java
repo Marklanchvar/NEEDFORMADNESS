@@ -928,7 +928,7 @@ public class Mad
             	if (wheelCapsized[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53]) {
             		contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
             		if (this.im == this.xt.im) {
-            			this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
+            			this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
             		}
             	}
             	
@@ -949,13 +949,13 @@ public class Mad
             				else {
             					n58 = (float)(n57 + 1.2);
             				}
-            				contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], n58 * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
+            				contO.dust(n56, array[n56], array3[n56], array2[n56], this.scx[n56], this.scz[n56], n58 * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
             			}
             			array3[n56] = (float)trackers.y[n53];
             			if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
             				contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
             				if (this.im == this.xt.im) {
-            					this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
+            					this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
             				}
             			}
             			float n59 = (Math.abs(Utils.sin(this.pxy)) + Math.abs(Utils.sin(this.pzy))) / 3.0f;
@@ -996,7 +996,7 @@ public class Mad
             			if (this.crank[0][n56] > 1) {
             				contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
             				if (this.im == this.xt.im) {
-            					this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
+            					this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
             				}
             			}
             			float n66 = (Math.abs(Utils.cos(this.pxy)) + Math.abs(Utils.cos(this.pzy))) / 4.0f;
@@ -1043,7 +1043,7 @@ public class Mad
             			if (this.crank[1][n56] > 1) {
             				contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
             				if (this.im == this.xt.im) {
-            					this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
+            					this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
             				}
             			}
             			float n73 = (Math.abs(Utils.cos(this.pxy)) + Math.abs(Utils.cos(this.pzy))) / 4.0f;
@@ -1090,7 +1090,7 @@ public class Mad
             			if (this.crank[2][n56] > 1) {
             				contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
             				if (this.im == this.xt.im) {
-            					this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
+            					this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
             				}
             			}
             			float n80 = (Math.abs(Utils.cos(this.pxy)) + Math.abs(Utils.cos(this.pzy))) / 4.0f;
@@ -1137,7 +1137,7 @@ public class Mad
             			if (this.crank[3][n56] > 1) {
             				contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 0);
             				if (this.im == this.xt.im) {
-            					this.xt.scrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
+            					this.xt.scrape(this.scx[n56], this.scy[n56], this.scz[n56]);
             				}
             			}
             			float n87 = (Math.abs(Utils.cos(this.pxy)) + Math.abs(Utils.cos(this.pzy))) / 4.0f;
@@ -1188,11 +1188,11 @@ public class Mad
             				if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
             					contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
             					if (this.im == this.xt.im) {
-            						this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
+            						this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
             					}
             				}
             				if (!b3 && surfaceType != 0) {
-            					contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
+            					contO.dust(n56, array[n56], array3[n56], array2[n56], this.scx[n56], this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
             				}
             			}
             			array3[n56] = trackers.y[n53] + ((n92 - trackers.y[n53]) * Utils.cos(-n90) - (n93 - trackers.z[n53]) * Utils.sin(-n90));
@@ -1225,11 +1225,11 @@ public class Mad
             				if (this.capsized && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1)) {
             					contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
             					if (this.im == this.xt.im) {
-            						this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
+            						this.xt.gscrape(this.scx[n56], this.scy[n56], this.scz[n56]);
             					}
             				}
             				if (!b3 && surfaceType != 0) {
-            					contO.dust(n56, array[n56], array3[n56], array2[n56], (int)this.scx[n56], (int)this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
+            					contO.dust(n56, array[n56], array3[n56], array2[n56], this.scx[n56], this.scz[n56], 1.4f * this.cd.simag[this.cn], 0, this.capsized && this.mtouch);
             				}
             			}
             			array3[n56] = trackers.y[n53] + ((n97 - trackers.y[n53]) * Utils.cos(-n95) - (n98 - trackers.x[n53]) * Utils.sin(-n95));
