@@ -4849,9 +4849,16 @@ public class xtGraphics extends Panel implements Runnable
             {
                 if (checkPoints.stage != 10 && this.nplayers != 1 && this.arrace != control.arrace) {
 
-
+                    if (this.alocked != -1 && checkPoints.dested[this.alocked] != 0) {
+                        this.alocked = -1;
+                        this.lalocked = -1;
+                    }
+                	if (this.alocked != -1 && checkPoints.dested[this.alocked] != 0) {
+                        this.alocked = -1;
+                        this.lalocked = -1;
+                    }
                 	{
-                        if (this.holdit) {
+                        if (this.alocked == -1 || this.holdit) {
                             if (this.cntflock == 100) {
                                 for (int n28 = 0; n28 < this.nplayers; ++n28) {
                                     if (this.holdit) {
@@ -5049,10 +5056,6 @@ public class xtGraphics extends Panel implements Runnable
                         this.tcnt = -5;
                         this.cntan = 20;
                         this.alocked = -1;
-                    }
-                    if (this.alocked != -1 && checkPoints.dested[this.alocked] != 0) {
-                        this.alocked = -1;
-                        this.lalocked = -1;
                     }
                 }
                 if (!this.holdit && this.fase != -6 && this.starcnt == 0 && checkPoints.stage != 10) {
