@@ -93,7 +93,7 @@ public class CheckPoints
                 if (this.magdam[i] > 1.0f) {
                     this.magdam[i] = 1.0f;
                 }
-                this.magpow[i] = array[i].power / 98F;
+                this.magpow[i] = array[i].power / 100F;
                 if (this.magpow[i] > 1.0f) {
                     this.magpow[i] = 1.0f;
                 }

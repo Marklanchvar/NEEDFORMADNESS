@@ -5127,7 +5127,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.rd.drawString("" + checkPoints.wasted + " / " + (this.nplayers - 1) + "", 150, 18);
                 this.rd.drawImage(this.pos, 42, 27, null);
                 this.rd.drawImage(this.rank[checkPoints.pos[mad.im]], 110, 28, null);
-                this.drawstat(checkPoints.magdam[0], mad.newcar, checkPoints.magpow[0]);
+                this.drawstat(checkPoints.magdam[this.im], mad.newcar, checkPoints.magpow[this.im]);
                 if (control.radar && checkPoints.stage != 10) {
 
 
@@ -5521,8 +5521,8 @@ public class xtGraphics extends Panel implements Runnable
                         }
                         if (!this.wasay) {
                             this.tcnt = this.auscnt;
-                            if (mad.power != 98.0f) {
-                                this.say = "Power Up " + (int)(100.0f * mad.powerup / 98.0f) + "%";
+                            if (mad.power != 100F) {
+                                this.say = "Power Up " + (int)(mad.powerup / 100F) + "%";
                             }
                             else {
                                 this.say = "Power To The MAX";
@@ -5855,6 +5855,8 @@ public class xtGraphics extends Panel implements Runnable
                 this.ftm = this.rd.getFontMetrics();
                 this.drawcs(17, "[                                ]", 76, 67, 240, 0);
                 this.drawcs(17, this.cd.names[this.sc[alocked]], 0, 0, 0, 0);
+                this.rd.setFont(new Font("Arial", 1, 11));
+                this.ftm = this.rd.getFontMetrics();
             }
         }
 
@@ -6187,7 +6189,7 @@ public class xtGraphics extends Panel implements Runnable
             if (b && mad.mtouch) {
                 if (!mad.capsized) {
                     if (!b2) {
-                        if (mad.power != 98.0f) {
+                        if (mad.power != 100F) {
                             if (Math.abs(mad.speed) > 0.0f && Math.abs(mad.speed) <= this.cd.swits[mad.cn][0]) {
                                 int n2 = (int)(3.0f * Math.abs(mad.speed) / this.cd.swits[mad.cn][0]);
                                 if (n2 == 2) {
