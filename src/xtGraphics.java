@@ -5662,7 +5662,7 @@ public class xtGraphics extends Panel implements Runnable
         barX[3] = 662 + powBar;
         barY[3] = 31;
         int powRed = 128;
-        if (magPow == 100F) {
+        if (magPow == 1F) {
             powRed = 64;
         }
         int powGreen = (int)(190 + magPow * 37);
