@@ -5127,7 +5127,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.rd.drawString("" + checkPoints.wasted + " / " + (this.nplayers - 1) + "", 150, 18);
                 this.rd.drawImage(this.pos, 42, 27, null);
                 this.rd.drawImage(this.rank[checkPoints.pos[mad.im]], 110, 28, null);
-                this.drawstat(checkPoints.magdam[mad.cn], mad.newcar, checkPoints.magpow[mad.cn]);
+                this.drawstat(checkPoints.magdam[0], mad.newcar, checkPoints.magpow[0]);
                 if (control.radar && checkPoints.stage != 10) {
 
 
@@ -5600,6 +5600,7 @@ public class xtGraphics extends Panel implements Runnable
         final int[] barX = new int[4];
         final int[] barY = new int[4];
         final int damBar = (int)(98 * magDam);
+        final int powBar = (int)(98 * magPow);
         barX[0] = 662;
         barY[0] = 11;
         barX[1] = 662;
@@ -5656,15 +5657,15 @@ public class xtGraphics extends Panel implements Runnable
         barY[0] = 31;
         barX[1] = 662;
         barY[1] = 40;
-        barX[2] = (int)(662 + magPow * .98F);
+        barX[2] = 662 + powBar;
         barY[2] = 40;
-        barX[3] = (int)(662 + magPow * .98F);
+        barX[3] = 662 + powBar;
         barY[3] = 31;
         int powRed = 128;
         if (magPow == 100F) {
             powRed = 64;
         }
-        int powGreen = (int)(190 + magPow * 0.3626);
+        int powGreen = (int)(190 + magPow * 37);
         int powBlue = 244;
         if (this.auscnt < 45 && this.aflk) {
             powRed = 128;
