@@ -670,14 +670,14 @@ public class Mad
             array[n18] += (this.scx[0] + this.scx[1] + this.scx[2] + this.scx[3]) / 4.0f;
             array2[n18] += (this.scz[0] + this.scz[1] + this.scz[2] + this.scz[3]) / 4.0f;
         }
-        int ncx = Math.round((contO.x - trackers.sx) / 3000);
+        int ncx = (int)((contO.x - trackers.sx) / 3000);
         if (ncx > trackers.ncx) {
             ncx = trackers.ncx;
         }
         if (ncx < 0) {
             ncx = 0;
         }
-        int ncz = Math.round((contO.z - trackers.sz) / 3000);
+        int ncz = (int)((contO.z - trackers.sz) / 3000);
         if (ncz > trackers.ncz) {
             ncz = trackers.ncz;
         }
@@ -687,11 +687,6 @@ public class Mad
         int surfaceType = 1;
         for (int n23 = 0; n23 < trackers.sect[ncx][ncz].length; ++n23) {
             final int n24 = trackers.sect[ncx][ncz][n23];
-
-            float tXZ = trackers.xz[n24];
-            float tcX = trackers.cx[n24];
-            float tcZ = trackers.cz[n24];
-            
             if (Math.abs(trackers.zy[n24]) != 90 && Math.abs(trackers.xy[n24]) != 90 && Math.abs(contO.x - trackers.x[n24]) < trackers.radx[n24] && Math.abs(contO.z - trackers.z[n24]) < trackers.radz[n24] && !trackers.decor[n24]) {
                 surfaceType = trackers.skd[n24];
             }
@@ -922,20 +917,21 @@ public class Mad
             float tXZ = trackers.xz[n53];
             float tcX = trackers.cx[n53];
             float tcZ = trackers.cz[n53];
+
+        	if (trackers.xz[n53] != 0F) {
+        		Utils.rot(array, array2, tcX, tcZ, -tXZ, 4);
+        		Utils.rot(scx, scz, 0, 0, -tXZ, 4);
+        	}
             
             for (int n56 = 0; n56 < 4; ++n56) {
-
-            	if (trackers.xz[n53] != 0F) {
-            		Utils.rot(array, array2, tcX, tcZ, -tXZ, 4);
-            		Utils.rot(scx, scz, 0, 0, -tXZ, 4);
-            	}
-
+            	
             	if (wheelCapsized[n56] && (trackers.skd[n53] == 0 || trackers.skd[n53] == 1) && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53]) {
             		contO.sprk(array[n56], array3[n56], array2[n56], this.scx[n56], this.scy[n56], this.scz[n56], 1);
             		if (this.im == this.xt.im) {
             			this.xt.gscrape((int)this.scx[n56], (int)this.scy[n56], (int)this.scz[n56]);
             		}
             	}
+            	
             	if (!wheelTracked[n56] && array[n56] > trackers.x[n53] - trackers.radx[n53] && array[n56] < trackers.x[n53] + trackers.radx[n53] && array2[n56] > trackers.z[n53] - trackers.radz[n53] && array2[n56] < trackers.z[n53] + trackers.radz[n53] && array3[n56] > trackers.y[n53] - trackers.rady[n53] && array3[n56] < trackers.y[n53] + trackers.rady[n53] && (!trackers.decor[n53])) {
             		if (trackers.xy[n53] == 0 && trackers.zy[n53] == 0 && trackers.y[n53] != 250 && array3[n56] > trackers.y[n53] - 5) {
             			++touchingFlat;
@@ -1242,13 +1238,13 @@ public class Mad
             		}
             	}
 
-            	if (trackers.xz[n53] != 0F) {
-            		Utils.rot(array, array2, tcX, tcZ, tXZ, 4);
-            		Utils.rot(scx, scz, 0, 0, tXZ, 4);
-            	}
-
             }
-            
+
+        	if (trackers.xz[n53] != 0F) {
+        		Utils.rot(array, array2, tcX, tcZ, tXZ, 4);
+        		Utils.rot(scx, scz, 0, 0, tXZ, 4);
+        	}
+
             if (touchingRamp == 4) {
                 this.mtouch = true;
             }
