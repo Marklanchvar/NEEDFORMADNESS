@@ -693,7 +693,7 @@ public class Mad
             float tcZ = trackers.cz[n24];
             
             if (trackers.xz[n24] != 0F) {
-            	Utils.rotS(contO.x, contO.z, tcX, tcZ, -tXZ);
+            	Utils.rot(contO.x, contO.z, tcX, tcZ, -tXZ);
             }
             
             if (Math.abs(trackers.zy[n24]) != 90 && Math.abs(trackers.xy[n24]) != 90 && Math.abs(contO.x - trackers.x[n24]) < trackers.radx[n24] && Math.abs(contO.z - trackers.z[n24]) < trackers.radz[n24] && !trackers.decor[n24]) {
@@ -701,7 +701,7 @@ public class Mad
             }
             
             if (trackers.xz[n24] != 0F) {
-            	Utils.rotS(contO.x, contO.z, tcX, tcZ, tXZ);
+            	Utils.rot(contO.x, contO.z, tcX, tcZ, tXZ);
             }
         }
         if (this.mtouch) {
@@ -804,7 +804,7 @@ public class Mad
                         if (surfaceType != 0) {
                             n38 = 1.2f;
                         }
-                        if (true /* this.m.random() > 0.65 */) {
+                        if (this.m.random() > 0.65) {
                             contO.dust(n31, array[n31], array3[n31], array2[n31], this.scx[n31], this.scz[n31], n38 * this.cd.simag[this.cn], this.tilt, this.capsized && this.mtouch);
                             if (this.im == this.xt.im && !this.capsized) {
                                 this.xt.skid(surfaceType, (float)Math.sqrt(this.scx[n31] * this.scx[n31] + this.scz[n31] * this.scz[n31]));

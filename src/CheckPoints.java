@@ -29,7 +29,8 @@ public class CheckPoints
     int[] pos;
     int[] clear;
     int[] dested;
-    float[] magperc;
+    float[] magdam;
+    float[] magpow;
     int wasted;
     boolean haltall;
     int pcleared;
@@ -70,7 +71,8 @@ public class CheckPoints
         this.pos = new int[] { 7, 7, 7, 7, 7, 7, 7, 7 };
         this.clear = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
         this.dested = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
-        this.magperc = new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+        this.magdam = new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+        this.magpow = new float[] { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
         this.wasted = 0;
         this.haltall = false;
         this.pcleared = 0;
@@ -87,9 +89,13 @@ public class CheckPoints
         if (!this.haltall) {
             this.pcleared = array[n2].pcleared;
             for (int i = 0; i < n; ++i) {
-                this.magperc[i] = array[i].hitmag / (float)array[i].cd.maxmag[array[i].cn];
-                if (this.magperc[i] > 1.0f) {
-                    this.magperc[i] = 1.0f;
+                this.magdam[i] = array[i].hitmag / (float)array[i].cd.maxmag[array[i].cn];
+                if (this.magdam[i] > 1.0f) {
+                    this.magdam[i] = 1.0f;
+                }
+                this.magpow[i] = array[i].power / 98F;
+                if (this.magpow[i] > 1.0f) {
+                    this.magpow[i] = 1.0f;
                 }
                 this.pos[i] = 0;
                 this.onscreen[i] = (int) array2[i].dist;

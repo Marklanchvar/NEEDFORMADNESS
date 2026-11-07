@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Medium
 {
-    float focus_point;
+    static float focus_point;
     float ground;
     int skyline;
     int[] fade;
@@ -31,9 +31,9 @@ public class Medium
     int noelec;
     boolean trk;
     boolean crs;
-    float cx;
-    float cy;
-    float cz;
+    static float cx;
+    static float cy;
+    static float cz;
     float xz;
     float zy;
     float x;
@@ -865,7 +865,7 @@ public class Medium
                 if (n3 % 2 == 0) {
                     final float n4 = this.cx + ((this.cgpx[n3] - this.x - this.cx) * Utils.cos(this.xz) - (this.cgpz[n3] - this.z - this.cz) * Utils.sin(this.xz));
                     final float n5 = this.cz + ((250 - this.y - this.cy) * Utils.sin(this.zy) + (this.cz + ((this.cgpx[n3] - this.x - this.cx) * Utils.sin(this.xz) + (this.cgpz[n3] - this.z - this.cz) * Utils.cos(this.xz)) - this.cz) * Utils.cos(this.zy));
-                    if (this.xs(n4 + this.pmx[n3], n5) > 0 && this.xs(n4 - this.pmx[n3], n5) < this.w && n5 > -this.pmx[n3] && n5 < this.fade[2]) {
+                    if (Utils.xs(n4 + this.pmx[n3], n5) > 0 && Utils.xs(n4 - this.pmx[n3], n5) < this.w && n5 > -this.pmx[n3] && n5 < this.fade[2]) {
                         array[i - n][j - n2] = n5;
                         final float[] array2 = new float[8];
                         final float[] array3 = new float[8];
@@ -885,8 +885,8 @@ public class Medium
                         int n9 = 0;
                         boolean b = true;
                         for (int l = 0; l < 8; ++l) {
-                            array5[l] = this.xs(array2[l], array3[l]);
-                            array6[l] = this.ys(array4[l], array3[l]);
+                            array5[l] = Utils.xs(array2[l], array3[l]);
+                            array6[l] = Utils.ys(array4[l], array3[l]);
                             if (array6[l] < 0 || array3[l] < 10) {
                                 ++n6;
                             }
@@ -946,8 +946,8 @@ public class Medium
                     int n17 = 0;
                     boolean b3 = true;
                     for (int n18 = 0; n18 < 8; ++n18) {
-                        array10[n18] = this.xs(array7[n18], array8[n18]);
-                        array11[n18] = this.ys(array9[n18], array8[n18]);
+                        array10[n18] = Utils.xs(array7[n18], array8[n18]);
+                        array11[n18] = Utils.ys(array9[n18], array8[n18]);
                         if (array11[n18] < 0 || array8[n18] < 10) {
                             ++n14;
                         }
@@ -1126,8 +1126,8 @@ public class Medium
         for (int i = 0; i < this.noc; ++i) {
             final float n = this.cx + ((this.clx[i] - this.x / 20 - this.cx) * Utils.cos(this.xz) - (this.clz[i] - this.z / 20 - this.cz) * Utils.sin(this.xz));
             final float n2 = this.cz + ((this.cldd[4] - this.y / 20 - this.cy) * Utils.sin(this.zy) + (this.cz + ((this.clx[i] - this.x / 20 - this.cx) * Utils.sin(this.xz) + (this.clz[i] - this.z / 20 - this.cz) * Utils.cos(this.xz)) - this.cz) * Utils.cos(this.zy));
-            final int xs = this.xs(n + this.cmx[i], n2);
-            final int xs2 = this.xs(n - this.cmx[i], n2);
+            final int xs = Utils.xs(n + this.cmx[i], n2);
+            final int xs2 = Utils.xs(n - this.cmx[i], n2);
             if (xs > 0 && xs2 < this.w && n2 > -this.cmx[i] && xs - xs2 > 20) {
                 final float[][] array = new float[3][12];
                 final float[][] array2 = new float[3][12];
@@ -1188,8 +1188,8 @@ public class Medium
                             n11 = l;
                             n12 = 2;
                         }
-                        array4[n10] = this.xs(array[n12][n11], array3[n12][n11]);
-                        array5[n10] = this.ys(array2[n12][n11], array3[n12][n11]);
+                        array4[n10] = Utils.xs(array[n12][n11], array3[n12][n11]);
+                        array5[n10] = Utils.ys(array2[n12][n11], array3[n12][n11]);
                         n8 += array[n12][n11];
                         n7 += array2[n12][n11];
                         n9 += array3[n12][n11];
@@ -1278,8 +1278,8 @@ public class Medium
                             n27 = n18;
                             n28 = 1;
                         }
-                        array4[n26] = this.xs(array[n28][n27], array3[n28][n27]);
-                        array5[n26] = this.ys(array2[n28][n27], array3[n28][n27]);
+                        array4[n26] = Utils.xs(array[n28][n27], array3[n28][n27]);
+                        array5[n26] = Utils.ys(array2[n28][n27], array3[n28][n27]);
                         n24 += array[n28][n27];
                         n23 += array2[n28][n27];
                         n25 += array3[n28][n27];
@@ -1332,8 +1332,8 @@ public class Medium
                 float n39 = 0;
                 float n40 = 0;
                 for (int n41 = 0; n41 < 12; ++n41) {
-                    array4[n41] = this.xs(array[0][n41], array3[0][n41]);
-                    array5[n41] = this.ys(array2[0][n41], array3[0][n41]);
+                    array4[n41] = Utils.xs(array[0][n41], array3[0][n41]);
+                    array5[n41] = Utils.ys(array2[0][n41], array3[0][n41]);
                     n39 += array[0][n41];
                     n38 += array2[0][n41];
                     n40 += array3[0][n41];
@@ -1480,7 +1480,7 @@ public class Medium
             final int n = this.mrd[i];
             final float n2 = this.cx + ((this.mtx[n][0] - this.x / 30 - this.cx) * Utils.cos(this.xz) - (this.mtz[n][0] - this.z / 30 - this.cz) * Utils.sin(this.xz));
             final float n3 = this.cz + ((this.mty[n][0] - this.y / 30 - this.cy) * Utils.sin(this.zy) + (this.cz + ((this.mtx[n][0] - this.x / 30 - this.cx) * Utils.sin(this.xz) + (this.mtz[n][0] - this.z / 30 - this.cz) * Utils.cos(this.xz)) - this.cz) * Utils.cos(this.zy));
-            if (this.xs(this.cx + ((this.mtx[n][this.nmv[n] - 1] - this.x / 30 - this.cx) * Utils.cos(this.xz) - (this.mtz[n][this.nmv[n] - 1] - this.z / 30 - this.cz) * Utils.sin(this.xz)), this.cz + ((this.mty[n][this.nmv[n] - 1] - this.y / 30 - this.cy) * Utils.sin(this.zy) + (this.cz + ((this.mtx[n][this.nmv[n] - 1] - this.x / 30 - this.cx) * Utils.sin(this.xz) + (this.mtz[n][this.nmv[n] - 1] - this.z / 30 - this.cz) * Utils.cos(this.xz)) - this.cz) * Utils.cos(this.zy))) > 0 && this.xs(n2, n3) < this.w) {
+            if (Utils.xs(this.cx + ((this.mtx[n][this.nmv[n] - 1] - this.x / 30 - this.cx) * Utils.cos(this.xz) - (this.mtz[n][this.nmv[n] - 1] - this.z / 30 - this.cz) * Utils.sin(this.xz)), this.cz + ((this.mty[n][this.nmv[n] - 1] - this.y / 30 - this.cy) * Utils.sin(this.zy) + (this.cz + ((this.mtx[n][this.nmv[n] - 1] - this.x / 30 - this.cx) * Utils.sin(this.xz) + (this.mtz[n][this.nmv[n] - 1] - this.z / 30 - this.cz) * Utils.cos(this.xz)) - this.cz) * Utils.cos(this.zy))) > 0 && Utils.xs(n2, n3) < this.w) {
                 final float[] array = new float[this.nmv[n] * 2];
                 final float[] array2 = new float[this.nmv[n] * 2];
                 final float[] array3 = new float[this.nmv[n] * 2];
@@ -1508,8 +1508,8 @@ public class Medium
                         if (l == 3) {
                             n9 = k + this.nmv[n];
                         }
-                        array4[l] = this.xs(array[n9], array3[n9]);
-                        array5[l] = this.ys(array2[n9], array3[n9]);
+                        array4[l] = Utils.xs(array[n9], array3[n9]);
+                        array5[l] = Utils.ys(array2[n9], array3[n9]);
                         if (array5[l] < 0 || array3[n9] < 10) {
                             ++n5;
                         }
@@ -1604,8 +1604,8 @@ public class Medium
             final float n2 = this.cz + (this.stx[i] * Utils.sin(this.xz) + this.stz[i] * Utils.cos(this.xz));
             final float n3 = this.cy + (-200.0f * Utils.cos(this.zy) - n2 * Utils.sin(this.zy));
             final float n4 = this.cz + (-200.0f * Utils.sin(this.zy) + n2 * Utils.cos(this.zy));
-            final int xs = this.xs(n, n4);
-            final int ys = this.ys(n3, n4);
+            final int xs = Utils.xs(n, n4);
+            final int ys = Utils.ys(n3, n4);
             if (xs - 1 > this.iw && xs + 3 < this.w && ys - 1 > this.ih && ys + 3 < this.h) {
                 if (this.twn[i] == 0) {
                     int n5 = (int)(3.0 * Math.random());
@@ -1689,7 +1689,7 @@ public class Medium
                 n4 = this.cz + ((this.ground - this.cy) * Utils.sin(this.zy) + (this.fade[i] - this.cz) * Utils.cos(this.zy));
             }
             array[0] = this.iw;
-            array2[0] = this.ys(ground, n4);
+            array2[0] = Utils.ys(ground, n4);
             if (array2[0] < this.ih) {
                 array2[0] = this.ih;
             }
@@ -1766,7 +1766,7 @@ public class Medium
         int r3 = r2;
         int g3 = g2;
         int b3 = b2;
-        int ys = this.ys(this.cy + ((this.skyline - 700 - this.cy) * Utils.cos(this.zy) - (7000 - this.cz) * Utils.sin(this.zy)), this.cz + ((this.skyline - 700 - this.cy) * Utils.sin(this.zy) + (7000 - this.cz) * Utils.cos(this.zy)));
+        int ys = Utils.ys(this.cy + ((this.skyline - 700 - this.cy) * Utils.cos(this.zy) - (7000 - this.cz) * Utils.sin(this.zy)), this.cz + ((this.skyline - 700 - this.cy) * Utils.sin(this.zy) + (7000 - this.cz) * Utils.cos(this.zy)));
         int ih = this.ih;
         for (int j = 0; j < 16; ++j) {
             float n5 = this.fade[j];
@@ -1776,7 +1776,7 @@ public class Medium
                 n5 = this.cz + ((this.skyline - this.cy) * Utils.sin(this.zy) + (this.fade[j] - this.cz) * Utils.cos(this.zy));
             }
             array[0] = this.iw;
-            array2[0] = this.ys(skyline, n5);
+            array2[0] = Utils.ys(skyline, n5);
             if (array2[0] > this.h) {
                 array2[0] = this.h;
             }
@@ -1833,7 +1833,7 @@ public class Medium
                 }
                 array[0] = this.iw;
                 if (k != 19) {
-                    array2[0] = this.ys(n8, n7);
+                    array2[0] = Utils.ys(n8, n7);
                     if (array2[0] > this.h) {
                         array2[0] = this.h;
                     }
@@ -2123,20 +2123,6 @@ public class Medium
             }
             this.fadfrom(this.fade[0]);
         }
-    }
-    
-    public int xs(final float f, float n5) {
-        if (n5 < this.cz) {
-            n5 = this.cz;
-        }
-        return (int) ((n5 - this.focus_point) * (this.cx - f) / n5 + f);
-    }
-    
-    public int ys(final float n, float n2) {
-        if (n2 < this.cz) {
-            n2 = this.cz;
-        }
-        return (int) ((n2 - this.focus_point) * (this.cy - n) / n2 + n);
     }
     
     public void rot(final float[] array4, final float[] array3, final float cy2, final float cz2, final float zy2, final int n4) {

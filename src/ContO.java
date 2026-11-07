@@ -1261,11 +1261,11 @@ public class ContO
         if (this.dist != 0) {
             this.dist = 0;
         }
-        final float n = this.m.cx + ((this.x - this.m.x - this.m.cx) * Utils.cos(this.m.xz) - (this.z - this.m.z - this.m.cz) * Utils.sin(this.m.xz));
-        final float n2 = this.m.cz + ((this.x - this.m.x - this.m.cx) * Utils.sin(this.m.xz) + (this.z - this.m.z - this.m.cz) * Utils.cos(this.m.xz));
-        final float n3 = this.m.cz + ((this.y - this.m.y - this.m.cy) * Utils.sin(this.m.zy) + (n2 - this.m.cz) * Utils.cos(this.m.zy));
-        int n4 = this.xs(n + this.maxR, n3) - this.xs(n - this.maxR, n3);
-        if (this.xs(n + this.maxR * 2, n3) > this.m.iw && this.xs(n - this.maxR * 2, n3) < this.m.w && n3 > -this.maxR && (n3 < this.m.fade[this.disline] + this.maxR || this.m.trk) && (n4 > this.disp || this.m.trk) && (!this.decor || !this.m.trk)) {
+        final float n = Medium.cx + ((this.x - this.m.x - Medium.cx) * Utils.cos(this.m.xz) - (this.z - this.m.z - Medium.cz) * Utils.sin(this.m.xz));
+        final float n2 = Medium.cz + ((this.x - this.m.x - Medium.cx) * Utils.sin(this.m.xz) + (this.z - this.m.z - Medium.cz) * Utils.cos(this.m.xz));
+        final float n3 = Medium.cz + ((this.y - this.m.y - Medium.cy) * Utils.sin(this.m.zy) + (n2 - Medium.cz) * Utils.cos(this.m.zy));
+        int n4 = Utils.xs(n + this.maxR, n3) - Utils.xs(n - this.maxR, n3);
+        if (Utils.xs(n + this.maxR * 2, n3) > this.m.iw && Utils.xs(n - this.maxR * 2, n3) < this.m.w && n3 > -this.maxR && (n3 < this.m.fade[this.disline] + this.maxR || this.m.trk) && (n4 > this.disp || this.m.trk) && (!this.decor || !this.m.trk)) {
             if (this.shadow) {
                 if (!this.m.crs) {
                     if (n3 < 2000) {
@@ -1299,9 +1299,9 @@ public class ContO
                             }
                         }
                         else {
-                            final float n6 = this.m.cy + ((this.m.ground - this.m.cy) * Utils.cos(this.m.zy) - (n2 - this.m.cz) * Utils.sin(this.m.zy));
-                            final float n7 = this.m.cz + ((this.m.ground - this.m.cy) * Utils.sin(this.m.zy) + (n2 - this.m.cz) * Utils.cos(this.m.zy));
-                            if (this.ys(n6 + this.maxR, n7) > 0 && this.ys(n6 - this.maxR, n7) < this.m.h) {
+                            final float n6 = Medium.cy + ((this.m.ground - Medium.cy) * Utils.cos(this.m.zy) - (n2 - Medium.cz) * Utils.sin(this.m.zy));
+                            final float n7 = Medium.cz + ((this.m.ground - Medium.cy) * Utils.sin(this.m.zy) + (n2 - Medium.cz) * Utils.cos(this.m.zy));
+                            if (Utils.ys(n6 + this.maxR, n7) > 0 && Utils.ys(n6 - this.maxR, n7) < this.m.h) {
                                 for (int k = 0; k < this.npl; ++k) {
                                     this.p[k].s(graphics2D, this.x - this.m.x, this.y - this.m.y, this.z - this.m.z, this.xz, this.xy, this.zy, 1);
                                 }
@@ -1319,8 +1319,8 @@ public class ContO
                     }
                 }
             }
-            final float n8 = this.m.cy + ((this.y - this.m.y - this.m.cy) * Utils.cos(this.m.zy) - (n2 - this.m.cz) * Utils.sin(this.m.zy));
-            if (this.ys(n8 + this.maxR, n3) > this.m.ih && this.ys(n8 - this.maxR, n3) < this.m.h) {
+            final float n8 = Medium.cy + ((this.y - this.m.y - Medium.cy) * Utils.cos(this.m.zy) - (n2 - Medium.cz) * Utils.sin(this.m.zy));
+            if (Utils.ys(n8 + this.maxR, n3) > this.m.ih && Utils.ys(n8 - this.maxR, n3) < this.m.h) {
                 if (this.elec && this.m.noelec == 0) {
                     this.electrify(graphics2D);
                 }
@@ -1331,7 +1331,7 @@ public class ContO
                     n4 = -1;
                 }
                 if (this.shadow) {
-                    this.dist = (int)Math.sqrt((this.m.x + this.m.cx - this.x) * (this.m.x + this.m.cx - this.x) + (this.m.z - this.z) * (this.m.z - this.z) + (this.m.y + this.m.cy - this.y) * (this.m.y + this.m.cy - this.y));
+                    this.dist = (int)Math.sqrt((this.m.x + Medium.cx - this.x) * (this.m.x + Medium.cx - this.x) + (this.m.z - this.z) * (this.m.z - this.z) + (this.m.y + Medium.cy - this.y) * (this.m.y + Medium.cy - this.y));
                     for (int n9 = 0; n9 < 20; ++n9) {
                     	if (this.stg != null) {
                             if (this.stg[n9] != 0) {
@@ -1385,7 +1385,7 @@ public class ContO
                     }
                     this.dsprk(graphics2D, false);
                 }
-                this.dist = (int)(Math.sqrt((int)Math.sqrt((this.m.x + this.m.cx - this.x) * (this.m.x + this.m.cx - this.x) + (this.m.z - this.z) * (this.m.z - this.z) + (this.m.y + this.m.cy - this.y) * (this.m.y + this.m.cy - this.y))) * this.grounded);
+                this.dist = (int)(Math.sqrt((int)Math.sqrt((this.m.x + Medium.cx - this.x) * (this.m.x + Medium.cx - this.x) + (this.m.z - this.z) * (this.m.z - this.z) + (this.m.y + Medium.cy - this.y) * (this.m.y + Medium.cy - this.y))) * this.grounded);
             }
         }
         if (this.shadow && this.dist == 0) {
@@ -1466,16 +1466,16 @@ public class ContO
                 }
             }
         }
-        Utils.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 4);
-        Utils.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 4);
+        Utils.rot(array, array3, Medium.cx, Medium.cz, this.m.xz, 4);
+        Utils.rot(array2, array3, Medium.cy, Medium.cz, this.m.zy, 4);
         boolean b2 = true;
         int n8 = 0;
         int n9 = 0;
         int n10 = 0;
         int n11 = 0;
         for (int n12 = 0; n12 < 4; ++n12) {
-            array[n12] = this.xs(array[n12], array3[n12]);
-            array2[n12] = this.ys(array2[n12], array3[n12]);
+            array[n12] = Utils.xs(array[n12], array3[n12]);
+            array2[n12] = Utils.ys(array2[n12], array3[n12]);
             if (array2[n12] < this.m.ih || array3[n12] < 10) {
                 ++n8;
             }
@@ -1554,8 +1554,8 @@ public class ContO
             Utils.rot(array, array2, this.x - this.m.x, this.y - this.m.y, this.xy, 4);
             Utils.rot(array2, array3, this.y - this.m.y, this.z - this.m.y, this.zy, 4);
             Utils.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 4);
-            Utils.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 4);
-            Utils.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 4);
+            Utils.rot(array, array3, Medium.cx, Medium.cz, this.m.xz, 4);
+            Utils.rot(array2, array3, Medium.cy, Medium.cz, this.m.zy, 4);
             int abs = 0;
             int abs2 = 0;
             int py = 0;
@@ -1579,40 +1579,40 @@ public class ContO
             if (abs2 < n3) {
                 abs2 = n3;
             }
-            final float n4 = this.m.cx + ((this.x - this.m.x - this.m.cx) * Utils.cos(this.m.xz) - (this.z - this.m.z - this.m.cz) * Utils.sin(this.m.xz));
-            final float n5 = this.m.cz + ((this.x - this.m.x - this.m.cx) * Utils.sin(this.m.xz) + (this.z - this.m.z - this.m.cz) * Utils.cos(this.m.xz));
-            final float n6 = this.m.cy + ((this.y - this.m.y - this.m.cy) * Utils.cos(this.m.zy) - (n5 - this.m.cz) * Utils.sin(this.m.zy));
-            final float n7 = this.m.cz + ((this.y - this.m.y - this.m.cy) * Utils.sin(this.m.zy) + (n5 - this.m.cz) * Utils.cos(this.m.zy));
-            array[0] = this.xs((int)(n4 - abs / 0.8 - this.m.random() * (abs / 2.4)), n7);
-            array2[0] = this.ys((int)(n6 - abs2 / 1.92 - this.m.random() * (abs2 / 5.67)), n7);
-            array[1] = this.xs((int)(n4 - abs / 0.8 - this.m.random() * (abs / 2.4)), n7);
-            array2[1] = this.ys((int)(n6 + abs2 / 1.92 + this.m.random() * (abs2 / 5.67)), n7);
-            array[2] = this.xs((int)(n4 - abs / 1.92 - this.m.random() * (abs / 5.67)), n7);
-            array2[2] = this.ys((int)(n6 + abs2 / 0.8 + this.m.random() * (abs2 / 2.4)), n7);
-            array[3] = this.xs((int)(n4 + abs / 1.92 + this.m.random() * (abs / 5.67)), n7);
-            array2[3] = this.ys((int)(n6 + abs2 / 0.8 + this.m.random() * (abs2 / 2.4)), n7);
-            array[4] = this.xs((int)(n4 + abs / 0.8 + this.m.random() * (abs / 2.4)), n7);
-            array2[4] = this.ys((int)(n6 + abs2 / 1.92 + this.m.random() * (abs2 / 5.67)), n7);
-            array[5] = this.xs((int)(n4 + abs / 0.8 + this.m.random() * (abs / 2.4)), n7);
-            array2[5] = this.ys((int)(n6 - abs2 / 1.92 - this.m.random() * (abs2 / 5.67)), n7);
-            array[6] = this.xs((int)(n4 + abs / 1.92 + this.m.random() * (abs / 5.67)), n7);
-            array2[6] = this.ys((int)(n6 - abs2 / 0.8 - this.m.random() * (abs2 / 2.4)), n7);
-            array[7] = this.xs((int)(n4 - abs / 1.92 - this.m.random() * (abs / 5.67)), n7);
-            array2[7] = this.ys((int)(n6 - abs2 / 0.8 - this.m.random() * (abs2 / 2.4)), n7);
+            final float n4 = Medium.cx + ((this.x - this.m.x - Medium.cx) * Utils.cos(this.m.xz) - (this.z - this.m.z - Medium.cz) * Utils.sin(this.m.xz));
+            final float n5 = Medium.cz + ((this.x - this.m.x - Medium.cx) * Utils.sin(this.m.xz) + (this.z - this.m.z - Medium.cz) * Utils.cos(this.m.xz));
+            final float n6 = Medium.cy + ((this.y - this.m.y - Medium.cy) * Utils.cos(this.m.zy) - (n5 - Medium.cz) * Utils.sin(this.m.zy));
+            final float n7 = Medium.cz + ((this.y - this.m.y - Medium.cy) * Utils.sin(this.m.zy) + (n5 - Medium.cz) * Utils.cos(this.m.zy));
+            array[0] = Utils.xs((int)(n4 - abs / 0.8 - this.m.random() * (abs / 2.4)), n7);
+            array2[0] = Utils.ys((int)(n6 - abs2 / 1.92 - this.m.random() * (abs2 / 5.67)), n7);
+            array[1] = Utils.xs((int)(n4 - abs / 0.8 - this.m.random() * (abs / 2.4)), n7);
+            array2[1] = Utils.ys((int)(n6 + abs2 / 1.92 + this.m.random() * (abs2 / 5.67)), n7);
+            array[2] = Utils.xs((int)(n4 - abs / 1.92 - this.m.random() * (abs / 5.67)), n7);
+            array2[2] = Utils.ys((int)(n6 + abs2 / 0.8 + this.m.random() * (abs2 / 2.4)), n7);
+            array[3] = Utils.xs((int)(n4 + abs / 1.92 + this.m.random() * (abs / 5.67)), n7);
+            array2[3] = Utils.ys((int)(n6 + abs2 / 0.8 + this.m.random() * (abs2 / 2.4)), n7);
+            array[4] = Utils.xs((int)(n4 + abs / 0.8 + this.m.random() * (abs / 2.4)), n7);
+            array2[4] = Utils.ys((int)(n6 + abs2 / 1.92 + this.m.random() * (abs2 / 5.67)), n7);
+            array[5] = Utils.xs((int)(n4 + abs / 0.8 + this.m.random() * (abs / 2.4)), n7);
+            array2[5] = Utils.ys((int)(n6 - abs2 / 1.92 - this.m.random() * (abs2 / 5.67)), n7);
+            array[6] = Utils.xs((int)(n4 + abs / 1.92 + this.m.random() * (abs / 5.67)), n7);
+            array2[6] = Utils.ys((int)(n6 - abs2 / 0.8 - this.m.random() * (abs2 / 2.4)), n7);
+            array[7] = Utils.xs((int)(n4 - abs / 1.92 - this.m.random() * (abs / 5.67)), n7);
+            array2[7] = Utils.ys((int)(n6 - abs2 / 0.8 - this.m.random() * (abs2 / 2.4)), n7);
             if (this.fcnt == 3) {
-                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), 22, 8);
+                Utils.rot(array, array2, Utils.xs(n4, n7), Utils.ys(n6, n7), 22, 8);
             }
             if (this.fcnt == 4) {
-                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), 22, 8);
+                Utils.rot(array, array2, Utils.xs(n4, n7), Utils.ys(n6, n7), 22, 8);
             }
             if (this.fcnt == 5) {
-                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), 0, 8);
+                Utils.rot(array, array2, Utils.xs(n4, n7), Utils.ys(n6, n7), 0, 8);
             }
             if (this.fcnt == 6) {
-                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), -22, 8);
+                Utils.rot(array, array2, Utils.xs(n4, n7), Utils.ys(n6, n7), -22, 8);
             }
             if (this.fcnt == 7) {
-                Utils.rot(array, array2, this.xs(n4, n7), this.ys(n6, n7), -22, 8);
+                Utils.rot(array, array2, Utils.xs(n4, n7), Utils.ys(n6, n7), -22, 8);
             }
             int r2 = (int)(191.0f + 191.0f * (this.m.snap[0] / 350.0f));
             if (r2 > 255) {
@@ -1637,22 +1637,22 @@ public class ContO
             }
             graphics2D.setColor(new Color(r2, g2, b2));
             graphics2D.fillPolygon(array, array2, 8);
-            array[0] = this.xs((int)(n4 - abs - this.m.random() * (abs / 4)), n7);
-            array2[0] = this.ys((int)(n6 - abs2 / 2.4 - this.m.random() * (abs2 / 9.6)), n7);
-            array[1] = this.xs((int)(n4 - abs - this.m.random() * (abs / 4)), n7);
-            array2[1] = this.ys((int)(n6 + abs2 / 2.4 + this.m.random() * (abs2 / 9.6)), n7);
-            array[2] = this.xs((int)(n4 - abs / 2.4 - this.m.random() * (abs / 9.6)), n7);
-            array2[2] = this.ys((int)(n6 + abs2 + this.m.random() * (abs2 / 4)), n7);
-            array[3] = this.xs((int)(n4 + abs / 2.4 + this.m.random() * (abs / 9.6)), n7);
-            array2[3] = this.ys((int)(n6 + abs2 + this.m.random() * (abs2 / 4)), n7);
-            array[4] = this.xs((int)(n4 + abs + this.m.random() * (abs / 4)), n7);
-            array2[4] = this.ys((int)(n6 + abs2 / 2.4 + this.m.random() * (abs2 / 9.6)), n7);
-            array[5] = this.xs((int)(n4 + abs + this.m.random() * (abs / 4)), n7);
-            array2[5] = this.ys((int)(n6 - abs2 / 2.4 - this.m.random() * (abs2 / 9.6)), n7);
-            array[6] = this.xs((int)(n4 + abs / 2.4 + this.m.random() * (abs / 9.6)), n7);
-            array2[6] = this.ys((int)(n6 - abs2 - this.m.random() * (abs2 / 4)), n7);
-            array[7] = this.xs((int)(n4 - abs / 2.4 - this.m.random() * (abs / 9.6)), n7);
-            array2[7] = this.ys((int)(n6 - abs2 - this.m.random() * (abs2 / 4)), n7);
+            array[0] = Utils.xs((int)(n4 - abs - this.m.random() * (abs / 4)), n7);
+            array2[0] = Utils.ys((int)(n6 - abs2 / 2.4 - this.m.random() * (abs2 / 9.6)), n7);
+            array[1] = Utils.xs((int)(n4 - abs - this.m.random() * (abs / 4)), n7);
+            array2[1] = Utils.ys((int)(n6 + abs2 / 2.4 + this.m.random() * (abs2 / 9.6)), n7);
+            array[2] = Utils.xs((int)(n4 - abs / 2.4 - this.m.random() * (abs / 9.6)), n7);
+            array2[2] = Utils.ys((int)(n6 + abs2 + this.m.random() * (abs2 / 4)), n7);
+            array[3] = Utils.xs((int)(n4 + abs / 2.4 + this.m.random() * (abs / 9.6)), n7);
+            array2[3] = Utils.ys((int)(n6 + abs2 + this.m.random() * (abs2 / 4)), n7);
+            array[4] = Utils.xs((int)(n4 + abs + this.m.random() * (abs / 4)), n7);
+            array2[4] = Utils.ys((int)(n6 + abs2 / 2.4 + this.m.random() * (abs2 / 9.6)), n7);
+            array[5] = Utils.xs((int)(n4 + abs + this.m.random() * (abs / 4)), n7);
+            array2[5] = Utils.ys((int)(n6 - abs2 / 2.4 - this.m.random() * (abs2 / 9.6)), n7);
+            array[6] = Utils.xs((int)(n4 + abs / 2.4 + this.m.random() * (abs / 9.6)), n7);
+            array2[6] = Utils.ys((int)(n6 - abs2 - this.m.random() * (abs2 / 4)), n7);
+            array[7] = Utils.xs((int)(n4 - abs / 2.4 - this.m.random() * (abs / 9.6)), n7);
+            array2[7] = Utils.ys((int)(n6 - abs2 - this.m.random() * (abs2 / 4)), n7);
             int r3 = (int)(213.0f + 213.0f * (this.m.snap[0] / 350.0f));
             if (r3 > 255) {
                 r3 = 255;
@@ -1722,8 +1722,8 @@ public class ContO
             if (this.roted) {
                 Utils.rot(array, array3, this.x - this.m.x, this.z - this.m.z, this.xz, 8);
             }
-            Utils.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 8);
-            Utils.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 8);
+            Utils.rot(array, array3, Medium.cx, Medium.cz, this.m.xz, 8);
+            Utils.rot(array2, array3, Medium.cy, Medium.cz, this.m.zy, 8);
             boolean b = true;
             int n5 = 0;
             int n6 = 0;
@@ -1732,8 +1732,8 @@ public class ContO
             final int[] array4 = new int[8];
             final int[] array5 = new int[8];
             for (int k = 0; k < 8; ++k) {
-                array4[k] = this.xs(array[k], array3[k]);
-                array5[k] = this.ys(array2[k], array3[k]);
+                array4[k] = Utils.xs(array[k], array3[k]);
+                array5[k] = Utils.ys(array2[k], array3[k]);
                 if (array5[k] < this.m.ih || array3[k] < 10) {
                     ++n5;
                 }
@@ -1862,7 +1862,7 @@ public class ContO
     
     public void pdust(final int n, final Graphics2D graphics2D, final boolean b) {
         if (b) {
-            this.sav[n] = (int)Math.sqrt((this.m.x + this.m.cx - this.sx[n]) * (this.m.x + this.m.cx - this.sx[n]) + (this.m.y + this.m.cy - this.sy[n]) * (this.m.y + this.m.cy - this.sy[n]) + (this.m.z - this.sz[n]) * (this.m.z - this.sz[n]));
+            this.sav[n] = (int)Math.sqrt((this.m.x + Medium.cx - this.sx[n]) * (this.m.x + Medium.cx - this.sx[n]) + (this.m.y + Medium.cy - this.sy[n]) * (this.m.y + Medium.cy - this.sy[n]) + (this.m.z - this.sz[n]) * (this.m.z - this.sz[n]));
         }
         if ((b && this.sav[n] > this.dist) || (!b && this.sav[n] <= this.dist)) {
             if (this.stg[n] == 1) {
@@ -1937,32 +1937,32 @@ public class ContO
                 }
                 this.smag[n][6] = this.smag[n][7];
             }
-            final float n8 = this.m.cx + ((this.sx[n] - this.m.x - this.m.cx) * Utils.cos(this.m.xz) - (this.sz[n] - this.m.z - this.m.cz) * Utils.sin(this.m.xz));
-            final float n9 = this.m.cz + ((this.sx[n] - this.m.x - this.m.cx) * Utils.sin(this.m.xz) + (this.sz[n] - this.m.z - this.m.cz) * Utils.cos(this.m.xz));
-            final float n10 = this.m.cy + ((this.sy[n] - this.m.y - this.m.cy - this.smag[n][7]) * Utils.cos(this.m.zy) - (n9 - this.m.cz) * Utils.sin(this.m.zy));
-            final float n11 = this.m.cz + ((this.sy[n] - this.m.y - this.m.cy - this.smag[n][7]) * Utils.sin(this.m.zy) + (n9 - this.m.cz) * Utils.cos(this.m.zy));
+            final float n8 = Medium.cx + ((this.sx[n] - this.m.x - Medium.cx) * Utils.cos(this.m.xz) - (this.sz[n] - this.m.z - Medium.cz) * Utils.sin(this.m.xz));
+            final float n9 = Medium.cz + ((this.sx[n] - this.m.x - Medium.cx) * Utils.sin(this.m.xz) + (this.sz[n] - this.m.z - Medium.cz) * Utils.cos(this.m.xz));
+            final float n10 = Medium.cy + ((this.sy[n] - this.m.y - Medium.cy - this.smag[n][7]) * Utils.cos(this.m.zy) - (n9 - Medium.cz) * Utils.sin(this.m.zy));
+            final float n11 = Medium.cz + ((this.sy[n] - this.m.y - Medium.cy - this.smag[n][7]) * Utils.sin(this.m.zy) + (n9 - Medium.cz) * Utils.cos(this.m.zy));
             final float[] sx = this.sx;
             sx[n] += this.scx[n] / (this.stg[n] + 1);
             final float[] sz = this.sz;
             sz[n] += this.scz[n] / (this.stg[n] + 1);
             final int[] array2 = new int[8];
             final int[] array3 = new int[8];
-            array2[0] = this.xs((int)(n8 + this.smag[n][0] * 0.9238f * 1.5f), n11);
-            array3[0] = this.ys((int)(n10 + this.smag[n][0] * 0.3826f * 1.5f), n11);
-            array2[1] = this.xs((int)(n8 + this.smag[n][1] * 0.9238f * 1.5f), n11);
-            array3[1] = this.ys((int)(n10 - this.smag[n][1] * 0.3826f * 1.5f), n11);
-            array2[2] = this.xs((int)(n8 + this.smag[n][2] * 0.3826f), n11);
-            array3[2] = this.ys((int)(n10 - this.smag[n][2] * 0.9238f), n11);
-            array2[3] = this.xs((int)(n8 - this.smag[n][3] * 0.3826f), n11);
-            array3[3] = this.ys((int)(n10 - this.smag[n][3] * 0.9238f), n11);
-            array2[4] = this.xs((int)(n8 - this.smag[n][4] * 0.9238f * 1.5f), n11);
-            array3[4] = this.ys((int)(n10 - this.smag[n][4] * 0.3826f * 1.5f), n11);
-            array2[5] = this.xs((int)(n8 - this.smag[n][5] * 0.9238f * 1.5f), n11);
-            array3[5] = this.ys((int)(n10 + this.smag[n][5] * 0.3826f * 1.5f), n11);
-            array2[6] = this.xs((int)(n8 - this.smag[n][6] * 0.3826f * 1.7f), n11);
-            array3[6] = this.ys((int)(n10 + this.smag[n][6] * 0.9238f), n11);
-            array2[7] = this.xs((int)(n8 + this.smag[n][7] * 0.3826f * 1.7f), n11);
-            array3[7] = this.ys((int)(n10 + this.smag[n][7] * 0.9238f), n11);
+            array2[0] = Utils.xs((int)(n8 + this.smag[n][0] * 0.9238f * 1.5f), n11);
+            array3[0] = Utils.ys((int)(n10 + this.smag[n][0] * 0.3826f * 1.5f), n11);
+            array2[1] = Utils.xs((int)(n8 + this.smag[n][1] * 0.9238f * 1.5f), n11);
+            array3[1] = Utils.ys((int)(n10 - this.smag[n][1] * 0.3826f * 1.5f), n11);
+            array2[2] = Utils.xs((int)(n8 + this.smag[n][2] * 0.3826f), n11);
+            array3[2] = Utils.ys((int)(n10 - this.smag[n][2] * 0.9238f), n11);
+            array2[3] = Utils.xs((int)(n8 - this.smag[n][3] * 0.3826f), n11);
+            array3[3] = Utils.ys((int)(n10 - this.smag[n][3] * 0.9238f), n11);
+            array2[4] = Utils.xs((int)(n8 - this.smag[n][4] * 0.9238f * 1.5f), n11);
+            array3[4] = Utils.ys((int)(n10 - this.smag[n][4] * 0.3826f * 1.5f), n11);
+            array2[5] = Utils.xs((int)(n8 - this.smag[n][5] * 0.9238f * 1.5f), n11);
+            array3[5] = Utils.ys((int)(n10 + this.smag[n][5] * 0.3826f * 1.5f), n11);
+            array2[6] = Utils.xs((int)(n8 - this.smag[n][6] * 0.3826f * 1.7f), n11);
+            array3[6] = Utils.ys((int)(n10 + this.smag[n][6] * 0.9238f), n11);
+            array2[7] = Utils.xs((int)(n8 + this.smag[n][7] * 0.3826f * 1.7f), n11);
+            array3[7] = Utils.ys((int)(n10 + this.smag[n][7] * 0.9238f), n11);
             for (int n12 = 0; n12 < 7; ++n12) {
                 final float[] array4 = this.smag[n];
                 final int n13 = n12;
@@ -2054,7 +2054,7 @@ public class ContO
             int n = (int)(Math.sqrt(this.rcx * this.rcx + this.rcy * this.rcy + this.rcz * this.rcz) / 10.0);
             if (n > 5) {
                 boolean b2 = false;
-                if (this.dist < Math.sqrt((this.m.x + this.m.cx - this.srx) * (this.m.x + this.m.cx - this.srx) + (this.m.y + this.m.cy - this.sry) * (this.m.y + this.m.cy - this.sry) + (this.m.z - this.srz) * (this.m.z - this.srz))) {
+                if (this.dist < Math.sqrt((this.m.x + Medium.cx - this.srx) * (this.m.x + Medium.cx - this.srx) + (this.m.y + Medium.cy - this.sry) * (this.m.y + Medium.cy - this.sry) + (this.m.z - this.srz) * (this.m.z - this.srz))) {
                     b2 = true;
                 }
                 if (n > 33) {
@@ -2122,18 +2122,18 @@ public class ContO
                 final float[] rz = this.rz;
                 final int n9 = j;
                 rz[n9] += (int)this.vrz[j];
-                final float n10 = this.m.cx + ((this.rx[j] - this.m.x - this.m.cx) * Utils.cos(this.m.xz) - (this.rz[j] - this.m.z - this.m.cz) * Utils.sin(this.m.xz));
-                final float n11 = this.m.cz + ((this.rx[j] - this.m.x - this.m.cx) * Utils.sin(this.m.xz) + (this.rz[j] - this.m.z - this.m.cz) * Utils.cos(this.m.xz));
-                final float n12 = this.m.cy + ((this.ry[j] - this.m.y - this.m.cy) * Utils.cos(this.m.zy) - (n11 - this.m.cz) * Utils.sin(this.m.zy));
-                final float n13 = this.m.cz + ((this.ry[j] - this.m.y - this.m.cy) * Utils.sin(this.m.zy) + (n11 - this.m.cz) * Utils.cos(this.m.zy));
-                final float n14 = this.m.cx + ((this.rx[j] - this.m.x - this.m.cx + this.vrx[j]) * Utils.cos(this.m.xz) - (this.rz[j] - this.m.z - this.m.cz + this.vrz[j]) * Utils.sin(this.m.xz));
-                final float n15 = this.m.cz + ((this.rx[j] - this.m.x - this.m.cx + this.vrx[j]) * Utils.sin(this.m.xz) + (this.rz[j] - this.m.z - this.m.cz + this.vrz[j]) * Utils.cos(this.m.xz));
-                final float n16 = this.m.cy + ((this.ry[j] - this.m.y - this.m.cy + this.vry[j]) * Utils.cos(this.m.zy) - (n15 - this.m.cz) * Utils.sin(this.m.zy));
-                final float n17 = this.m.cz + ((this.ry[j] - this.m.y - this.m.cy + this.vry[j]) * Utils.sin(this.m.zy) + (n15 - this.m.cz) * Utils.cos(this.m.zy));
-                final int xs = this.xs(n10, n13);
-                final int ys = this.ys(n12, n13);
-                final int xs2 = this.xs(n14, n17);
-                final int ys2 = this.ys(n16, n17);
+                final float n10 = Medium.cx + ((this.rx[j] - this.m.x - Medium.cx) * Utils.cos(this.m.xz) - (this.rz[j] - this.m.z - Medium.cz) * Utils.sin(this.m.xz));
+                final float n11 = Medium.cz + ((this.rx[j] - this.m.x - Medium.cx) * Utils.sin(this.m.xz) + (this.rz[j] - this.m.z - Medium.cz) * Utils.cos(this.m.xz));
+                final float n12 = Medium.cy + ((this.ry[j] - this.m.y - Medium.cy) * Utils.cos(this.m.zy) - (n11 - Medium.cz) * Utils.sin(this.m.zy));
+                final float n13 = Medium.cz + ((this.ry[j] - this.m.y - Medium.cy) * Utils.sin(this.m.zy) + (n11 - Medium.cz) * Utils.cos(this.m.zy));
+                final float n14 = Medium.cx + ((this.rx[j] - this.m.x - Medium.cx + this.vrx[j]) * Utils.cos(this.m.xz) - (this.rz[j] - this.m.z - Medium.cz + this.vrz[j]) * Utils.sin(this.m.xz));
+                final float n15 = Medium.cz + ((this.rx[j] - this.m.x - Medium.cx + this.vrx[j]) * Utils.sin(this.m.xz) + (this.rz[j] - this.m.z - Medium.cz + this.vrz[j]) * Utils.cos(this.m.xz));
+                final float n16 = Medium.cy + ((this.ry[j] - this.m.y - Medium.cy + this.vry[j]) * Utils.cos(this.m.zy) - (n15 - Medium.cz) * Utils.sin(this.m.zy));
+                final float n17 = Medium.cz + ((this.ry[j] - this.m.y - Medium.cy + this.vry[j]) * Utils.sin(this.m.zy) + (n15 - Medium.cz) * Utils.cos(this.m.zy));
+                final int xs = Utils.xs(n10, n13);
+                final int ys = Utils.ys(n12, n13);
+                final int xs2 = Utils.xs(n14, n17);
+                final int ys2 = Utils.ys(n16, n17);
                 if (xs < this.m.iw && xs2 < this.m.iw) {
                     this.rtg[j] = 0;
                 }
@@ -2185,20 +2185,6 @@ public class ContO
         }
     }
     
-    public int xs(final float f, float n3) {
-        if (n3 < 50) {
-            n3 = 50;
-        }
-        return (int) ((n3 - this.m.focus_point) * (this.m.cx - f) / n3 + f);
-    }
-    
-    public int ys(final float n, float n2) {
-        if (n2 < 50) {
-            n2 = 50;
-        }
-        return (int) ((n2 - this.m.focus_point) * (this.m.cy - n) / n2 + n);
-    }
-    
     public int getvalue(final String s, final String s2, final int n) {
         int n2 = 0;
         String string = "";
@@ -2221,35 +2207,5 @@ public class ContO
     
     public int py(final int n, final int n2, final int n3, final int n4) {
         return (n - n2) * (n - n2) + (n3 - n4) * (n3 - n4);
-    }
-    
-    public void rot(final float[] array, final float[] array3, final float f, final float g, final float xz2, final int n4) {
-        if (xz2 != 0) {
-            for (int i = 0; i < n4; ++i) {
-                final float n5 = array[i];
-                final float n6 = array3[i];
-                array[i] = (f + ((n5 - f) * Utils.cos(xz2) - (n6 - g) * Utils.sin(xz2)));
-                array3[i] = (g + ((n5 - f) * Utils.sin(xz2) + (n6 - g) * Utils.cos(xz2)));
-            }
-        }
-    }
-    public void rot(final int[] array, final int[] array3, final float f, final float g, final float xz2, final int n4) {
-        if (xz2 != 0) {
-            for (int i = 0; i < n4; ++i) {
-                final int n5 = array[i];
-                final int n6 = array3[i];
-                array[i] = (int) (f + ((n5 - f) * Utils.cos(xz2) - (n6 - g) * Utils.sin(xz2)));
-                array3[i] = (int) (g + ((n5 - f) * Utils.sin(xz2) + (n6 - g) * Utils.cos(xz2)));
-            }
-        }
-    }
-    
-    public void rot(float array, float array3, final float f, final float g, final float xz2) {
-        if (xz2 != 0) {
-                final float n5 = array;
-                final float n6 = array3;
-                array = (int) (f + ((n5 - f) * Utils.cos(xz2) - (n6 - g) * Utils.sin(xz2)));
-                array3 = (int) (g + ((n5 - f) * Utils.sin(xz2) + (n6 - g) * Utils.cos(xz2)));
-        }
     }
 }

@@ -290,13 +290,13 @@ public class Plane
                 Utils.rot(plane3DX, plane3DZ, objectX, objectY, xy, this.n);
                 Utils.rot(plane3DZ, plane3DY, objectY, objectZ, zy, this.n);
                 Utils.rot(plane3DX, plane3DY, objectX, objectZ, xz, this.n);
-                Utils.rot(plane3DX, plane3DY, this.m.cx, this.m.cz, this.m.xz, this.n);
-                Utils.rot(plane3DZ, plane3DY, this.m.cy, this.m.cz, this.m.zy, this.n);
+                Utils.rot(plane3DX, plane3DY, Medium.cx, Medium.cz, this.m.xz, this.n);
+                Utils.rot(plane3DZ, plane3DY, Medium.cy, Medium.cz, this.m.zy, this.n);
                 final int[] spazX = new int[this.n];
                 final int[] spazY = new int[this.n];
                 for (int l = 0; l < this.n; ++l) {
-                    spazX[l] = this.xs(plane3DX[l], plane3DY[l]);
-                    spazY[l] = this.ys(plane3DZ[l], plane3DY[l]);
+                    spazX[l] = Utils.xs(plane3DX[l], plane3DY[l]);
+                    spazY[l] = Utils.ys(plane3DZ[l], plane3DY[l]);
                 }
                 graphics2D.setColor(new Color(0xE6E6E6));
                 graphics2D.fillPolygon(spazX, spazY, this.n);
@@ -388,11 +388,11 @@ public class Plane
                 Utils.rot(plane3DX, plane3DZ, objectX, objectY, xy, 3);
                 Utils.rot(plane3DZ, plane3DY, objectY, objectZ, zy, 3);
                 Utils.rot(plane3DX, plane3DY, objectX, objectZ, xz, 3);
-                Utils.rot(plane3DX, plane3DY, this.m.cx, this.m.cz, this.m.xz, 3);
-                Utils.rot(plane3DZ, plane3DY, this.m.cy, this.m.cz, this.m.zy, 3);
+                Utils.rot(plane3DX, plane3DY, Medium.cx, Medium.cz, this.m.xz, 3);
+                Utils.rot(plane3DZ, plane3DY, Medium.cy, Medium.cz, this.m.zy, 3);
                 for (int n19 = 0; n19 < 3; ++n19) {
-                    array6[n19] = this.xs(plane3DX[n19], plane3DY[n19]);
-                    array7[n19] = this.ys(plane3DZ[n19], plane3DY[n19]);
+                    array6[n19] = Utils.xs(plane3DX[n19], plane3DY[n19]);
+                    array7[n19] = Utils.ys(plane3DZ[n19], plane3DY[n19]);
                 }
                 int r = (int)(255.0f + 255.0f * (this.m.snap[0] / 400.0f));
                 if (r > 255) {
@@ -453,11 +453,11 @@ public class Plane
                 Utils.rot(plane3DX, plane3DZ, objectX, objectY, xy, 3);
                 Utils.rot(plane3DZ, plane3DY, objectY, objectZ, zy, 3);
                 Utils.rot(plane3DX, plane3DY, objectX, objectZ, xz, 3);
-                Utils.rot(plane3DX, plane3DY, this.m.cx, this.m.cz, this.m.xz, 3);
-                Utils.rot(plane3DZ, plane3DY, this.m.cy, this.m.cz, this.m.zy, 3);
+                Utils.rot(plane3DX, plane3DY, Medium.cx, Medium.cz, this.m.xz, 3);
+                Utils.rot(plane3DZ, plane3DY, Medium.cy, Medium.cz, this.m.zy, 3);
                 for (int n24 = 0; n24 < 3; ++n24) {
-                    array6[n24] = this.xs(plane3DX[n24], plane3DY[n24]);
-                    array7[n24] = this.ys(plane3DZ[n24], plane3DY[n24]);
+                    array6[n24] = Utils.xs(plane3DX[n24], plane3DY[n24]);
+                    array7[n24] = Utils.ys(plane3DZ[n24], plane3DY[n24]);
                 }
                 int r2 = (int)(255.0f + 255.0f * (this.m.snap[0] / 400.0f));
                 if (r2 > 255) {
@@ -587,13 +587,13 @@ public class Plane
             if (array18[0] > this.m.ground) {
                 this.chip = 19;
             }
-            Utils.rot(array16, array17, this.m.cx, this.m.cz, this.m.xz, 3);
-            Utils.rot(array18, array17, this.m.cy, this.m.cz, this.m.zy, 3);
+            Utils.rot(array16, array17, Medium.cx, Medium.cz, this.m.xz, 3);
+            Utils.rot(array18, array17, Medium.cy, Medium.cz, this.m.zy, 3);
             final int[] array22 = new int[3];
             final int[] array23 = new int[3];
             for (int n32 = 0; n32 < 3; ++n32) {
-                array22[n32] = this.xs(array16[n32], array17[n32]);
-                array23[n32] = this.ys(array18[n32], array17[n32]);
+                array22[n32] = Utils.xs(array16[n32], array17[n32]);
+                array23[n32] = Utils.ys(array18[n32], array17[n32]);
             }
             final int n33 = (int)(this.m.random() * 3.0f);
             if (this.bfase != -7) {
@@ -630,14 +630,14 @@ public class Plane
             }
             this.projf /= 3.0f;
         }
-        Utils.rot(plane3DX, plane3DY, this.m.cx, this.m.cz, this.m.xz, this.n);
+        Utils.rot(plane3DX, plane3DY, Medium.cx, Medium.cz, this.m.xz, this.n);
         boolean b4 = false;
         final int[] array24 = new int[this.n];
         final int[] array25 = new int[this.n];
         int n36 = 500;
         for (int n37 = 0; n37 < this.n; ++n37) {
-            array24[n37] = this.xs(plane3DX[n37], plane3DY[n37]);
-            array25[n37] = this.ys(plane3DZ[n37], plane3DY[n37]);
+            array24[n37] = Utils.xs(plane3DX[n37], plane3DY[n37]);
+            array25[n37] = Utils.ys(plane3DZ[n37], plane3DY[n37]);
         }
         int n38 = 0;
         int n39 = 1;
@@ -659,18 +659,18 @@ public class Plane
             b4 = true;
             int n43 = 0;
             for (int n44 = 0; n44 < this.n; ++n44) {
-                if (plane3DY[n44] < 50 && plane3DZ[n44] > this.m.cy) {
+                if (plane3DY[n44] < 50 && plane3DZ[n44] > Medium.cy) {
                     b4 = false;
                 }
                 else if (plane3DZ[n44] == plane3DZ[0]) {
                     ++n43;
                 }
             }
-            if (n43 == this.n && plane3DZ[0] > this.m.cy) {
+            if (n43 == this.n && plane3DZ[0] > Medium.cy) {
                 b4 = false;
             }
         }
-        Utils.rot(plane3DZ, plane3DY, this.m.cy, this.m.cz, this.m.zy, this.n);
+        Utils.rot(plane3DZ, plane3DY, Medium.cy, Medium.cz, this.m.zy, this.n);
 
         av = 0;
         for (int n62 = 0; n62 < this.n; ++n62) {
@@ -685,8 +685,8 @@ public class Plane
         int pointsOut = 0;
         int pointsBehind = 0;
         for (int n51 = 0; n51 < this.n; ++n51) {
-            polygon2DX[n51] = this.xs(plane3DX[n51], plane3DY[n51]);
-            polygon2DY[n51] = this.ys(plane3DZ[n51], plane3DY[n51]);
+            polygon2DX[n51] = Utils.xs(plane3DX[n51], plane3DY[n51]);
+            polygon2DY[n51] = Utils.ys(plane3DZ[n51], plane3DY[n51]);
             if (polygon2DY[n51] < this.m.ih || plane3DY[n51] < 0) {
                 ++pointsOut;
             }
@@ -1168,7 +1168,7 @@ public class Plane
                 float tcZ = t.cz[n19];
                 
                 if (t.xz[n19] != 0F) {
-                	Utils.rotS(midX, midZ, tcX, tcZ, -tXZ);
+                	Utils.rot(midX, midZ, tcX, tcZ, -tXZ);
                 }
                 
                 if (Math.abs(this.t.zy[n19]) != 90 && Math.abs(this.t.xy[n19]) != 90 && Math.abs(midX - (this.t.x[n19] - this.m.x)) < this.t.radx[n19] && Math.abs(midZ - (this.t.z[n19] - this.m.z)) < this.t.radz[n19] && !this.t.decor[n19]) {
@@ -1188,7 +1188,7 @@ public class Plane
                 }
                 
                 if (t.xz[n19] != 0F) {
-                	Utils.rotS(midX, midZ, tcX, tcZ, tXZ);
+                	Utils.rot(midX, midZ, tcX, tcZ, tXZ);
                 }
             }
         }
@@ -1203,15 +1203,15 @@ public class Plane
                 }
             }
         if (n24 != 0) {
-            Utils.rot(shadow3DX, shadow3DY, this.m.cx, this.m.cz, this.m.xz, this.n);
-            Utils.rot(shadow3DZ, shadow3DY, this.m.cy, this.m.cz, this.m.zy, this.n);
+            Utils.rot(shadow3DX, shadow3DY, Medium.cx, Medium.cz, this.m.xz, this.n);
+            Utils.rot(shadow3DZ, shadow3DY, Medium.cy, Medium.cz, this.m.zy, this.n);
             int n27 = 0;
             int n28 = 0;
             int n29 = 0;
             int n30 = 0;
             for (int n31 = 0; n31 < this.n; ++n31) {
-                array6[n31] = this.xs(shadow3DX[n31], shadow3DY[n31]);
-                array7[n31] = this.ys(shadow3DZ[n31], shadow3DY[n31]);
+                array6[n31] = Utils.xs(shadow3DX[n31], shadow3DY[n31]);
+                array7[n31] = Utils.ys(shadow3DZ[n31], shadow3DY[n31]);
                 if (array7[n31] < this.m.ih || shadow3DY[n31] < 10) {
                     ++n27;
                 }
@@ -1238,17 +1238,17 @@ public class Plane
     }
     
     public int xs(final float n, float cz) {
-        if (cz < this.m.cz) {
-            cz = this.m.cz;
+        if (cz < Medium.cz) {
+            cz = Medium.cz;
         }
-        return (int) ((cz - this.m.focus_point) * (this.m.cx - n) / cz + n);
+        return (int) ((cz - this.m.focus_point) * (Medium.cx - n) / cz + n);
     }
     
     public int ys(final float n, float cz) {
-        if (cz < this.m.cz) {
-            cz = this.m.cz;
+        if (cz < Medium.cz) {
+            cz = Medium.cz;
         }
-        return (int) ((cz - this.m.focus_point) * (this.m.cy - n) / cz + n);
+        return (int) ((cz - this.m.focus_point) * (Medium.cy - n) / cz + n);
     }
     
     public void rot(final float[] array, final float[] array2, final float cx, final float cz, final float xz, final int n4) {
@@ -1263,7 +1263,7 @@ public class Plane
     }
     
     public float spy(final float array, final float array2) {
-        return (float)Math.sqrt((array - this.m.cx) * (array - this.m.cx) + array2 * array2);
+        return (float)Math.sqrt((array - Medium.cx) * (array - Medium.cx) + array2 * array2);
     }
     
     public float py(final float n, final float n2) {

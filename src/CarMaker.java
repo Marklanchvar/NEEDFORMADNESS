@@ -352,7 +352,7 @@ public class CarMaker extends Applet implements Runnable, ActionListener
         this.btgame[1] = this.getImage("" + Madness.fpath + "data/backtogame2.gif");
         this.logo = this.getImage("" + Madness.fpath + "data/carmakerlogo.gif");
         this.m.w = 700;
-        this.m.cx = 350;
+        Medium.cx = 350;
         this.m.y = -240;
         this.m.z = -400;
         this.m.zy = 4;
@@ -906,13 +906,13 @@ public class CarMaker extends Applet implements Runnable, ActionListener
                         Utils.rot(array, array2, this.o.x - this.m.x, this.o.y - this.m.y, this.o.xy, 6);
                         Utils.rot(array2, array3, this.o.y - this.m.y, this.o.z - this.m.z, this.o.zy, 6);
                         Utils.rot(array, array3, this.o.x - this.m.x, this.o.z - this.m.z, this.o.xz, 6);
-                        Utils.rot(array, array3, this.m.cx, this.m.cz, this.m.xz, 6);
-                        Utils.rot(array2, array3, this.m.cy, this.m.cz, this.m.zy, 6);
+                        Utils.rot(array, array3, Medium.cx, Medium.cz, this.m.xz, 6);
+                        Utils.rot(array2, array3, Medium.cy, Medium.cz, this.m.zy, 6);
                         final int[] array7 = new int[6];
                         final int[] array8 = new int[6];
                         for (int n13 = 0; n13 < 6; ++n13) {
-                            array7[n13] = this.xs(array[n13], array3[n13]);
-                            array8[n13] = this.ys(array2[n13], array3[n13]);
+                            array7[n13] = Utils.xs(array[n13], array3[n13]);
+                            array8[n13] = Utils.ys(array2[n13], array3[n13]);
                         }
                         this.rd.setColor(new Color(0, 150, 0));
                         this.rd.drawString("X+", array7[0] - 7, array8[0] + 4);
@@ -4581,17 +4581,17 @@ public class CarMaker extends Applet implements Runnable, ActionListener
     }
     
     public int xs(final float n, float cz) {
-        if (cz < this.m.cz) {
-            cz = this.m.cz;
+        if (cz < Medium.cz) {
+            cz = Medium.cz;
         }
-        return (int) ((cz - this.m.focus_point) * (this.m.cx - n) / cz + n);
+        return (int) ((cz - this.m.focus_point) * (Medium.cx - n) / cz + n);
     }
     
     public int ys(final float n, float cz) {
-        if (cz < this.m.cz) {
-            cz = this.m.cz;
+        if (cz < Medium.cz) {
+            cz = Medium.cz;
         }
-        return (int) ((cz - this.m.focus_point) * (this.m.cy - n) / cz + n);
+        return (int) ((cz - this.m.focus_point) * (Medium.cy - n) / cz + n);
     }
     
     @Override

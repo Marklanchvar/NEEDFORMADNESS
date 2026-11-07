@@ -1,5 +1,6 @@
 public class Utils
 {
+	Medium m;
 
     public static float cos(float i) {
         while (i >= 360) {
@@ -41,6 +42,20 @@ public class Utils
         return (float) Math.toDegrees(Math.asin(f));
     }
     
+    public static int xs(final float f, float n5) {
+        if (n5 < Medium.cz) {
+            n5 = Medium.cz;
+        }
+        return (int) ((n5 - Medium.focus_point) * (Medium.cx - f) / n5 + f);
+    }
+    
+    public static int ys(final float n, float n2) {
+        if (n2 < Medium.cz) {
+            n2 = Medium.cz;
+        }
+        return (int) ((n2 - Medium.focus_point) * (Medium.cy - n) / n2 + n);
+    }
+    
     public static void rot(final float[] pointX, final float[] pointY, final float originX, final float originY, final float angle, final int count) {
         if (angle != 0) {
             for (int i = 0; i < count; ++i) {
@@ -63,7 +78,7 @@ public class Utils
         }
     }
     
-    public static void rotS(float pointX, float pointY, final float originX, final float originY, final float angle) {
+    public static void rot(float pointX, float pointY, final float originX, final float originY, final float angle) {
         if (angle != 0) {
                 final float cloneX = pointX;
                 final float cloneY = pointY;

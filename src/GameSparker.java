@@ -1147,11 +1147,11 @@ public class GameSparker extends Applet implements Runnable
             		}
             		else {
             			actat--;
-            			if (actat < 0) {
-            				actat = 0;
+            			if (actat < 5) {
+            				actat = 5;
             			}
             		}
-            		if (xtGraphics.starcnt == 0 && isGaming) medium.adjstfade(actat * 15 / (isGaming ? 47F : 35F));
+            		if (xtGraphics.starcnt == 0 && isGaming) medium.adjstfade((actat * 10 + 5) / (isGaming ? 47F : 35F));
             		lastTime = endTime;
             		nfr = 0;
             	}
