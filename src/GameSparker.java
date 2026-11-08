@@ -85,7 +85,6 @@ public class GameSparker extends Applet implements Runnable
     Checkbox notp;
     boolean openm;
     Smenu sgame;
-    Smenu wgame;
     Smenu warb;
     Smenu pgame;
     Smenu vnpls;
@@ -101,16 +100,11 @@ public class GameSparker extends Applet implements Runnable
     Smenu swait;
     Smenu sclass;
     Smenu scars;
-    Smenu sfix;
     Smenu gmode;
     Smenu rooms;
-    Smenu sendtyp;
-    Smenu senditem;
-    Smenu clanlev;
-    Smenu clcars;
+    
     Smenu datat;
     Smenu ilaps;
-    Smenu icars;
     Smenu proitem;
 	static int actat;
     
@@ -149,7 +143,6 @@ public class GameSparker extends Applet implements Runnable
         this.applejava = false;
         this.openm = false;
         this.sgame = new Smenu(8);
-        this.wgame = new Smenu(4);
         this.warb = new Smenu(102);
         this.pgame = new Smenu(11);
         this.vnpls = new Smenu(5);
@@ -165,16 +158,10 @@ public class GameSparker extends Applet implements Runnable
         this.swait = new Smenu(6);
         this.sclass = new Smenu(7);
         this.scars = new Smenu(4);
-        this.sfix = new Smenu(7);
         this.gmode = new Smenu(3);
         this.rooms = new Smenu(7);
-        this.sendtyp = new Smenu(6);
-        this.senditem = new Smenu(707);
-        this.clanlev = new Smenu(8);
-        this.clcars = new Smenu(707);
         this.datat = new Smenu(26);
         this.ilaps = new Smenu(18);
-        this.icars = new Smenu(5);
         this.proitem = new Smenu(707);
     }
     
@@ -1289,7 +1276,6 @@ public class GameSparker extends Applet implements Runnable
         this.add(this.mycar);
         this.add(this.notp);
         this.sgame.setFont(new Font("Arial", 1, 13));
-        this.wgame.setFont(new Font("Arial", 1, 13));
         this.warb.setFont(new Font("Arial", 1, 13));
         this.pgame.setFont(new Font("Arial", 1, 12));
         this.vnpls.setFont(new Font("Arial", 1, 13));
@@ -1305,19 +1291,12 @@ public class GameSparker extends Applet implements Runnable
         this.swait.setFont(new Font("Arial", 0, 12));
         this.sclass.setFont(new Font("Arial", 1, 12));
         this.scars.setFont(new Font("Arial", 1, 12));
-        this.sfix.setFont(new Font("Arial", 1, 12));
         this.mycar.setFont(new Font("Arial", 1, 12));
         this.notp.setFont(new Font("Arial", 1, 12));
         this.gmode.setFont(new Font("Arial", 1, 13));
         this.rooms.setFont(new Font("Arial", 1, 13));
-        this.sendtyp.setFont(new Font("Arial", 1, 12));
-        this.senditem.setFont(new Font("Arial", 1, 12));
         this.datat.setFont(new Font("Arial", 1, 12));
-        this.clanlev.setFont(new Font("Arial", 1, 12));
-        this.clcars.setFont(new Font("Arial", 1, 12));
-        this.clcars.alphad = true;
         this.ilaps.setFont(new Font("Arial", 1, 13));
-        this.icars.setFont(new Font("Arial", 1, 12));
         this.proitem.setFont(new Font("Arial", 1, 12));
         this.sgame.add(this.rd, " NFM 1     ");
         this.sgame.add(this.rd, " NFM 2     ");
@@ -1326,9 +1305,6 @@ public class GameSparker extends Applet implements Runnable
         this.sgame.add(this.rd, " Monthly Top20 ");
         this.sgame.add(this.rd, " All Time Top20 ");
         this.sgame.add(this.rd, " Stage Maker ");
-        this.wgame.add(this.rd, " Normal Game");
-        this.wgame.add(this.rd, " War / Battle");
-        this.wgame.add(this.rd, " War / Battle - Practice");
         this.warb.add(this.rd, " Loading your clan's wars and battles, please wait...");
         this.pgame.add(this.rd, " Select the game you want to practice");
         this.vnpls.add(this.rd, "Players");
@@ -1382,56 +1358,28 @@ public class GameSparker extends Applet implements Runnable
         this.scars.add(this.rd, "All Cars");
         this.scars.add(this.rd, "Custom Cars");
         this.scars.add(this.rd, "Game Cars");
-        this.sfix.add(this.rd, "Unlimited Fixing");
-        this.sfix.add(this.rd, "4 Fixes");
-        this.sfix.add(this.rd, "3 Fixes");
-        this.sfix.add(this.rd, "2 Fixes");
-        this.sfix.add(this.rd, "1 Fix");
-        this.sfix.add(this.rd, "No Fixing");
-        this.icars.add(this.rd, "Type of Cars");
-        this.icars.add(this.rd, "All Cars");
-        this.icars.add(this.rd, "Clan Cars");
-        this.icars.add(this.rd, "Game Cars");
-        this.icars.w = 140;
         this.gmode.add(this.rd, " Normal Game ");
         this.gmode.add(this.rd, " Practice Game ");
         this.rooms.rooms = true;
         this.rooms.add(this.rd, "Ghostrider :: 1");
-        this.sendtyp.add(this.rd, "Write a Message");
-        this.sendtyp.add(this.rd, "Share a Custom Car");
-        this.sendtyp.add(this.rd, "Share a Custom Stage");
-        this.sendtyp.add(this.rd, "Send a Clan Invitation");
-        this.sendtyp.add(this.rd, "Share a Relative Date");
-        this.senditem.add(this.rd, "Suddenly the King becomes Santa's Little Helper");
-        for (int n4 = 0; n4 < 6; ++n4) {
-            this.clanlev.add(this.rd, "" + (n4 + 1) + "");
-        }
-        this.clanlev.add(this.rd, "7 - Admin");
         this.hidefields();
     }
     
     public void hidefields() {
         this.ilaps.hide();
-        this.icars.hide();
         this.proitem.hide();
-        this.clcars.hide();
-        this.clanlev.hide();
         this.mmsg.hide();
         this.datat.hide();
-        this.senditem.hide();
-        this.sendtyp.hide();
         this.rooms.hide();
         this.mcars.hide();
         this.mstgs.hide();
         this.gmode.hide();
         this.sclass.hide();
         this.scars.hide();
-        this.sfix.hide();
         this.mycar.hide();
         this.notp.hide();
         this.cmsg.hide();
         this.sgame.hide();
-        this.wgame.hide();
         this.pgame.hide();
         this.vnpls.hide();
         this.vtyp.hide();
@@ -1495,37 +1443,16 @@ public class GameSparker extends Applet implements Runnable
         if (this.warb.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
             this.openm = true;
         }
-        if (this.wgame.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
-            this.openm = true;
-        }
         if (this.rooms.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
-            this.openm = true;
-        }
-        if (this.sendtyp.draw(this.rd, this.xm, this.ym, this.moused, 450, true)) {
-            this.openm = true;
-        }
-        if (this.senditem.draw(this.rd, this.xm, this.ym, this.moused, 450, true)) {
             this.openm = true;
         }
         if (this.datat.draw(this.rd, this.xm, this.ym, this.moused, 450, true)) {
             this.openm = true;
         }
-        if (this.clanlev.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
-            this.openm = true;
-        }
-        if (this.clcars.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
-            this.openm = true;
-        }
         if (this.ilaps.draw(this.rd, this.xm, this.ym, this.moused, 450, true)) {
             this.openm = true;
         }
-        if (this.icars.draw(this.rd, this.xm, this.ym, this.moused, 450, true)) {
-            this.openm = true;
-        }
         if (this.proitem.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
-            this.openm = true;
-        }
-        if (this.sfix.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
             this.openm = true;
         }
         if (this.sclass.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
