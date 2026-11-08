@@ -319,11 +319,9 @@ public class xtGraphics extends Panel implements Runnable
     int[] ovw;
     int[] ovh;
     int[] ovsx;
-    int removeds;
     int nfmtab;
     boolean justwon1;
     boolean justwon2;
-    int lfrom;
     int lockcnt;
     boolean showtf;
     int ransay;
@@ -535,11 +533,9 @@ public class xtGraphics extends Panel implements Runnable
         this.ovw = new int[] { 0, 0, 0, 0 };
         this.ovh = new int[] { 0, 0, 0, 0 };
         this.ovsx = new int[] { 0, 0, 0, 0 };
-        this.removeds = 0;
         this.nfmtab = 0;
         this.justwon1 = false;
         this.justwon2 = false;
-        this.lfrom = 0;
         this.lockcnt = 0;
         this.showtf = false;
         this.ransay = 0;
@@ -1574,8 +1570,6 @@ public class xtGraphics extends Panel implements Runnable
             this.app.sgame.select(2);
             this.nfmtab = 2;
         }
-        this.removeds = 0;
-        this.lfrom = 0;
         this.cd.staction = 0;
         this.fase = 2;
     }
@@ -1597,7 +1591,6 @@ public class xtGraphics extends Panel implements Runnable
         if (this.cd.staction != 0) {
             this.cd.staction = 0;
         }
-        this.removeds = 0;
     }
     
     public void cantgo(final Control control) {
@@ -1652,15 +1645,9 @@ public class xtGraphics extends Panel implements Runnable
                     this.app.requestFocus();
                 }
                 if (this.cd.staction == 5) {
-                    if (this.lfrom == 0) {
-                        this.cd.staction = 0;
-                        this.removeds = 1;
-                    }
-                    else {
                         this.cd.onstage = checkPoints.name;
                         this.cd.staction = 2;
                         this.dnload = 2;
-                    }
                     this.backlog = this.nickname;
                     this.nickey = this.cd.tnickey;
                     this.logged = true;
@@ -1782,7 +1769,7 @@ public class xtGraphics extends Panel implements Runnable
                             }
                         }
                     }
-                    else if (this.removeds != 1) {
+                    else {
                         this.rd.setFont(new Font("Arial", 1, 13));
                         this.ftm = this.rd.getFontMetrics();
                         this.drawcs(132, "Failed to load stage...", 255, 138, 0, 3);
