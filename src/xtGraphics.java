@@ -2742,14 +2742,6 @@ public class xtGraphics extends Panel implements Runnable
                 this.intertrack[0].stop();
                 this.intertrack[1].loadimod(false);
                 this.intertrack[1].play();
-        		if (this.unlocked[0] == 11) {
-        			if (this.unlocked[1] != 17) {
-        				this.opselect = 1;
-        			}
-        			else {
-        				this.opselect = 2;
-        			}
-        		}
         		if (this.firstime) {
         			this.oldfase = 10;
         			this.fase = 11;
@@ -2759,6 +2751,7 @@ public class xtGraphics extends Panel implements Runnable
                    this.gmode = 0;
                    this.fase = -9;
         		}
+            	this.intertrack[0].stop();
         	}
         	if (this.opselect == 1) {
                 this.intertrack[0].stop();
