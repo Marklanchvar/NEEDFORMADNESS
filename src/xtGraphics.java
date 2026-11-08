@@ -344,7 +344,6 @@ public class xtGraphics extends Panel implements Runnable
     int lsc;
     int mouson;
     int onmsc;
-    boolean remi;
     int basefase;
     boolean noclass;
     int gatey;
@@ -561,7 +560,6 @@ public class xtGraphics extends Panel implements Runnable
         this.lsc = -1;
         this.mouson = -1;
         this.onmsc = -1;
-        this.remi = false;
         this.basefase = 0;
         this.noclass = false;
         this.gatey = 300;
@@ -3004,7 +3002,6 @@ public class xtGraphics extends Panel implements Runnable
         this.xstart = new int[] { 0, -350, 350, -350, 350, -350, 350, 0 };
         this.zstart = new int[] { -380, -760, -760, 0, 0, 760, 760, 380 };
         this.onmsc = -1;
-        this.remi = false;
         this.basefase = 0;
         this.noclass = false;
         if (this.testdrive != 1 && this.testdrive != 2) {
@@ -3147,7 +3144,7 @@ public class xtGraphics extends Panel implements Runnable
     	this.flatrstart = 6;
 
         this.rd.drawImage(this.selectcar, 321, 37, null);
-        if (this.cfase == 3 || this.cfase == 7 || this.remi) {
+        if (this.cfase == 3 || this.cfase == 7) {
             if (this.cd.lastload == 1) {
                 this.rd.drawImage(this.ycmc, 337, 58, null);
             }
@@ -3155,47 +3152,7 @@ public class xtGraphics extends Panel implements Runnable
                 this.rd.drawImage(this.yac, 323, 58, null);
             }
         }
-        if (this.cfase == 11) {
-            this.rd.setFont(new Font("Arial", 1, 13));
-            this.ftm = this.rd.getFontMetrics();
-            String s = "Top 20 Cars";
-            int i = this.cd.loadlist;
-            String s2 = "Weekly";
-            while (i > 6) {
-                i -= 6;
-                if (s2.equals("Semi-Annual")) {
-                    s2 = "Annual";
-                }
-                if (s2.equals("Monthly")) {
-                    s2 = "Semi-Annual";
-                }
-                if (s2.equals("Weekly")) {
-                    s2 = "Monthly";
-                }
-            }
-            if (i == 1) {
-                s = "" + s2 + " Top 20 Cars";
-            }
-            if (i == 2) {
-                s = "" + s2 + " Top 20 Class A Cars";
-            }
-            if (i == 3) {
-                s = "" + s2 + " Top 20 Class A & B Cars";
-            }
-            if (i == 4) {
-                s = "" + s2 + " Top 20 Class B Cars";
-            }
-            if (i == 5) {
-                s = "" + s2 + " Top 20 Class B & C Cars";
-            }
-            if (i == 6) {
-                s = "" + s2 + " Top 20 Class C Cars";
-            }
-            this.drawcs(69, s, 120, 176, 255, 3);
-        }
-        if (!this.remi) {
             array[this.sc[0]].d(this.rd);
-        }
         if (this.cfase == 8) {
             this.drawprom(150, 85);
             this.rd.setFont(new Font("Arial", 1, 13));
@@ -3273,7 +3230,7 @@ public class xtGraphics extends Panel implements Runnable
             if (this.flatrstart < 6) {
                 n8 = 2;
             }
-            if (!this.remi && (this.cfase != 10 || (this.cd.action != 0 && this.cd.action < 14))) {
+            if (this.cfase != 10 || (this.cd.action != 0 && this.cd.action < 14)) {
                 if (this.cfase == 3 && this.cd.lastload == 2) {
                     this.app.mcars.move(400 - this.app.mcars.w / 2, 78);
                     this.app.mcars.show = true;
@@ -3309,14 +3266,12 @@ public class xtGraphics extends Panel implements Runnable
             else {
                 this.app.mcars.show = false;
             }
-            if (!this.remi) {
                 if (this.sc[0] != this.minsl) {
                     this.rd.drawImage(this.back[this.pback], 95, 275, null);
                 }
                 if (this.sc[0] != this.maxsl) {
                     this.rd.drawImage(this.next[this.pnext], 645, 275, null);
                 }
-            }
             if (this.gmode == 1) {
                 if (this.sc[0] == 5 && this.unlocked[0] <= 2) {
                     k = 2;
@@ -3390,42 +3345,6 @@ public class xtGraphics extends Panel implements Runnable
                                 n7 = 16;
                                 this.cfase = 3;
                             }
-                        }
-                        if (this.remi) {
-                            this.remi = false;
-                        }
-                    }
-                    if (this.cfase == -1) {
-                        if (this.autolog) {
-                            this.autolog = false;
-                            this.cfase = 5;
-                            this.cd.action = 1;
-                            this.cd.sparkactionloader();
-                        }
-                        else if (this.cd.lastload != 2) {
-                            this.cfase = 5;
-                            this.showtf = false;
-                            if (!this.logged) {
-                                this.cd.action = 0;
-                                this.cd.reco = -2;
-                                this.tcnt = 5;
-                                this.cntflock = 0;
-                            }
-                            else {
-                                this.cd.action = 3;
-                                this.cd.sparkactionloader();
-                            }
-                        }
-                        else {
-                            this.minsl = 16;
-                            this.maxsl = this.cd.nlocars - 1;
-                            if (this.onmsc >= this.minsl && this.onmsc <= this.maxsl) {
-                                n7 = this.onmsc;
-                            }
-                            else {
-                                n7 = 16;
-                            }
-                            this.cfase = 3;
                         }
                     }
                     if (this.cfase == 4) {
