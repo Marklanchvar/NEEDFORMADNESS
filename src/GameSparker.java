@@ -52,8 +52,6 @@ public class GameSparker extends Applet implements Runnable
     int aph;
     float apmult;
     float reqmult;
-    int lastw;
-    int lasth;
     boolean onbar;
     boolean oncarm;
     boolean onstgm;
@@ -117,8 +115,6 @@ public class GameSparker extends Applet implements Runnable
         this.aph = 0;
         this.apmult = 1.0f;
         this.reqmult = 0.0f;
-        this.lastw = 0;
-        this.lasth = 0;
         this.onbar = false;
         this.oncarm = false;
         this.onstgm = false;
@@ -1166,10 +1162,6 @@ public class GameSparker extends Applet implements Runnable
     @Override
     public void paint(final Graphics graphics) {
         final Graphics2D graphics2D = (Graphics2D)graphics;
-        if (this.lastw != this.getWidth() || this.lasth != this.getHeight()) {
-            this.lastw = this.getWidth();
-            this.lasth = this.getHeight();
-        }
         // Always scale offImage to fit inside the window
         float scaleW = this.getWidth() / 800.0f;
         float scaleH = this.getHeight() / 450.0f;

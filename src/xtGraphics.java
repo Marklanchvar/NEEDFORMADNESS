@@ -49,26 +49,13 @@ public class xtGraphics extends Panel implements Runnable
     int warning;
     boolean newparts;
     boolean logged;
-    boolean gotlog;
-    boolean autolog;
     boolean nofull;
-    int hours;
     boolean onviewpro;
-    int playingame;
-    int onjoin;
-    int ontyp;
     float[] arnp;
     String nickname;
     String nickey;
     String backlog;
-    String server;
-    String localserver;
-    String servername;
-    int servport;
-    int gameport;
     int acexp;
-    int cntptrys;
-    int[] delays;
     int nplayers;
     int im;
     String[] plnames;
@@ -80,7 +67,6 @@ public class xtGraphics extends Panel implements Runnable
     int[] zstart;
     float[][] allrnp;
     boolean[] isbot;
-    String gaclan;
     float lcarx;
     float lcary;
     float lcarz;
@@ -88,7 +74,6 @@ public class xtGraphics extends Panel implements Runnable
     int beststunt;
     int laptime;
     int fastestlap;
-    int sendstat;
     int testdrive;
     boolean holdit;
     int holdcnt;
@@ -401,26 +386,13 @@ public class xtGraphics extends Panel implements Runnable
         this.warning = 0;
         this.newparts = false;
         this.logged = false;
-        this.gotlog = false;
-        this.autolog = false;
         this.nofull = false;
-        this.hours = 8;
         this.onviewpro = false;
-        this.playingame = -1;
-        this.onjoin = -1;
-        this.ontyp = 0;
         this.arnp = new float[] { 0.5f, 0.0f, 0.0f, 1.0f, 0.5f, 0.0f };
         this.nickname = "";
         this.nickey = "";
         this.backlog = "";
-        this.server = "multiplayer.needformadness.com";
-        this.localserver = "";
-        this.servername = "Madness";
-        this.servport = 7071;
-        this.gameport = 7001;
         this.acexp = 0;
-        this.cntptrys = 5;
-        this.delays = new int[] { 600, 600, 600 };
         this.nplayers = 8;
         this.im = 0;
         this.plnames = new String[] { "", "", "", "", "", "", "", "" };
@@ -432,7 +404,6 @@ public class xtGraphics extends Panel implements Runnable
         this.zstart = new int[] { -380, -760, -760, 0, 0, 760, 760, 380 };
         this.allrnp = new float[8][6];
         this.isbot = new boolean[8];
-        this.gaclan = "";
         this.lcarx = 0;
         this.lcary = 0;
         this.lcarz = 0;
@@ -440,7 +411,6 @@ public class xtGraphics extends Panel implements Runnable
         this.beststunt = 0;
         this.laptime = 0;
         this.fastestlap = 0;
-        this.sendstat = 0;
         this.testdrive = 0;
         this.holdit = false;
         this.holdcnt = 0;
@@ -1340,7 +1310,6 @@ public class xtGraphics extends Panel implements Runnable
         this.beststunt = 0;
         this.laptime = 0;
         this.fastestlap = 0;
-        this.sendstat = 0;
         if (this.fase == 2 || this.fase == -22) {
             this.sortcars(n);
         }
@@ -1651,7 +1620,6 @@ public class xtGraphics extends Panel implements Runnable
                     this.backlog = this.nickname;
                     this.nickey = this.cd.tnickey;
                     this.logged = true;
-                    this.gotlog = true;
                     if (this.cd.reco == 0) {
                         this.acexp = 0;
                     }
