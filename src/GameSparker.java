@@ -87,9 +87,7 @@ public class GameSparker extends Applet implements Runnable
     Smenu pgame;
     Smenu vnpls;
     Smenu vtyp;
-    Smenu snfmm;
-    Smenu snfm1;
-    Smenu snfm2;
+    Smenu snfm;
     Smenu mstgs;
     Smenu mcars;
     Smenu slaps;
@@ -143,9 +141,7 @@ public class GameSparker extends Applet implements Runnable
         this.pgame = new Smenu(11);
         this.vnpls = new Smenu(5);
         this.vtyp = new Smenu(6);
-        this.snfmm = new Smenu(12);
-        this.snfm1 = new Smenu(12);
-        this.snfm2 = new Smenu(19);
+        this.snfm = new Smenu(34);
         this.mstgs = new Smenu(707);
         this.mcars = new Smenu(707);
         this.slaps = new Smenu(17);
@@ -174,7 +170,7 @@ public class GameSparker extends Applet implements Runnable
         final Medium medium = new Medium();
         final Trackers trackers = new Trackers();
         final CheckPoints checkPoints = new CheckPoints();
-        final ContO[] array = new ContO[40 + 16 + 66]; // original cars + carmaker cars + track pieces = 122
+        final ContO[] array = new ContO[16 + 40 + 66]; // original cars + carmaker cars + track pieces = 122
         final CarDefine carDefine = new CarDefine(array, medium, trackers, this);
         final xtGraphics xtGraphics = new xtGraphics(medium, carDefine, this.rd, this);
         this.sizebar = xtGraphics.getImage("data/sizebar.gif");
@@ -1041,10 +1037,10 @@ public class GameSparker extends Applet implements Runnable
             if (xtGraphics.fase == -4) {
                 if (n7 == 0) {
                     xtGraphics.sendwin(checkPoints);
-                    if (xtGraphics.winner && xtGraphics.gmode != 0 && checkPoints.stage != 27 && checkPoints.stage == xtGraphics.unlocked[xtGraphics.gmode - 1] + (xtGraphics.gmode - 1) * 10) {
-                        ++xtGraphics.unlocked[xtGraphics.gmode - 1];
-                        this.setcarcookie(xtGraphics.sc[0], carDefine.names[xtGraphics.sc[0]], xtGraphics.arnp, xtGraphics.gmode, xtGraphics.unlocked, false);
-                        --xtGraphics.unlocked[xtGraphics.gmode - 1];
+                    if (xtGraphics.winner && checkPoints.stage != 32 && checkPoints.stage == xtGraphics.unlocked) {
+                        ++xtGraphics.unlocked;
+                        this.setcarcookie(xtGraphics.sc[0], carDefine.names[xtGraphics.sc[0]], xtGraphics.arnp, xtGraphics.unlocked, false);
+                        --xtGraphics.unlocked;
                     }
                 }
                 if (n7 <= 0) {
@@ -1272,9 +1268,7 @@ public class GameSparker extends Applet implements Runnable
         this.pgame.setFont(new Font("Arial", 1, 12));
         this.vnpls.setFont(new Font("Arial", 1, 13));
         this.vtyp.setFont(new Font("Arial", 1, 13));
-        this.snfmm.setFont(new Font("Arial", 1, 13));
-        this.snfm1.setFont(new Font("Arial", 1, 13));
-        this.snfm2.setFont(new Font("Arial", 1, 13));
+        this.snfm.setFont(new Font("Arial", 1, 13));
         this.mstgs.setFont(new Font("Arial", 1, 13));
         this.mcars.setFont(new Font("Arial", 1, 13));
         this.slaps.setFont(new Font("Arial", 1, 13));
@@ -1308,23 +1302,15 @@ public class GameSparker extends Applet implements Runnable
         this.vtyp.add(this.rd, "Wasting only");
         this.vtyp.add(this.rd, "Racers VS Wasters - my clan wastes");
         this.vtyp.add(this.rd, "Racers VS Wasters - my clan races");
-        this.snfmm.add(this.rd, "Select Stage");
-        this.snfm1.add(this.rd, "Select Stage");
-        this.snfm2.add(this.rd, "Select Stage");
+        this.snfm.add(this.rd, "Select Stage");
         this.mstgs.add(this.rd, "Suddenly the King becomes Santa's Little Helper");
         this.mcars.add(this.rd, "Sword of Justice");
         this.snpls.add(this.rd, "Select");
         this.swait.add(this.rd, "1 Minute");
         this.ilaps.add(this.rd, "Laps");
         this.ilaps.add(this.rd, "1 Lap");
-        for (int i = 0; i < 5; ++i) {
-            this.snfmm.add(this.rd, " Stage " + (i + 1) + "");
-        }
-        for (int j = 0; j < 10; ++j) {
-            this.snfm1.add(this.rd, " Stage " + (j + 1) + "");
-        }
-        for (int k = 0; k < 17; ++k) {
-            this.snfm2.add(this.rd, " Stage " + (k + 1) + "");
+        for (int j = 0; j < 32; ++j) {
+            this.snfm.add(this.rd, " Stage " + (j + 1) + "");
         }
         for (int l = 0; l < 7; ++l) {
             this.snpls.add(this.rd, "    " + (l + 2) + "");
@@ -1377,9 +1363,7 @@ public class GameSparker extends Applet implements Runnable
         this.vtyp.hide();
         this.warb.hide();
         this.slaps.hide();
-        this.snfm1.hide();
-        this.snfmm.hide();
-        this.snfm2.hide();
+        this.snfm.hide();
         this.snpls.hide();
         this.snbts.hide();
         this.swait.hide();
@@ -1408,13 +1392,7 @@ public class GameSparker extends Applet implements Runnable
         if (this.sgame.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
             this.openm = true;
         }
-        if (this.snfm1.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
-            this.openm = true;
-        }
-        if (this.snfm2.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
-            this.openm = true;
-        }
-        if (this.snfmm.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
+        if (this.snfm.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
             this.openm = true;
         }
         if (this.mstgs.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
@@ -1899,7 +1877,7 @@ public class GameSparker extends Applet implements Runnable
             else {
                 medium.lightn = -1;
             }
-            if (checkPoints.stage == 1 || checkPoints.stage == 11) {
+            if (false) {
                 medium.nochekflk = false;
             }
             else {
@@ -1914,7 +1892,9 @@ public class GameSparker extends Applet implements Runnable
                 if (xtGraphics.fase == 22) {
                     xtGraphics.colorCar(array2[xtGraphics.sc[n9]], n9);
                 }
-                array[n9] = new ContO(array2[xtGraphics.sc[n9]], xtGraphics.xstart[n9], 250 - array2[xtGraphics.sc[n9]].grat, xtGraphics.zstart[n9], 0);
+                if (n9 >= 0 && n9 < 16) {
+                	if (array2[xtGraphics.sc[n9]] != null) array[n9] = new ContO(array2[xtGraphics.sc[n9]], xtGraphics.xstart[n9], 250 - array2[xtGraphics.sc[n9]].grat, xtGraphics.zstart[n9], 0);
+                }
                 array3[n9].reseto(xtGraphics.sc[n9], array[n9], checkPoints);
             }
             if (xtGraphics.fase == 2 || xtGraphics.fase == -22) {
@@ -2052,7 +2032,7 @@ public class GameSparker extends Applet implements Runnable
         this.exwist = true;
     }
     
-    public void setcarcookie(final int i, final String str, final float[] array, final int n, final int[] array2, final boolean b) {
+    public void setcarcookie(final int i, final String str, final float[] array, final int array2, final boolean b) {
         try {
             final File file = new File("" + Madness.fpath + "data/user.data");
             final String[] array3 = { "", "", "", "", "" };
@@ -2064,15 +2044,10 @@ public class GameSparker extends Applet implements Runnable
                 }
                 bufferedReader.close();
             }
-            if (n == 0) {
                 array3[1] = "lastcar(" + i + "," + (int)(array[0] * 100.0f) + "," + (int)(array[1] * 100.0f) + "," + (int)(array[2] * 100.0f) + "," + (int)(array[3] * 100.0f) + "," + (int)(array[4] * 100.0f) + "," + (int)(array[5] * 100.0f) + "," + str + ")";
-            }
-            if (n == 1) {
-                array3[2] = "NFM1(" + i + "," + array2[0] + ")";
-            }
-            if (n == 2) {
-                array3[3] = "NFM2(" + i + "," + array2[1] + ")";
-            }
+            
+                array3[2] = "NFM(" + i + "," + array2 + ")";
+            
             array3[4] = "graphics(" + Madness.moto + "," + Madness.anti + "," + Madness.smooth + ")";
             final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
             for (int j = 0; j < 5; ++j) {
@@ -2098,26 +2073,15 @@ public class GameSparker extends Applet implements Runnable
                 }
                 bufferedReader.close();
             }
-            if (array2[2].startsWith("NFM1")) {
-                final int getint = this.getint("NFM1", array2[2], 0);
+            if (array2[2].startsWith("NFM")) {
+                final int getint = this.getint("NFM", array2[2], 0);
                 if (getint >= 0 && getint < 16) {
-                    xtGraphics.scm[0] = getint;
+                    xtGraphics.osc = getint;
                     xtGraphics.firstime = false;
                 }
-                final int getint2 = this.getint("NFM1", array2[2], 1);
-                if (getint2 >= 1 && getint2 <= 11) {
-                    xtGraphics.unlocked[0] = getint2;
-                }
-            }
-            if (array2[3].startsWith("NFM2")) {
-                final int getint3 = this.getint("NFM2", array2[3], 0);
-                if (getint3 >= 0 && getint3 < 16) {
-                    xtGraphics.scm[1] = getint3;
-                    xtGraphics.firstime = false;
-                }
-                final int getint4 = this.getint("NFM2", array2[3], 1);
-                if (getint4 >= 1 && getint4 <= 17) {
-                    xtGraphics.unlocked[1] = getint4;
+                final int getint2 = this.getint("NFM", array2[2], 1);
+                if (getint2 >= 1 && getint2 <= 32) {
+                    xtGraphics.unlocked = getint2;
                 }
             }
             if (array2[4].startsWith("graphics")) {

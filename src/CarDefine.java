@@ -797,9 +797,6 @@ public class CarDefine implements Runnable
     }
     
     public void loadstagemaker() {
-        this.gs.mstgs.hide();
-        this.gs.mstgs.removeAll();
-        this.gs.mstgs.add(this.gs.rd, "Select Stage");
         int n = 0;
         if (new File("" + Madness.fpath + "mystages/").exists()) {
             final String[] list = new File("" + Madness.fpath + "mystages/").list();
@@ -817,8 +814,6 @@ public class CarDefine implements Runnable
             this.gs.mstgs.add(this.gs.rd, "No stages where found in your 'mystages' folder.");
             this.msloaded = -1;
         }
-        this.gs.mstgs.select(0);
-        this.gs.mstgs.show();
     }
     
     public void loadcarmaker() {

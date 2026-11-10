@@ -42,9 +42,7 @@ public class xtGraphics extends Panel implements Runnable
     boolean shaded;
     int flipo;
     int nextc;
-    int gmode;
-    int[] unlocked;
-    int[] scm;
+    int unlocked;
     int looped;
     int warning;
     boolean newparts;
@@ -305,8 +303,7 @@ public class xtGraphics extends Panel implements Runnable
     int[] ovh;
     int[] ovsx;
     int nfmtab;
-    boolean justwon1;
-    boolean justwon2;
+    boolean justwon;
     int lockcnt;
     boolean showtf;
     int ransay;
@@ -379,9 +376,7 @@ public class xtGraphics extends Panel implements Runnable
         this.shaded = false;
         this.flipo = 0;
         this.nextc = 0;
-        this.gmode = 0;
-        this.unlocked = new int[] { 1, 1 };
-        this.scm = new int[] { 0, 0 };
+        this.unlocked = 1;
         this.looped = 1;
         this.warning = 0;
         this.newparts = false;
@@ -504,8 +499,7 @@ public class xtGraphics extends Panel implements Runnable
         this.ovh = new int[] { 0, 0, 0, 0 };
         this.ovsx = new int[] { 0, 0, 0, 0 };
         this.nfmtab = 0;
-        this.justwon1 = false;
-        this.justwon2 = false;
+        this.justwon = false;
         this.lockcnt = 0;
         this.showtf = false;
         this.ransay = 0;
@@ -1094,21 +1088,15 @@ public class xtGraphics extends Panel implements Runnable
                 }
                 if (name.equals("bcl.gif")) {
                     this.bcl[0] = this.loadimage(b, mediaTracker, defaultToolkit);
+                    this.bcl[1] = this.dodgen(this.bcl[0]);
                 }
                 if (name.equals("bcr.gif")) {
                     this.bcr[0] = this.loadimage(b, mediaTracker, defaultToolkit);
+                    this.bcr[1] = this.dodgen(this.bcr[0]);
                 }
                 if (name.equals("bc.gif")) {
                     this.bc[0] = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
-                if (name.equals("pbcl.gif")) {
-                    this.bcl[1] = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
-                if (name.equals("pbcr.gif")) {
-                    this.bcr[1] = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
-                if (name.equals("pbc.gif")) {
-                    this.bc[1] = this.loadimage(b, mediaTracker, defaultToolkit);
+                    this.bc[1] = this.dodgen(this.bc[0]);
                 }
                 if (name.equals("cmc.gif")) {
                     this.carMakerCars = this.loadimage(b, mediaTracker, defaultToolkit);
@@ -1477,11 +1465,11 @@ public class xtGraphics extends Panel implements Runnable
     
     public void inishstageselect(final CheckPoints checkPoints) {
     	Medium.cy = 225;
-        if (checkPoints.stage == -2 && (this.cd.msloaded != 1 || !this.logged)) {
-            checkPoints.stage = (int)(Math.random() * 27.0) + 1;
+        if (checkPoints.stage == -2 && this.cd.msloaded != 1) {
+            checkPoints.stage = (int)(Math.random() * 32.0) + 1;
         }
-        if (checkPoints.stage > 27) {
-            checkPoints.stage = (int)(Math.random() * 27.0) + 1;
+        if (checkPoints.stage > 32) {
+            checkPoints.stage = (int)(Math.random() * 32.0) + 1;
         }
         if (checkPoints.stage == -2) {
             boolean b = false;
@@ -1491,34 +1479,21 @@ public class xtGraphics extends Panel implements Runnable
                 }
             }
             if (!b) {
-                checkPoints.stage = (int)(Math.random() * 27.0) + 1;
+                checkPoints.stage = (int)(Math.random() * 32.0) + 1;
             }
         }
-        if (this.gmode == 1) {
-            if (this.unlocked[0] != 11 || this.justwon1) {
-                checkPoints.stage = this.unlocked[0];
+        {
+            if (this.unlocked != 32 || this.justwon) {
+                checkPoints.stage = this.unlocked;
             }
-            else if (this.winner || checkPoints.stage > 11) {
-                checkPoints.stage = (int)(Math.random() * 11.0) + 1;
-            }
-            if (checkPoints.stage == 11) {
-                checkPoints.stage = 27;
-            }
-        }
-        if (this.gmode == 2) {
-            if (this.unlocked[0] != 17 || this.justwon2) {
-                checkPoints.stage = this.unlocked[1] + 10;
-            }
-            else if (this.winner || checkPoints.stage < 11) {
-                checkPoints.stage = (int)(Math.random() * 17.0) + 11;
+            else if (this.winner) {
+                checkPoints.stage = (int)(Math.random() * 32.0);
             }
         }
         this.app.sgame.setBackground(Color.BLACK);
         this.app.sgame.setForeground(new Color(47, 179, 255));
-        this.app.snfm1.setBackground(Color.BLACK);
-        this.app.snfm1.setForeground(new Color(47, 179, 255));
-        this.app.snfm2.setBackground(Color.BLACK);
-        this.app.snfm2.setForeground(new Color(47, 179, 255));
+        this.app.snfm.setBackground(Color.BLACK);
+        this.app.snfm.setForeground(new Color(47, 179, 255));
         this.app.mstgs.setBackground(Color.BLACK);
         this.app.mstgs.setForeground(new Color(47, 179, 255));
         this.app.gmode.setBackground(new Color(49, 49, 0));
@@ -1568,18 +1543,18 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.drawImage(this.select, 338, 35, null);
         this.rd.setFont(new Font("Arial", 1, 13));
         this.ftm = this.rd.getFontMetrics();
-        this.drawcs(130, "This stage will be unlocked when stage " + this.unlocked[this.gmode - 1] + " is complete!", 177, 177, 177, 3);
+        this.drawcs(130, "This stage will be unlocked when stage " + this.unlocked + " is complete!", 177, 177, 177, 3);
         for (int i = 0; i < 9; ++i) {
             this.rd.drawImage(this.pgate, 277 + i * 30, 215, null);
         }
         this.rd.setFont(new Font("Arial", 1, 12));
         this.ftm = this.rd.getFontMetrics();
         if (this.aflk) {
-            this.drawcs(185, "[ Stage " + (this.unlocked[this.gmode - 1] + 1) + " Locked ]", 255, 128, 0, 3);
+            this.drawcs(185, "[ Stage " + (this.unlocked + 1) + " Locked ]", 255, 128, 0, 3);
             this.aflk = false;
         }
         else {
-            this.drawcs(185, "[ Stage " + (this.unlocked[this.gmode - 1] + 1) + " Locked ]", 255, 0, 0, 3);
+            this.drawcs(185, "[ Stage " + (this.unlocked + 1) + " Locked ]", 255, 0, 0, 3);
             this.aflk = true;
         }
         this.rd.drawImage(this.back[this.pback], 370, 345, null);
@@ -1597,19 +1572,18 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.drawImage(this.select, 338, 35, null);
         if (this.testdrive != 3 && this.testdrive != 4) {
             if (checkPoints.stage > 0 && this.cd.staction == 0) {
-                if (checkPoints.stage != 1 && (checkPoints.stage != 11 || this.gmode != 2)) {
+                if (checkPoints.stage != 1) {
                     this.rd.drawImage(this.back[this.pback], 115, 135, null);
                 }
-                if (checkPoints.stage != 27) {
+                if (checkPoints.stage != 32) {
                     this.rd.drawImage(this.next[this.pnext], 625, 135, null);
                 }
             }
-            if (this.gmode == 0) {
+            if (nfmtab == 1) {
                 int n3 = 0;
                 if (this.nfmtab != this.app.sgame.getSelectedIndex()) {
                     this.nfmtab = this.app.sgame.getSelectedIndex();
-                    this.app.snfm1.select(0);
-                    this.app.snfm2.select(0);
+                    this.app.snfm.select(0);
                     this.app.mstgs.select(0);
                     this.app.requestFocus();
                 }
@@ -1644,12 +1618,9 @@ public class xtGraphics extends Panel implements Runnable
                 int n4 = 0;
                 this.app.sgame.setSize(131, 22);
                 if (this.app.sgame.getSelectedIndex() == 0) {
-                    n4 = 400 - (this.app.sgame.getWidth() + 6 + this.app.snfm1.getWidth()) / 2;
+                    n4 = 400 - (this.app.sgame.getWidth() + 6 + this.app.snfm.getWidth()) / 2;
                 }
                 if (this.app.sgame.getSelectedIndex() == 1) {
-                    n4 = 400 - (this.app.sgame.getWidth() + 6 + this.app.snfm2.getWidth()) / 2;
-                }
-                if (this.app.sgame.getSelectedIndex() == 2) {
                     if (this.cd.staction != 0) {
                         this.cd.staction = 0;
                     }
@@ -1671,46 +1642,25 @@ public class xtGraphics extends Panel implements Runnable
                 this.app.sgame.move(n4, 62);
                 final int n5 = n4 + (this.app.sgame.getWidth() + 6);
                 if (this.nfmtab == 0) {
-                    if (!this.app.snfm1.isShowing()) {
-                        this.app.snfm1.show();
+                    if (!this.app.snfm.isShowing()) {
+                        this.app.snfm.show();
                         if (checkPoints.stage > 0) {
-                            this.app.snfm1.select(checkPoints.stage);
+                            this.app.snfm.select(checkPoints.stage);
                         }
                     }
-                    this.app.snfm1.move(n5, 62);
-                    if (this.app.snfm2.isShowing()) {
-                        this.app.snfm2.hide();
-                    }
+                    this.app.snfm.move(n5, 62);
                     if (this.app.mstgs.isShowing()) {
                         this.app.mstgs.hide();
                     }
                 }
                 if (this.nfmtab == 1) {
-                    if (!this.app.snfm2.isShowing()) {
-                        this.app.snfm2.show();
-                        if (checkPoints.stage > 10) {
-                            this.app.snfm2.select(checkPoints.stage - 10);
-                        }
-                    }
-                    this.app.snfm2.move(n5, 62);
-                    if (this.app.snfm1.isShowing()) {
-                        this.app.snfm1.hide();
-                    }
-                    if (this.app.mstgs.isShowing()) {
-                        this.app.mstgs.hide();
-                    }
-                }
-                if (this.nfmtab == 2) {
                     if (!this.app.mstgs.isShowing()) {
                         this.app.mstgs.show();
                             this.app.mstgs.select(checkPoints.name);
                     }
                     this.app.mstgs.move(n5, 62);
-                    if (this.app.snfm1.isShowing()) {
-                        this.app.snfm1.hide();
-                    }
-                    if (this.app.snfm2.isShowing()) {
-                        this.app.snfm2.hide();
+                    if (this.app.snfm.isShowing()) {
+                        this.app.snfm.hide();
                     }
                 }
                 this.rd.setFont(new Font("Arial", 1, 13));
@@ -1743,7 +1693,7 @@ public class xtGraphics extends Panel implements Runnable
                         this.drawcs(132, "Failed to load stage...", 255, 138, 0, 3);
                         this.rd.setFont(new Font("Arial", 1, 11));
                         this.ftm = this.rd.getFontMetrics();
-                        if (this.nfmtab == 2) {
+                        if (this.nfmtab == 1) {
                             this.drawcs(155, "Please Test Drive this stage in the Stage Maker to make sure it can be loaded!", 255, 138, 0, 3);
                         }
                         if (this.nfmtab == 1 || this.nfmtab == 0) {
@@ -1754,10 +1704,7 @@ public class xtGraphics extends Panel implements Runnable
                             }
                             catch (final InterruptedException ex) {}
                             if (this.nfmtab == 0) {
-                                this.app.snfm1.select(1 + (int)(Math.random() * 10.0));
-                            }
-                            if (this.nfmtab == 1) {
-                                this.app.snfm2.select(1 + (int)(Math.random() * 17.0));
+                                this.app.snfm.select(1 + (int)(Math.random() * 32.0));
                             }
                         }
                     }
@@ -1793,22 +1740,15 @@ public class xtGraphics extends Panel implements Runnable
                 else if (this.app.gmode.isShowing()) {
                     this.app.gmode.hide();
                 }
-                if (this.nfmtab == 0 && this.app.snfm1.getSelectedIndex() != checkPoints.stage && this.app.snfm1.getSelectedIndex() != 0) {
-                    checkPoints.stage = this.app.snfm1.getSelectedIndex();
+                if (this.nfmtab == 0 && this.app.snfm.getSelectedIndex() != checkPoints.stage && this.app.snfm.getSelectedIndex() != 0) {
+                    checkPoints.stage = this.app.snfm.getSelectedIndex();
                     checkPoints.nto = 0;
                     this.hidos();
                     this.fase = 2;
                     this.app.requestFocus();
                 }
-                if (this.nfmtab == 1 && this.app.snfm2.getSelectedIndex() != checkPoints.stage - 10 && this.app.snfm2.getSelectedIndex() != 0) {
-                    checkPoints.stage = this.app.snfm2.getSelectedIndex() + 10;
-                    checkPoints.nto = 0;
-                    this.hidos();
-                    this.fase = 2;
-                    this.app.requestFocus();
-                }
-                if (this.nfmtab == 2 && !this.app.mstgs.getSelectedItem().equals(checkPoints.name) && this.app.mstgs.getSelectedIndex() != 0) {
-                    if (this.nfmtab == 2) {
+                if (this.nfmtab == 1 && !this.app.mstgs.getSelectedItem().equals(checkPoints.name) && this.app.mstgs.getSelectedIndex() != 0) {
+                    if (this.nfmtab == 1) {
                         checkPoints.stage = -1;
                     }
                     checkPoints.name = this.app.mstgs.getSelectedItem();
@@ -1857,24 +1797,11 @@ public class xtGraphics extends Panel implements Runnable
                     this.intertrack[1].unloadimod();
                 }
                 if (checkPoints.stage > 0) {
-                    if (control.right) {
-                        if (this.gmode == 0 || (this.gmode == 1 && checkPoints.stage != this.unlocked[0]) || (this.gmode == 2 && checkPoints.stage != this.unlocked[1] + 10) || checkPoints.stage == 27) {
-                            if (checkPoints.stage != 27) {
+                    if (control.right && checkPoints.stage != 32) {
+                        if (checkPoints.stage != this.unlocked) {
                                 this.hidos();
                                 ++checkPoints.stage;
-                                if (this.gmode == 1 && checkPoints.stage == 11) {
-                                    checkPoints.stage = 27;
-                                }
-                                if (checkPoints.stage > 10) {
-                                    this.app.sgame.select(1);
-                                    this.nfmtab = 1;
-                                }
-                                else {
-                                    this.app.sgame.select(0);
-                                    this.nfmtab = 0;
-                                }
                                 this.fase = 2;
-                            }
                         }
                         else {
                             this.fase = 4;
@@ -1882,20 +1809,9 @@ public class xtGraphics extends Panel implements Runnable
                         }
                         control.right = false;
                     }
-                    if (control.left && checkPoints.stage != 1 && (checkPoints.stage != 11 || this.gmode != 2)) {
+                    if (control.left && checkPoints.stage != 1) {
                         this.hidos();
                         --checkPoints.stage;
-                        if (this.gmode == 1 && checkPoints.stage == 26) {
-                            checkPoints.stage = 10;
-                        }
-                        if (checkPoints.stage > 10) {
-                            this.app.sgame.select(1);
-                            this.nfmtab = 1;
-                        }
-                        else {
-                            this.app.sgame.select(0);
-                            this.nfmtab = 0;
-                        }
                         this.fase = 2;
                         control.left = false;
                     }
@@ -1932,8 +1848,7 @@ public class xtGraphics extends Panel implements Runnable
     
     public void hidos() {
         this.app.sgame.hide();
-        this.app.snfm1.hide();
-        this.app.snfm2.hide();
+        this.app.snfm.hide();
         this.app.mstgs.hide();
     }
     
@@ -2701,7 +2616,6 @@ public class xtGraphics extends Panel implements Runnable
         			this.firstime = false;
         		}
         		else {
-                   this.gmode = 0;
                    this.fase = -9;
         		}
             	this.intertrack[0].stop();
@@ -2960,13 +2874,8 @@ public class xtGraphics extends Panel implements Runnable
         this.basefase = 0;
         this.noclass = false;
         if (this.testdrive != 1 && this.testdrive != 2) {
-            if (this.gmode != 0) {
                 this.cfase = 0;
-                this.sc[0] = this.scm[this.gmode - 1];
-            }
-            if (this.gmode == 0) {
                 this.sc[0] = this.osc;
-            }
             if (this.cd.lastload != 1 || this.cfase != 3) {
                 this.onmsc = this.sc[0];
             }
@@ -3227,24 +3136,7 @@ public class xtGraphics extends Panel implements Runnable
                 if (this.sc[0] != this.maxsl) {
                     this.rd.drawImage(this.next[this.pnext], 645, 275, null);
                 }
-            if (this.gmode == 1) {
-                if (this.sc[0] == 5 && this.unlocked[0] <= 2) {
-                    k = 2;
-                }
-                if (this.sc[0] == 6 && this.unlocked[0] <= 4) {
-                    k = 4;
-                }
-                if (this.sc[0] == 11 && this.unlocked[0] <= 6) {
-                    k = 6;
-                }
-                if (this.sc[0] == 14 && this.unlocked[0] <= 8) {
-                    k = 8;
-                }
-                if (this.sc[0] == 15 && this.unlocked[0] <= 10) {
-                    k = 10;
-                }
-            }
-            if (this.gmode == 2 && this.sc[0] >= 8 && this.unlocked[1] <= (this.sc[0] - 7) * 2) {
+            if (this.sc[0] >= 8 && this.unlocked <= (this.sc[0] - 7) * 2) {
                 k = (this.sc[0] - 7) * 2;
             }
             if (k != 0) {
@@ -3636,7 +3528,7 @@ public class xtGraphics extends Panel implements Runnable
                     this.fase = -22;
                 }
                 if (this.sc[0] < 16 || this.cd.lastload == 2) {
-                    this.app.setcarcookie(this.sc[0], this.cd.names[this.sc[0]], this.arnp, this.gmode, this.unlocked, this.mtop);
+                    this.app.setcarcookie(this.sc[0], this.cd.names[this.sc[0]], this.arnp, this.unlocked, this.mtop);
                 }
                 if (this.cd.haltload != 0) {
                     if (this.cd.haltload == 2) {
@@ -3645,15 +3537,7 @@ public class xtGraphics extends Panel implements Runnable
                     this.cd.lcardate[0] = 0;
                     this.cd.haltload = 0;
                 }
-                if (this.gmode == 0) {
                     this.osc = this.sc[0];
-                }
-                if (this.gmode == 1) {
-                    this.scm[0] = this.sc[0];
-                }
-                if (this.gmode == 2) {
-                    this.scm[1] = this.sc[0];
-                }
                 if (this.app.mycar.isShowing()) {
                     this.app.mycar.setVisible(false);
                 }
@@ -3693,7 +3577,6 @@ public class xtGraphics extends Panel implements Runnable
                 this.sc[0] = 15;
             }
             this.osc = this.sc[0];
-            this.gmode = 0;
             if (this.app.mycar.isShowing()) {
                 this.app.mycar.setVisible(false);
             }
@@ -3857,9 +3740,6 @@ public class xtGraphics extends Panel implements Runnable
         String string = ":";
         if (checkPoints.stage > 0) {
             int stage = checkPoints.stage;
-            if (stage > 10) {
-                stage -= 10;
-            }
             string = " " + stage + "!";
         }
         {
@@ -3874,100 +3754,68 @@ public class xtGraphics extends Panel implements Runnable
                     this.drawcs(184, "" + checkPoints.name + "", 255, 115, 0, 3);
             }
         }
-        if (this.winner && this.gmode != 0 && (checkPoints.stage == this.unlocked[this.gmode - 1] + (this.gmode - 1) * 10 || checkPoints.stage == 27)) {
+        if (this.winner && checkPoints.stage == this.unlocked) {
             int n4 = 0;
             int y = 0;
             this.pin = 60;
-            if (this.gmode == 1) {
-                if (checkPoints.stage == 2) {
-                    n4 = 5;
-                    y = 365;
-                    this.pin = -20;
-                    this.scm[0] = 5;
-                }
-                if (checkPoints.stage == 4) {
-                    n4 = 6;
-                    y = 320;
-                    this.pin = -20;
-                    this.scm[0] = 6;
-                }
-                if (checkPoints.stage == 6) {
-                    n4 = 11;
-                    y = 326;
-                    this.pin = -20;
-                    this.scm[0] = 11;
-                }
-                if (checkPoints.stage == 8) {
-                    n4 = 14;
-                    y = 350;
-                    this.pin = -20;
-                    this.scm[0] = 14;
-                }
-                if (checkPoints.stage == 10) {
-                    n4 = 15;
-                    y = 370;
-                    this.pin = -20;
-                    this.scm[0] = 15;
-                }
-            }
-            if (this.gmode == 2) {
+            {
                 if (checkPoints.stage == 12) {
                     n4 = 8;
                     y = 365;
                     this.pin = -20;
-                    this.scm[1] = 8;
+                    this.osc = 8;
                 }
                 if (checkPoints.stage == 14) {
                     n4 = 9;
                     y = 320;
                     this.pin = -20;
-                    this.scm[1] = 9;
+                    this.osc = 9;
                 }
                 if (checkPoints.stage == 16) {
                     n4 = 10;
                     y = 370;
                     this.pin = -20;
-                    this.scm[1] = 10;
+                    this.osc = 10;
                 }
                 if (checkPoints.stage == 18) {
                     n4 = 11;
                     y = 326;
                     this.pin = -20;
-                    this.scm[1] = 11;
+                    this.osc = 11;
                 }
                 if (checkPoints.stage == 20) {
                     n4 = 12;
                     y = 310;
                     this.pin = -20;
-                    this.scm[1] = 12;
+                    this.osc = 12;
                 }
                 if (checkPoints.stage == 22) {
                     n4 = 13;
                     y = 310;
                     this.pin = -20;
-                    this.scm[1] = 13;
+                    this.osc = 13;
                 }
                 if (checkPoints.stage == 24) {
                     n4 = 14;
                     y = 350;
                     this.pin = -20;
-                    this.scm[1] = 14;
+                    this.osc = 14;
                 }
                 if (checkPoints.stage == 26) {
                     n4 = 15;
                     y = 370;
                     this.pin = -20;
-                    this.scm[1] = 15;
+                    this.osc = 15;
                 }
             }
-            if (checkPoints.stage != 27) {
+            if (checkPoints.stage != 32) {
                 this.rd.setFont(new Font("Arial", 1, 13));
                 this.ftm = this.rd.getFontMetrics();
                 if (this.aflk) {
-                    this.drawcs(200 + this.pin, "Stage " + (checkPoints.stage + 1 - (this.gmode - 1) * 10) + " is now unlocked!", 196, 176, 0, 3);
+                    this.drawcs(200 + this.pin, "Stage " + (checkPoints.stage + 1) + " is now unlocked!", 196, 176, 0, 3);
                 }
                 else {
-                    this.drawcs(200 + this.pin, "Stage " + (checkPoints.stage + 1 - (this.gmode - 1) * 10) + " is now unlocked!", 255, 247, 165, 3);
+                    this.drawcs(200 + this.pin, "Stage " + (checkPoints.stage + 1) + " is now unlocked!", 255, 247, 165, 3);
                 }
                 if (n4 != 0) {
                     if (this.aflk) {
@@ -4039,10 +3887,10 @@ public class xtGraphics extends Panel implements Runnable
                 this.rd.setFont(new Font("Arial", 1, 13));
                 this.ftm = this.rd.getFontMetrics();
                 if (this.aflk) {
-                    this.drawcs(180, "Woohoooo you finished NFM" + this.gmode + " !!!", 144, 167, 255, 3);
+                    this.drawcs(180, "Woohoooo you finished NFM !!!", 144, 167, 255, 3);
                 }
                 else {
-                    this.drawcs(180, "Woohoooo you finished NFM" + this.gmode + " !!!", 228, 240, 255, 3);
+                    this.drawcs(180, "Woohoooo you finished NFM !!!", 228, 240, 255, 3);
                 }
                 if (this.aflk) {
                     this.drawcs(210, "You're Awesome!", 144, 167, 255, 3);
@@ -4099,44 +3947,16 @@ public class xtGraphics extends Panel implements Runnable
         }
         this.rd.drawImage(this.contin[this.pcontin], 355, 380, null);
         if (control.enter || control.handb) {
-            if (this.loadedt) {
-                this.strack.unload();
-            }
-            {
-                this.opselect = 3;
-                if (this.gmode == 1) {
-                    this.opselect = 0;
-                    if (this.winner && checkPoints.stage == this.unlocked[this.gmode - 1] + (this.gmode - 1) * 10 && checkPoints.stage != 27) {
-                        final int[] unlocked = this.unlocked;
-                        final int n7 = this.gmode - 1;
-                        ++unlocked[n7];
-                        this.justwon1 = true;
-                    }
-                    else {
-                        this.justwon1 = false;
-                    }
-                }
-                if (this.gmode == 2) {
-                    this.opselect = 1;
-                    if (this.winner && checkPoints.stage == this.unlocked[this.gmode - 1] + (this.gmode - 1) * 10 && checkPoints.stage != 27) {
-                        final int[] unlocked2 = this.unlocked;
-                        final int n8 = this.gmode - 1;
-                        ++unlocked2[n8];
-                        this.justwon2 = true;
-                    }
-                    else {
-                        this.justwon2 = false;
-                    }
-                }
-                if (checkPoints.stage == 27 && this.gmode == 0) {
-                    checkPoints.stage = (int)(Math.random() * 27.0) + 1;
-                }
-                this.fase = 10;
-            }
-            if (this.winner && checkPoints.stage != 27 && checkPoints.stage > 0) {
-                ++checkPoints.stage;
-            }
-            this.flipo = 0;
+        	if (this.loadedt) {
+        		this.strack.unload();
+        	}
+    		this.fase = 10;
+        	if (this.winner && checkPoints.stage == this.unlocked && checkPoints.stage != 32) {
+        		++checkPoints.stage;
+        		++this.unlocked;
+        		this.justwon = true;
+        	}
+    		this.flipo = 0;
             control.enter = false;
             control.handb = false;
         }
@@ -4152,15 +3972,9 @@ public class xtGraphics extends Panel implements Runnable
             n = 27;
         }
         int n2 = 8;
-        if (this.gmode == 1) {
-            n2 = 6;
-        }
         boolean b = false;
         if (n <= 10) {
             int n3 = 7;
-            if (this.gmode == 1) {
-                n3 = 5;
-            }
             if ((n == 1 || n == 2) && this.sc[0] != 5) {
                 this.sc[n3] = 5;
                 n2 = n3;
@@ -4225,31 +4039,11 @@ public class xtGraphics extends Panel implements Runnable
                 if (n9 > Math.random()) {
                     array[j] = false;
                 }
-                if (this.gmode == 1) {
-                    if (this.sc[j] >= 7 && this.sc[j] <= 10) {
+                {
+                    if ((this.sc[j] - 7) * 2 > this.unlocked) {
                         array[j] = false;
                     }
-                    if (this.sc[j] == 12 || this.sc[j] == 13) {
-                        array[j] = false;
-                    }
-                    if (this.sc[j] > 5 && this.unlocked[0] <= 2) {
-                        array[j] = false;
-                    }
-                    if (this.sc[j] > 6 && this.unlocked[0] <= 4) {
-                        array[j] = false;
-                    }
-                    if (this.sc[j] > 11 && this.unlocked[0] <= 6) {
-                        array[j] = false;
-                    }
-                    if (this.sc[j] > 14 && this.unlocked[0] <= 8) {
-                        array[j] = false;
-                    }
-                }
-                if (this.gmode == 2) {
-                    if ((this.sc[j] - 7) * 2 > this.unlocked[1]) {
-                        array[j] = false;
-                    }
-                    if (n != 16 || this.unlocked[1] != 16 || this.sc[j] >= 9) {
+                    if (n != 16 || this.unlocked != 16 || this.sc[j] >= 9) {
                         continue;
                     }
                     array[j] = false;
@@ -4270,7 +4064,7 @@ public class xtGraphics extends Panel implements Runnable
                     b2 = true;
                 }
             }
-            if (!b2 && (Math.random() > Math.random() || this.gmode != 0)) {
+            if (!b2 && Math.random() > Math.random()) {
                 this.sc[n5] = 11;
             }
             boolean b3 = false;
@@ -4279,7 +4073,7 @@ public class xtGraphics extends Panel implements Runnable
                     b3 = true;
                 }
             }
-            if (!b3 && (Math.random() > Math.random() || this.gmode != 0)) {
+            if (!b3 && Math.random() > Math.random()) {
                 this.sc[n6] = 14;
             }
         }
@@ -4301,7 +4095,7 @@ public class xtGraphics extends Panel implements Runnable
                     b5 = true;
                 }
             }
-            if (!b5 && (Math.random() > Math.random() || this.gmode != 0)) {
+            if (!b5 && Math.random() > Math.random()) {
                 this.sc[n5] = 12;
             }
             boolean b6 = false;
@@ -4310,7 +4104,7 @@ public class xtGraphics extends Panel implements Runnable
                     b6 = true;
                 }
             }
-            if (!b6 && (Math.random() > Math.random() || this.gmode != 0)) {
+            if (!b6 && Math.random() > Math.random()) {
                 this.sc[n6] = 10;
             }
         }
@@ -4321,7 +4115,7 @@ public class xtGraphics extends Panel implements Runnable
                     b7 = true;
                 }
             }
-            if (!b7 && (Math.random() > Math.random() || this.gmode != 0)) {
+            if (!b7 && Math.random() > Math.random()) {
                 this.sc[n5] = 11;
             }
             boolean b8 = false;
@@ -4330,7 +4124,7 @@ public class xtGraphics extends Panel implements Runnable
                     b8 = true;
                 }
             }
-            if (!b8 && (Math.random() > Math.random() || this.gmode != 0)) {
+            if (!b8 && Math.random() > Math.random()) {
                 this.sc[n6] = 13;
             }
         }
@@ -4341,7 +4135,7 @@ public class xtGraphics extends Panel implements Runnable
                     b9 = true;
                 }
             }
-            if (!b9 && (Math.random() > Math.random() || this.gmode != 0)) {
+            if (!b9 && Math.random() > Math.random()) {
                 this.sc[n5] = 13;
             }
             boolean b10 = false;
@@ -4350,7 +4144,7 @@ public class xtGraphics extends Panel implements Runnable
                     b10 = true;
                 }
             }
-            if (!b10 && (Math.random() > Math.random() || this.gmode != 0)) {
+            if (!b10 && Math.random() > Math.random()) {
                 this.sc[n6] = 12;
             }
         }
