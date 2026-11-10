@@ -1490,29 +1490,17 @@ public class xtGraphics extends Panel implements Runnable
                 checkPoints.stage = (int)(Math.random() * 32.0);
             }
         }
-        this.app.sgame.setBackground(Color.BLACK);
-        this.app.sgame.setForeground(new Color(47, 179, 255));
         this.app.snfm.setBackground(Color.BLACK);
         this.app.snfm.setForeground(new Color(47, 179, 255));
         this.app.mstgs.setBackground(Color.BLACK);
         this.app.mstgs.setForeground(new Color(47, 179, 255));
         this.app.gmode.setBackground(new Color(49, 49, 0));
         this.app.gmode.setForeground(new Color(148, 167, 0));
-        this.app.sgame.removeAll();
-        this.app.sgame.add(this.rd, " NFM 1     ");
-        this.app.sgame.add(this.rd, " NFM 2     ");
-        this.app.sgame.add(this.rd, " Stage Maker ");
-        if (checkPoints.stage > 0 && checkPoints.stage <= 10) {
-            this.app.sgame.select(0);
+        if (checkPoints.stage > 0 && checkPoints.stage <= 32) {
             this.nfmtab = 0;
         }
-        if (checkPoints.stage > 10) {
-            this.app.sgame.select(1);
-            this.nfmtab = 1;
-        }
         if (checkPoints.stage == -1) {
-            this.app.sgame.select(2);
-            this.nfmtab = 2;
+            this.nfmtab = 1;
         }
         this.cd.staction = 0;
         this.fase = 2;
@@ -1581,12 +1569,9 @@ public class xtGraphics extends Panel implements Runnable
             }
             if (nfmtab == 1) {
                 int n3 = 0;
-                if (this.nfmtab != this.app.sgame.getSelectedIndex()) {
-                    this.nfmtab = this.app.sgame.getSelectedIndex();
                     this.app.snfm.select(0);
                     this.app.mstgs.select(0);
                     this.app.requestFocus();
-                }
                 if (this.cd.staction == 5) {
                         this.cd.onstage = checkPoints.name;
                         this.cd.staction = 2;
@@ -1616,31 +1601,6 @@ public class xtGraphics extends Panel implements Runnable
                     this.cd.staction = 0;
                 }
                 int n4 = 0;
-                this.app.sgame.setSize(131, 22);
-                if (this.app.sgame.getSelectedIndex() == 0) {
-                    n4 = 400 - (this.app.sgame.getWidth() + 6 + this.app.snfm.getWidth()) / 2;
-                }
-                if (this.app.sgame.getSelectedIndex() == 1) {
-                    if (this.cd.staction != 0) {
-                        this.cd.staction = 0;
-                    }
-                    this.app.mstgs.setSize(338, 22);
-                    if (this.cd.msloaded != 2) {
-                        this.app.mstgs.removeAll();
-                        this.app.mstgs.add(this.rd, "Loading Stage Maker stages, please wait...");
-                        this.app.mstgs.select(0);
-                        n3 = 2;
-                    }
-                    n4 = 400 - (this.app.sgame.getWidth() + 6 + this.app.mstgs.getWidth()) / 2;
-                }
-                if (!this.app.sgame.isShowing()) {
-                    this.app.sgame.show();
-                }
-                if (!this.app.sgame.isShowing()) {
-                    this.app.sgame.show();
-                }
-                this.app.sgame.move(n4, 62);
-                final int n5 = n4 + (this.app.sgame.getWidth() + 6);
                 if (this.nfmtab == 0) {
                     if (!this.app.snfm.isShowing()) {
                         this.app.snfm.show();
@@ -1648,7 +1608,6 @@ public class xtGraphics extends Panel implements Runnable
                             this.app.snfm.select(checkPoints.stage);
                         }
                     }
-                    this.app.snfm.move(n5, 62);
                     if (this.app.mstgs.isShowing()) {
                         this.app.mstgs.hide();
                     }
@@ -1658,7 +1617,6 @@ public class xtGraphics extends Panel implements Runnable
                         this.app.mstgs.show();
                             this.app.mstgs.select(checkPoints.name);
                     }
-                    this.app.mstgs.move(n5, 62);
                     if (this.app.snfm.isShowing()) {
                         this.app.snfm.hide();
                     }
@@ -1847,7 +1805,6 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void hidos() {
-        this.app.sgame.hide();
         this.app.snfm.hide();
         this.app.mstgs.hide();
     }

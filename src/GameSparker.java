@@ -82,7 +82,6 @@ public class GameSparker extends Applet implements Runnable
     Checkbox mycar;
     Checkbox notp;
     boolean openm;
-    Smenu sgame;
     Smenu warb;
     Smenu pgame;
     Smenu vnpls;
@@ -136,7 +135,6 @@ public class GameSparker extends Applet implements Runnable
         this.shaka = 0;
         this.applejava = false;
         this.openm = false;
-        this.sgame = new Smenu(8);
         this.warb = new Smenu(102);
         this.pgame = new Smenu(11);
         this.vnpls = new Smenu(5);
@@ -1263,7 +1261,6 @@ public class GameSparker extends Applet implements Runnable
         this.add(this.mmsg);
         this.add(this.mycar);
         this.add(this.notp);
-        this.sgame.setFont(new Font("Arial", 1, 13));
         this.warb.setFont(new Font("Arial", 1, 13));
         this.pgame.setFont(new Font("Arial", 1, 12));
         this.vnpls.setFont(new Font("Arial", 1, 13));
@@ -1284,13 +1281,6 @@ public class GameSparker extends Applet implements Runnable
         this.datat.setFont(new Font("Arial", 1, 12));
         this.ilaps.setFont(new Font("Arial", 1, 13));
         this.proitem.setFont(new Font("Arial", 1, 12));
-        this.sgame.add(this.rd, " NFM 1     ");
-        this.sgame.add(this.rd, " NFM 2     ");
-        this.sgame.add(this.rd, " My Stages ");
-        this.sgame.add(this.rd, " Weekly Top20 ");
-        this.sgame.add(this.rd, " Monthly Top20 ");
-        this.sgame.add(this.rd, " All Time Top20 ");
-        this.sgame.add(this.rd, " Stage Maker ");
         this.warb.add(this.rd, " Loading your clan's wars and battles, please wait...");
         this.pgame.add(this.rd, " Select the game you want to practice");
         this.vnpls.add(this.rd, "Players");
@@ -1357,7 +1347,6 @@ public class GameSparker extends Applet implements Runnable
         this.mycar.hide();
         this.notp.hide();
         this.cmsg.hide();
-        this.sgame.hide();
         this.pgame.hide();
         this.vnpls.hide();
         this.vtyp.hide();
@@ -1387,9 +1376,6 @@ public class GameSparker extends Applet implements Runnable
             this.openm = true;
         }
         if (this.scars.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
-            this.openm = true;
-        }
-        if (this.sgame.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
             this.openm = true;
         }
         if (this.snfm.draw(this.rd, this.xm, this.ym, this.moused, 450, false)) {
