@@ -1719,15 +1719,11 @@ public class xtGraphics extends Panel implements Runnable
             else {
                 this.rd.setFont(new Font("SansSerif", 1, 13));
                 this.ftm = this.rd.getFontMetrics();
-                if (checkPoints.stage != 27) {
-                    int stage = checkPoints.stage;
-                    if (stage > 10) {
-                        stage -= 10;
-                    }
-                    this.drawcs(80, "Stage " + stage + "  >", 255, 128, 0, 3);
+                if (checkPoints.stage != 32) {
+                    this.drawcs(80, "Stage " + checkPoints.stage + "  >", 255, 128, 0, 3);
                 }
                 else {
-                    this.drawcs(80, "Final Party Stage  >", 255, 128, 0, 3);
+                    this.drawcs(80, "The End  >", 255, 128, 0, 3);
                 }
                 aflk = !aflk;
                 if (this.aflk) {
