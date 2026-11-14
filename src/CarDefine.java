@@ -47,6 +47,9 @@ public class CarDefine implements Runnable
     int[] cclass;
     String[] names;
     int[] enginsignature;
+    /**
+     * 1 = from carmaker
+     */
     int lastload;
     int nlcars;
     int nlocars;

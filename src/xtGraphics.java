@@ -37,7 +37,14 @@ public class xtGraphics extends Panel implements Runnable
     boolean mtop;
     int opselect;
     int dropf;
-    int cfase;
+    /** 
+     * 0 = browsing original cars
+     * 1 = carmaker pop up
+     * 2 = loading carmaker cars
+     * 3 = browsing carmaker cars
+     * 4 = carmaker car error
+     */
+    int cfase; 
     boolean firstime;
     boolean shaded;
     int flipo;
@@ -205,7 +212,6 @@ public class xtGraphics extends Panel implements Runnable
     Image[] bc;
     Image carMakerCars;
     Image gac;
-    Image yac;
     Image ycmc;
     Image[] trackbg;
     Image[] dude;
@@ -1103,9 +1109,6 @@ public class xtGraphics extends Panel implements Runnable
                 }
                 if (name.equals("gac.gif")) {
                     this.gac = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
-                if (name.equals("yac.gif")) {
-                    this.yac = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("ycmc.gif")) {
                     this.ycmc = this.loadimage(b, mediaTracker, defaultToolkit);
@@ -2835,14 +2838,6 @@ public class xtGraphics extends Panel implements Runnable
             if (this.cfase == 0 && this.sc[0] > 15) {
                 this.sc[0] = 15;
             }
-            if (this.cfase == 11 || this.cfase == 101) {
-                if (this.sc[0] >= 16 && this.cd.lastload == 2 && this.sc[0] < 36) {
-                    this.cfase = 3;
-                }
-                else {
-                    this.cfase = 0;
-                }
-            }
             if (this.cfase == 3) {
                 if (this.cd.lastload == 0) {
                     this.sc[0] = 15;
@@ -2961,30 +2956,12 @@ public class xtGraphics extends Panel implements Runnable
     	this.flatrstart = 6;
 
         this.rd.drawImage(this.selectcar, 321, 37, null);
-        if (this.cfase == 3 || this.cfase == 7) {
+        if (this.cfase == 3) {
             if (this.cd.lastload == 1) {
                 this.rd.drawImage(this.ycmc, 337, 58, null);
             }
-            if (this.cd.lastload == 2) {
-                this.rd.drawImage(this.yac, 323, 58, null);
-            }
         }
             array[this.sc[0]].d(this.rd);
-        if (this.cfase == 8) {
-            this.drawprom(150, 85);
-            this.rd.setFont(new Font("Arial", 1, 13));
-            this.ftm = this.rd.getFontMetrics();
-            this.drawcs(195, "Removing Car...", 0, 0, 0, 3);
-            if (this.cd.action != 10) {
-                if (this.cd.action != -10) {
-                    this.cfase = 5;
-                    this.showtf = false;
-                }
-                else {
-                    this.cfase = 9;
-                }
-            }
-        }
         if ((this.testdrive == 1 || this.testdrive == 2) && this.lsc != this.sc[0]) {
             if (array[this.sc[0]].xy != 0) {
                 array[this.sc[0]].xy = 0;
@@ -3067,9 +3044,6 @@ public class xtGraphics extends Panel implements Runnable
                 else {
                     this.app.mcars.show = false;
                     String string = "";
-                    if (this.cfase == 11) {
-                        string = "N#" + (this.sc[0] - 35) + "  ";
-                    }
                     if (this.aflk) {
                         this.drawcs(95 + n8, string + this.cd.names[this.sc[0]], 240, 240, 240, 3);
                         this.aflk = false;
@@ -3146,6 +3120,18 @@ public class xtGraphics extends Panel implements Runnable
                                 this.cfase = 3;
                             }
                         }
+                    } else if (this.cfase == 3 && this.testdrive != 1 && this.testdrive != 2) {
+                    	if (this.drawcarb(false, this.gac, "", 95, 70, mouseX, mouseY, mouseHold)) {
+                    		this.minsl = 0;
+                    		this.maxsl = 15;
+                    		if (this.onmsc >= this.minsl && this.onmsc <= this.maxsl) {
+                    			n7 = this.onmsc;
+                    		}
+                    		else {
+                    			n7 = 15;
+                    		}
+                    		this.cfase = 0;
+                    	}
                     }
                     if (this.cfase == 4) {
                         this.drawprom(145, 150);
@@ -3399,9 +3385,6 @@ public class xtGraphics extends Panel implements Runnable
         	}
         }
         if (flipo != 0) {
-        	if (this.cfase == 11 || this.cfase == 101) {
-        		this.cd.action = 0;
-        	}
         	if (this.app.mycar.isShowing()) {
         		this.app.mycar.setVisible(false);
         	}
@@ -3442,7 +3425,7 @@ public class xtGraphics extends Panel implements Runnable
         	--this.flipo;
         }
 
-        if (this.cfase == 0 || this.cfase == 3 || this.cfase == 11 || this.cfase == 101) {
+        if (this.cfase == 0 || this.cfase == 3) {
             this.basefase = this.cfase;
             if (n7 != -1) {
                 if (this.flatrstart > 1) {
@@ -3503,14 +3486,7 @@ public class xtGraphics extends Panel implements Runnable
             this.pback = 0;
             this.pnext = 0;
             this.pcontin = 0;
-            if (this.cfase == 8 && n7 != -1) {
-                if (this.flatrstart > 1) {
-                    this.flatrstart = 0;
-                }
-                this.nextc = n7 + 20;
-                this.flipo = 20;
-            }
-            if (this.cfase == 5 && this.cd.action == 0 && control.enter) {
+            if (this.cd.action == 0 && control.enter) {
                 this.tcnt = 0;
                 control.enter = false;
             }
