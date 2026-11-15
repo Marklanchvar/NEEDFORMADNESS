@@ -39,8 +39,6 @@ public class Madness extends Panel
     static GraphicsDevice myDevice;
     static DisplayMode defdisp;
     static DisplayMode fulldisp;
-    static int testdrive;
-    static String testcar;
     static int textid;
     static String upfile;
     static boolean inisetup;
@@ -146,50 +144,6 @@ public class Madness extends Panel
         
     }
     
-    public static void carmaker() {
-        Madness.applet.stop();
-        Madness.frame.removeAll();
-        try {
-            Thread.sleep(400L);
-        }
-        catch (final Exception ex) {}
-        Madness.applet.destroy();
-        Madness.applet = null;
-        System.gc();
-        System.runFinalization();
-        try {
-            Thread.sleep(400L);
-        }
-        catch (final Exception ex2) {}
-        Madness.applet = new CarMaker();
-        Madness.frame.add("Center", Madness.applet);
-        Madness.frame.show();
-        Madness.applet.init();
-        Madness.applet.start();
-    }
-    
-    public static void stagemaker() {
-        Madness.applet.stop();
-        Madness.frame.removeAll();
-        try {
-            Thread.sleep(400L);
-        }
-        catch (final Exception ex) {}
-        Madness.applet.destroy();
-        Madness.applet = null;
-        System.gc();
-        System.runFinalization();
-        try {
-            Thread.sleep(400L);
-        }
-        catch (final Exception ex2) {}
-        Madness.applet = new StageMaker();
-        Madness.frame.add("Center", Madness.applet);
-        Madness.frame.show();
-        Madness.applet.init();
-        Madness.applet.start();
-    }
-    
     public static void game() {
         Madness.applet.stop();
         Madness.frame.removeAll();
@@ -272,8 +226,6 @@ public class Madness extends Panel
         Madness.anti = 0;
         Madness.smooth = 0;
         Madness.moto = 0;
-        Madness.testdrive = 0;
-        Madness.testcar = "";
         Madness.textid = 0;
         Madness.upfile = "";
         Madness.inisetup = false;
