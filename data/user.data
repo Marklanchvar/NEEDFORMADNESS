@@ -1,5 +1,5 @@
 lastcar(1,-100,-100,-100,-100,-100,-100,Formula 7)
-lastcar(15,-100,-100,-100,-100,-100,-100,DR Monstaa)
-NFM(15,32)
+lastcar(1,Formula 7)
+NFM(1,32)
 
 graphics(0,0,0)

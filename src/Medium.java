@@ -22,7 +22,6 @@ public class Medium
     int origfade;
     int fogd;
     int mgen;
-    boolean loadnew;
     boolean lightson;
     boolean darksky;
     int lightn;
@@ -129,7 +128,6 @@ public class Medium
         this.origfade = 5000;
         this.fogd = 7;
         this.mgen = (int)(Math.random() * 100000.0);
-        this.loadnew = false;
         this.lightson = false;
         this.darksky = false;
         this.lightn = -1;
