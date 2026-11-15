@@ -355,6 +355,7 @@ public class xtGraphics extends Panel implements Runnable
 	int ydu;
 	boolean grabable;
 	float carrot;
+	float[] proba;
 	
     public xtGraphics(final Medium m, final CarDefine cd, final Graphics2D rd, final GameSparker app) {
         this.fase = 111;
@@ -549,6 +550,7 @@ public class xtGraphics extends Panel implements Runnable
     	this.grabable = true;
     	this.carrot = 0;
     	this.intertrack = new RadicalMod[3];
+    	this.proba = new float[] { 0.6f, 0.7f, 0.4f, 0.3f, 0.8f, 0.0f, 0.3f, 0.3f, 0.3f, 0.1f, 0.1f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f };
         for (int i = 0; i < 5; ++i) {
             this.pengs[i] = false;
         }
@@ -1280,7 +1282,7 @@ public class xtGraphics extends Panel implements Runnable
         this.beststunt = 0;
         this.laptime = 0;
         this.fastestlap = 0;
-        if (this.fase == 2 || this.fase == -22) {
+        if (this.fase == 2) {
             this.sortcars(n);
         }
     }
@@ -3231,204 +3233,303 @@ public class xtGraphics extends Panel implements Runnable
         }
     }
     
-    public void sortcars(int n) {
-    	if (n != 0) {
-    		for (int i = 1; i < 8; ++i) {
-    			this.sc[i] = -1;
-    		}
-    		final boolean[] array = new boolean[8];
-    		if (n < 0) {
-    			n = 27;
-    		}
-    		int n2 = 8;
-    		boolean b = false;
-    		if (n <= 10) {
-    			int n3 = 7;
-    			if ((n == 1 || n == 2) && this.sc[0] != 5) {
-    				this.sc[n3] = 5;
-    				n2 = n3;
-    			}
-    			if ((n == 3 || n == 4) && this.sc[0] != 6) {
-    				this.sc[n3] = 6;
-    				n2 = n3;
-    			}
-    			if ((n == 5 || n == 6) && this.sc[0] != 11) {
-    				this.sc[n3] = 11;
-    				n2 = n3;
-    			}
-    			if ((n == 7 || n == 8) && this.sc[0] != 14) {
-    				this.sc[n3] = 14;
-    				n2 = n3;
-    			}
-    			if ((n == 9 || n == 10) && this.sc[0] != 15) {
-    				this.sc[n3] = 15;
-    				n2 = n3;
-    			}
-    		}
-    		else {
-    			n -= 10;
-    			b = true;
-    			if (this.sc[0] != 7 + (n + 1) / 2 && n != 17) {
-    				this.sc[7] = 7 + (n + 1) / 2;  // last car = boss
-    				n2 = 7;
-    			}
-    		}
-    		int n4 = 16;
-    		int n5 = 1;
-    		int n6 = 2;
-    		for (int j = 1; j < n2; ++j) {
-    			array[j] = false;
-    			while (!array[j]) {
-    				float n7 = 10.0f;
-    				if (b) {
-    					n7 = 17.0f;
-    				}
-    				this.sc[j] = (int)(Math.random() * (24.0f + 8.0f * (n / n7)));
-    				if (this.sc[j] >= 16) {
-    					final int[] sc = this.sc;
-    					final int n8 = j;
-    					sc[n8] -= 16;
-    				}
-    				array[j] = true;
-    				for (int k = 0; k < 8; ++k) {
-    					if (j != k && this.sc[j] == this.sc[k]) {
-    						array[j] = false;
-    					}
-    				}
-    				if (b) {
-    					n7 = 16.0f;
-    				}
-    				float n9 = (15 - this.sc[j]) / 15.0f * (n / n7);
-    				if (n9 > 0.8) {
-    					n9 = 0.8f;
-    				}
-    				if (n == 17 && n9 > 0.5) {
-    					n9 = 0.5f;
-    				}
-    				if (n9 > Math.random()) {
-    					array[j] = false;
-    				}
-    				{
-    					if ((this.sc[j] - 7) * 2 > this.unlocked) {
-    						array[j] = false;
-    					}
-    					if (n != 16 || this.unlocked != 16 || this.sc[j] >= 9) {
-    						continue;
-    					}
-    					array[j] = false;
-    				}
-    			}
-    			if (this.sc[j] < n4) {
-    				n4 = this.sc[j];
-    				if (n5 != j) {
-    					n6 = n5;
-    					n5 = j;
-    				}
-    			}
-    		}
-    		if (!b && n == 10) {
-    			boolean b2 = false;
-    			for (int l = 0; l < 8; ++l) {
-    				if (this.sc[l] == 11) {
-    					b2 = true;
-    				}
-    			}
-    			if (!b2 && Math.random() > Math.random()) {
-    				this.sc[n5] = 11;
-    			}
-    			boolean b3 = false;
-    			for (int n10 = 0; n10 < 8; ++n10) {
-    				if (this.sc[n10] == 14) {
-    					b3 = true;
-    				}
-    			}
-    			if (!b3 && Math.random() > Math.random()) {
-    				this.sc[n6] = 14;
-    			}
-    		}
-    		if (n == 12) {
-    			boolean b4 = false;
-    			for (int n11 = 0; n11 < 8; ++n11) {
-    				if (this.sc[n11] == 11) {
-    					b4 = true;
-    				}
-    			}
-    			if (!b4) {
-    				this.sc[n5] = 11;
-    			}
-    		}
-    		if (n == 14) {
-    			boolean b5 = false;
-    			for (int n12 = 0; n12 < 8; ++n12) {
-    				if (this.sc[n12] == 12) {
-    					b5 = true;
-    				}
-    			}
-    			if (!b5 && Math.random() > Math.random()) {
-    				this.sc[n5] = 12;
-    			}
-    			boolean b6 = false;
-    			for (int n13 = 0; n13 < 8; ++n13) {
-    				if (this.sc[n13] == 10) {
-    					b6 = true;
-    				}
-    			}
-    			if (!b6 && Math.random() > Math.random()) {
-    				this.sc[n6] = 10;
-    			}
-    		}
-    		if (n == 15) {
-    			boolean b7 = false;
-    			for (int n14 = 0; n14 < 8; ++n14) {
-    				if (this.sc[n14] == 11) {
-    					b7 = true;
-    				}
-    			}
-    			if (!b7 && Math.random() > Math.random()) {
-    				this.sc[n5] = 11;
-    			}
-    			boolean b8 = false;
-    			for (int n15 = 0; n15 < 8; ++n15) {
-    				if (this.sc[n15] == 13) {
-    					b8 = true;
-    				}
-    			}
-    			if (!b8 && Math.random() > Math.random()) {
-    				this.sc[n6] = 13;
-    			}
-    		}
-    		if (n == 16) {
-    			boolean b9 = false;
-    			for (int n16 = 0; n16 < 8; ++n16) {
-    				if (this.sc[n16] == 13) {
-    					b9 = true;
-    				}
-    			}
-    			if (!b9 && Math.random() > Math.random()) {
-    				this.sc[n5] = 13;
-    			}
-    			boolean b10 = false;
-    			for (int n17 = 0; n17 < 8; ++n17) {
-    				if (this.sc[n17] == 12) {
-    					b10 = true;
-    				}
-    			}
-    			if (!b10 && Math.random() > Math.random()) {
-    				this.sc[n6] = 12;
-    			}
-    		}
-    		{
-    			int n18 = 0;
-    			for (int n19 = 0; n19 < this.cd.nlcars - 16; ++n19) {
-    				if (n18 == 0) {
-    					for (int n20 = 1; n20 < n2; ++n20) {
-    						array[n20] = false;
-    					}
-    				}
-    			}
-    		}
-    	}
+    public void sortcars(final int n) {
+        if (n != 0) {
+            int n2 = 1;
+            do {
+                this.sc[n2] = -1;
+            } while (++n2 < 8);
+            final boolean[] array = new boolean[7];
+            if (this.unlocked == n && this.unlocked != 17) {
+                this.sc[6] = 7 + (n + 1) / 2;
+                int n3 = 1;
+                do {
+                    array[n3] = false;
+                } while (++n3 < 6);
+                if (n == 14) {
+                    if (this.sc[0] != 12) {
+                        this.sc[5] = 12;
+                    }
+                    else {
+                        this.sc[5] = 1;
+                    }
+                    if (this.sc[0] != 10) {
+                        this.sc[4] = 10;
+                    }
+                    else {
+                        this.sc[4] = 1;
+                    }
+                    array[5] = (array[4] = true);
+                    int n4 = (int)(Math.random() * 3.0 + 1.0);
+                    if (this.sc[0] != 9) {
+                        this.sc[n4] = 9;
+                        array[n4] = true;
+                        if (++n4 == 4) {
+                            n4 = 1;
+                        }
+                    }
+                    if (this.sc[0] != 5) {
+                        this.sc[n4] = 5;
+                        array[n4] = true;
+                        if (++n4 == 4) {
+                            n4 = 1;
+                        }
+                    }
+                    if (this.sc[0] != 8) {
+                        this.sc[n4] = 8;
+                        array[n4] = true;
+                        if (++n4 == 4) {}
+                    }
+                }
+                if (n == 16) {
+                    int n5 = 4;
+                    int n6 = 5;
+                    int n7 = 1;
+                    int n8 = 2;
+                    if (Math.random() > Math.random()) {
+                        n5 = 5;
+                        n6 = 4;
+                    }
+                    if (Math.random() < Math.random()) {
+                        n7 = 2;
+                        n8 = 1;
+                    }
+                    if (this.sc[0] != 12) {
+                        this.sc[n5] = 12;
+                    }
+                    else {
+                        this.sc[n5] = 14;
+                    }
+                    if (this.sc[0] != 10) {
+                        this.sc[n6] = 10;
+                    }
+                    else {
+                        this.sc[n6] = 14;
+                    }
+                    if (this.sc[0] != 11) {
+                        this.sc[n7] = 11;
+                    }
+                    else {
+                        this.sc[n7] = 14;
+                    }
+                    if (this.sc[0] != 13) {
+                        this.sc[n8] = 13;
+                    }
+                    else {
+                        this.sc[n8] = 14;
+                    }
+                    if (this.sc[0] <= 9) {
+                        this.sc[3] = 14;
+                    }
+                    else {
+                        this.sc[3] = 9;
+                    }
+                    int n9 = 1;
+                    do {
+                        array[n9] = true;
+                    } while (++n9 < 6);
+                }
+                int n10 = 1;
+                do {
+                    while (!array[n10]) {
+                        this.sc[n10] = (int)(Math.random() * (7 + (n + 1) / 2));
+                        array[n10] = true;
+                        int n11 = 0;
+                        do {
+                            if (n10 != n11 && this.sc[n10] == this.sc[n11]) {
+                                array[n10] = false;
+                            }
+                        } while (++n11 < 7);
+                        if (Math.random() < this.proba[this.sc[n10]]) {
+                            array[n10] = false;
+                        }
+                        if (n == 10) {
+                            if (this.sc[0] != 11) {
+                                if (this.sc[n10] == 2 || this.sc[n10] == 4 || this.sc[n10] == 11) {
+                                    array[n10] = false;
+                                }
+                            }
+                            else if (this.sc[n10] == 9) {
+                                array[n10] = false;
+                            }
+                        }
+                        if (n == 11 && (this.sc[n10] == 0 || this.sc[n10] == 1 || this.sc[n10] == 2 || this.sc[n10] == 3 || this.sc[n10] == 4 || this.sc[n10] == 7)) {
+                            array[n10] = false;
+                        }
+                        if ((n == 12 || n == 15) && this.sc[n10] <= 4) {
+                            array[n10] = false;
+                        }
+                        if (n != 11 && n != 12 && n10 != 1 && n10 != 2 && this.sc[n10] == 13) {
+                            array[n10] = false;
+                        }
+                    }
+                } while (++n10 < 6);
+                if (n == 15) {
+                    boolean b = false;
+                    int n12 = 0;
+                    do {
+                        if (this.sc[n12] == 13) {
+                            b = true;
+                        }
+                    } while (++n12 < 6);
+                    if (!b && Math.random() > Math.random()) {
+                        if (Math.random() > Math.random()) {
+                            this.sc[1] = 13;
+                        }
+                        else {
+                            this.sc[2] = 13;
+                        }
+                    }
+                }
+                if (n == 12) {
+                    boolean b2 = false;
+                    int n13 = 0;
+                    do {
+                        if (this.sc[n13] == 11) {
+                            b2 = true;
+                        }
+                    } while (++n13 < 6);
+                    if (!b2) {
+                        this.sc[2] = 11;
+                    }
+                }
+                if (n == 8) {
+                    boolean b3 = false;
+                    int n14 = 0;
+                    do {
+                        if (this.sc[n14] == 9) {
+                            b3 = true;
+                        }
+                    } while (++n14 < 6);
+                    if (!b3) {
+                        this.sc[5] = 9;
+                    }
+                    boolean b4 = false;
+                    int n15 = 0;
+                    do {
+                        if (this.sc[n15] == 8) {
+                            b4 = true;
+                        }
+                    } while (++n15 < 6);
+                    if (!b4) {
+                        this.sc[4] = 8;
+                    }
+                    boolean b5 = false;
+                    int n16 = 0;
+                    do {
+                        if (this.sc[n16] == 10) {
+                            b5 = true;
+                        }
+                    } while (++n16 < 6);
+                    if (!b5) {
+                        this.sc[2] = 10;
+                    }
+                }
+                if (n == 9) {
+                    boolean b6 = false;
+                    int n17 = 0;
+                    do {
+                        if (this.sc[n17] == 10) {
+                            b6 = true;
+                        }
+                    } while (++n17 < 6);
+                    if (b6) {
+                        if (this.sc[5] != 10) {
+                            boolean b7 = false;
+                            int n18 = 0;
+                            do {
+                                if (this.sc[n18] == 5) {
+                                    b7 = true;
+                                }
+                            } while (++n18 < 6);
+                            if (b7) {
+                                if (this.sc[5] != 5) {
+                                    boolean b8 = false;
+                                    int n19 = 0;
+                                    do {
+                                        if (this.sc[n19] == 9) {
+                                            b8 = true;
+                                        }
+                                    } while (++n19 < 6);
+                                    if (!b8) {
+                                        this.sc[5] = 9;
+                                    }
+                                }
+                            }
+                            else {
+                                this.sc[5] = 5;
+                            }
+                        }
+                    }
+                    else {
+                        this.sc[5] = 10;
+                    }
+                }
+            }
+            else {
+                int n20 = 7;
+                if (this.sc[0] != 7 + (n + 1) / 2 && n != 17) {
+                    this.sc[6] = 7 + (n + 1) / 2;
+                    n20 = 6;
+                }
+                for (int i = 1; i < n20; ++i) {
+                    array[i] = false;
+                    while (!array[i]) {
+                        int unlocked = this.unlocked;
+                        if (unlocked == 17) {
+                            unlocked = 16;
+                        }
+                        this.sc[i] = (int)(Math.random() * (8 + (unlocked + 1) / 2));
+                        array[i] = true;
+                        int n21 = 0;
+                        do {
+                            if (i != n21 && this.sc[i] == this.sc[n21]) {
+                                array[i] = false;
+                            }
+                        } while (++n21 < 7);
+                        float n22 = this.proba[this.sc[i]];
+                        if (n - this.sc[i] > 4 && n != 17) {
+                            n22 += (n - this.sc[i] - 4) / 10.0f;
+                            if (n22 > 0.9) {
+                                n22 = 0.9f;
+                            }
+                        }
+                        if (n == 16 && this.sc[i] <= 8 && n22 < 0.9) {
+                            n22 = 0.9f;
+                        }
+                        if (Math.random() < n22) {
+                            array[i] = false;
+                        }
+                        if (n != 11 && n != 12 && i != 1 && i != 2 && this.sc[i] == 13 && array[i]) {
+                            array[i] = false;
+                            if ((Math.random() <= Math.random() * 1.6 || n == 14) && (n != 16 || Math.random() <= Math.random())) {
+                                continue;
+                            }
+                            if (Math.random() > Math.random()) {
+                                this.sc[1] = 13;
+                            }
+                            else {
+                                this.sc[2] = 13;
+                            }
+                        }
+                    }
+                }
+            }
+            if (n == 12) {
+                boolean b9 = false;
+                int n23 = 0;
+                do {
+                    if (this.sc[n23] == 11) {
+                        b9 = true;
+                    }
+                } while (++n23 < 6);
+                if (!b9) {
+                    this.sc[2] = 11;
+                }
+            }
+        }
     }
+    
     public void ctachm(final int mouseX, final int mouseY, final int mouseClick, final Control control) {
         if (this.fase == 1) {
             if (mouseClick == 1) {
