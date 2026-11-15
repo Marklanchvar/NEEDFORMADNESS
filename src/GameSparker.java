@@ -580,7 +580,7 @@ public class GameSparker extends Applet implements Runnable
                         checkPoints.checkstat(array3, array2, record, xtGraphics.nplayers, xtGraphics.im);
                         medium.follow(array2[0], array3[0].cxz, 0, view);
                         xtGraphics.stat(array3[0], array2[0], checkPoints, this.u[0], true);
-                        this.rd.setColor(new Color(255, 255, 255));
+                        this.rd.setColor(Color.WHITE);
                         this.rd.fillRect(0, 0, 800, 450);
                     }
                 }

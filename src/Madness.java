@@ -36,9 +36,6 @@ public class Madness extends Panel
     static int anti;
 	static int smooth;
 	static int moto;
-    static GraphicsDevice myDevice;
-    static DisplayMode defdisp;
-    static DisplayMode fulldisp;
     static int textid;
     static String upfile;
     static boolean inisetup;
@@ -46,7 +43,6 @@ public class Madness extends Panel
     static long advtime;
     
     public static void main(final String[] array) {
-        //System.runFinalizersOnExit(true);
         (Madness.frame = new Frame("Need for Madness")).setBackground(new Color(0, 0, 0));
         Madness.frame.setIgnoreRepaint(true);
         Madness.fpath = "";
@@ -88,44 +84,11 @@ public class Madness extends Panel
         });
         Madness.frame.add("Center", Madness.applet);
         Madness.frame.show();
-        Madness.frame.setMinimumSize(new Dimension(930, 586));
-        Madness.frame.setSize(930, 586);
+        Madness.frame.setMinimumSize(new Dimension(800, 450));
+        Madness.frame.setSize(800, 450);
         Madness.frame.setExtendedState(6);
         Madness.applet.init();
         Madness.applet.start();
-        Madness.myDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        Madness.defdisp = Madness.myDevice.getDisplayMode();
-    }
-    
-    public static void exitfullscreen() {
-        Madness.frame.dispose();
-        (Madness.frame = new Frame("Need for Madness")).setBackground(new Color(0, 0, 0));
-        Madness.frame.setIgnoreRepaint(true);
-        Madness.frame.setIconImage(Toolkit.getDefaultToolkit().createImage("" + Madness.fpath + "data/icon.gif"));
-        Madness.frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(final WindowEvent windowEvent) {
-                Madness.exitsequance();
-            }
-        });
-        Madness.frame.add("Center", Madness.applet);
-        Madness.frame.show();
-        if (Madness.myDevice.isFullScreenSupported()) {
-            try {
-                Madness.myDevice.setDisplayMode(Madness.defdisp);
-            }
-            catch (final Exception ex) {}
-            if (Madness.myDevice.isDisplayChangeSupported()) {
-                try {
-                    Madness.myDevice.setFullScreenWindow(null);
-                }
-                catch (final Exception ex2) {}
-            }
-        }
-        Madness.frame.setMinimumSize(new Dimension(930, 586));
-        Madness.frame.setSize(800, 586);
-        Madness.frame.setExtendedState(6);
-        Madness.applet.requestFocus();
     }
     
     public static void exitsequance() {
