@@ -95,7 +95,6 @@ public class xtGraphics extends Panel implements Runnable
     Image oloadingmusic;
     Image oflaot;
     Image oexitgame;
-    Image mload;
     Image dmg;
     Image pwr;
     Image pos;
@@ -947,9 +946,6 @@ public class xtGraphics extends Panel implements Runnable
                 if (name.equals("arn.gif")) {
                     this.arn = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
-                if (name.equals("mload.gif")) {
-                    this.mload = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
                 if (name.equals("login.gif")) {
                     this.login = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
                 }
@@ -1460,7 +1456,6 @@ public class xtGraphics extends Panel implements Runnable
                 checkPoints.stage = (int)(Math.random() * 32.0);
             }
         }
-        this.cd.staction = 0;
         this.fase = 2;
     }
     
@@ -1478,9 +1473,6 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawImage(this.select, 338, 35, null);
         }
         this.app.repaint();
-        if (this.cd.staction != 0) {
-            this.cd.staction = 0;
-        }
     }
     
     public void cantgo(final Control control) {
@@ -1514,74 +1506,64 @@ public class xtGraphics extends Panel implements Runnable
     }
     
     public void stageselect(final CheckPoints checkPoints, final Control control, final int n, final int n2, final boolean b) {
-        this.rd.drawImage(this.peek, 0, 275, null);
-        this.rd.drawImage(this.select, 338, 35, null);
-        if (true) {
-            if (checkPoints.stage > 0 && this.cd.staction == 0) {
-                if (checkPoints.stage != 1) {
-                    this.rd.drawImage(this.back[this.pback], 115, 135, null);
-                }
-                if (checkPoints.stage != 32) {
-                    this.rd.drawImage(this.next[this.pnext], 625, 135, null);
-                }
-            }
-            {
-                this.rd.setFont(new Font("SansSerif", 1, 13));
-                this.ftm = this.rd.getFontMetrics();
-                if (checkPoints.stage != 32) {
-                    this.drawcs(80, "Stage " + checkPoints.stage + "  >", 255, 128, 0, 3);
-                }
-                else {
-                    this.drawcs(80, "The End  >", 255, 128, 0, 3);
-                }
-                aflk = !aflk;
-                if (this.aflk) {
-                    this.drawcs(100, "| " + checkPoints.name + " |", 240, 240, 240, 3);
-                }
-                else {
-                    this.drawcs(100, "| " + checkPoints.name + " |", 176, 176, 176, 3);
-                }
-                if (checkPoints.stage != -3) {
-                    this.rd.drawImage(this.contin[this.pcontin], 355, 360, null);
-                }
-                else {
-                    this.pcontin = 0;
-                }
-            }
-            if (this.cd.staction == 0) {
-                if ((control.handb || control.enter) && checkPoints.stage != -3) {
-                    this.dudo = 150;
-                    this.fase = 5;
-                    control.handb = false;
-                    control.enter = false;
-                    this.intertrack[1].stop();
-                    this.intertrack[1].unloadimod();
-                }
-                if (checkPoints.stage > 0) {
-                    if (control.right && checkPoints.stage != 32) {
-                        if (checkPoints.stage != this.unlocked) {
-                                ++checkPoints.stage;
-                                this.fase = 2;
-                        }
-                        else {
-                            this.fase = 4;
-                            this.lockcnt = 100;
-                        }
-                        control.right = false;
-                    }
-                    if (control.left && checkPoints.stage != 1) {
-                        --checkPoints.stage;
-                        this.fase = 2;
-                        control.left = false;
-                    }
-                }
-            }
-        }
-        if (this.drawcarb(true, null, " Exit X ", 670, 30, n, n2, b)) {
-            this.intertrack[1].stop();
-        	this.fase = 10;
-        	this.opselect = 0;
-        }
+    	this.rd.drawImage(this.peek, 0, 275, null);
+    	this.rd.drawImage(this.select, 338, 35, null);
+    	if (checkPoints.stage != 1) {
+    		this.rd.drawImage(this.back[this.pback], 115, 135, null);
+    	}
+    	if (checkPoints.stage != 32) {
+    		this.rd.drawImage(this.next[this.pnext], 625, 135, null);
+    	}
+    	{
+    		this.rd.setFont(new Font("SansSerif", 1, 13));
+    		this.ftm = this.rd.getFontMetrics();
+    		if (checkPoints.stage != 32) {
+    			this.drawcs(80, "Stage " + checkPoints.stage + "  >", 255, 128, 0, 3);
+    		}
+    		else {
+    			this.drawcs(80, "The End  >", 255, 128, 0, 3);
+    		}
+    		aflk = !aflk;
+    		if (this.aflk) {
+    			this.drawcs(100, "| " + checkPoints.name + " |", 240, 240, 240, 3);
+    		}
+    		else {
+    			this.drawcs(100, "| " + checkPoints.name + " |", 176, 176, 176, 3);
+    		}
+    			this.rd.drawImage(this.contin[this.pcontin], 355, 360, null);
+    	}
+    	{
+    		if (control.handb || control.enter) {
+    			this.dudo = 150;
+    			this.fase = 5;
+    			control.handb = false;
+    			control.enter = false;
+    			this.intertrack[1].stop();
+    			this.intertrack[1].unloadimod();
+    		}
+    		if (control.right && checkPoints.stage != 32) {
+    			if (checkPoints.stage != this.unlocked) {
+    				++checkPoints.stage;
+    				this.fase = 2;
+    				control.right = false;
+    			}
+    			else {
+    				this.fase = 4;
+    				this.lockcnt = 100;
+    				control.right = false;
+    			}
+    		}
+    		if (control.left && checkPoints.stage != 1) {
+    			--checkPoints.stage;
+    			this.fase = 2;
+    			control.left = false;
+    		}
+    	}
+    	if (this.drawcarb(true, null, " Exit X ", 670, 30, n, n2, b)) {
+    		this.intertrack[1].stop();
+    		this.fase = 10;
+    		this.opselect = 0;
+    	}
     }
     
     public void hipnoload(final int n, final boolean b) {
@@ -2638,93 +2620,85 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.drawImage(this.selectcar, 321, 37, null);
             array[this.sc[0]].d(this.rd);
         int n7 = -1;
-        int k = 0;
         boolean b2 = false;
         if (flipo == 0) {
-            this.rd.setFont(new Font("Arial", 1, 13));
-            this.ftm = this.rd.getFontMetrics();
-                if (this.sc[0] != 0) {
-                    this.rd.drawImage(this.back[this.pback], 95, 275, null);
-                }
-                if (this.sc[0] != 15) {
-                    this.rd.drawImage(this.next[this.pnext], 645, 275, null);
-                }
-            if (this.sc[0] >= 8 && this.unlocked <= (this.sc[0] - 7) * 2) {
-                k = (this.sc[0] - 7) * 2;
-            }
-            if (k != 0) {
-                if (this.gatey == 300) {
-                    for (int n9 = 0; n9 < 9; ++n9) {
-                        this.pgas[n9] = false;
-                        this.pgady[n9] = 0;
-                    }
-                    this.pgas[0] = true;
-                }
-                for (int n10 = 0; n10 < 9; ++n10) {
-                    this.rd.drawImage(this.pgate, this.pgatx[n10], this.pgaty[n10] + this.pgady[n10] - this.gatey, null);
-                    if (true) {
-                        if (this.pgas[n10]) {
-                            final int[] pgady = this.pgady;
-                            final int n11 = n10;
-                            pgady[n11] -= (80 + 100 / (n10 + 1) - Math.abs(this.pgady[n10])) / 3;
-                            if (this.pgady[n10] < -(70 + 100 / (n10 + 1))) {
-                                this.pgas[n10] = false;
-                                if (n10 != 8) {
-                                    this.pgas[n10 + 1] = true;
-                                }
-                            }
-                        }
-                        else {
-                            final int[] pgady2 = this.pgady;
-                            final int n12 = n10;
-                            pgady2[n12] += (80 + 100 / (n10 + 1) - Math.abs(this.pgady[n10])) / 3;
-                            if (this.pgady[n10] > 0) {
-                                this.pgady[n10] = 0;
-                            }
-                        }
-                    }
-                }
-                if (this.gatey != 0) {
-                    this.gatey -= 100;
-                }
-                if (true) {
-                    this.drawcs(355, "[ Car Locked ]", 210, 210, 210, 3);
-                    this.drawcs(375, "This car unlocks when stage " + k + " is completed...", 255, 96, 0, 3);
-                }
-            }
-            else {
-                if (true) {
-                    
-                	carStatsDisplay();
-                	{
-                		this.rd.setFont(new Font("Arial", 1, 13));
-                		this.ftm = this.rd.getFontMetrics();
-                		String str3 = "Class C";
-                		if (this.cd.cclass[this.sc[0]] == 1) {
-                			str3 = "Class B & C";
-                		}
-                		if (this.cd.cclass[this.sc[0]] == 2) {
-                			str3 = "Class B";
-                		}
-                		if (this.cd.cclass[this.sc[0]] == 3) {
-                			str3 = "Class A & B";
-                		}
-                		if (this.cd.cclass[this.sc[0]] == 4) {
-                			str3 = "Class A";
-                		}
-                		if (this.kbload < 7) {
-                			this.rd.setColor(Color.BLACK);
-                			++this.kbload;
-                		}
-                		else {
-                			this.rd.setColor(new Color(176, 41, 0));
-                			this.kbload = 0;
-                		}
-                		this.rd.drawString(str3, 549 - this.ftm.stringWidth(str3) / 2, 95);
-                	}
-                }
-                    this.rd.drawImage(this.contin[this.pcontin], 355, 385, null);
-            }
+        	this.rd.setFont(new Font("Arial", 1, 13));
+        	this.ftm = this.rd.getFontMetrics();
+        	if (this.sc[0] != 0) {
+        		this.rd.drawImage(this.back[this.pback], 95, 275, null);
+        	}
+        	if (this.sc[0] != 15) {
+        		this.rd.drawImage(this.next[this.pnext], 645, 275, null);
+        	}
+        	if (this.unlocked <= (this.sc[0] - 7) * 2) {
+        		if (this.gatey == 300) {
+        			for (int n9 = 0; n9 < 9; ++n9) {
+        				this.pgas[n9] = false;
+        				this.pgady[n9] = 0;
+        			}
+        			this.pgas[0] = true;
+        		}
+        		for (int n10 = 0; n10 < 9; ++n10) {
+        			this.rd.drawImage(this.pgate, this.pgatx[n10], this.pgaty[n10] + this.pgady[n10] - this.gatey, null);
+        			if (true) {
+        				if (this.pgas[n10]) {
+        					final int[] pgady = this.pgady;
+        					final int n11 = n10;
+        					pgady[n11] -= (80 + 100 / (n10 + 1) - Math.abs(this.pgady[n10])) / 3;
+        					if (this.pgady[n10] < -(70 + 100 / (n10 + 1))) {
+        						this.pgas[n10] = false;
+        						if (n10 != 8) {
+        							this.pgas[n10 + 1] = true;
+        						}
+        					}
+        				}
+        				else {
+        					final int[] pgady2 = this.pgady;
+        					final int n12 = n10;
+        					pgady2[n12] += (80 + 100 / (n10 + 1) - Math.abs(this.pgady[n10])) / 3;
+        					if (this.pgady[n10] > 0) {
+        						this.pgady[n10] = 0;
+        					}
+        				}
+        			}
+        		}
+        		if (this.gatey != 0) {
+        			this.gatey -= 100;
+        		}
+        		if (true) {
+        			this.drawcs(355, "[ Car Locked ]", 210, 210, 210, 3);
+        			this.drawcs(375, "This car unlocks when stage " + (this.sc[0] - 7) * 2 + " is completed...", 255, 96, 0, 3);
+        		}
+        	}
+        	else {
+
+        		carStatsDisplay();
+        		this.rd.setFont(new Font("Arial", 1, 13));
+        		this.ftm = this.rd.getFontMetrics();
+        		String str3 = "Class C";
+        		if (this.cd.cclass[this.sc[0]] == 1) {
+        			str3 = "Class B & C";
+        		}
+        		if (this.cd.cclass[this.sc[0]] == 2) {
+        			str3 = "Class B";
+        		}
+        		if (this.cd.cclass[this.sc[0]] == 3) {
+        			str3 = "Class A & B";
+        		}
+        		if (this.cd.cclass[this.sc[0]] == 4) {
+        			str3 = "Class A";
+        		}
+        		if (this.kbload < 7) {
+        			this.rd.setColor(Color.BLACK);
+        			++this.kbload;
+        		}
+        		else {
+        			this.rd.setColor(new Color(176, 41, 0));
+        			this.kbload = 0;
+        		}
+        		this.rd.drawString(str3, 549 - this.ftm.stringWidth(str3) / 2, 95);
+        	}
+        		this.rd.drawImage(this.contin[this.pcontin], 355, 385, null);
         }
         //car display
         
@@ -2824,7 +2798,7 @@ public class xtGraphics extends Panel implements Runnable
                     this.flipo = 20;
                 }
             }
-            if (k == 0 && this.flipo < 10 && (control.handb || control.enter)) {
+            if ((this.sc[0] - 7) * 2 < this.unlocked && this.flipo < 10 && (control.handb || control.enter)) {
                 this.m.crs = false;
                     this.fase = 3;
                 if (this.sc[0] < 16) {

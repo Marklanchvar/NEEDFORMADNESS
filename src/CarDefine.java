@@ -60,7 +60,6 @@ public class CarDefine implements Runnable
     String tnickey;
     int loadlist;
     String viewname;
-    int staction;
     String onstage;
     int inslot;
     int roundslot;
@@ -107,7 +106,6 @@ public class CarDefine implements Runnable
         this.tnickey = "";
         this.loadlist = 0;
         this.viewname = "";
-        this.staction = 0;
         this.onstage = "";
         this.inslot = -1;
         this.roundslot = 0;
@@ -640,7 +638,6 @@ public class CarDefine implements Runnable
     }
     
     public void stopallnow() {
-        this.staction = 0;
         this.action = 0;
         if (this.carloader != null) {
             this.carloader.stop();

@@ -44,7 +44,6 @@ public class GameSparker extends Applet implements Runnable
     Image offImage;
     Thread gamer;
     Thread physics;
-    int mload;
     boolean exwist;
     int apx;
     int apy;
@@ -84,7 +83,6 @@ public class GameSparker extends Applet implements Runnable
 	static int actat;
     
     public GameSparker() {
-        this.mload = 1;
         this.exwist = false;
         this.apx = 0;
         this.apy = 0;
@@ -422,38 +420,6 @@ public class GameSparker extends Applet implements Runnable
                     this.mouses = 2;
                 }
                 xtGraphics.stageselect(checkPoints, this.u[0], this.xm, this.ym, this.moused);
-            }
-            if (xtGraphics.fase == 1177) {
-                this.mvect = 100;
-                if (n == 0) {
-                    if (xtGraphics.loadedt) {
-                        this.rd.setColor(Color.BLACK);
-                        this.rd.fillRect(0, 0, 800, 450);
-                        this.repaint();
-                        this.checkmemory(xtGraphics);
-                        xtGraphics.strack.unload();
-                        xtGraphics.strack = null;
-                        xtGraphics.flexpix = null;
-                        xtGraphics.fleximg = null;
-                        System.gc();
-                        xtGraphics.loadedt = false;
-                    }
-                    this.rd.setColor(Color.BLACK);
-                    this.rd.fillRect(65, 25, 670, 400);
-                    if (this.mload > 0) {
-                        this.rd.drawImage(xtGraphics.mload, 259, 195, this);
-                    }
-                    this.repaint();
-                    if (this.mload == 2) {
-                        carDefine.loadready();
-                        this.loadbase(array, medium, trackers, xtGraphics, true);
-                        this.readcookies(xtGraphics, carDefine, array);
-                        this.mload = -1;
-                    }
-                    System.gc();
-                    n = 1;
-                }
-                else {}
             }
             if (xtGraphics.fase == 0) { // ingame
                 for (int n33 = 0; n33 < xtGraphics.nplayers; ++n33) {
@@ -1734,9 +1700,6 @@ public class GameSparker extends Applet implements Runnable
             System.out.println("Error Reading Models: " + obj);
         }
         System.gc();
-        if (this.mload != -1 && n != 615671) {
-            this.mload = 2;
-        }
     }
     
     public int getint(final String s, final String s2, final int n) {
