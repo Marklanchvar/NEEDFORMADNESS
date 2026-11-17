@@ -88,6 +88,7 @@ public class ContO
     String err;
     float roofat;
     int wh;
+    float wrad;
     
     public ContO(final byte[] buf, final Medium m, final Trackers t) {
     	this.npl = 0;
@@ -108,6 +109,7 @@ public class ContO
     	this.decor = false;
     	this.grounded = 1.0f;
     	this.grat = 0;
+    	this.wrad = 1;
     	this.keyx = new float[4];
     	this.keyz = new float[4];
     	this.sprkat = 0;
@@ -400,6 +402,7 @@ public class ContO
     		}
     	}
     	this.grat = wheels.ground;
+    	this.wrad = wheels.radius;
     	this.sprkat = wheels.sparkat;
     	if (this.shadow) {
     		this.stg = new int[20];
@@ -470,6 +473,7 @@ public class ContO
         this.grounded = contO.grounded;
         this.decor = contO.decor;
         this.grat = contO.grat;
+        this.wrad = contO.wrad;
         this.sprkat = contO.sprkat;
         this.p = new Plane[contO.npl];
         for (int i = 0; i < this.npl; ++i) {

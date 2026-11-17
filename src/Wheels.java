@@ -47,9 +47,9 @@ public class Wheels
         if (n5 == 11) {
             n9 = n2;
         }
-        this.sparkat = (n11 * 24.0f);
-        this.ground = (n3 + 13.0f * n11);
-        this.radius = (13.0f * n11);
+        this.sparkat = (n11 * 24F);
+        this.radius = (13F * n11);
+        this.ground = this.radius + n3;
         
         for (int i = 0; i < 12; ++i) {
         	float radi = 13F;

@@ -153,8 +153,6 @@ public class xtGraphics extends Panel implements Runnable
     Image ks;
     Image kenter;
     Image nfm;
-    Image login;
-    Image register;
     Image play;
     Image sdets;
     Image cancel;
@@ -164,12 +162,9 @@ public class xtGraphics extends Panel implements Runnable
     Image bolp;
     Image bor;
     Image borp;
-    Image logout;
     Image change;
     Image pln;
     Image pon;
-    Image dome;
-    Image upgrade;
     Image bols;
     Image bolps;
     Image bors;
@@ -946,23 +941,11 @@ public class xtGraphics extends Panel implements Runnable
                 if (name.equals("arn.gif")) {
                     this.arn = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
-                if (name.equals("login.gif")) {
-                    this.login = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
-                }
                 if (name.equals("play.gif")) {
                     this.play = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
                 }
                 if (name.equals("cancel.gif")) {
                     this.cancel = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
-                }
-                if (name.equals("dome.gif")) {
-                    this.dome = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
-                }
-                if (name.equals("register.gif")) {
-                    this.register = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
-                }
-                if (name.equals("upgrade.gif")) {
-                    this.upgrade = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("sdets.gif")) {
                     this.sdets = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
@@ -984,9 +967,6 @@ public class xtGraphics extends Panel implements Runnable
                 }
                 if (name.equals("borp.gif")) {
                     this.borp = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
-                }
-                if (name.equals("logout.gif")) {
-                    this.logout = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
                 }
                 if (name.equals("change.gif")) {
                     this.change = this.loadBimage(b, mediaTracker, defaultToolkit, 0);
