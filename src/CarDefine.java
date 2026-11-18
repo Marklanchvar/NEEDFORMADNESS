@@ -115,78 +115,680 @@ public class CarDefine implements Runnable
         this.m = m;
         this.t = t;
         this.gs = gs;
-        this.loadstat();
-    }
-
-    public void loadstat() {
-        for (int carIndex = 0; carIndex < 16; ++carIndex) {
-            try {
-                final BufferedReader reader = new BufferedReader(new FileReader("" + Madness.fpath + "cars/" + carIndex + ".txt"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    final String trim = line.trim();
-                    if (trim.startsWith("name(")) {
-                        this.names[carIndex] = this.getSvalue("name", trim, 0);
-                    }
-                    else if (trim.startsWith("swits(")) {
-                        for (int i = 0; i < 3; ++i) {
-                            this.swits[carIndex][i] = this.getvalue("swits", trim, i);
-                        }
-                    }
-                    else if (trim.startsWith("acelf(")) {
-                        for (int i = 0; i < 3; ++i) {
-                            this.acelf[carIndex][i] = this.getfloatvalue("acelf", trim, i);
-                        }
-                    }
-                    else if (trim.startsWith("handb(")) this.handb[carIndex] = this.getvalue("handb", trim, 0);
-                    else if (trim.startsWith("airs(")) this.airs[carIndex] = this.getfloatvalue("airs", trim, 0);
-                    else if (trim.startsWith("airc(")) this.airc[carIndex] = this.getvalue("airc", trim, 0);
-                    else if (trim.startsWith("turn(")) this.turn[carIndex] = this.getvalue("turn", trim, 0);
-                    else if (trim.startsWith("grip(")) this.grip[carIndex] = this.getfloatvalue("grip", trim, 0);
-                    else if (trim.startsWith("bounce(")) this.bounce[carIndex] = this.getfloatvalue("bounce", trim, 0);
-                    else if (trim.startsWith("simag(")) this.simag[carIndex] = this.getfloatvalue("simag", trim, 0);
-                    else if (trim.startsWith("moment(")) this.moment[carIndex] = this.getfloatvalue("moment", trim, 0);
-                    else if (trim.startsWith("comprad(")) this.comprad[carIndex] = this.getfloatvalue("comprad", trim, 0);
-                    else if (trim.startsWith("push(")) this.push[carIndex] = this.getvalue("push", trim, 0);
-                    else if (trim.startsWith("revpush(")) this.revpush[carIndex] = this.getvalue("revpush", trim, 0);
-                    else if (trim.startsWith("lift(")) this.lift[carIndex] = this.getvalue("lift", trim, 0);
-                    else if (trim.startsWith("revlift(")) this.revlift[carIndex] = this.getvalue("revlift", trim, 0);
-                    else if (trim.startsWith("powerloss(")) this.powerloss[carIndex] = this.getvalue("powerloss", trim, 0);
-                    else if (trim.startsWith("flipy(")) this.flipy[carIndex] = this.getfloatvalue("flipy", trim, 0);
-                    else if (trim.startsWith("msquash(")) this.msquash[carIndex] = this.getvalue("msquash", trim, 0);
-                    else if (trim.startsWith("clrad(")) this.clrad[carIndex] = this.getvalue("clrad", trim, 0);
-                    else if (trim.startsWith("dammult(")) this.dammult[carIndex] = this.getfloatvalue("dammult", trim, 0);
-                    else if (trim.startsWith("maxmag(")) this.maxmag[carIndex] = this.getvalue("maxmag", trim, 0);
-                    else if (trim.startsWith("dishandle(")) this.dishandle[carIndex] = this.getfloatvalue("dishandle", trim, 0);
-                    else if (trim.startsWith("outdam(")) this.outdam[carIndex] = this.getfloatvalue("outdam", trim, 0);
-                    else if (trim.startsWith("cclass(")) this.cclass[carIndex] = this.getvalue("cclass", trim, 0);
-                    else if (trim.startsWith("enginsignature(")) this.enginsignature[carIndex] = this.getvalue("enginsignature", trim, 0);
-                }
-                reader.close();
-            }
-            catch (final Exception ex) {
-                System.out.println("Error Loading Car Stat: " + ex);
-            }
-        }
-    }
-
-    public float getfloatvalue(final String s, final String s2, final int n) {
-        String string = "";
-        int valueIndex = 0;
-        for (int i = s.length() + 1; i < s2.length(); ++i) {
-            final char c = s2.charAt(i);
-            if (c == ',' || c == ')') {
-                ++valueIndex;
-                ++i;
-            }
-            if (valueIndex == n) {
-                string += c;
-            }
-        }
-        if (string.endsWith("F") || string.endsWith("f")) {
-            string = string.substring(0, string.length() - 1);
-        }
-        return Float.parseFloat(string);
     }
     
     public void loadstat(final byte[] buf, final String s, final float maxR, final float roofat, final int n3, final int n4) {
+        this.names[n4] = s;
+        boolean b = false;
+        boolean b2 = false;
+        final int[] array = { 128, 128, 128, 128, 128 };
+        int n5 = 640;
+        final int[] array2 = { 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50 };
+        final int[] array3 = { 50, 50, 50 };
+        this.enginsignature[n4] = 0;
+        float n6 = 0.0f;
+        this.createdby[n4 - 16] = "Unkown User";
+        try {
+            final DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(buf));
+            String line;
+            while ((line = dataInputStream.readLine()) != null) {
+                final String trim = line.trim();
+                if (trim.startsWith("stat(")) {
+                    try {
+                        n5 = 0;
+                        for (int i = 0; i < 5; ++i) {
+                            array[i] = this.getvalue("stat", trim, i);
+                            if (array[i] > 200) {
+                                array[i] = 200;
+                            }
+                            if (array[i] < 16) {
+                                array[i] = 16;
+                            }
+                            n5 += array[i];
+                        }
+                        b = true;
+                    }
+                    catch (final Exception ex) {
+                        b = false;
+                    }
+                }
+                if (trim.startsWith("physics(")) {
+                    try {
+                        for (int j = 0; j < 11; ++j) {
+                            array2[j] = this.getvalue("physics", trim, j);
+                            if (array2[j] > 100) {
+                                array2[j] = 100;
+                            }
+                            if (array2[j] < 0) {
+                                array2[j] = 0;
+                            }
+                        }
+                        for (int k = 0; k < 3; ++k) {
+                            array3[k] = this.getvalue("physics", trim, k + 11);
+                            if (k != 0 && array3[k] > 100) {
+                                array3[k] = 100;
+                            }
+                            if (array3[k] < 0) {
+                                array3[k] = 0;
+                            }
+                        }
+                        this.enginsignature[n4] = this.getvalue("physics", trim, 14);
+                        if (this.enginsignature[n4] > 4) {
+                            this.enginsignature[n4] = 0;
+                        }
+                        if (this.enginsignature[n4] < 0) {
+                            this.enginsignature[n4] = 0;
+                        }
+                        n6 = (float)this.getvalue("physics", trim, 15);
+                        if (n6 > 0.0f) {
+                            b2 = true;
+                        }
+                    }
+                    catch (final Exception ex2) {
+                        b2 = false;
+                    }
+                }
+                if (trim.startsWith("handling(")) {
+                    try {
+                        int getvalue = this.getvalue("handling", trim, 0);
+                        if (getvalue > 200) {
+                            getvalue = 200;
+                        }
+                        if (getvalue < 50) {
+                            getvalue = 50;
+                        }
+                        this.dishandle[n4] = getvalue / 200.0f;
+                    }
+                    catch (final Exception ex3) {}
+                }
+                if (trim.startsWith("carmaker(")) {
+                    this.createdby[n4 - 16] = this.getSvalue("carmaker", trim, 0);
+                }
+            }
+            dataInputStream.close();
+        }
+        catch (final Exception obj) {
+            System.out.println("Error Loading Car Stat: " + obj);
+        }
+        if (b && b2) {
+            int l = 0;
+            if (n5 > 680) {
+                l = 680 - n5;
+            }
+            if (n5 > 640 && n5 < 680) {
+                l = 640 - n5;
+            }
+            if (n5 > 600 && n5 < 640) {
+                l = 600 - n5;
+            }
+            if (n5 > 560 && n5 < 600) {
+                l = 560 - n5;
+            }
+            if (n5 > 520 && n5 < 560) {
+                l = 520 - n5;
+            }
+            if (n5 < 520) {
+                l = 520 - n5;
+            }
+            while (l != 0) {
+                for (int n7 = 0; n7 < 5; ++n7) {
+                    if (l > 0 && array[n7] < 200) {
+                        final int[] array4 = array;
+                        final int n8 = n7;
+                        ++array4[n8];
+                        --l;
+                    }
+                    if (l < 0 && array[n7] > 16) {
+                        final int[] array5 = array;
+                        final int n9 = n7;
+                        --array5[n9];
+                        ++l;
+                    }
+                }
+            }
+            int n10 = 0;
+            for (int n11 = 0; n11 < 5; ++n11) {
+                n10 += array[n11];
+            }
+            if (n10 == 520) {
+                this.cclass[n4] = 0;
+            }
+            if (n10 == 560) {
+                this.cclass[n4] = 1;
+            }
+            if (n10 == 600) {
+                this.cclass[n4] = 2;
+            }
+            if (n10 == 640) {
+                this.cclass[n4] = 3;
+            }
+            if (n10 == 680) {
+                this.cclass[n4] = 4;
+            }
+            int n12 = 0;
+            int n13 = 0;
+            float n14 = 0.5f;
+            if (array[0] == 200) {
+                n12 = 1;
+                n13 = 1;
+            }
+            if (array[0] > 192 && array[0] < 200) {
+                n12 = 12;
+                n13 = 1;
+                n14 = (array[0] - 192) / 8.0f;
+            }
+            if (array[0] == 192) {
+                n12 = 12;
+                n13 = 12;
+            }
+            if (array[0] > 148 && array[0] < 192) {
+                n12 = 14;
+                n13 = 12;
+                n14 = (array[0] - 148) / 44.0f;
+            }
+            if (array[0] == 148) {
+                n12 = 14;
+                n13 = 14;
+            }
+            if (array[0] > 133 && array[0] < 148) {
+                n12 = 10;
+                n13 = 14;
+                n14 = (array[0] - 133) / 15.0f;
+            }
+            if (array[0] == 133) {
+                n12 = 10;
+                n13 = 10;
+            }
+            if (array[0] > 112 && array[0] < 133) {
+                n12 = 15;
+                n13 = 10;
+                n14 = (array[0] - 112) / 21.0f;
+            }
+            if (array[0] == 112) {
+                n12 = 15;
+                n13 = 15;
+            }
+            if (array[0] > 107 && array[0] < 112) {
+                n12 = 11;
+                n13 = 15;
+                n14 = (array[0] - 107) / 5.0f;
+            }
+            if (array[0] == 107) {
+                n12 = 11;
+                n13 = 11;
+            }
+            if (array[0] > 88 && array[0] < 107) {
+                n12 = 13;
+                n13 = 11;
+                n14 = (array[0] - 88) / 19.0f;
+            }
+            if (array[0] == 88) {
+                n12 = 13;
+                n13 = 13;
+            }
+            if (array[0] > 88) {
+                this.swits[n4][0] = (int)((this.swits[n13][0] - this.swits[n12][0]) * n14 + this.swits[n12][0]);
+                this.swits[n4][1] = (int)((this.swits[n13][1] - this.swits[n12][1]) * n14 + this.swits[n12][1]);
+                this.swits[n4][2] = (int)((this.swits[n13][2] - this.swits[n12][2]) * n14 + this.swits[n12][2]);
+            }
+            else {
+                float n15 = array[0] / 88.0f;
+                if (n15 < 0.76) {
+                    n15 = 0.76f;
+                }
+                this.swits[n4][0] = (int)(50.0f * n15);
+                this.swits[n4][1] = (int)(130.0f * n15);
+                this.swits[n4][2] = (int)(210.0f * n15);
+            }
+            int n16 = 0;
+            int n17 = 0;
+            float n18 = 0.5f;
+            if (array[1] == 200) {
+                n16 = 1;
+                n17 = 1;
+            }
+            if (array[1] > 150 && array[1] < 200) {
+                n16 = 14;
+                n17 = 1;
+                n18 = (array[1] - 150) / 50.0f;
+            }
+            if (array[1] == 150) {
+                n16 = 14;
+                n17 = 14;
+            }
+            if (array[1] > 144 && array[1] < 150) {
+                n16 = 9;
+                n17 = 14;
+                n18 = (array[1] - 144) / 6.0f;
+            }
+            if (array[1] == 144) {
+                n16 = 9;
+                n17 = 9;
+            }
+            if (array[1] > 139 && array[1] < 144) {
+                n16 = 6;
+                n17 = 9;
+                n18 = (array[1] - 139) / 5.0f;
+            }
+            if (array[1] == 139) {
+                n16 = 6;
+                n17 = 6;
+            }
+            if (array[1] > 128 && array[1] < 139) {
+                n16 = 15;
+                n17 = 6;
+                n18 = (array[1] - 128) / 11.0f;
+            }
+            if (array[1] == 128) {
+                n16 = 15;
+                n17 = 15;
+            }
+            if (array[1] > 122 && array[1] < 128) {
+                n16 = 10;
+                n17 = 15;
+                n18 = (array[1] - 122) / 6.0f;
+            }
+            if (array[1] == 122) {
+                n16 = 10;
+                n17 = 10;
+            }
+            if (array[1] > 119 && array[1] < 122) {
+                n16 = 3;
+                n17 = 10;
+                n18 = (array[1] - 119) / 3.0f;
+            }
+            if (array[1] == 119) {
+                n16 = 3;
+                n17 = 3;
+            }
+            if (array[1] > 98 && array[1] < 119) {
+                n16 = 5;
+                n17 = 3;
+                n18 = (array[1] - 98) / 21.0f;
+            }
+            if (array[1] == 98) {
+                n16 = 5;
+                n17 = 5;
+            }
+            if (array[1] > 81 && array[1] < 98) {
+                n16 = 0;
+                n17 = 5;
+                n18 = (array[1] - 81) / 17.0f;
+            }
+            if (array[1] == 81) {
+                n16 = 0;
+                n17 = 0;
+            }
+            if (array[1] <= 80) {
+                n16 = 2;
+                n17 = 2;
+            }
+            if (array[0] <= 88) {
+                n16 = 13;
+                n17 = 13;
+            }
+            this.acelf[n4][0] = (this.acelf[n17][0] - this.acelf[n16][0]) * n18 + this.acelf[n16][0];
+            this.acelf[n4][1] = (this.acelf[n17][1] - this.acelf[n16][1]) * n18 + this.acelf[n16][1];
+            this.acelf[n4][2] = (this.acelf[n17][2] - this.acelf[n16][2]) * n18 + this.acelf[n16][2];
+            if (array[1] <= 70 && array[0] > 88) {
+                this.acelf[n4][0] = 9.0f;
+                this.acelf[n4][1] = 4.0f;
+                this.acelf[n4][2] = 3.0f;
+            }
+            float n19 = (array[2] - 88) / 109.0f;
+            if (n19 > 1.0f) {
+                n19 = 1.0f;
+            }
+            if (n19 < -0.55) {
+                n19 = -0.55f;
+            }
+            this.airs[n4] = 0.55f + 0.45f * n19 + 0.4f * (array2[9] / 100.0f);
+            if (this.airs[n4] < 0.3) {
+                this.airs[n4] = 0.3f;
+            }
+            this.airc[n4] = (int)(10.0f + 70.0f * n19 + 30.0f * (array2[10] / 100.0f));
+            if (this.airc[n4] < 0) {
+                this.airc[n4] = 0;
+            }
+            int n20 = (int)(670.0f - (array2[9] + array2[10]) / 200.0f * 420.0f);
+            if (array[0] <= 88) {
+                n20 = (int)(1670.0f - (array2[9] + array2[10]) / 200.0f * 1420.0f);
+            }
+            if (array[2] > 190 && n20 < 300) {
+                n20 = 300;
+            }
+            this.powerloss[n4] = n20 * 10000;
+            this.moment[n4] = 0.7f + (array[3] - 16) / 184.0f * 1.0f;
+            if (array[0] < 110) {
+                this.moment[n4] = 0.75f + (array[3] - 16) / 184.0f * 1.25f;
+            }
+            if (array[3] == 200 && array[4] == 200 && array[0] <= 88) {
+                this.moment[n4] = 3.0f;
+            }
+            float n21 = 0.9f + (array[4] - 90) * 0.01f;
+            if (n21 < 0.6) {
+                n21 = 0.6f;
+            }
+            if (array[4] == 200 && array[0] <= 88) {
+                n21 = 3.0f;
+            }
+            this.maxmag[n4] = (int)(n6 * n21);
+            this.outdam[n4] = 0.35f + (n21 - 0.6f) * 0.5f;
+            if (this.outdam[n4] < 0.35) {
+                this.outdam[n4] = 0.35f;
+            }
+            if (this.outdam[n4] > 1.0f) {
+                this.outdam[n4] = 1.0f;
+            }
+            this.clrad[n4] = (int)(array3[0] * array3[0] * 1.5);
+            if (this.clrad[n4] < 1000) {
+                this.clrad[n4] = 1000;
+            }
+            this.dammult[n4] = 0.3f + array3[1] * 0.005f;
+            this.msquash[n4] = (int)(2.0 + (float)array3[2] / 7.6);
+            this.flipy[n4] = roofat;
+            this.handb[n4] = (int)(7.0f + array2[0] / 100.0f * 8.0f);
+            this.turn[n4] = (int)(4.0f + array2[1] / 100.0f * 6.0f);
+            this.grip[n4] = 16.0f + array2[2] / 100.0f * 14.0f;
+            if (this.grip[n4] < 21.0f) {
+                final int[] array6 = this.swits[n4];
+                final int n22 = 0;
+                array6[n22] += (int)(40.0f * ((21.0f - this.grip[n4]) / 5.0f));
+                if (this.swits[n4][0] > 100) {
+                    this.swits[n4][0] = 100;
+                }
+            }
+            this.bounce[n4] = 0.8f + array2[3] / 100.0f * 0.6f;
+            if (array2[3] > 67) {
+                final float[] airs = this.airs;
+                airs[n4] *= 0.76f + (1.0f - array2[3] / 100.0f) * 0.24f;
+                final int[] airc = this.airc;
+                airc[n4] *= (int)(0.76f + (1.0f - array2[3] / 100.0f) * 0.24f);
+            }
+            this.lift[n4] = (int)(array2[5] * (float)array2[5] / 10000.0f * 30.0f);
+            this.revlift[n4] = (int)(array2[6] / 100.0f * 32.0f);
+            this.push[n4] = (int)(2.0f + array2[7] / 100.0f * 2.0f * ((30 - this.lift[n4]) / 30));
+            this.revpush[n4] = (int)(1.0f + array2[8] / 100.0f * 2.0f);
+            this.comprad[n4] = maxR / 400.0f + (array[3] - 16) / 184.0f * 0.2f;
+            if (this.comprad[n4] < 0.4) {
+                this.comprad[n4] = 0.4f;
+            }
+            this.simag[n4] = (n3 - 17) * 0.0167f + 0.85f;
+        }
+        else {
+            this.names[n4] = "";
+        }
+    }
+    
+    public int getvalue(final String s, final String s2, final int n) {
+        int n2 = 0;
+        String string = "";
+        for (int i = s.length() + 1; i < s2.length(); ++i) {
+            final String string2 = "" + s2.charAt(i);
+            if (string2.equals(",") || string2.equals(")")) {
+                ++n2;
+                ++i;
+            }
+            if (n2 == n) {
+                string += s2.charAt(i);
+            }
+        }
+        return Float.valueOf(string).intValue();
+    }
+    
+    public String getSvalue(final String s, final String s2, final int n) {
+        String string = "";
+        for (int n2 = 0, index = s.length() + 1; index < s2.length() && n2 <= n; ++index) {
+            final String string2 = "" + s2.charAt(index);
+            if (string2.equals(",") || string2.equals(")")) {
+                ++n2;
+            }
+            else if (n2 == n) {
+                string += string2;
+            }
+        }
+        return string;
+    }
+    
+    public int servervalue(final String s, final int n) {
+        int intValue = -1;
+        try {
+            int index = 0;
+            int n2 = 0;
+            int n3 = 0;
+            String string = "";
+            while (index < s.length() && n3 != 2) {
+                final String string2 = "" + s.charAt(index);
+                if (string2.equals("|")) {
+                    ++n2;
+                    if (n3 == 1 || n2 > n) {
+                        n3 = 2;
+                    }
+                }
+                else if (n2 == n) {
+                    string += string2;
+                    n3 = 1;
+                }
+                ++index;
+            }
+            if (string.equals("")) {
+                string = "-1";
+            }
+            intValue = Integer.valueOf(string);
+        }
+        catch (final Exception ex) {}
+        return intValue;
+    }
+    
+    public String serverSvalue(final String s, final int n) {
+        String s2 = "";
+        try {
+            int index = 0;
+            int n2 = 0;
+            int n3 = 0;
+            String string = "";
+            while (index < s.length() && n3 != 2) {
+                final String string2 = "" + s.charAt(index);
+                if (string2.equals("|")) {
+                    ++n2;
+                    if (n3 == 1 || n2 > n) {
+                        n3 = 2;
+                    }
+                }
+                else if (n2 == n) {
+                    string += string2;
+                    n3 = 1;
+                }
+                ++index;
+            }
+            s2 = string;
+        }
+        catch (final Exception ex) {}
+        return s2;
+    }
+    
+    public void loadready() {
+        this.m.csky[0] = 170;
+        this.m.csky[1] = 220;
+        this.m.csky[2] = 255;
+        this.m.cfade[0] = 255;
+        this.m.cfade[1] = 220;
+        this.m.cfade[2] = 220;
+        this.m.snap[0] = 0;
+        this.m.snap[1] = 0;
+        this.m.snap[2] = 0;
+        this.fails = "";
+        this.nl = 0;
+        this.action = 0;
+    }
+    
+    public void sparkactionloader() {
+        (this.actionloader = new Thread(this)).start();
+    }
+    
+    public void sparkcarloader() {
+        if (!this.carlon) {
+            (this.carloader = new Thread(this)).start();
+            this.carlon = true;
+        }
+    }
+    
+    public void sparkstageaction() {
+        (this.stageaction = new Thread(this)).start();
+    }
+    
+    public void stopallnow() {
+        this.action = 0;
+        if (this.carloader != null) {
+            this.carloader.stop();
+            this.carloader = null;
+        }
+        if (this.actionloader != null) {
+            this.actionloader.stop();
+            this.actionloader = null;
+        }
+        if (this.stageaction != null) {
+            this.stageaction.stop();
+            this.stageaction = null;
+        }
+    }
+    
+    @Override
+    public void run() {
+        if (Thread.currentThread() == this.actionloader) {
+            if (this.action == 4) {
+                this.m.csky[0] = 170;
+                this.m.csky[1] = 220;
+                this.m.csky[2] = 255;
+                this.m.cfade[0] = 255;
+                this.m.cfade[1] = 220;
+                this.m.cfade[2] = 220;
+                this.m.snap[0] = 0;
+                this.m.snap[1] = 0;
+                this.m.snap[2] = 0;
+                    this.action = -1;
+                System.gc();
+            }
+            if (this.action == 12) {
+                this.m.csky[0] = 170;
+                this.m.csky[1] = 220;
+                this.m.csky[2] = 255;
+                this.m.cfade[0] = 255;
+                this.m.cfade[1] = 220;
+                this.m.cfade[2] = 220;
+                this.m.snap[0] = 0;
+                this.m.snap[1] = 0;
+                this.m.snap[2] = 0;
+                final int nl = this.nl;
+                this.nl = 0;
+                while (this.nl < nl) {
+                    ++this.nl;
+                }
+                this.nl = 0;
+                    this.action = -1;
+                System.gc();
+            }
+            if (this.action == 102) {
+                this.m.csky[0] = 170;
+                this.m.csky[1] = 220;
+                this.m.csky[2] = 255;
+                this.m.cfade[0] = 255;
+                this.m.cfade[1] = 220;
+                this.m.cfade[2] = 220;
+                this.m.snap[0] = 0;
+                this.m.snap[1] = 0;
+                this.m.snap[2] = 0;
+                final int nl2 = this.nl;
+                this.nl = 0;
+                while (this.nl < nl2) {
+                    ++this.nl;
+                }
+                this.nl = 0;
+                    this.action = -1;
+                System.gc();
+            }
+            this.actionloader = null;
+        }
+        if (Thread.currentThread() == this.carloader) {
+            while (this.nl > 0) {
+                int n4 = 0;
+                if (n4 != -1) {
+                    int n7 = 36;
+                    if (this.haltload > 0) {
+                        n7 = 36 + this.haltload;
+                    }
+                    int n8 = n7;
+                    this.onloadingcar = n8 - 35;
+                    this.onloadingcar = 0;
+                }
+                --this.nl;
+                try {
+                    final Thread carloader = this.carloader;
+                    Thread.sleep(20L);
+                }
+                catch (final InterruptedException ex5) {}
+            }
+            this.carlon = false;
+            this.carloader = null;
+        }
+    }
+    
+    public int loadcar(final String str, int n) {
+        try {
+            final File file = new File("" + Madness.fpath + "mycars/" + str + ".rad");
+            if (file.exists()) {
+                String string = "";
+                final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    string = string + "" + line + "\n";
+                }
+                bufferedReader.close();
+                this.bco[n] = new ContO(string.getBytes(), this.m, this.t);
+                if (this.bco[n].errd || this.bco[n].npl <= 60) {
+                    n = -1;
+                }
+                if (n != -1) {
+                    this.bco[n].shadow = true;
+                    this.bco[n].noline = false;
+                    this.bco[n].decor = false;
+                    this.bco[n].tnt = 0;
+                    this.bco[n].disp = 0;
+                    this.bco[n].disline = 7;
+                    this.bco[n].grounded = 1.0f;
+                    boolean b = true;
+                    if (this.bco[n].keyz[0] < 0 || this.bco[n].keyx[0] > 0) {
+                        b = false;
+                    }
+                    if (this.bco[n].keyz[1] < 0 || this.bco[n].keyx[1] < 0) {
+                        b = false;
+                    }
+                    if (this.bco[n].keyz[2] > 0 || this.bco[n].keyx[2] > 0) {
+                        b = false;
+                    }
+                    if (this.bco[n].keyz[3] > 0 || this.bco[n].keyx[3] < 0) {
+                        b = false;
+                    }
+                    if (!b) {
+                        n = -1;
+                    }
+                }
+                if (n != -1) {
+                    this.loadstat(string.getBytes(), str, this.bco[n].maxR, this.bco[n].roofat, this.bco[n].wh, n);
+                    if (this.names[n].equals("")) {
+                        n = -1;
+                    }
+                }
+            }
+            else {
+                n = -1;
+            }
+        }
+        catch (final Exception obj) {
+            n = -1;
+            System.out.println("Error Loading Car: " + obj);
+        }
+        System.gc();
+        return n;
+    }
+}
