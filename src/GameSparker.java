@@ -1603,12 +1603,7 @@ public class GameSparker extends Applet implements Runnable
             else {
                 medium.lightn = -1;
             }
-            if (false) {
                 medium.nochekflk = false;
-            }
-            else {
-                medium.nochekflk = true;
-            }
             for (int n8 = 0; n8 < xtGraphics.nplayers; ++n8) {
                 this.u[n8].reset(checkPoints, xtGraphics.sc[n8]);
             }
@@ -1636,19 +1631,11 @@ public class GameSparker extends Applet implements Runnable
                 medium.crs = false;
                 xtGraphics.fase = 5;
             }
-            if (checkPoints.stage > 0) {
                 int stage = checkPoints.stage;
-                if (stage > 27) {
-                    stage -= 27;
-                }
-                else if (stage > 10) {
-                    stage -= 10;
+                if (stage > 32) {
+                    stage -= 32;
                 }
                 xtGraphics.asay = "Stage " + stage + ":  " + checkPoints.name + " ";
-            }
-            else {
-                xtGraphics.asay = "Custom Stage:  " + checkPoints.name + " ";
-            }
             record.reset(array);
         }
         else if (xtGraphics.fase == 2) {

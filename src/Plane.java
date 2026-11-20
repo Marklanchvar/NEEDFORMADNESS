@@ -703,13 +703,7 @@ public class Plane
                 ++pointsBehind;
             }
         }
-        if (pointsOut >= this.n * 4) {
-            visible = 0;
-        }
-        if (this.m.trk && pointsOut >= this.n * 4) {
-            visible = 0;
-        }
-        if (this.m.trk && pointsBehind != 0) {
+        if (pointsOut == this.n && pointsBehind == this.n) {
             visible = 0;
         }
         if (pointsBehind != 0) {
@@ -1163,14 +1157,6 @@ public class Plane
             for (int n18 = this.t.sect[ncx][ncz].length - 1; n18 >= 0; --n18) {
                 final int n19 = this.t.sect[ncx][ncz][n18];
                 int n20 = 0;
-                float tXZ = t.xz[n19];
-                float tcX = t.cx[n19];
-                float tcZ = t.cz[n19];
-                
-                if (t.xz[n19] != 0F) {
-                	Utils.rot(midX, midZ, tcX, tcZ, -tXZ);
-                }
-                
                 if (Math.abs(this.t.zy[n19]) != 90 && Math.abs(this.t.xy[n19]) != 90 && Math.abs(midX - (this.t.x[n19] - this.m.x)) < this.t.radx[n19] && Math.abs(midZ - (this.t.z[n19] - this.m.z)) < this.t.radz[n19] && !this.t.decor[n19]) {
                     ++n20;
                 }
@@ -1186,18 +1172,14 @@ public class Plane
                     }
                     break;
                 }
-                
-                if (t.xz[n19] != 0F) {
-                	Utils.rot(midX, midZ, tcX, tcZ, tXZ);
-                }
             }
         }
         int n24 = 1;
-        final int[] array6 = new int[this.n];
-        final int[] array7 = new int[this.n];
+        final int[] shadow2DX = new int[this.n];
+        final int[] shadow2DY = new int[this.n];
             for (int n25 = 0; n25 < this.m.nsp; ++n25) {
                 for (int n26 = 0; n26 < this.n; ++n26) {
-                    if (Math.abs(shadow3DX[n26] - this.m.spx[n25]) < this.m.sprad[n25] && Math.abs(shadow3DY[n26] - this.m.spz[n25]) < this.m.sprad[n25]) {
+                    if (Math.abs(shadow2DX[n26] - this.m.spx[n25]) < this.m.sprad[n25] && Math.abs(shadow2DY[n26] - this.m.spz[n25]) < this.m.sprad[n25]) {
                         n24 = 0;
                     }
                 }
@@ -1205,34 +1187,31 @@ public class Plane
         if (n24 != 0) {
             Utils.rot(shadow3DX, shadow3DY, Medium.cx, Medium.cz, this.m.xz, this.n);
             Utils.rot(shadow3DZ, shadow3DY, Medium.cy, Medium.cz, this.m.zy, this.n);
-            int n27 = 0;
-            int n28 = 0;
-            int n29 = 0;
-            int n30 = 0;
+            int outOfBounds = 0;
             for (int n31 = 0; n31 < this.n; ++n31) {
-                array6[n31] = Utils.xs(shadow3DX[n31], shadow3DY[n31]);
-                array7[n31] = Utils.ys(shadow3DZ[n31], shadow3DY[n31]);
-                if (array7[n31] < this.m.ih || shadow3DY[n31] < 10) {
-                    ++n27;
+                shadow2DX[n31] = Utils.xs(shadow3DX[n31], shadow3DY[n31]);
+                shadow2DY[n31] = Utils.ys(shadow3DZ[n31], shadow3DY[n31]);
+                if (shadow2DY[n31] < this.m.ih || shadow3DY[n31] < 0) {
+                    ++outOfBounds;
                 }
-                if (array7[n31] > this.m.h || shadow3DY[n31] < 10) {
-                    ++n28;
+                if (shadow2DY[n31] > this.m.h || shadow3DY[n31] < 0) {
+                    ++outOfBounds;
                 }
-                if (array6[n31] < this.m.iw || shadow3DY[n31] < 10) {
-                    ++n29;
+                if (shadow2DX[n31] < this.m.iw || shadow3DY[n31] < 0) {
+                    ++outOfBounds;
                 }
-                if (array6[n31] > this.m.w || shadow3DY[n31] < 10) {
-                    ++n30;
+                if (shadow2DX[n31] > this.m.w || shadow3DY[n31] < 0) {
+                    ++outOfBounds;
                 }
             }
-            if (n29 == this.n || n27 == this.n || n28 == this.n || n30 == this.n) {
+            if (outOfBounds == this.n) {
                 n24 = 0;
             }
         }
         if (n24 != 0) {
             graphics2D.setColor(Color.BLACK);
             graphics2D.setComposite(AlphaComposite.getInstance(3, 1 / 3F));
-            graphics2D.fillPolygon(array6, array7, this.n);
+            graphics2D.fillPolygon(shadow2DX, shadow2DY, this.n);
             graphics2D.setComposite(AlphaComposite.getInstance(3));
         }
     }
