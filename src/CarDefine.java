@@ -735,7 +735,7 @@ public class CarDefine implements Runnable
     
     public int loadcar(final String str, int n) {
         try {
-            final File file = new File("" + Madness.fpath + "mycars/" + str + ".rad");
+            final File file = new File("" + Madness.fpath + "cars/" + str + ".rad");
             if (file.exists()) {
                 String string = "";
                 final BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -791,4 +791,5 @@ public class CarDefine implements Runnable
         System.gc();
         return n;
     }
+    
 }

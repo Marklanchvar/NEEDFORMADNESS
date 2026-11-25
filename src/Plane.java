@@ -51,7 +51,7 @@ public class Plane
     int flx;
     int colnum;
     
-    public Plane(final Medium m, final Trackers t, final float[] array3, final float[] array5, final float[] array42, final int n, final int[] array4, final int glass, final int gr, final int fs, final float wx2, final float wy2, final float wz2, final int disline, final int bfase, final boolean road, final int light, final boolean solo) {
+    public Plane(final Medium m, final Trackers t, final float[] planeX, final float[] planeY, final float[] planeZ, final int n, final int[] color, final int glass, final int gr, final int fs, final float wx2, final float wy2, final float wz2, final int disline, final int bfase, final boolean road, final int light, final boolean solo) {
         this.c = new int[3];
         this.oc = new int[3];
         this.hsb = new float[3];
@@ -98,57 +98,47 @@ public class Plane
         this.oz = new float[this.n];
         this.oy = new float[this.n];
         for (int i = 0; i < this.n; ++i) {
-            this.ox[i] = array3[i];
-            this.oy[i] = array42[i];
-            this.oz[i] = array5[i];
+            this.ox[i] = planeX[i];
+            this.oy[i] = planeZ[i];
+            this.oz[i] = planeY[i];
         }
         for (int j = 0; j < 3; ++j) {
-            this.oc[j] = array4[j];
+            this.oc[j] = color[j];
         }
         if (gr == -15) {
-            if (array4[0] == 211) {
+            if (color[0] == 211) {
                 final int n2 = (int)(Math.random() * 40.0 - 20.0);
                 final int n3 = (int)(Math.random() * 40.0 - 20.0);
                 for (int k = 0; k < this.n; ++k) {
-                    final float[] ox = this.ox;
-                    final int n4 = k;
-                    ox[n4] += n2;
-                    final float[] oz = this.oz;
-                    final int n5 = k;
-                    oz[n5] += n3;
+                    this.ox[k] += n2;
+                    this.oz[k] += n3;
                 }
             }
             final int n6 = (int)(185.0 + Math.random() * 20.0);
-            array4[0] = (217 + n6) / 2;
-            if (array4[0] == 211) {
-                array4[0] = 210;
+            color[0] = (217 + n6) / 2;
+            if (color[0] == 211) {
+                color[0] = 210;
             }
-            array4[1] = (189 + n6) / 2;
-            array4[2] = (132 + n6) / 2;
+            color[1] = (189 + n6) / 2;
+            color[2] = (132 + n6) / 2;
             for (int l = 0; l < this.n; ++l) {
                 if (Math.random() > Math.random()) {
-                    final float[] ox2 = this.ox;
-                    final int n7 = l;
-                    ox2[n7] += (int)(8.0 * Math.random() - 4.0);
+                	this.ox[l] += (int)(8.0 * Math.random() - 4.0);
                 }
                 if (Math.random() > Math.random()) {
-                    final float[] oy = this.oy;
-                    final int n8 = l;
-                    oy[n8] += (int)(8.0 * Math.random() - 4.0);
+                    this.oy[l] += (int)(8.0 * Math.random() - 4.0);
                 }
                 if (Math.random() > Math.random()) {
-                    final float[] oz2 = this.oz;
-                    final int n9 = l;
-                    oz2[n9] += (int)(8.0 * Math.random() - 4.0);
+                    this.oz[l] += (int)(8.0 * Math.random() - 4.0);
                 }
             }
         }
-        if (array4[0] == array4[1] && array4[1] == array4[2]) {
+        if (color[0] == color[1] && color[1] == color[2]) {
             this.nocol = true;
         }
         if (glass == 0) {
             for (int n10 = 0; n10 < 3; ++n10) {
-                this.c[n10] = (int)(array4[n10] + array4[n10] * (this.m.snap[n10] / 100.0f));
+                this.c[n10] = (int)(color[n10] + color[n10] * (this.m.snap[n10] / 100.0f));
                 if (this.c[n10] > 255) {
                     this.c[n10] = 255;
                 }
@@ -169,7 +159,7 @@ public class Plane
         }
         if (glass == 3) {
             for (int n13 = 0; n13 < 3; ++n13) {
-                this.c[n13] = array4[n13];
+                this.c[n13] = color[n13];
             }
         }
         this.disline = disline;
@@ -177,9 +167,7 @@ public class Plane
         this.glass = glass;
         Color.RGBtoHSB(this.c[0], this.c[1], this.c[2], this.hsb);
         if (glass == 3 && !this.m.trk) {
-            final float[] hsb = this.hsb;
-            final int n14 = 1;
-            hsb[n14] += 0.05f;
+            this.hsb[1] += 0.05f;
             if (this.hsb[1] > 1.0f) {
                 this.hsb[1] = 1.0f;
             }
@@ -537,63 +525,57 @@ public class Plane
                 if (this.ctmag < -3.0f) {
                     this.ctmag = -3.0f;
                 }
-                this.cox[1] = (int)(this.cox[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
-                this.cox[2] = (int)(this.cox[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
-                this.coy[1] = (int)(this.coy[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
-                this.coy[2] = (int)(this.coy[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
-                this.coz[1] = (int)(this.coz[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
-                this.coz[2] = (int)(this.coz[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
+                this.cox[1] = (this.cox[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
+                this.cox[2] = (this.cox[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
+                this.coy[1] = (this.coy[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
+                this.coy[2] = (this.coy[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
+                this.coz[1] = (this.coz[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
+                this.coz[2] = (this.coz[0] + this.ctmag * (10.0f - this.m.random() * 20.0f));
                 this.dx = 0;
                 this.dy = 0;
                 this.dz = 0;
                 if (this.bfase != -7) {
-                    this.vx = (int)(this.ctmag * (30.0f - this.m.random() * 60.0f));
-                    this.vz = (int)(this.ctmag * (30.0f - this.m.random() * 60.0f));
-                    this.vy = (int)(this.ctmag * (30.0f - this.m.random() * 60.0f));
+                    this.vx = (this.ctmag * (30.0f - this.m.random() * 60.0f));
+                    this.vz = (this.ctmag * (30.0f - this.m.random() * 60.0f));
+                    this.vy = (this.ctmag * (30.0f - this.m.random() * 60.0f));
                 }
                 else {
-                    this.vx = (int)(this.ctmag * (10.0f - this.m.random() * 20.0f));
-                    this.vz = (int)(this.ctmag * (10.0f - this.m.random() * 20.0f));
-                    this.vy = (int)(this.ctmag * (10.0f - this.m.random() * 20.0f));
+                    this.vx = (this.ctmag * (10.0f - this.m.random() * 20.0f));
+                    this.vz = (this.ctmag * (10.0f - this.m.random() * 20.0f));
+                    this.vy = (this.ctmag * (10.0f - this.m.random() * 20.0f));
                 }
                 this.chip = 2;
             }
-            final float[] array16 = new float[3];
-            final float[] array17 = new float[3];
-            final float[] array18 = new float[3];
+            final float[] chipX = new float[3];
+            final float[] chipY = new float[3];
+            final float[] chipZ = new float[3];
             for (int n27 = 0; n27 < 3; ++n27) {
-                array16[n27] = this.cox[n27] + objectX;
-                array18[n27] = this.coy[n27] + objectY;
-                array17[n27] = this.coz[n27] + objectZ;
+                chipX[n27] = this.cox[n27] + objectX;
+                chipZ[n27] = this.coy[n27] + objectY;
+                chipY[n27] = this.coz[n27] + objectZ;
             }
-            Utils.rot(array16, array18, objectX, objectY, this.cxy, 3);
-            Utils.rot(array18, array17, objectY, objectZ, this.czy, 3);
-            Utils.rot(array16, array17, objectX, objectZ, this.cxz, 3);
+            Utils.rot(chipX, chipZ, objectX, objectY, this.cxy, 3);
+            Utils.rot(chipZ, chipY, objectY, objectZ, this.czy, 3);
+            Utils.rot(chipX, chipY, objectX, objectZ, this.cxz, 3);
             for (int n28 = 0; n28 < 3; ++n28) {
-                final float[] array19 = array16;
-                final int n29 = n28;
-                array19[n29] += this.dx;
-                final float[] array20 = array18;
-                final int n30 = n28;
-                array20[n30] += this.dy;
-                final float[] array21 = array17;
-                final int n31 = n28;
-                array21[n31] += this.dz;
+                chipX[n28] += this.dx;
+                chipZ[n28] += this.dy;
+                chipY[n28] += this.dz;
             }
             this.dx += this.vx;
             this.dz += this.vz;
             this.dy += this.vy;
             this.vy += 7;
-            if (array18[0] > this.m.ground) {
+            if (chipZ[0] > this.m.ground) {
                 this.chip = 19;
             }
-            Utils.rot(array16, array17, Medium.cx, Medium.cz, this.m.xz, 3);
-            Utils.rot(array18, array17, Medium.cy, Medium.cz, this.m.zy, 3);
-            final int[] array22 = new int[3];
-            final int[] array23 = new int[3];
+            Utils.rot(chipX, chipY, Medium.cx, Medium.cz, this.m.xz, 3);
+            Utils.rot(chipZ, chipY, Medium.cy, Medium.cz, this.m.zy, 3);
+            final int[] chipScrnX = new int[3];
+            final int[] chipScrnY = new int[3];
             for (int n32 = 0; n32 < 3; ++n32) {
-                array22[n32] = Utils.xs(array16[n32], array17[n32]);
-                array23[n32] = Utils.ys(array18[n32], array17[n32]);
+                chipScrnX[n32] = Utils.xs(chipX[n32], chipY[n32]);
+                chipScrnY[n32] = Utils.ys(chipZ[n32], chipY[n32]);
             }
             final int n33 = (int)(this.m.random() * 3.0f);
             if (this.bfase != -7) {
@@ -610,7 +592,7 @@ public class Plane
             else {
                 graphics2D.setColor(Color.getHSBColor(this.hsb[0], this.hsb[1], this.hsb[2]));
             }
-            graphics2D.fillPolygon(array22, array23, 3);
+            graphics2D.fillPolygon(chipScrnX, chipScrnY, 3);
             ++this.chip;
             if (this.chip == 20) {
                 this.chip = 0;
