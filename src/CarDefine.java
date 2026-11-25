@@ -18,9 +18,7 @@ public class CarDefine implements Runnable
     GameSparker gs;
     ContO[] bco;
     Medium m;
-    Thread carloader;
     Thread actionloader;
-    Thread stageaction;
     int[][] swits;
     float[][] acelf;
     int[] handb;
@@ -626,30 +624,11 @@ public class CarDefine implements Runnable
         (this.actionloader = new Thread(this)).start();
     }
     
-    public void sparkcarloader() {
-        if (!this.carlon) {
-            (this.carloader = new Thread(this)).start();
-            this.carlon = true;
-        }
-    }
-    
-    public void sparkstageaction() {
-        (this.stageaction = new Thread(this)).start();
-    }
-    
     public void stopallnow() {
         this.action = 0;
-        if (this.carloader != null) {
-            this.carloader.stop();
-            this.carloader = null;
-        }
         if (this.actionloader != null) {
             this.actionloader.stop();
             this.actionloader = null;
-        }
-        if (this.stageaction != null) {
-            this.stageaction.stop();
-            this.stageaction = null;
         }
     }
     
@@ -708,28 +687,6 @@ public class CarDefine implements Runnable
                 System.gc();
             }
             this.actionloader = null;
-        }
-        if (Thread.currentThread() == this.carloader) {
-            while (this.nl > 0) {
-                int n4 = 0;
-                if (n4 != -1) {
-                    int n7 = 36;
-                    if (this.haltload > 0) {
-                        n7 = 36 + this.haltload;
-                    }
-                    int n8 = n7;
-                    this.onloadingcar = n8 - 35;
-                    this.onloadingcar = 0;
-                }
-                --this.nl;
-                try {
-                    final Thread carloader = this.carloader;
-                    Thread.sleep(20L);
-                }
-                catch (final InterruptedException ex5) {}
-            }
-            this.carlon = false;
-            this.carloader = null;
         }
     }
     
