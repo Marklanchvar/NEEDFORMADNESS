@@ -12,13 +12,12 @@ import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.ByteArrayInputStream;
 
-public class CarDefine implements Runnable
+public class CarDefine
 {
     Trackers t;
     GameSparker gs;
     ContO[] bco;
     Medium m;
-    Thread actionloader;
     int[][] swits;
     float[][] acelf;
     int[] handb;
@@ -48,8 +47,6 @@ public class CarDefine implements Runnable
     int nlcars;
     String[] createdby;
     int nl;
-    int action;
-    boolean carlon;
     int reco;
     int haltload;
     int onloadingcar;
@@ -94,8 +91,6 @@ public class CarDefine implements Runnable
         this.nlcars = 0;
         this.createdby = new String[16];
         this.nl = 0;
-        this.action = 0;
-        this.carlon = false;
         this.reco = -2;
         this.haltload = 0;
         this.onloadingcar = 0;
@@ -617,77 +612,6 @@ public class CarDefine implements Runnable
         this.m.snap[2] = 0;
         this.fails = "";
         this.nl = 0;
-        this.action = 0;
-    }
-    
-    public void sparkactionloader() {
-        (this.actionloader = new Thread(this)).start();
-    }
-    
-    public void stopallnow() {
-        this.action = 0;
-        if (this.actionloader != null) {
-            this.actionloader.stop();
-            this.actionloader = null;
-        }
-    }
-    
-    @Override
-    public void run() {
-        if (Thread.currentThread() == this.actionloader) {
-            if (this.action == 4) {
-                this.m.csky[0] = 170;
-                this.m.csky[1] = 220;
-                this.m.csky[2] = 255;
-                this.m.cfade[0] = 255;
-                this.m.cfade[1] = 220;
-                this.m.cfade[2] = 220;
-                this.m.snap[0] = 0;
-                this.m.snap[1] = 0;
-                this.m.snap[2] = 0;
-                    this.action = -1;
-                System.gc();
-            }
-            if (this.action == 12) {
-                this.m.csky[0] = 170;
-                this.m.csky[1] = 220;
-                this.m.csky[2] = 255;
-                this.m.cfade[0] = 255;
-                this.m.cfade[1] = 220;
-                this.m.cfade[2] = 220;
-                this.m.snap[0] = 0;
-                this.m.snap[1] = 0;
-                this.m.snap[2] = 0;
-                final int nl = this.nl;
-                this.nl = 0;
-                while (this.nl < nl) {
-                    ++this.nl;
-                }
-                this.nl = 0;
-                    this.action = -1;
-                System.gc();
-            }
-            if (this.action == 102) {
-                this.m.csky[0] = 170;
-                this.m.csky[1] = 220;
-                this.m.csky[2] = 255;
-                this.m.cfade[0] = 255;
-                this.m.cfade[1] = 220;
-                this.m.cfade[2] = 220;
-                this.m.snap[0] = 0;
-                this.m.snap[1] = 0;
-                this.m.snap[2] = 0;
-                final int nl2 = this.nl;
-                this.nl = 0;
-                while (this.nl < nl2) {
-                    ++this.nl;
-                }
-                this.nl = 0;
-                    this.action = -1;
-                System.gc();
-            }
-            this.actionloader = null;
-        }
     }
     
     public int loadcar(final String str, int n) {

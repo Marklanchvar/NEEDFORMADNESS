@@ -544,13 +544,7 @@ public class Mad
         }
         //float n11 = 20.0f * this.speed / (154.0f * this.cd.simag[this.cn]);
         double n11 = Math.toDegrees(this.speed / contO.wrad);
-        contO.wzy -= n11;
-        if (contO.wzy < -180) {
-            contO.wzy += 360;
-        }
-        if (contO.wzy > 180) {
-            contO.wzy -= 360;
-        }
+        contO.wzy = (float) (contO.wzy % 360 - n11);
         if (control.right) {
             contO.wxz -= this.cd.turn[this.cn];
             if (contO.wxz < -36) {
