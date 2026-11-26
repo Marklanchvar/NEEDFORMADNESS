@@ -1284,48 +1284,12 @@ public class GameSparker extends Applet implements Runnable
         String string = "";
         try {
             DataInputStream dataInputStream;
-            if (checkPoints.stage != -2) {
+            {
                 String str = "stages/" + checkPoints.stage + "";
                 if (checkPoints.stage == -1) {
                     str = "mystages/" + checkPoints.name + "";
                 }
                 dataInputStream = new DataInputStream(new FileInputStream(new File("" + Madness.fpath + "" + str + ".txt")));
-            }
-            else if (checkPoints.stage > 0) {
-                dataInputStream = new DataInputStream(new URL("http://multiplayer.needformadness.com/stages/" + checkPoints.stage + ".txt").openStream());
-            }
-            else {
-                final URL url = new URL(("http://multiplayer.needformadness.com/tracks/" + checkPoints.name + ".radq").replace(' ', '_'));
-                final int contentLength = url.openConnection().getContentLength();
-                final DataInputStream dataInputStream2 = new DataInputStream(url.openStream());
-                final byte[] array4 = new byte[contentLength];
-                dataInputStream2.readFully(array4);
-                ZipInputStream zipInputStream;
-                if (array4[0] == 80 && array4[1] == 75 && array4[2] == 3) {
-                    zipInputStream = new ZipInputStream(new ByteArrayInputStream(array4));
-                }
-                else {
-                    final byte[] buf = new byte[contentLength - 40];
-                    for (int i = 0; i < contentLength - 40; ++i) {
-                        int n = 20;
-                        if (i >= 500) {
-                            n = 40;
-                        }
-                        buf[i] = array4[i + n];
-                    }
-                    zipInputStream = new ZipInputStream(new ByteArrayInputStream(buf));
-                }
-                int j = Integer.valueOf(zipInputStream.getNextEntry().getName());
-                final byte[] array5 = new byte[j];
-                int off = 0;
-                while (j > 0) {
-                    final int read = zipInputStream.read(array5, off, j);
-                    off += read;
-                    j -= read;
-                }
-                zipInputStream.close();
-                dataInputStream2.close();
-                dataInputStream = new DataInputStream(new ByteArrayInputStream(array5));
             }
             String line;
             while ((line = dataInputStream.readLine()) != null) {
@@ -1588,6 +1552,7 @@ public class GameSparker extends Applet implements Runnable
             trackers.devidetrackers(getint2, getint - getint2, getint4, getint3 - getint4);
         }
         catch (final Exception obj) {
+        	obj.printStackTrace();
             checkPoints.stage = -3;
             System.out.println("Error in stage " + checkPoints.stage);
             System.out.println("" + obj);

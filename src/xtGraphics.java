@@ -124,7 +124,6 @@ public class xtGraphics extends Panel implements Runnable
     Image radicalplay;
     Image logomadnes;
     Image byrd;
-    Image opback;
     Image nfmcoms;
     Image opti;
     Image bgmain;
@@ -340,8 +339,6 @@ public class xtGraphics extends Panel implements Runnable
     int flyr;
     int flyrdest;
     int flang;
-	Image opbtn;
-	Image opbtn2;
 	Image logomadnes2;
 	int menuCar;
 	int changeCar;
@@ -350,6 +347,8 @@ public class xtGraphics extends Panel implements Runnable
 	boolean grabable;
 	float carrot;
 	float[] proba;
+	Image[] opbtn;
+	Image[] smalopbtn;
 	
     public xtGraphics(final Medium m, final CarDefine cd, final Graphics2D rd, final GameSparker app) {
         this.fase = 111;
@@ -545,6 +544,8 @@ public class xtGraphics extends Panel implements Runnable
     	this.carrot = 0;
     	this.intertrack = new RadicalMod[3];
     	this.proba = new float[] { 0.6f, 0.7f, 0.4f, 0.3f, 0.8f, 0.0f, 0.3f, 0.3f, 0.3f, 0.1f, 0.1f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f };
+    	this.opbtn = new Image[2];
+    	this.smalopbtn = new Image[2];
         for (int i = 0; i < 5; ++i) {
             this.pengs[i] = false;
         }
@@ -920,9 +921,6 @@ public class xtGraphics extends Panel implements Runnable
                 if (name.equals("options.png")) {
                     this.opti = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
-                if (name.equals("opback.png")) {
-                    this.opback = this.loadimage(b, mediaTracker, defaultToolkit);
-                }
                 if (name.equals("logomad.png")) {
                     this.logomadnes = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
@@ -1071,10 +1069,16 @@ public class xtGraphics extends Panel implements Runnable
                     this.ycmc = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("opbtn.png")) {
-                    this.opbtn = this.loadimage(b, mediaTracker, defaultToolkit);
+                    this.opbtn[0] = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("opbtn2.png")) {
-                    this.opbtn2 = this.loadimage(b, mediaTracker, defaultToolkit);
+                    this.opbtn[1] = this.loadimage(b, mediaTracker, defaultToolkit);
+                }
+                if (name.equals("smalopbtn.png")) {
+                    this.smalopbtn[0] = this.loadimage(b, mediaTracker, defaultToolkit);
+                }
+                if (name.equals("smalopbtn2.png")) {
+                    this.smalopbtn[1] = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("logomad2.png")) {
                     this.logomadnes2 = this.loadimage(b, mediaTracker, defaultToolkit);
@@ -2258,7 +2262,6 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.setColor(Color.BLACK);
         this.rd.fillRect(0, 0, 800, 90);
         this.logo(0, 0);
-        this.rd.drawImage(this.opback, 408, 194, null);
         aflk = !aflk;
         --this.playhi;
         if (this.playhi < -5) {
@@ -2278,29 +2281,7 @@ public class xtGraphics extends Panel implements Runnable
             }
             control.down = false;
         }
-        if (this.opselect == 0) {
-            if (aflk || shaded) {
-            	this.rd.drawImage(opbtn, 440, 194, null);
-            }
-        } else if (playhi < 0) this.rd.drawImage(opbtn, 440, 194, null);
-        if (this.opselect == 1) {
-            if (aflk || shaded) {
-            	this.rd.drawImage(opbtn2, 472, 274, null);
-            }
-        }
-        if (this.opselect == 2) {
-        	 if (aflk || shaded) {
-        		this.rd.drawImage(opbtn2, 472, 322, null);
-            }
-        }
-        if (this.opselect == 3) {
-        	 if (aflk || shaded) {
-        		this.rd.drawImage(opbtn2, 472, 370, null);
-            }
-        }
-        this.rd.drawImage(this.opti, 508, 205, null);
-        if ((control.enter || control.handb) && opselect != -1) {
-        	if (this.opselect == 0) {
+        	if (this.drawb(opbtn, 440, 194, 2, aflk, playhi < 0, this.opselect == 0, control)) {
                 this.intertrack[0].stop();
                 this.intertrack[1].loadimod(false);
                 this.intertrack[1].play();
@@ -2314,17 +2295,17 @@ public class xtGraphics extends Panel implements Runnable
         		}
             	this.intertrack[0].stop();
         	}
-        	if (this.opselect == 1) {
+        	if (this.drawb(smalopbtn, 472, 274, 2, aflk, false, this.opselect == 1, control)) {
                 this.intertrack[0].stop();
         		this.oldfase = 10;
         		this.fase = 11;
         		this.firstime = false;
         	}
-        	if (this.opselect == 2) {
+        	if (this.drawb(smalopbtn, 472, 322, 2, aflk, false, this.opselect == 2, control)) {
         		this.oldfase = 10;
         		this.fase = 9999;
         	}
-        	if (this.opselect == 3) {
+        	if (this.drawb(smalopbtn, 472, 370, 2, aflk, false, this.opselect == 3, control)) {
                 this.intertrack[0].stop();
                 this.intertrack[2].loadimod(false);
                 this.intertrack[2].play();
@@ -2333,7 +2314,8 @@ public class xtGraphics extends Panel implements Runnable
         	this.flipo = 0;
         	control.enter = false;
         	control.handb = false;
-        }
+
+        this.rd.drawImage(this.opti, 508, 205, null);
         this.rd.drawImage(this.byrd, 72, 410, null);
         this.rd.drawImage(this.nfmcoms, 567, 410, null);
         if (this.shaded) {
@@ -6241,6 +6223,40 @@ public class xtGraphics extends Panel implements Runnable
             this.rd.drawImage(image, n + 7, n2 + 7, null);
         }
         return b3;
+    }
+    /**
+     * 
+     * @param buttonImage Image set of your button element
+     * @param offsetX Horizontal offset of the button
+     * @param offsetY Vertical offset of the button
+     * @param flkTyp Type of flickering 
+     * @param pattern1 Flickering pattern 1
+     * @param pattern2 Flickering pattern 2
+     * @param opSelect Non-mouse selection state
+     * @param control 
+     * @return pressed state of button element
+     */
+    public boolean drawb(final Image[] buttonImage, final int offsetX, final int offsetY, final int flkTyp, final boolean pattern1, final boolean pattern2, final boolean opSelect, Control control) {
+    	int imageW = buttonImage[0].getWidth(null);
+    	int imageH = buttonImage[0].getHeight(null);
+    	int marginW = (int) ((buttonImage[0].getWidth(null) - buttonImage[1].getWidth(null)) * .5F);
+    	int marginH = (int) ((buttonImage[0].getHeight(null) - buttonImage[1].getHeight(null)) * .5F);
+    	boolean overb = (this.app.xm > offsetX && this.app.xm < offsetX + imageW &&
+    			this.app.ym > offsetY && this.app.ym < offsetY + imageH) || opSelect;
+    	boolean flik = false;
+    	switch (flkTyp) {
+    	case 0: 
+    		flik = (this.app.mouses == 1);
+    	break;
+    	case 1: 
+    		flik = (overb && this.app.mouses != 1);
+    	break;
+    	case 2:
+    		flik = overb ? pattern1 : pattern2;
+    	break;
+    	}
+    	this.rd.drawImage(buttonImage[flik ? 1 : 0], offsetX + (flik ? marginW : 0), offsetY + (flik ? marginH : 0), null);
+        return ((control.enter || control.handb) && overb);
     }
     
     public int getvalue(final String s, final int n) {
