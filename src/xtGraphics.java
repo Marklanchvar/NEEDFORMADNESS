@@ -3512,47 +3512,6 @@ public class xtGraphics extends Panel implements Runnable
                 this.lym = mouseY;
             }
         }
-        if (this.fase == 10) {
-        	if (mouseClick == 1) {
-                if (this.overon(504, 194, 192, 64, mouseX, mouseY)) {
-                    this.opselect = 0;
-                    this.shaded = true;
-                }
-                if (this.overon(504, 274, 192, 32, mouseX, mouseY)) {
-                    this.opselect = 1;
-                    this.shaded = true;
-                }
-                if (this.overon(504, 322, 192, 32, mouseX, mouseY)) {
-                    this.opselect = 2;
-                    this.shaded = true;
-                }
-                if (this.overon(504, 370, 192, 32, mouseX, mouseY)) {
-                    this.opselect = 3;
-                    this.shaded = true;
-                }
-            }
-            if (mouseClick == 2 && this.shaded) {
-                control.enter = true;
-                this.shaded = false;
-            }
-            if (mouseClick == 0 && (mouseX != this.lxm || mouseY != this.lym)) {
-            	opselect = -1;
-                if (this.overon(504, 194, 192, 64, mouseX, mouseY)) {
-                    this.opselect = 0;
-                }
-                if (this.overon(504, 274, 192, 32, mouseX, mouseY)) {
-                    this.opselect = 1;
-                }
-                if (this.overon(504, 322, 192, 32, mouseX, mouseY)) {
-                    this.opselect = 2;
-                }
-                if (this.overon(504, 370, 192, 32, mouseX, mouseY)) {
-                    this.opselect = 3;
-                }
-                this.lxm = mouseX;
-                this.lym = mouseY;
-            }
-        }
         if (this.fase == 11) {
             if (this.flipo >= 1 && this.flipo <= 15) {
                 if (mouseClick == 1 && this.over(this.next[0], mouseX, mouseY, 665, 395)) {
@@ -6256,7 +6215,7 @@ public class xtGraphics extends Panel implements Runnable
     	break;
     	}
     	this.rd.drawImage(buttonImage[flik ? 1 : 0], offsetX + (flik ? marginW : 0), offsetY + (flik ? marginH : 0), null);
-        return ((control.enter || control.handb) && overb);
+        return (((control.enter || control.handb) || this.app.mouses == 2) && overb);
     }
     
     public int getvalue(final String s, final int n) {
