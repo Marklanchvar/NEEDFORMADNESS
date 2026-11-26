@@ -2281,7 +2281,7 @@ public class xtGraphics extends Panel implements Runnable
             }
             control.down = false;
         }
-        	if (this.drawb(opbtn, 440, 194, 2, aflk, playhi < 0, this.opselect == 0, control)) {
+        	if (this.drawb(opbtn, 440, 194, 2, aflk, playhi < 0, 0, control)) {
                 this.intertrack[0].stop();
                 this.intertrack[1].loadimod(false);
                 this.intertrack[1].play();
@@ -2295,17 +2295,17 @@ public class xtGraphics extends Panel implements Runnable
         		}
             	this.intertrack[0].stop();
         	}
-        	if (this.drawb(smalopbtn, 472, 274, 2, aflk, false, this.opselect == 1, control)) {
+        	if (this.drawb(smalopbtn, 472, 274, 2, aflk, false, 1, control)) {
                 this.intertrack[0].stop();
         		this.oldfase = 10;
         		this.fase = 11;
         		this.firstime = false;
         	}
-        	if (this.drawb(smalopbtn, 472, 322, 2, aflk, false, this.opselect == 2, control)) {
+        	if (this.drawb(smalopbtn, 472, 322, 2, aflk, false, 2, control)) {
         		this.oldfase = 10;
         		this.fase = 9999;
         	}
-        	if (this.drawb(smalopbtn, 472, 370, 2, aflk, false, this.opselect == 3, control)) {
+        	if (this.drawb(smalopbtn, 472, 370, 2, aflk, false, 3, control)) {
                 this.intertrack[0].stop();
                 this.intertrack[2].loadimod(false);
                 this.intertrack[2].play();
@@ -3385,6 +3385,8 @@ public class xtGraphics extends Panel implements Runnable
     }
 }
     public void ctachm(final int mouseX, final int mouseY, final int mouseClick, final Control control) {
+    	this.lxm = mouseX;
+        this.lym = mouseY;
         if (this.fase == 1) {
             if (mouseClick == 1) {
                 if (this.over(this.next[0], mouseX, mouseY, 625, 135)) {
@@ -3462,8 +3464,6 @@ public class xtGraphics extends Panel implements Runnable
             }
         }
         if (this.fase == -5) {
-            this.lxm = mouseX;
-            this.lym = mouseY;
             if (mouseClick == 1 && this.over(this.contin[0], mouseX, mouseY, 355, 380)) {
                 this.pcontin = 1;
             }
@@ -3508,8 +3508,6 @@ public class xtGraphics extends Panel implements Runnable
                 if (this.overon(341, 125, 109, 22, mouseX, mouseY)) {
                     this.opselect = 3;
                 }
-                this.lxm = mouseX;
-                this.lym = mouseY;
             }
         }
         if (this.fase == 11) {
@@ -6195,13 +6193,13 @@ public class xtGraphics extends Panel implements Runnable
      * @param control 
      * @return pressed state of button element
      */
-    public boolean drawb(final Image[] buttonImage, final int offsetX, final int offsetY, final int flkTyp, final boolean pattern1, final boolean pattern2, final boolean opSelect, Control control) {
+    public boolean drawb(final Image[] buttonImage, final int offsetX, final int offsetY, final int flkTyp, final boolean pattern1, final boolean pattern2, final int opSelect, Control control) {
     	int imageW = buttonImage[0].getWidth(null);
     	int imageH = buttonImage[0].getHeight(null);
     	int marginW = (int) ((buttonImage[0].getWidth(null) - buttonImage[1].getWidth(null)) * .5F);
     	int marginH = (int) ((buttonImage[0].getHeight(null) - buttonImage[1].getHeight(null)) * .5F);
     	boolean overb = (this.app.xm > offsetX && this.app.xm < offsetX + imageW &&
-    			this.app.ym > offsetY && this.app.ym < offsetY + imageH) || opSelect;
+    			this.app.ym > offsetY && this.app.ym < offsetY + imageH);
     	boolean flik = false;
     	switch (flkTyp) {
     	case 0: 
@@ -6215,7 +6213,7 @@ public class xtGraphics extends Panel implements Runnable
     	break;
     	}
     	this.rd.drawImage(buttonImage[flik ? 1 : 0], offsetX + (flik ? marginW : 0), offsetY + (flik ? marginH : 0), null);
-        return (((control.enter || control.handb) || this.app.mouses == 2) && overb);
+        return (this.app.mouses == 2 && overb);
     }
     
     public int getvalue(final String s, final int n) {
@@ -6301,7 +6299,7 @@ public class xtGraphics extends Panel implements Runnable
         		}
         	}
         }
-        if (this.drawcarb(true, null, "Finish", 400, 200, this.app.xm, this.app.ym, this.app.moused)) {
+        if (this.drawcarb(true, null, "Finish", 400, 200, this.app.xm, this.app.ym, this.app.moused) || this.app.u[0].exit) {
         	fase = oldfase;
         }
 		
