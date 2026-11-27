@@ -27,6 +27,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Cursor;
 import java.awt.image.ImageObserver;
+import java.awt.image.VolatileImage;
 import java.awt.RenderingHints;
 import java.util.Date;
 import java.awt.Color;
@@ -35,13 +36,15 @@ import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.Image;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.applet.Applet;
 
 public class GameSparker extends Applet implements Runnable
 {
     static final float nanoMilli = .0000001F;
 	Graphics2D rd;
-    Image offImage;
+    VolatileImage offImage;
     Thread gamer;
     Thread physics;
     boolean exwist;
@@ -1083,7 +1086,12 @@ public class GameSparker extends Applet implements Runnable
     @Override
     public void init() {
         this.setBackground(Color.BLACK);
-        this.offImage = this.createImage(800, 450);
+        GraphicsConfiguration gc = GraphicsEnvironment
+        	    .getLocalGraphicsEnvironment()
+        	    .getDefaultScreenDevice()
+        	    .getDefaultConfiguration();
+
+        this.offImage = gc.createCompatibleVolatileImage(800, 450);
         if (this.offImage != null) {
             this.rd = (Graphics2D)this.offImage.getGraphics();
         }
