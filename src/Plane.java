@@ -255,7 +255,7 @@ public class Plane
         this.projf /= 3.0f;
     }
     
-    public void d(final Graphics2D graphics2D, final float objectX, final float objectY, final float objectZ, final float xz, final float xy, final float zy, final float wxz, final float wzy, boolean b, final float n4) {
+    public void d(final Graphics2D graphics2D, final float objectX, final float objectY, final float objectZ, final float xz, final float xy, final float zy, final float wxz, final float wzy, boolean outlineInvisible, final float apparentSize) {
         if (this.master == 1) {
             if (this.av > 3000 && !this.m.crs) {
                 this.n = 12;
@@ -674,7 +674,7 @@ public class Plane
         av /= this.n;
         av += gr;
         
-        int visible = 1;
+        int fillVisible = 1;
         final int[] polygon2DX = new int[this.n];
         final int[] polygon2DY = new int[this.n];
         int pointsOut = 0;
@@ -699,12 +699,12 @@ public class Plane
             }
         }
         if (pointsOut == this.n && pointsBehind == this.n) {
-            visible = 0;
+            fillVisible = 0;
         }
         if (pointsBehind != 0) {
-            b = true;
+            outlineInvisible = true;
         }
-        if (visible != 0 && n4 != -1) {
+        if (fillVisible != 0 && apparentSize != -1) {
             int abs3 = 0;
             int abs4 = 0;
             for (int n52 = 0; n52 < this.n; ++n52) {
@@ -720,13 +720,13 @@ public class Plane
                 }
             }
             if (abs3 == 0 || abs4 == 0) {
-                visible = 0;
+                fillVisible = 0;
             }
-            else if (abs3 < 3 && abs4 < 3 && ((n4 / abs3 > 15 && n4 / abs4 > 15) || b) && (!this.m.lightson || this.light == 0)) {
-                visible = 0;
+            else if (abs3 < 3 && abs4 < 3 && ((apparentSize / abs3 > 15 && apparentSize / abs4 > 15) || outlineInvisible) && (!this.m.lightson || this.light == 0)) {
+                fillVisible = 0;
             }
         }
-        if (visible != 0) {
+        if (fillVisible != 0) {
             int lastmaf = 1;
             int gr = this.gr;
             if (gr < 0 && gr >= -15) {
@@ -774,42 +774,42 @@ public class Plane
                 gr -= 40;
             }
             if (!this.m.trk && (this.av > this.m.fade[this.disline] || this.av == 0)) {
-                visible = 0;
+                fillVisible = 0;
             }
             if (lastmaf == -111 && this.av > 4500 && !this.road) {
-                visible = 0;
+                fillVisible = 0;
             }
             if (lastmaf == -111 && this.av > 1500) {
-                b = true;
+                outlineInvisible = true;
             }
             if (this.av > 3000 && this.m.adv <= 900) {
-                b = true;
+                outlineInvisible = true;
             }
             if (this.fs == 22 && this.av < 11200) {
                 this.m.lastmaf = lastmaf;
             }
-            if (this.gr == -13 && (!this.m.lastcheck || n4 != -1)) {
-                visible = 0;
+            if (this.gr == -13 && (!this.m.lastcheck || apparentSize != -1)) {
+                fillVisible = 0;
             }
             if (this.master == 2 && this.av > 3000 && !this.m.crs) {
-                visible = 0;
+                fillVisible = 0;
             }
             if ((this.gr == -14 || this.gr == -15 || this.gr == -12) && (this.av > 11000 || b4 || lastmaf == -111) && !this.m.trk) {
-                visible = 0;
+                fillVisible = 0;
             }
             if (this.gr == -11 && this.av > 11000 && !this.m.trk) {
-                visible = 0;
+                fillVisible = 0;
             }
             if (this.glass == 2 && (this.m.trk || this.av > 6700)) {
-                visible = 0;
+                fillVisible = 0;
             }
             if (this.flx != 0 && this.m.random() > 0.3 && this.flx != 77) {
-                visible = 0;
+                fillVisible = 0;
             }
         }
-        if (visible != 0) {
+        if (fillVisible != 0) {
             float n66 = (float)(this.projf / this.deltaf + 0.3);
-            if (b && !this.solo) {
+            if (outlineInvisible && !this.solo) {
                 boolean b5 = false;
                 if (n66 > 1.0f) {
                     if (n66 >= 1.27) {
@@ -840,7 +840,7 @@ public class Plane
                 }
                 if (this.gr == -11 || this.gr == -12) {
                     n66 = 0.6f;
-                    if (n4 == -1) {
+                    if (apparentSize == -1) {
                         if (this.m.cpflik || (this.m.nochekflk && !this.m.lastcheck)) {
                             n66 = 1.0f;
                         }
@@ -849,7 +849,7 @@ public class Plane
                         }
                     }
                 }
-                if (this.gr == -13 && n4 == -1) {
+                if (this.gr == -13 && apparentSize == -1) {
                     if (this.m.cpflik) {
                         n66 = 0.0f;
                     }
@@ -881,7 +881,7 @@ public class Plane
             int red = color.getRed();
             int green = color.getGreen();
             int blue = color.getBlue();
-            if (this.m.lightson && (this.light != 0 || ((this.gr == -11 || this.gr == -12) && n4 == -1))) {
+            if (this.m.lightson && (this.light != 0 || ((this.gr == -11 || this.gr == -12) && apparentSize == -1))) {
                 red = this.oc[0];
                 if (red > 255) {
                     red = 255;
@@ -915,17 +915,15 @@ public class Plane
             }
             graphics2D.setColor(cachedColor(red, green, blue));
             graphics2D.fillPolygon(polygon2DX, polygon2DY, this.n);
-            graphics2D.setColor(cachedColor(red, green, blue));
-            graphics2D.fillPolygon(polygon2DX, polygon2DY, this.n);
 
             boolean doStroke = false;
             int strokeR = 0, strokeG = 0, strokeB = 0;
 
             if (this.m.trk && this.gr == -10) {
-                b = false;
+                outlineInvisible = false;
             }
 
-            if (!b) {
+            if (!outlineInvisible) {
                 if (this.flx == 0) {
                     if (!this.solo) {
                         strokeR = 0;
@@ -1032,7 +1030,7 @@ public class Plane
                     strokeR = this.c[0];
                     strokeG = this.c[1];
                     strokeB = this.c[2];
-                    if (n4 == -1 && this.m.cpflik) {
+                    if (apparentSize == -1 && this.m.cpflik) {
                         strokeR *= (int)1.6;
                         if (strokeR > 255) {
                             strokeR = 255;
