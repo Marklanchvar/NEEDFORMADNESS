@@ -53,29 +53,29 @@ public class Wheels
         
         for (int i = 0; i < 12; ++i) {
         	float radi = 13F;
-        	float radian = (float) ((Math.PI / 4F) + ((i / 6F) * Math.PI));
+        	float angle = 45 + i * 30F;
             array2[i] = (n2 + 4.0f * n10);
-        	array3[i] = (float) (n3 + (Math.sin(radian) * radi) * n11);
-        	array4[i] = (float) (n4 + (Math.cos(radian) * radi) * n11);
+        	array3[i] = (float) (n3 + (Utils.sin(angle) * radi) * n11);
+        	array4[i] = (float) (n4 + (Utils.cos(angle) * radi) * n11);
         }
         array[n] = new Plane(medium, trackers, array2, array4, array3, 12, array5, 0, n8, 0, n9, n3, n4, 7, 0, false, 0, false);
         ++n;
         
         for (int i = 0; i < 20; ++i) {
-            array2[i] = (n2 - 4.0f * n10);
+            array2[i] = (n2 - 4F * n10);
         }
         for (int i = 0; i < 13; ++i) {
         	float radi = 13F;
-        	float radian = (float) ((Math.PI / 4F) + ((i / 6F) * Math.PI));
-        	array3[i] = (float) (n3 + (Math.sin(radian) * radi) * n11);
-        	array4[i] = (float) (n4 + (Math.cos(radian) * radi) * n11);
+        	float angle = 45 + i * 30F;
+        	array3[i] = (float) (n3 + (Utils.sin(angle) * radi) * n11);
+        	array4[i] = (float) (n4 + (Utils.cos(angle) * radi) * n11);
         }
         
         for (int i = 13; i < 20; ++i) {
         	float radi = 10F;
-        	float radian = (float) ((i / 3F) * Math.PI);
-        	array3[i] = (float) (n3 + (Math.sin(radian) * radi) * this.size);
-        	array4[i] = (float) (n4 + (Math.cos(radian) * radi) * this.size);
+        	float angle = i * 60F;
+        	array3[i] = (float) (n3 + (Utils.sin(angle) * radi) * this.size);
+        	array4[i] = (float) (n4 + (Utils.cos(angle) * radi) * this.size);
         }
         array[n] = new Plane(medium, trackers, array2, array4, array3, 20, array5, 0, n8, 0, n9, n3, n4, 7, 0, false, 0, false);
         array[n].master = 1;
@@ -85,14 +85,14 @@ public class Wheels
         array3[2] = n3;
         array4[2] = n4;
         for (int i = 0; i < 6; i++) {
-        	float radian1 = (float) ((i / 3F) * Math.PI);
-        	float radian2 = radian1 + (float)(Math.PI / 3F);
+        	float angle1 = i * 60F;
+        	float angle2 = angle1 + 60F;
         	float radi = 10F;
-        	array3[0] = (float) (n3 + (Math.sin(radian1) * radi) * this.size);
-        	array4[0] = (float) (n4 + (Math.cos(radian1) * radi) * this.size);
+        	array3[0] = (float) (n3 + (Utils.sin(angle1) * radi) * this.size);
+        	array4[0] = (float) (n4 + (Utils.cos(angle1) * radi) * this.size);
 
-        	array3[1] = (float) (n3 + (Math.sin(radian2) * radi) * this.size);
-        	array4[1] = (float) (n4 + (Math.cos(radian2) * radi) * this.size);
+        	array3[1] = (float) (n3 + (Utils.sin(angle2) * radi) * this.size);
+        	array4[1] = (float) (n4 + (Utils.cos(angle2) * radi) * this.size);
         	array[n] = new Plane(medium, trackers, array2, array4, array3, 3, this.rc, 0, n8, 0, n9, n3, n4, 7, 0, false, 0, false);
         	if (this.depth / this.size < 7.0f) {
         		array[n].master = 2;
@@ -101,14 +101,14 @@ public class Wheels
         }
         for (int i = 0; i < 12; i++) {
         	float radi = 13F;
-        	float radian1 = (float) ((Math.PI / 4F) + ((i / 6F) * Math.PI));
-        	float radian2 = radian1 + (float)(Math.PI / 6F);
+        	float angle1 = 45 + i * 30F;
+        	float angle2 = angle1 + 30F;
         	array2[0] = array2[1] = (n2 - 4.0f * n10);
         	array2[2] = array2[3] = (n2 + 4.0f * n10);
-        	array3[0] = array3[3] = (float) (n3 + (Math.sin(radian1) * radi) * n11);
-        	array4[0] =	array4[3] = (float) (n4 + (Math.cos(radian1) * radi) * n11);
-        	array3[1] = array3[2] = (float) (n3 + (Math.sin(radian2) * radi) * n11);
-        	array4[1] =	array4[2] = (float) (n4 + (Math.cos(radian2) * radi) * n11);
+        	array3[0] = array3[3] = (float) (n3 + (Utils.sin(angle1) * radi) * n11);
+        	array4[0] =	array4[3] = (float) (n4 + (Utils.cos(angle1) * radi) * n11);
+        	array3[1] = array3[2] = (float) (n3 + (Utils.sin(angle2) * radi) * n11);
+        	array4[1] =	array4[2] = (float) (n4 + (Utils.cos(angle2) * radi) * n11);
         	array[n] = new Plane(medium, trackers, array2, array4, array3, 4, array5, 0, n8, 0, n9, n3, n4, 7, 0, false, 0, true);
         	++n;
         }

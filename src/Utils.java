@@ -1,30 +1,26 @@
 public class Utils
 {
-	Medium m;
-	
-	public static int clamp255(int value) {
-	    return value > 255 ? 255 : (value < 0 ? 0 : value);
+	private static final int SINETABLE_RESOLUTION = 4096;
+	private static final int SINETABLE_MASK = SINETABLE_RESOLUTION - 1;
+	private static final int COSINE_OFFSET = SINETABLE_RESOLUTION / 4; // 90 degrees
+	private static final float ANGLE_TO_INDEX = SINETABLE_RESOLUTION / 360F;
+	private static final float[] SINEWAVE_LUT = new float[SINETABLE_RESOLUTION];
+
+	static {
+	    for (int i = 0; i < SINETABLE_RESOLUTION; i++) {
+	        SINEWAVE_LUT[i] = (float) Math.sin(Math.toRadians(i * (360F / SINETABLE_RESOLUTION)));
+	    }
 	}
 
-    public static float cos(float i) {
-        while (i >= 360) {
-            i -= 360;
-        }
-        while (i < 0) {
-            i += 360;
-        }
-        return (float) Math.cos(Math.toRadians(i));
-    }
-    
-    public static float sin(float f) {
-        while (f >= 360) {
-            f -= 360;
-        }
-        while (f < 0) {
-            f += 360;
-        }
-        return (float) Math.sin(Math.toRadians(f));
-    }
+	public static float sin(float degrees) {
+	    int index = Math.round((float) (degrees * ANGLE_TO_INDEX)) & SINETABLE_MASK;
+	    return SINEWAVE_LUT[index];
+	}
+
+	public static float cos(float degrees) {
+	    int index = (Math.round((float) (degrees * ANGLE_TO_INDEX)) + COSINE_OFFSET) & SINETABLE_MASK;
+	    return SINEWAVE_LUT[index];
+	}
     
     public static float acos(float i) {
     	while (i > 1F) {
@@ -35,17 +31,9 @@ public class Utils
         }
         return (float) Math.toDegrees(Math.acos(i));
     }
-    
-    public static float asin(float f) {
-        while (f > 1F) {
-            f = 1F;
-        }
-        while (f < -1F) {
-            f = -1F;
-        }
-        return (float) Math.toDegrees(Math.asin(f));
-    }
-    
+
+	Medium m;
+	
     public static int xs(final float f, float n5) {
         if (n5 < Medium.cz) {
             n5 = Medium.cz;
@@ -94,5 +82,10 @@ public class Utils
                 pointY = originY + ((cloneX - originX) * Utils.sin(angle) + (cloneY - originY) * Utils.cos(angle));
         }
     }
+    
+	public static int clamp255(int value) {
+	    return value > 255 ? 255 : (value < 0 ? 0 : value);
+	}
+
     
 }

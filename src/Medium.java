@@ -52,8 +52,6 @@ public class Medium
     int vxz;
     int adv;
     boolean vert;
-    float[] tcos;
-    float[] tsin;
     int lastmaf;
     int checkpoint;
     boolean lastcheck;
@@ -158,8 +156,6 @@ public class Medium
         this.vxz = 180;
         this.adv = 500;
         this.vert = false;
-        this.tcos = new float[360];
-        this.tsin = new float[360];
         this.lastmaf = 0;
         this.checkpoint = -1;
         this.lastcheck = false;
@@ -214,12 +210,6 @@ public class Medium
         this.stc = null;
         this.bst = null;
         this.twn = null;
-        for (int i = 0; i < 360; ++i) {
-            this.tcos[i] = (float)Math.cos(i * 0.017453292519943295);
-        }
-        for (int j = 0; j < 360; ++j) {
-            this.tsin[j] = (float)Math.sin(j * 0.017453292519943295);
-        }
     }
     
     public float random() {

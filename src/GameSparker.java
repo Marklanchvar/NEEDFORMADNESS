@@ -1,50 +1,35 @@
 import java.net.URI;
 import java.awt.Desktop;
 import java.awt.Event;
-import java.io.Writer;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.Reader;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.io.ByteArrayInputStream;
 import java.net.URL;
-import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.File;
 import java.awt.Component;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.LayoutManager;
-import java.awt.Composite;
+import java.awt.image.BufferedImage;
 import java.awt.AlphaComposite;
-import java.awt.BasicStroke;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Cursor;
-import java.awt.image.ImageObserver;
-import java.awt.image.VolatileImage;
 import java.awt.RenderingHints;
 import java.util.Date;
 import java.awt.Color;
-import java.awt.Checkbox;
 import java.awt.TextArea;
 import java.awt.TextField;
 import java.awt.Image;
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsEnvironment;
 import java.applet.Applet;
 
 public class GameSparker extends Applet implements Runnable
 {
     static final float nanoMilli = .0000001F;
 	Graphics2D rd;
-    VolatileImage offImage;
+    BufferedImage offImage = new BufferedImage(800, 450, 1);
     Thread gamer;
     Thread physics;
     boolean exwist;
@@ -72,17 +57,6 @@ public class GameSparker extends Applet implements Runnable
     float lmxz;
     float shaka;
     boolean applejava;
-    Smenu slaps;
-    Smenu snpls;
-    Smenu snbts;
-    Smenu swait;
-    Smenu sclass;
-    Smenu scars;
-    Smenu rooms;
-    
-    Smenu datat;
-    Smenu ilaps;
-    Smenu proitem;
 	static int actat;
     
     public GameSparker() {
@@ -109,21 +83,10 @@ public class GameSparker extends Applet implements Runnable
         this.lmxz = 0;
         this.shaka = 0;
         this.applejava = false;
-        this.slaps = new Smenu(17);
-        this.snpls = new Smenu(9);
-        this.snbts = new Smenu(8);
-        this.swait = new Smenu(6);
-        this.sclass = new Smenu(7);
-        this.scars = new Smenu(4);
-        this.rooms = new Smenu(7);
-        this.datat = new Smenu(26);
-        this.ilaps = new Smenu(18);
-        this.proitem = new Smenu(707);
     }
     
     @Override
     public void run() {
-        this.rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         this.rd.setColor(Color.BLACK);
         this.rd.fillRect(0, 0, 800, 450);
         this.repaint();
@@ -142,7 +105,6 @@ public class GameSparker extends Applet implements Runnable
         this.chkbx[0] = xtGraphics.getImage("data/checkbox1.gif");
         this.chkbx[1] = xtGraphics.getImage("data/checkbox2.gif");
         xtGraphics.loaddata();
-        int n = 0;
         final Record record = new Record(medium);
         this.loadbase(array, medium, trackers, xtGraphics, false);
         final ContO[] array2 = new ContO[8000];
@@ -157,7 +119,7 @@ public class GameSparker extends Applet implements Runnable
         System.gc();
         boolean startFrame = false;
         long lastTime = 0;
-        actat = 35;
+        actat = 350;
         int nfr = 0;
         int n7 = 0;
         int n8 = 0;
@@ -986,13 +948,13 @@ public class GameSparker extends Applet implements Runnable
             boolean isGaming = (xtGraphics.fase == 0 || xtGraphics.fase == -1 || xtGraphics.fase == -3);
             if (isGaming && !startFrame) {
             	startFrame = !startFrame;
-            	actat = 47;
+            	actat = 350;
             } else if (!isGaming && startFrame) {
             	startFrame = !startFrame;
-            	actat = 35;
+            	actat = 350;
             }
             	if (nfr == 10) {
-            		if (endTime - lastTime < (isGaming ? 530 : 400)) {
+            		if (endTime - lastTime < (isGaming ? 400 : 400)) {
             			actat++;
             		}
             		else {
@@ -1001,8 +963,8 @@ public class GameSparker extends Applet implements Runnable
             				actat = 5;
             			}
             		}
-            		if (xtGraphics.starcnt == 0 && isGaming) medium.adjstfade(actat);
-            		lastTime = endTime;
+            		if (xtGraphics.starcnt == 0 && isGaming) medium.adjstfade(actat * .1F);
+            		lastTime = startTime;
             		nfr = 0;
             	}
             	else {
@@ -1019,7 +981,7 @@ public class GameSparker extends Applet implements Runnable
                     this.gamer = null;
                 }
             }
-            long millis = actat - (endTime - startTime);
+            long millis = (long) (actat * .1F) - (endTime - startTime);
             if (millis < 5) {
                 millis = 5;
             }
@@ -1086,78 +1048,9 @@ public class GameSparker extends Applet implements Runnable
     @Override
     public void init() {
         this.setBackground(Color.BLACK);
-        GraphicsConfiguration gc = GraphicsEnvironment
-        	    .getLocalGraphicsEnvironment()
-        	    .getDefaultScreenDevice()
-        	    .getDefaultConfiguration();
-
-        this.offImage = gc.createCompatibleVolatileImage(800, 450);
         if (this.offImage != null) {
             this.rd = (Graphics2D)this.offImage.getGraphics();
         }
-        BasicStroke roundStroke = new BasicStroke(
-        		1.0f, 
-        		BasicStroke.CAP_ROUND, 
-        		BasicStroke.JOIN_ROUND
-        		);
-
-        this.rd.setStroke(roundStroke);
-        this.rd.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
-        this.setLayout(null);
-        this.slaps.setFont(new Font("Arial", 1, 13));
-        this.snpls.setFont(new Font("Arial", 0, 13));
-        this.snbts.setFont(new Font("Arial", 0, 13));
-        this.swait.setFont(new Font("Arial", 0, 12));
-        this.sclass.setFont(new Font("Arial", 1, 12));
-        this.scars.setFont(new Font("Arial", 1, 12));
-        this.rooms.setFont(new Font("Arial", 1, 13));
-        this.datat.setFont(new Font("Arial", 1, 12));
-        this.ilaps.setFont(new Font("Arial", 1, 13));
-        this.proitem.setFont(new Font("Arial", 1, 12));
-        this.snpls.add(this.rd, "Select");
-        this.swait.add(this.rd, "1 Minute");
-        this.ilaps.add(this.rd, "Laps");
-        this.ilaps.add(this.rd, "1 Lap");
-        for (int l = 0; l < 7; ++l) {
-            this.snpls.add(this.rd, "    " + (l + 2) + "");
-        }
-        for (int m = 0; m < 7; ++m) {
-            this.snbts.add(this.rd, "    " + m + "    ");
-        }
-        for (int n = 0; n < 2; ++n) {
-            this.swait.add(this.rd, "" + (n + 2) + " Minutes");
-        }
-        for (int n2 = 0; n2 < 15; ++n2) {
-            this.slaps.add(this.rd, "" + (n2 + 1) + "");
-        }
-        for (int n3 = 0; n3 < 14; ++n3) {
-            this.ilaps.add(this.rd, "" + (n3 + 2) + " Laps");
-        }
-        this.sclass.add(this.rd, "All Classes");
-        this.sclass.add(this.rd, "Class C Cars");
-        this.sclass.add(this.rd, "Class B & C Cars");
-        this.sclass.add(this.rd, "Class B Cars");
-        this.sclass.add(this.rd, "Class A & B Cars");
-        this.sclass.add(this.rd, "Class A Cars");
-        this.scars.add(this.rd, "All Cars");
-        this.scars.add(this.rd, "Custom Cars");
-        this.scars.add(this.rd, "Game Cars");
-        this.rooms.rooms = true;
-        this.rooms.add(this.rd, "Ghostrider :: 1");
-        this.hidefields();
-    }
-    
-    public void hidefields() {
-        this.ilaps.hide();
-        this.proitem.hide();
-        this.datat.hide();
-        this.rooms.hide();
-        this.sclass.hide();
-        this.scars.hide();
-        this.slaps.hide();
-        this.snpls.hide();
-        this.snbts.hide();
-        this.swait.hide();
     }
     
     public void movefield(final Component component, int x, int y, final int width, final int height) {
@@ -1773,9 +1666,6 @@ public class GameSparker extends Applet implements Runnable
             }
         }
         catch (final Exception ex2) {}
-    }
-    
-    public void regprom() {
     }
     
     @Override
