@@ -5,7 +5,8 @@ import java.awt.Color;
 
 public class Plane
 {
-    Medium m;
+    private static final Color COLOR_SPAZ = new Color (0xE6E6E6);
+	Medium m;
     Trackers t;
     float[] ox;
     float[] oy;
@@ -50,6 +51,9 @@ public class Plane
     int pb;
     int flx;
     int colnum;
+    
+    Color fillColor = Color.WHITE;
+    Color drawColor = Color.BLACK;
     
     public Plane(final Medium m, final Trackers t, final float[] planeX, final float[] planeY, final float[] planeZ, final int n, final int[] color, final int glass, final int gr, final int fs, final float wx2, final float wy2, final float wz2, final int disline, final int bfase, final boolean road, final int light, final boolean solo) {
         this.c = new int[3];
@@ -286,7 +290,7 @@ public class Plane
                     spazX[l] = Utils.xs(plane3DX[l], plane3DY[l]);
                     spazY[l] = Utils.ys(plane3DZ[l], plane3DY[l]);
                 }
-                graphics2D.setColor(new Color(0xE6E6E6));
+                graphics2D.setColor(COLOR_SPAZ);
                 graphics2D.fillPolygon(spazX, spazY, this.n);
             }
             float n9 = 1.0f;
