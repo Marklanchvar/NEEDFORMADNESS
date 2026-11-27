@@ -1,5 +1,3 @@
-import java.util.stream.IntStream;
-
 public class Utils
 {
 	Medium m;
@@ -66,12 +64,12 @@ public class Utils
         if (angle != 0) {
             final float cos = Utils.cos(angle);
             final float sin = Utils.sin(angle);
-            IntStream.range(0, count).parallel().forEach(i -> {
+            for (int i = 0; i < count; ++i) {
                 final float cloneX = pointX[i];
                 final float cloneY = pointY[i];
                 pointX[i] = originX + ((cloneX - originX) * cos - (cloneY - originY) * sin);
                 pointY[i] = originY + ((cloneX - originX) * sin + (cloneY - originY) * cos);
-            });
+            }
         }
     }
     
@@ -79,12 +77,12 @@ public class Utils
         if (angle != 0) {
             final float cos = Utils.cos(angle);
             final float sin = Utils.sin(angle);
-            IntStream.range(0, count).parallel().forEach(i -> {
+            for (int i = 0; i < count; ++i) {
                 final int cloneX = pointX[i];
                 final int cloneY = pointY[i];
                 pointX[i] = (int) (originX + ((cloneX - originX) * cos - (cloneY - originY) * sin));
                 pointY[i] = (int) (originY + ((cloneX - originX) * sin + (cloneY - originY) * cos));
-            });
+            }
         }
     }
     
