@@ -1,9 +1,7 @@
-import java.awt.Composite;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Random;
-import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.ByteArrayInputStream;
 

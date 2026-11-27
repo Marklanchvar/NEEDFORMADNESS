@@ -1,4 +1,3 @@
-import java.net.URL;
 import java.awt.image.BufferedImage;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
@@ -7,16 +6,12 @@ import java.awt.AlphaComposite;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Color;
-import java.io.InputStreamReader;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.io.FileInputStream;
 import java.io.File;
-import java.io.PrintWriter;
-import java.io.BufferedReader;
-import java.net.Socket;
 import java.awt.Image;
 import java.awt.image.ImageObserver;
 import java.awt.FontMetrics;
@@ -44,7 +39,6 @@ public class xtGraphics extends Panel implements Runnable
     int unlocked;
     int looped;
     int warning;
-    boolean nofull;
     boolean onviewpro;
     String nickname;
     String nickey;
@@ -364,7 +358,6 @@ public class xtGraphics extends Panel implements Runnable
         this.unlocked = 1;
         this.looped = 1;
         this.warning = 0;
-        this.nofull = false;
         this.onviewpro = false;
         this.nickname = "";
         this.nickey = "";
@@ -551,18 +544,6 @@ public class xtGraphics extends Panel implements Runnable
         for (int i = 0; i < 5; ++i) {
             this.pengs[i] = false;
         }
-        this.nofull = false;
-        final SecurityManager securityManager = System.getSecurityManager();
-        if (securityManager != null) {
-            try {
-                securityManager.checkConnect("needformadness.com", -1);
-            }
-            catch (final Exception obj) {
-                if (("" + obj).indexOf("access denied") != -1) {
-                    this.nofull = true;
-                }
-            }
-        }
         this.badmac = false;
     }
     
@@ -677,8 +658,6 @@ public class xtGraphics extends Panel implements Runnable
     public void loadimages() {
         final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         final MediaTracker mediaTracker = new MediaTracker(this.app);
-        Image loadBimage = null;
-        Image loadBimage2 = null;
         this.dnload += 8;
         try {
             final FileInputStream in = new FileInputStream(new File("" + Madness.fpath + "data/images.zip"));
@@ -697,10 +676,8 @@ public class xtGraphics extends Panel implements Runnable
                     this.carsbg = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("color.gif")) {
-                    loadBimage = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("class.gif")) {
-                    loadBimage2 = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("smokey.gif")) {
                     this.smokeypix(b, mediaTracker, defaultToolkit);
@@ -1924,7 +1901,7 @@ public class xtGraphics extends Panel implements Runnable
             this.m.iw = 0;
             this.m.h = 450;
             this.m.w = 800;
-            this.m.focus_point = 400;
+            Medium.focus_point = 400;
             Medium.cx = 400;
             Medium.cy = 225;
             Medium.cz = 50;
@@ -2247,15 +2224,15 @@ public class xtGraphics extends Panel implements Runnable
         
         this.m.trk = false;
         this.m.crs = false;
-        this.m.focus_point = 400;
+        Medium.focus_point = 400;
         Medium.cx = 200;
         Medium.cy = 300;
         Medium.cz = 50;
         this.m.xz = 0;
         this.m.zy = 10;
-        this.m.x = array[menuCar].x - m.cx;
-        this.m.y = array[menuCar].y - m.cy - Utils.sin(m.zy) * (array[menuCar].maxR + 400) + array[menuCar].grat;
-        this.m.z = array[menuCar].z - m.cz - Utils.cos(m.zy) * (array[menuCar].maxR + 400);
+        this.m.x = array[menuCar].x - Medium.cx;
+        this.m.y = array[menuCar].y - Medium.cy - Utils.sin(m.zy) * (array[menuCar].maxR + 400) + array[menuCar].grat;
+        this.m.z = array[menuCar].z - Medium.cz - Utils.cos(m.zy) * (array[menuCar].maxR + 400);
         this.m.ground = 0;
         this.m.d(this.rd);
         array[menuCar].d(this.rd);
@@ -2561,7 +2538,7 @@ public class xtGraphics extends Panel implements Runnable
         this.m.iw = 0;
         this.m.h = 450;
         this.m.w = 800;
-        this.m.focus_point = 400;
+        Medium.focus_point = 400;
         Medium.cx = 400;
         Medium.cy = 225;
         Medium.cz = 50;
@@ -2581,13 +2558,13 @@ public class xtGraphics extends Panel implements Runnable
         
         this.m.trk = false;
         this.m.crs = true;
-        this.m.focus_point = 400;
+        Medium.focus_point = 400;
         Medium.cx = 400;
         Medium.cy = 250;
         this.m.zy = 20;
-        this.m.x = -m.cx;
-        this.m.y = -m.cy - Utils.sin(m.zy) * (array[this.sc[0]].maxR + 500);
-        this.m.z = -m.cz - Utils.cos(m.zy) * (array[this.sc[0]].maxR + 500);
+        this.m.x = -Medium.cx;
+        this.m.y = -Medium.cy - Utils.sin(m.zy) * (array[this.sc[0]].maxR + 500);
+        this.m.z = -Medium.cz - Utils.cos(m.zy) * (array[this.sc[0]].maxR + 500);
         this.m.ground = -m.y;
 
 		array[this.sc[0]].x = 0;

@@ -1213,14 +1213,14 @@ public class Plane
         if (cz < Medium.cz) {
             cz = Medium.cz;
         }
-        return (int) ((cz - this.m.focus_point) * (Medium.cx - n) / cz + n);
+        return (int) ((cz - Medium.focus_point) * (Medium.cx - n) / cz + n);
     }
     
     public int ys(final float n, float cz) {
         if (cz < Medium.cz) {
             cz = Medium.cz;
         }
-        return (int) ((cz - this.m.focus_point) * (Medium.cy - n) / cz + n);
+        return (int) ((cz - Medium.focus_point) * (Medium.cy - n) / cz + n);
     }
     
     public void rot(final float[] array, final float[] array2, final float cx, final float cz, final float xz, final int n4) {

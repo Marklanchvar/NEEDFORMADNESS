@@ -1,29 +1,14 @@
 import java.net.URI;
 import java.awt.Desktop;
 import java.util.Date;
-import java.io.FileOutputStream;
-import java.io.DataInputStream;
-import java.net.URL;
-import java.awt.Window;
-import javax.swing.Icon;
-import javax.swing.JOptionPane;
-import java.io.Reader;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.awt.GraphicsEnvironment;
 import java.awt.Dimension;
-import java.awt.Component;
-import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.Toolkit;
-import java.io.Writer;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.File;
 import java.awt.Color;
-import java.awt.DisplayMode;
-import java.awt.GraphicsDevice;
 import java.applet.Applet;
 import java.awt.Frame;
 import java.awt.Panel;
@@ -83,7 +68,7 @@ public class Madness extends Panel
             }
         });
         Madness.frame.add("Center", Madness.applet);
-        Madness.frame.show();
+        Madness.frame.setVisible(true);
         Madness.frame.setMinimumSize(new Dimension(800, 450));
         Madness.frame.setSize(800, 450);
         Madness.frame.setExtendedState(6);
@@ -124,7 +109,7 @@ public class Madness extends Panel
         catch (final Exception ex2) {}
         Madness.applet = new GameSparker();
         Madness.frame.add("Center", Madness.applet);
-        Madness.frame.show();
+        Madness.frame.setVisible(true);
         Madness.applet.init();
         Madness.applet.start();
     }

@@ -1072,7 +1072,7 @@ public class GameSparker extends Applet implements Runnable
             if (b) {
                 if ((this.xm > n && this.xm < n + width && this.ym > n2 && this.ym < n2 + height) || !textField.getText().equals("")) {
                     if (!textField.isShowing()) {
-                        textField.show();
+                        textField.setVisible(true);
                         textField.requestFocus();
                     }
                     if (width == 360 || width == 576) {
@@ -1089,7 +1089,7 @@ public class GameSparker extends Applet implements Runnable
                 }
                 else {
                     if (textField.isShowing()) {
-                        textField.hide();
+                        textField.setVisible(false);
                         this.requestFocus();
                     }
                     this.rd.setColor(textField.getBackground());
@@ -1101,7 +1101,7 @@ public class GameSparker extends Applet implements Runnable
         }
         else {
             if (b && !textField.isShowing()) {
-                textField.show();
+                textField.setVisible(true);
             }
             this.movefield(textField, n, n2, width, height);
         }
@@ -1111,7 +1111,7 @@ public class GameSparker extends Applet implements Runnable
         if (this.applejava) {
             if ((this.xm > n && this.xm < n + width && this.ym > n2 && this.ym < n2 + height) || !textArea.getText().equals(" ")) {
                 if (!textArea.isShowing()) {
-                    textArea.show();
+                    textArea.setVisible(true);
                     textArea.requestFocus();
                 }
                 if (width == 360 || width == 576) {
@@ -1128,7 +1128,7 @@ public class GameSparker extends Applet implements Runnable
             }
             else {
                 if (textArea.isShowing()) {
-                    textArea.hide();
+                    textArea.setVisible(false);
                     this.requestFocus();
                 }
                 this.rd.setColor(textArea.getBackground());
@@ -1139,7 +1139,7 @@ public class GameSparker extends Applet implements Runnable
         }
         else {
             if (!textArea.isShowing()) {
-                textArea.show();
+                textArea.setVisible(true);
             }
             this.movefield(textArea, n, n2, width, height);
         }
