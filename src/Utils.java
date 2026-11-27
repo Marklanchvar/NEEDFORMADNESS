@@ -1,3 +1,5 @@
+import java.util.stream.IntStream;
+
 public class Utils
 {
 	Medium m;
@@ -62,23 +64,27 @@ public class Utils
     
     public static void rot(final float[] pointX, final float[] pointY, final float originX, final float originY, final float angle, final int count) {
         if (angle != 0) {
-            for (int i = 0; i < count; ++i) {
+            final float cos = Utils.cos(angle);
+            final float sin = Utils.sin(angle);
+            IntStream.range(0, count).parallel().forEach(i -> {
                 final float cloneX = pointX[i];
                 final float cloneY = pointY[i];
-                pointX[i] = originX + ((cloneX - originX) * Utils.cos(angle) - (cloneY - originY) * Utils.sin(angle));
-                pointY[i] = originY + ((cloneX - originX) * Utils.sin(angle) + (cloneY - originY) * Utils.cos(angle));
-            }
+                pointX[i] = originX + ((cloneX - originX) * cos - (cloneY - originY) * sin);
+                pointY[i] = originY + ((cloneX - originX) * sin + (cloneY - originY) * cos);
+            });
         }
     }
     
     public static void rot(final int[] pointX, final int[] pointY, final float originX, final float originY, final float angle, final int count) {
         if (angle != 0) {
-            for (int i = 0; i < count; ++i) {
+            final float cos = Utils.cos(angle);
+            final float sin = Utils.sin(angle);
+            IntStream.range(0, count).parallel().forEach(i -> {
                 final int cloneX = pointX[i];
                 final int cloneY = pointY[i];
-                pointX[i] = (int) (originX + ((cloneX - originX) * Utils.cos(angle) - (cloneY - originY) * Utils.sin(angle)));
-                pointY[i] = (int) (originY + ((cloneX - originX) * Utils.sin(angle) + (cloneY - originY) * Utils.cos(angle)));
-            }
+                pointX[i] = (int) (originX + ((cloneX - originX) * cos - (cloneY - originY) * sin));
+                pointY[i] = (int) (originY + ((cloneX - originX) * sin + (cloneY - originY) * cos));
+            });
         }
     }
     
