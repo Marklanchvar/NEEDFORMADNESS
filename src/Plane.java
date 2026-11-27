@@ -805,13 +805,13 @@ public class Plane
                     n66 = 1.0f;
                 }
                 if (b5) {
-                    n66 *= (float)0.89;
+                    n66 *= 0.89F;
                 }
                 else {
-                    n66 *= (float)0.86;
+                    n66 *= 0.86F;
                 }
-                if (n66 < 0.37) {
-                    n66 = 0.37f;
+                if (n66 < 0.37F) {
+                    n66 = 0.37F;
                 }
                 if (this.gr == -9) {
                     n66 = 0.7f;
@@ -862,9 +862,7 @@ public class Plane
             Color color = Color.getHSBColor(this.hsb[0], this.hsb[1], this.hsb[2] * n66);
             if (this.m.trk) {
                     final float[] hsbvals = new float[3];
-                    int gray = (int) (0.299 * oc[0] + 0.587 * oc[1] + 0.114 * oc[2]);
-                    if (gray > 255) gray = 255;
-                    Color.RGBtoHSB(gray, gray, gray, hsbvals);
+                    Color.RGBtoHSB(oc[0], oc[1], oc[2], hsbvals);
                     color = Color.getHSBColor(hsbvals[0], hsbvals[1], hsbvals[2] * n66);
             }
             int red = color.getRed();

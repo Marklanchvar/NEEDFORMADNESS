@@ -301,16 +301,16 @@ public class Medium
             if (this.hit == 45000) {
                 this.fo = 1.0f;
                 this.zy = 67;
-                this.atrx = (checkPoints.x[0] - this.trx) / 116L;
-                this.atrz = (checkPoints.z[0] - this.trz) / 116L;
+                this.atrx = (checkPoints.x[0] - this.trx) / 116F;
+                this.atrz = (checkPoints.z[0] - this.trz) / 116F;
                 this.focus_point = 400;
             }
             if (this.hit == 20000) {
                 this.fallen = 500;
                 this.fo = 1.0f;
                 this.zy = 67;
-                this.atrx = (checkPoints.x[0] - this.trx) / 116L;
-                this.atrz = (checkPoints.z[0] - this.trz) / 116L;
+                this.atrx = (checkPoints.x[0] - this.trx) / 116F;
+                this.atrz = (checkPoints.z[0] - this.trz) / 116F;
                 this.focus_point = 400;
             }
             this.hit -= this.fallen;

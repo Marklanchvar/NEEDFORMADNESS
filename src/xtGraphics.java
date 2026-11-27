@@ -115,7 +115,6 @@ public class xtGraphics extends Panel implements Runnable
     Image congrd;
     Image gameov;
     Image carsbg;
-    Image carsbgc;
     Image selectcar;
     Image statb;
     Image statbo;
@@ -349,6 +348,7 @@ public class xtGraphics extends Panel implements Runnable
 	float[] proba;
 	Image[] opbtn;
 	Image[] smalopbtn;
+	boolean kborm;
 	
     public xtGraphics(final Medium m, final CarDefine cd, final Graphics2D rd, final GameSparker app) {
         this.fase = 111;
@@ -546,6 +546,7 @@ public class xtGraphics extends Panel implements Runnable
     	this.proba = new float[] { 0.6f, 0.7f, 0.4f, 0.3f, 0.8f, 0.0f, 0.3f, 0.3f, 0.3f, 0.1f, 0.1f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f };
     	this.opbtn = new Image[2];
     	this.smalopbtn = new Image[2];
+    	this.kborm = false; 
         for (int i = 0; i < 5; ++i) {
             this.pengs[i] = false;
         }
@@ -691,7 +692,7 @@ public class xtGraphics extends Panel implements Runnable
                     off += read;
                     i -= read;
                 }
-                if (name.equals("cars.gif")) {
+                if (name.equals("cars.png")) {
                     this.carsbg = this.loadimage(b, mediaTracker, defaultToolkit);
                 }
                 if (name.equals("color.gif")) {
@@ -1091,7 +1092,6 @@ public class xtGraphics extends Panel implements Runnable
         catch (final Exception obj) {
             System.out.println("Error Loading Images: " + obj);
         }
-        this.makecarsbgc(loadBimage, loadBimage2);
         System.gc();
     }
     
@@ -2318,7 +2318,7 @@ public class xtGraphics extends Panel implements Runnable
         this.rd.drawImage(this.opti, 508, 205, null);
         this.rd.drawImage(this.byrd, 72, 410, null);
         this.rd.drawImage(this.nfmcoms, 567, 410, null);
-        if (this.shaded) {
+        if (control.enter || control.handb) {
             this.app.repaint();
             try {
                 Thread.sleep(200L);
@@ -2332,12 +2332,12 @@ public class xtGraphics extends Panel implements Runnable
 		if (this.overon(this.xdu,
 				this.ydu,
 				this.dude[0].getWidth(null),
-				this.dude[0].getHeight(null), lxm, lym)) {
+				this.dude[0].getHeight(null), app.xm, app.ym)) {
 			dudeAlert = 1;
 			if (this.app.moused && grabable) {
 				dudeAlert = 2;
-				this.xdu = this.lxm - this.dude[0].getWidth(null) / 2;
-				this.ydu = this.lym - this.dude[0].getHeight(null) / 2;
+				this.xdu = this.app.xm - this.dude[0].getWidth(null) / 2;
+				this.ydu = this.app.ym - this.dude[0].getHeight(null) / 2;
 			}
 		}
 		 ++this.flipo;
@@ -2548,7 +2548,6 @@ public class xtGraphics extends Panel implements Runnable
         this.zstart = new int[] { -380, -760, -760, 0, 0, 760, 760, 380 };
         this.onmsc = -1;
         this.noclass = false;
-        this.carsbginflex();
         this.flatrstart = 0;
         this.m.lightson = false;
         this.pnext = 0;
@@ -2575,12 +2574,81 @@ public class xtGraphics extends Panel implements Runnable
     public void carselect(final Control control, final ContO[] array, final Mad mad, final int mouseX, final int mouseY, final boolean mouseHold) {
     	this.rd.setColor(Color.BLACK);
     	this.rd.fillRect(0, 0, 800, 450);
-    		this.rd.drawImage(this.carsbg, 65, 25, null);
-    	this.carsbginflex();
+    	this.rd.drawImage(this.carsbg, 0, 0, null);
     	this.flatrstart = 6;
+//car display
+        
+        this.m.trk = false;
+        this.m.crs = true;
+        this.m.focus_point = 400;
+        Medium.cx = 400;
+        Medium.cy = 250;
+        this.m.zy = 20;
+        this.m.x = -m.cx;
+        this.m.y = -m.cy - Utils.sin(m.zy) * (array[this.sc[0]].maxR + 500);
+        this.m.z = -m.cz - Utils.cos(m.zy) * (array[this.sc[0]].maxR + 500);
+        this.m.ground = -m.y;
 
-        this.rd.drawImage(this.selectcar, 321, 37, null);
+		array[this.sc[0]].x = 0;
+		array[this.sc[0]].z = 0;
+        
+        if (flipo == 0) {
+            array[this.sc[0]].y = -array[this.sc[0]].grat;
+            array[this.sc[0]].xz = carrot;
+
+        	if (this.mouson >= 0 && this.mouson <= 3) {
+        		carrot += 2;
+        	}
+        	else {
+        		carrot += 5;
+        	}
+        	if (carrot > 360) {
+        		carrot -= 360;
+        	}
+        	array[this.sc[0]].zy = 0;
+        	array[this.sc[0]].wzy -= 10;
+        	if (array[this.sc[0]].wzy < -180) {
+        		array[this.sc[0]].wzy += 360;
+        	}
+        }
+        if (flipo != 0) {
+        	this.pback = 0;
+        	this.pnext = 0;
+        	this.gatey = 300;
+
+        	if (this.flipo > 10) {
+        		array[this.sc[0]].y -= 100;
+        		if (this.nextc == 1) {
+        			array[this.sc[0]].zy += 20;
+        		}
+        		if (this.nextc == -1) {
+        			array[this.sc[0]].zy -= 20;
+        		}
+        	}
+        	else {
+        		if (this.flipo == 10) {
+        			if (this.nextc >= 20) {
+        				this.sc[0] = this.nextc - 20;
+        				this.lsc = -1;
+        			}
+        			if (this.nextc == 1) {
+        				++this.sc[0];
+        			}
+        			if (this.nextc == -1) {
+        				--this.sc[0];
+        			}
+        			array[this.sc[0]].y = -array[this.sc[0]].grat -1100;
+        			array[this.sc[0]].zy = 0;
+        		}
+        		array[this.sc[0]].y += 100;
+    			array[this.sc[0]].xz = carrot;
+        	}
+        	--this.flipo;
+        }
+
             array[this.sc[0]].d(this.rd);
+
+            this.rd.drawImage(this.selectcar, 321, 37, null);
         int n7 = -1;
         boolean b2 = false;
         if (flipo == 0) {
@@ -2662,76 +2730,7 @@ public class xtGraphics extends Panel implements Runnable
         	}
         		this.rd.drawImage(this.contin[this.pcontin], 355, 385, null);
         }
-        //car display
         
-        this.m.trk = false;
-        this.m.crs = true;
-        this.m.focus_point = 400;
-        Medium.cx = 400;
-        Medium.cy = 250;
-        this.m.zy = 10;
-        this.m.x = -m.cx;
-        this.m.y = -m.cy - Utils.sin(m.zy) * (array[this.sc[0]].maxR + 500);
-        this.m.z = -m.cz - Utils.cos(m.zy) * (array[this.sc[0]].maxR + 500);
-        this.m.ground = -m.y;
-
-		array[this.sc[0]].x = 0;
-		array[this.sc[0]].z = 0;
-        
-        if (flipo == 0) {
-            array[this.sc[0]].y = -array[this.sc[0]].grat;
-            array[this.sc[0]].xz = carrot;
-
-        	if (this.mouson >= 0 && this.mouson <= 3) {
-        		carrot += 2;
-        	}
-        	else {
-        		carrot += 5;
-        	}
-        	if (carrot > 360) {
-        		carrot -= 360;
-        	}
-        	array[this.sc[0]].zy = 0;
-        	array[this.sc[0]].wzy -= 10;
-        	if (array[this.sc[0]].wzy < -180) {
-        		array[this.sc[0]].wzy += 360;
-        	}
-        }
-        if (flipo != 0) {
-        	this.pback = 0;
-        	this.pnext = 0;
-        	this.gatey = 300;
-
-        	if (this.flipo > 10) {
-        		array[this.sc[0]].y -= 100;
-        		if (this.nextc == 1) {
-        			array[this.sc[0]].zy += 20;
-        		}
-        		if (this.nextc == -1) {
-        			array[this.sc[0]].zy -= 20;
-        		}
-        	}
-        	else {
-        		if (this.flipo == 10) {
-        			if (this.nextc >= 20) {
-        				this.sc[0] = this.nextc - 20;
-        				this.lsc = -1;
-        			}
-        			if (this.nextc == 1) {
-        				++this.sc[0];
-        			}
-        			if (this.nextc == -1) {
-        				--this.sc[0];
-        			}
-        			array[this.sc[0]].y = -array[this.sc[0]].grat -1100;
-        			array[this.sc[0]].zy = 0;
-        		}
-        		array[this.sc[0]].y += 100;
-    			array[this.sc[0]].xz = carrot;
-        	}
-        	--this.flipo;
-        }
-
         {
             if (n7 != -1) {
                 if (this.flatrstart > 1) {
@@ -2799,6 +2798,7 @@ public class xtGraphics extends Panel implements Runnable
             this.intertrack[1].stop();
             
         	this.fase = 10;
+        	this.opselect = -1;
         	this.opselect = 0;
         }
     }
@@ -5801,123 +5801,6 @@ public class xtGraphics extends Panel implements Runnable
         }
     }
     
-    private void makecarsbgc(final Image img, final Image img2) {
-        final int[] array = new int[268000];
-        final PixelGrabber pixelGrabber = new PixelGrabber(this.carsbg, 0, 0, 670, 400, array, 0, 670);
-        try {
-            pixelGrabber.grabPixels();
-        }
-        catch (final InterruptedException ex) {}
-        final int[] pix = new int[20700];
-        final PixelGrabber pixelGrabber2 = new PixelGrabber(img, 0, 0, 92, 225, pix, 0, 92);
-        try {
-            pixelGrabber2.grabPixels();
-        }
-        catch (final InterruptedException ex2) {}
-        final int[] pix2 = new int[2112];
-        final PixelGrabber pixelGrabber3 = new PixelGrabber(img2, 0, 0, 88, 24, pix2, 0, 88);
-        try {
-            pixelGrabber3.grabPixels();
-        }
-        catch (final InterruptedException ex3) {}
-        for (int i = 0; i < 670; ++i) {
-            for (int j = 0; j < 400; ++j) {
-                if (i > 14 && i < 106 && j > 11 && j < 236 && pix[i - 14 + (j - 11) * 92] != pix[0]) {
-                    final Color color = new Color(array[i + j * 670]);
-                    final Color color2 = new Color(pix[i - 14 + (j - 11) * 92]);
-                    int r = (int)(color.getRed() * 0.33 + color2.getRed() * 0.67);
-                    if (r > 255) {
-                        r = 255;
-                    }
-                    if (r < 0) {
-                        r = 0;
-                    }
-                    int g = (int)(color.getGreen() * 0.33 + color2.getGreen() * 0.67);
-                    if (g > 255) {
-                        g = 255;
-                    }
-                    if (g < 0) {
-                        g = 0;
-                    }
-                    int b = (int)(color.getBlue() * 0.33 + color2.getBlue() * 0.67);
-                    if (b > 255) {
-                        b = 255;
-                    }
-                    if (b < 0) {
-                        b = 0;
-                    }
-                    array[i + j * 670] = new Color(r, g, b).getRGB();
-                }
-                if (i > 564 && i < 656 && j > 11 && j < 236 && pix[i - 564 + (j - 11) * 92] != pix[0]) {
-                    final Color color3 = new Color(array[i + j * 670]);
-                    final Color color4 = new Color(pix[i - 564 + (j - 11) * 92]);
-                    int r2 = (int)(color3.getRed() * 0.33 + color4.getRed() * 0.67);
-                    if (r2 > 255) {
-                        r2 = 255;
-                    }
-                    if (r2 < 0) {
-                        r2 = 0;
-                    }
-                    int g2 = (int)(color3.getGreen() * 0.33 + color4.getGreen() * 0.67);
-                    if (g2 > 255) {
-                        g2 = 255;
-                    }
-                    if (g2 < 0) {
-                        g2 = 0;
-                    }
-                    int b2 = (int)(color3.getBlue() * 0.33 + color4.getBlue() * 0.67);
-                    if (b2 > 255) {
-                        b2 = 255;
-                    }
-                    if (b2 < 0) {
-                        b2 = 0;
-                    }
-                    array[i + j * 670] = new Color(r2, g2, b2).getRGB();
-                }
-                if (i > 440 && i < 528 && j > 53 && j < 77 && pix2[i - 440 + (j - 53) * 88] != pix2[0]) {
-                    final Color color5 = new Color(array[i + j * 670]);
-                    final Color color6 = new Color(pix2[i - 440 + (j - 53) * 88]);
-                    int r3 = (int)(color5.getRed() * 0.33 + color6.getRed() * 0.67);
-                    if (r3 > 255) {
-                        r3 = 255;
-                    }
-                    if (r3 < 0) {
-                        r3 = 0;
-                    }
-                    int g3 = (int)(color5.getGreen() * 0.33 + color6.getGreen() * 0.67);
-                    if (g3 > 255) {
-                        g3 = 255;
-                    }
-                    if (g3 < 0) {
-                        g3 = 0;
-                    }
-                    int b3 = (int)(color5.getBlue() * 0.33 + color6.getBlue() * 0.67);
-                    if (b3 > 255) {
-                        b3 = 255;
-                    }
-                    if (b3 < 0) {
-                        b3 = 0;
-                    }
-                    array[i + j * 670] = new Color(r3, g3, b3).getRGB();
-                }
-            }
-        }
-        this.carsbgc = this.createImage(new MemoryImageSource(670, 400, array, 0, 670));
-    }
-    
-    public void carsbginflex() {
-            this.flatr = 0;
-            this.flyr = (int)(this.m.random() * 160.0f - 80.0f);
-            this.flyrdest = (int)(this.flyr + this.m.random() * 160.0f - 80.0f);
-            this.flang = 1;
-            this.flexpix = new int[268000];
-            final PixelGrabber pixelGrabber = new PixelGrabber(this.carsbg, 0, 0, 670, 400, this.flexpix, 0, 670);
-            try {
-                pixelGrabber.grabPixels();
-            }
-            catch (final InterruptedException ex) {}
-    }
-    
     public void drawSmokeCarsbg() {
             if (Math.abs(this.flyr - this.flyrdest) > 20) {
                 if (this.flyr > this.flyrdest) {
@@ -6194,12 +6077,19 @@ public class xtGraphics extends Panel implements Runnable
      * @return pressed state of button element
      */
     public boolean drawb(final Image[] buttonImage, final int offsetX, final int offsetY, final int flkTyp, final boolean pattern1, final boolean pattern2, final int opSelect, Control control) {
+    	
     	int imageW = buttonImage[0].getWidth(null);
     	int imageH = buttonImage[0].getHeight(null);
     	int marginW = (int) ((buttonImage[0].getWidth(null) - buttonImage[1].getWidth(null)) * .5F);
     	int marginH = (int) ((buttonImage[0].getHeight(null) - buttonImage[1].getHeight(null)) * .5F);
-    	boolean overb = (this.app.xm > offsetX && this.app.xm < offsetX + imageW &&
-    			this.app.ym > offsetY && this.app.ym < offsetY + imageH);
+    	boolean overb = false;
+    	if (this.lxm > offsetX && this.lxm < offsetX + imageW &&
+    			this.lym > offsetY && this.lym < offsetY + imageH) {
+    		overb = true;
+    	} else if (this.opselect == opSelect){
+    		overb = true;
+    	};
+    	if (overb) this.opselect = opSelect;
     	boolean flik = false;
     	switch (flkTyp) {
     	case 0: 
@@ -6213,7 +6103,7 @@ public class xtGraphics extends Panel implements Runnable
     	break;
     	}
     	this.rd.drawImage(buttonImage[flik ? 1 : 0], offsetX + (flik ? marginW : 0), offsetY + (flik ? marginH : 0), null);
-        return (this.app.mouses == 2 && overb);
+        return ((control.enter || control.handb) && overb);
     }
     
     public int getvalue(final String s, final int n) {

@@ -45,10 +45,10 @@ public class GameSparker extends Applet implements Runnable
     Thread gamer;
     Thread physics;
     boolean exwist;
-    int apx;
-    int apy;
-    int apw;
-    int aph;
+    int bufferX;
+    int bufferY;
+    int bufferW;
+    int bufferH;
     float apmult;
     float reqmult;
     Image sizebar;
@@ -84,10 +84,10 @@ public class GameSparker extends Applet implements Runnable
     
     public GameSparker() {
         this.exwist = false;
-        this.apx = 0;
-        this.apy = 0;
-        this.apw = 0;
-        this.aph = 0;
+        this.bufferX = 0;
+        this.bufferY = 0;
+        this.bufferW = 0;
+        this.bufferH = 0;
         this.apmult = 1.0f;
         this.reqmult = 0.0f;
         this.chkbx = new Image[2];
@@ -357,7 +357,8 @@ public class GameSparker extends Applet implements Runnable
                 this.mvect = 20;
             }
             if (xtGraphics.fase == 1) { //stage select
-            	xtGraphics.trackbg(true);
+            	//xtGraphics.trackbg(true);
+            	medium.d(this.rd);
                 if (checkPoints.stage != -3) {
                     medium.aroundtrack(checkPoints);
                     if (medium.hit == 5000 && this.mvect < 40) {
@@ -1042,14 +1043,15 @@ public class GameSparker extends Applet implements Runnable
         if (this.apmult < 0.01f) {
             this.apmult = 0.01f;
         }
-        this.apx = (int)(this.getWidth() / 2 - 400.0f * this.apmult);
-        this.apy = (int)(this.getHeight() / 2 - 225.0f * this.apmult);
-        this.apw = (int)(800.0f * this.apmult);
-        this.aph = (int)(450.0f * this.apmult);
-        int[] shaka = {0, 0};
+        this.bufferX = (int)(this.getWidth() / 2 - 400.0f * this.apmult);
+        this.bufferY = (int)(this.getHeight() / 2 - 225.0f * this.apmult);
+        this.bufferW = (int)(800.0f * this.apmult);
+        this.bufferH = (int)(450.0f * this.apmult);
+        int shakX = 0;
+        int shakY = 0;
         if (Madness.moto == 1 && this.shaka > 0) {
-            shaka[0] = (int)((this.shaka * 2 * Math.random() - this.shaka) * this.apmult);
-            shaka[1] = (int)((this.shaka * 2 * Math.random() - this.shaka) * this.apmult);
+        	shakX = (int)((this.shaka * 2 * Math.random() - this.shaka) * this.apmult);
+        	shakY = (int)((this.shaka * 2 * Math.random() - this.shaka) * this.apmult);
             --this.shaka;
         }
         	if (Madness.smooth == 1 && this.apmult != 1.0f) {
@@ -1060,35 +1062,17 @@ public class GameSparker extends Applet implements Runnable
         	if (Madness.moto == 1) {
         		graphics2D.setComposite(AlphaComposite.getInstance(3, this.mvect / 100.0f));
         		this.rd.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
-        		graphics2D.drawImage(this.offImage, this.apx + shaka[0], this.apy + shaka[1], apw, aph, this);
-        		this.cropit(graphics2D, shaka[0], shaka[1]);
+        		graphics2D.drawImage(this.offImage, this.bufferX + shakX, this.bufferY + shakY, bufferW, bufferH, this);
+
+                graphics2D.setComposite(AlphaComposite.getInstance(3));
+                graphics2D.fillRect(0, 0, shakX + bufferX, this.getHeight());
+                graphics2D.fillRect(0, 0, this.getWidth(), shakY + bufferY);
+                graphics2D.fillRect(this.getWidth() - bufferX - shakX, 0, shakX + bufferX, this.getHeight());
+                graphics2D.fillRect(0, this.getHeight() - bufferY - shakY, this.getWidth(), shakY + bufferY);
         	}
         	else {
-        		graphics2D.drawImage(this.offImage, this.apx, this.apy, apw, aph, this);
+        		graphics2D.drawImage(this.offImage, this.bufferX, this.bufferY, bufferW, bufferH, this);
         	}
-    }
-    
-    public void cropit(final Graphics2D graphics2D, final int a, final int a2) {
-        if (a != 0 || a2 != 0) {
-            graphics2D.setComposite(AlphaComposite.getInstance(3));
-            graphics2D.setColor(new Color(0, 0, 0));
-        }
-        if (a != 0) {
-            if (a < 0) {
-                graphics2D.fillRect(this.apx + a, this.apy - (int)(25.0f * this.apmult), Math.abs(a), aph);
-            }
-            else {
-                graphics2D.fillRect(this.apx + apw, this.apy - (int)(25.0f * this.apmult), a, aph);
-            }
-        }
-        if (a2 != 0) {
-            if (a2 < 0) {
-                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + a2, apw, Math.abs(a2));
-            }
-            else {
-                graphics2D.fillRect(this.apx - (int)(25.0f * this.apmult), this.apy + aph, apw, a2);
-            }
-        }
     }
     
     @Override
@@ -1170,12 +1154,12 @@ public class GameSparker extends Applet implements Runnable
     
     public void movefield(final Component component, int x, int y, final int width, final int height) {
         if (width == 360 || width == 576) {
-            x = (int)(x * this.apmult + this.apx + component.getWidth() / 2 * (this.apmult - 1.0f));
-            y = (int)(y * this.apmult + this.apy + 12.0f * (this.apmult - 1.0f));
+            x = (int)(x * this.apmult + this.bufferX + component.getWidth() / 2 * (this.apmult - 1.0f));
+            y = (int)(y * this.apmult + this.bufferY + 12.0f * (this.apmult - 1.0f));
         }
         else {
-            x = (int)(x * this.apmult + this.apx);
-            y = (int)(y * this.apmult + this.apy + 12.0f * (this.apmult - 1.0f));
+            x = (int)(x * this.apmult + this.bufferX);
+            y = (int)(y * this.apmult + this.bufferY + 12.0f * (this.apmult - 1.0f));
         }
         if (component.getX() != x || component.getY() != y) {
             component.setBounds(x, y, width, height);
@@ -1191,12 +1175,12 @@ public class GameSparker extends Applet implements Runnable
                         textField.requestFocus();
                     }
                     if (width == 360 || width == 576) {
-                        n = (int)(n * this.apmult + this.apx + textField.getWidth() / 2 * (this.apmult - 1.0f));
-                        n2 = (int)(n2 * this.apmult + this.apy + 12.0f * (this.apmult - 1.0f));
+                        n = (int)(n * this.apmult + this.bufferX + textField.getWidth() / 2 * (this.apmult - 1.0f));
+                        n2 = (int)(n2 * this.apmult + this.bufferY + 12.0f * (this.apmult - 1.0f));
                     }
                     else {
-                        n = (int)(n * this.apmult + this.apx);
-                        n2 = (int)(n2 * this.apmult + this.apy + 12.0f * (this.apmult - 1.0f));
+                        n = (int)(n * this.apmult + this.bufferX);
+                        n2 = (int)(n2 * this.apmult + this.bufferY + 12.0f * (this.apmult - 1.0f));
                     }
                     if (textField.getX() != n || textField.getY() != n2) {
                         textField.setBounds(n, n2, width, height);
@@ -1230,12 +1214,12 @@ public class GameSparker extends Applet implements Runnable
                     textArea.requestFocus();
                 }
                 if (width == 360 || width == 576) {
-                    n = (int)(n * this.apmult + this.apx + textArea.getWidth() / 2 * (this.apmult - 1.0f));
-                    n2 = (int)(n2 * this.apmult + this.apy + 12.0f * (this.apmult - 1.0f));
+                    n = (int)(n * this.apmult + this.bufferX + textArea.getWidth() / 2 * (this.apmult - 1.0f));
+                    n2 = (int)(n2 * this.apmult + this.bufferY + 12.0f * (this.apmult - 1.0f));
                 }
                 else {
-                    n = (int)(n * this.apmult + this.apx);
-                    n2 = (int)(n2 * this.apmult + this.apy + 12.0f * (this.apmult - 1.0f));
+                    n = (int)(n * this.apmult + this.bufferX);
+                    n2 = (int)(n2 * this.apmult + this.bufferY + 12.0f * (this.apmult - 1.0f));
                 }
                 if (textArea.getX() != n || textArea.getY() != n2) {
                     textArea.setBounds(n, n2, width, height);
@@ -1790,8 +1774,8 @@ public class GameSparker extends Applet implements Runnable
     public boolean mouseUp(final Event event, final int n, final int n2) {
         if (!this.exwist) {
             if (this.mouses == 11) {
-                this.xm = (int)((n - this.apx) / this.apmult);
-                this.ym = (int)((n2 - this.apy) / this.apmult);
+                this.xm = (int)((n - this.bufferX) / this.apmult);
+                this.ym = (int)((n2 - this.bufferY) / this.apmult);
                 this.mouses = -1;
             }
             this.moused = false;
@@ -1804,8 +1788,8 @@ public class GameSparker extends Applet implements Runnable
         this.requestFocus();
         if (!this.exwist) {
             if (this.mouses == 0) {
-                this.xm = (int)((n - this.apx) / this.apmult);
-                this.ym = (int)((n2 - this.apy) / this.apmult);
+                this.xm = (int)((n - this.bufferX) / this.apmult);
+                this.ym = (int)((n2 - this.bufferY) / this.apmult);
                 this.mouses = 1;
             }
             this.moused = true;
@@ -1816,8 +1800,8 @@ public class GameSparker extends Applet implements Runnable
     @Override
     public boolean mouseMove(final Event event, final int mouseX, final int mouseY) {
         if (!this.exwist && !this.lostfcs) {
-            this.xm = (int)((mouseX - this.apx) / this.apmult);
-            this.ym = (int)((mouseY - this.apy) / this.apmult);
+            this.xm = (int)((mouseX - this.bufferX) / this.apmult);
+            this.ym = (int)((mouseY - this.bufferY) / this.apmult);
         }
         return false;
     }
@@ -1825,8 +1809,8 @@ public class GameSparker extends Applet implements Runnable
     @Override
     public boolean mouseDrag(final Event event, final int n, final int n2) {
         if (!this.exwist && !this.lostfcs) {
-            this.xm = (int)((n - this.apx) / this.apmult);
-            this.ym = (int)((n2 - this.apy) / this.apmult);
+            this.xm = (int)((n - this.bufferX) / this.apmult);
+            this.ym = (int)((n2 - this.bufferY) / this.apmult);
         }
         return false;
     }
