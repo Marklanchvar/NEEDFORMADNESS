@@ -915,196 +915,207 @@ public class Plane
             }
             graphics2D.setColor(cachedColor(red, green, blue));
             graphics2D.fillPolygon(polygon2DX, polygon2DY, this.n);
+            graphics2D.setColor(cachedColor(red, green, blue));
+            graphics2D.fillPolygon(polygon2DX, polygon2DY, this.n);
+
+            boolean doStroke = false;
+            int strokeR = 0, strokeG = 0, strokeB = 0;
+
             if (this.m.trk && this.gr == -10) {
                 b = false;
             }
+
             if (!b) {
                 if (this.flx == 0) {
                     if (!this.solo) {
-                        int r3 = 0;
-                        int g3 = 0;
-                        int b6 = 0;
+                        strokeR = 0;
+                        strokeG = 0;
+                        strokeB = 0;
                         if (this.m.lightson && this.light != 0) {
-                            r3 = this.oc[0] / 2;
-                            if (r3 > 255) {
-                                r3 = 255;
+                            strokeR = this.oc[0] / 2;
+                            if (strokeR > 255) {
+                                strokeR = 255;
                             }
-                            if (r3 < 0) {
-                                r3 = 0;
+                            if (strokeR < 0) {
+                                strokeR = 0;
                             }
-                            g3 = this.oc[1] / 2;
-                            if (g3 > 255) {
-                                g3 = 255;
+                            strokeG = this.oc[1] / 2;
+                            if (strokeG > 255) {
+                                strokeG = 255;
                             }
-                            if (g3 < 0) {
-                                g3 = 0;
+                            if (strokeG < 0) {
+                                strokeG = 0;
                             }
-                            b6 = this.oc[2] / 2;
-                            if (b6 > 255) {
-                                b6 = 255;
+                            strokeB = this.oc[2] / 2;
+                            if (strokeB > 255) {
+                                strokeB = 255;
                             }
-                            if (b6 < 0) {
-                                b6 = 0;
+                            if (strokeB < 0) {
+                                strokeB = 0;
                             }
                         }
-                        if (Madness.anti == 1) {
-                            graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                        }
-                        graphics2D.setColor(cachedColor(r3, g3, b6));
-                        graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
-                        if (Madness.anti == 1) {
-                            graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-                        }
+                        doStroke = true;
                     }
                 }
                 else {
                     if (this.flx == 2) {
-                        graphics2D.setColor(cachedColor(0, 0, 0));
-                        graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
+                        strokeR = 0;
+                        strokeG = 0;
+                        strokeB = 0;
+                        doStroke = true;
                     }
                     if (this.flx == 1) {
-                        final int r4 = 0;
-                        int g4 = (int)(223.0f + 223.0f * (this.m.snap[1] / 100.0f));
-                        if (g4 > 255) {
-                            g4 = 255;
+                        strokeR = 0;
+                        strokeG = (int)(223.0f + 223.0f * (this.m.snap[1] / 100.0f));
+                        if (strokeG > 255) {
+                            strokeG = 255;
                         }
-                        if (g4 < 0) {
-                            g4 = 0;
+                        if (strokeG < 0) {
+                            strokeG = 0;
                         }
-                        int b7 = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
-                        if (b7 > 255) {
-                            b7 = 255;
+                        strokeB = (int)(255.0f + 255.0f * (this.m.snap[2] / 100.0f));
+                        if (strokeB > 255) {
+                            strokeB = 255;
                         }
-                        if (b7 < 0) {
-                            b7 = 0;
+                        if (strokeB < 0) {
+                            strokeB = 0;
                         }
-                        graphics2D.setColor(cachedColor(r4, g4, b7));
-                        graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
+                        doStroke = true;
                         this.flx = 2;
                     }
                     if (this.flx == 3) {
-                        final int r5 = 0;
-                        int g5 = (int)(255.0f + 255.0f * (this.m.snap[1] / 100.0f));
-                        if (g5 > 255) {
-                            g5 = 255;
+                        strokeR = 0;
+                        strokeG = (int)(255.0f + 255.0f * (this.m.snap[1] / 100.0f));
+                        if (strokeG > 255) {
+                            strokeG = 255;
                         }
-                        if (g5 < 0) {
-                            g5 = 0;
+                        if (strokeG < 0) {
+                            strokeG = 0;
                         }
-                        int b8 = (int)(223.0f + 223.0f * (this.m.snap[2] / 100.0f));
-                        if (b8 > 255) {
-                            b8 = 255;
+                        strokeB = (int)(223.0f + 223.0f * (this.m.snap[2] / 100.0f));
+                        if (strokeB > 255) {
+                            strokeB = 255;
                         }
-                        if (b8 < 0) {
-                            b8 = 0;
+                        if (strokeB < 0) {
+                            strokeB = 0;
                         }
-                        graphics2D.setColor(cachedColor(r5, g5, b8));
-                        graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
+                        doStroke = true;
                         this.flx = 2;
                     }
                     if (this.flx == 77) {
-                        graphics2D.setColor(cachedColor(16, 198, 255));
-                        graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
+                        strokeR = 16;
+                        strokeG = 198;
+                        strokeB = 255;
+                        doStroke = true;
                         this.flx = 0;
                     }
                 }
             }
             else if (this.road && this.av <= 3000 && !this.m.trk && this.m.fade[0] > 4000) {
-                red -= 10;
-                if (red < 0) {
-                    red = 0;
+                strokeR = red - 10;
+                if (strokeR < 0) {
+                    strokeR = 0;
                 }
-                green -= 10;
-                if (green < 0) {
-                    green = 0;
+                strokeG = green - 10;
+                if (strokeG < 0) {
+                    strokeG = 0;
                 }
-                blue -= 10;
-                if (blue < 0) {
-                    blue = 0;
+                strokeB = blue - 10;
+                if (strokeB < 0) {
+                    strokeB = 0;
                 }
-                graphics2D.setColor(cachedColor(red, green, blue));
-                graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
+                doStroke = true;
             }
+
             if (this.gr == -10) {
                 if (!this.m.trk) {
-                    int r6 = this.c[0];
-                    int g6 = this.c[1];
-                    int b9 = this.c[2];
+                    strokeR = this.c[0];
+                    strokeG = this.c[1];
+                    strokeB = this.c[2];
                     if (n4 == -1 && this.m.cpflik) {
-                        r6 *= (int)1.6;
-                        if (r6 > 255) {
-                            r6 = 255;
+                        strokeR *= (int)1.6;
+                        if (strokeR > 255) {
+                            strokeR = 255;
                         }
-                        g6 *= (int)1.6;
-                        if (g6 > 255) {
-                            g6 = 255;
+                        strokeG *= (int)1.6;
+                        if (strokeG > 255) {
+                            strokeG = 255;
                         }
-                        b9 *= (int)1.6;
-                        if (b9 > 255) {
-                            b9 = 255;
+                        strokeB *= (int)1.6;
+                        if (strokeB > 255) {
+                            strokeB = 255;
                         }
                     }
                     for (int n68 = 0; n68 < 16; ++n68) {
                         if (this.av > this.m.fade[n68]) {
-                            r6 = (r6 * this.m.fogd + this.m.cfade[0]) / (this.m.fogd + 1);
-                            g6 = (g6 * this.m.fogd + this.m.cfade[1]) / (this.m.fogd + 1);
-                            b9 = (b9 * this.m.fogd + this.m.cfade[2]) / (this.m.fogd + 1);
+                            strokeR = (strokeR * this.m.fogd + this.m.cfade[0]) / (this.m.fogd + 1);
+                            strokeG = (strokeG * this.m.fogd + this.m.cfade[1]) / (this.m.fogd + 1);
+                            strokeB = (strokeB * this.m.fogd + this.m.cfade[2]) / (this.m.fogd + 1);
                         }
                     }
-                    graphics2D.setColor(cachedColor(r6, g6, b9));
-                    graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
+                    doStroke = true;
                 }
                 else if (this.m.cpflik && this.m.hit == 5000) {
                     int g7 = (int)(Math.random() * 115.0);
-                    int r7 = g7 * 2 - 54;
-                    if (r7 < 0) {
-                        r7 = 0;
+                    strokeR = g7 * 2 - 54;
+                    if (strokeR < 0) {
+                        strokeR = 0;
                     }
-                    if (r7 > 255) {
-                        r7 = 255;
+                    if (strokeR > 255) {
+                        strokeR = 255;
                     }
-                    int b10 = 202 + g7 * 2;
-                    if (b10 < 0) {
-                        b10 = 0;
+                    strokeB = 202 + g7 * 2;
+                    if (strokeB < 0) {
+                        strokeB = 0;
                     }
-                    if (b10 > 255) {
-                        b10 = 255;
+                    if (strokeB > 255) {
+                        strokeB = 255;
                     }
-                    g7 += 101;
-                    if (g7 < 0) {
-                        g7 = 0;
+                    strokeG = g7 + 101;
+                    if (strokeG < 0) {
+                        strokeG = 0;
                     }
-                    if (g7 > 255) {
-                        g7 = 255;
+                    if (strokeG > 255) {
+                        strokeG = 255;
                     }
-                    graphics2D.setColor(cachedColor(r7, g7, b10));
-                    graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
+                    doStroke = true;
                 }
             }
+
             if (this.gr == -18 && !this.m.trk) {
-                int r8 = this.c[0];
-                int g8 = this.c[1];
-                int b11 = this.c[2];
+                strokeR = this.c[0];
+                strokeG = this.c[1];
+                strokeB = this.c[2];
                 if (this.m.cpflik && this.m.elecr >= 0.0f) {
-                    r8 = (int)(25.5f * this.m.elecr);
-                    if (r8 > 255) {
-                        r8 = 255;
+                    strokeR = (int)(25.5f * this.m.elecr);
+                    if (strokeR > 255) {
+                        strokeR = 255;
                     }
-                    g8 = (int)(128.0f + 12.8f * this.m.elecr);
-                    if (g8 > 255) {
-                        g8 = 255;
+                    strokeG = (int)(128.0f + 12.8f * this.m.elecr);
+                    if (strokeG > 255) {
+                        strokeG = 255;
                     }
-                    b11 = 255;
+                    strokeB = 255;
                 }
                 for (int n69 = 0; n69 < 16; ++n69) {
                     if (this.av > this.m.fade[n69]) {
-                        r8 = (r8 * this.m.fogd + this.m.cfade[0]) / (this.m.fogd + 1);
-                        g8 = (g8 * this.m.fogd + this.m.cfade[1]) / (this.m.fogd + 1);
-                        b11 = (b11 * this.m.fogd + this.m.cfade[2]) / (this.m.fogd + 1);
+                        strokeR = (strokeR * this.m.fogd + this.m.cfade[0]) / (this.m.fogd + 1);
+                        strokeG = (strokeG * this.m.fogd + this.m.cfade[1]) / (this.m.fogd + 1);
+                        strokeB = (strokeB * this.m.fogd + this.m.cfade[2]) / (this.m.fogd + 1);
                     }
                 }
-                graphics2D.setColor(cachedColor(r8, g8, b11));
+                doStroke = true;
+            }
+
+            if (doStroke) {
+                if (Madness.anti == 1) {
+                    graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                }
+                graphics2D.setColor(cachedColor(strokeR, strokeG, strokeB));
                 graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
+                if (Madness.anti == 1) {
+                    graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                }
             }
         }
     }

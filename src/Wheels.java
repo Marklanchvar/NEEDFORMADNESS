@@ -24,16 +24,7 @@ public class Wheels
         this.rc[1] = n2;
         this.rc[2] = n3;
         this.size = n4 / 10.0f;
-        if (this.size < 0.0f) {
-            this.size = 0.0f;
-        }
         this.depth = n5 / 10.0f;
-        if (this.depth / this.size > 41.0f) {
-            this.depth = this.size * 41.0f;
-        }
-        if (this.depth / this.size < -25.0f) {
-            this.depth = -(this.size * 25.0f);
-        }
     }
     
     public void make(final Medium medium, final Trackers trackers, final Plane[] array, int n, final int n2, final int n3, final int n4, final int n5, final int n6, final int n7, final int n8) {
