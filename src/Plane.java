@@ -52,8 +52,17 @@ public class Plane
     int flx;
     int colnum;
     
-    Color fillColor = Color.WHITE;
-    Color drawColor = Color.BLACK;
+    private int cachedRgb = -1;
+    private Color cachedColor;
+
+    private Color cachedColor(int r, int g, int b) {
+        int rgb = (r << 16) | (g << 8) | b;
+        if (rgb != cachedRgb) {
+            cachedRgb = rgb;
+            cachedColor = new Color(r, g, b);
+        }
+        return cachedColor;
+    }
     
     public Plane(final Medium m, final Trackers t, final float[] planeX, final float[] planeY, final float[] planeZ, final int n, final int[] color, final int glass, final int gr, final int fs, final float wx2, final float wy2, final float wz2, final int disline, final int bfase, final boolean road, final int light, final boolean solo) {
         this.c = new int[3];
@@ -407,7 +416,7 @@ public class Plane
                 if (b2 < 0) {
                     b2 = 0;
                 }
-                graphics2D.setColor(new Color(r, g, b2));
+                graphics2D.setColor(cachedColor(r, g, b2));
                 graphics2D.fillPolygon(array6, array7, 3);
                 plane3DX[0] = this.ox[this.pa] + objectX;
                 plane3DZ[0] = this.oy[this.pa] + objectY;
@@ -472,7 +481,7 @@ public class Plane
                 if (b3 < 0) {
                     b3 = 0;
                 }
-                graphics2D.setColor(new Color(r2, g2, b3));
+                graphics2D.setColor(cachedColor(r2, g2, b3));
                 graphics2D.fillPolygon(array6, array7, 3);
             }
             for (int n25 = 0; n25 < this.n; ++n25) {
@@ -584,13 +593,13 @@ public class Plane
             final int n33 = (int)(this.m.random() * 3.0f);
             if (this.bfase != -7) {
                 if (n33 == 0) {
-                    graphics2D.setColor(new Color(this.c[0], this.c[1], this.c[2]).darker());
+                    graphics2D.setColor(cachedColor(this.c[0], this.c[1], this.c[2]).darker());
                 }
                 if (n33 == 1) {
-                    graphics2D.setColor(new Color(this.c[0], this.c[1], this.c[2]));
+                    graphics2D.setColor(cachedColor(this.c[0], this.c[1], this.c[2]));
                 }
                 if (n33 == 2) {
-                    graphics2D.setColor(new Color(this.c[0], this.c[1], this.c[2]).brighter());
+                    graphics2D.setColor(cachedColor(this.c[0], this.c[1], this.c[2]).brighter());
                 }
             }
             else {
@@ -904,7 +913,7 @@ public class Plane
                     }
                 }
             }
-            graphics2D.setColor(new Color(red, green, blue));
+            graphics2D.setColor(cachedColor(red, green, blue));
             graphics2D.fillPolygon(polygon2DX, polygon2DY, this.n);
             if (this.m.trk && this.gr == -10) {
                 b = false;
@@ -941,7 +950,7 @@ public class Plane
                         if (Madness.anti == 1) {
                             graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                         }
-                        graphics2D.setColor(new Color(r3, g3, b6));
+                        graphics2D.setColor(cachedColor(r3, g3, b6));
                         graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
                         if (Madness.anti == 1) {
                             graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
@@ -950,7 +959,7 @@ public class Plane
                 }
                 else {
                     if (this.flx == 2) {
-                        graphics2D.setColor(new Color(0, 0, 0));
+                        graphics2D.setColor(cachedColor(0, 0, 0));
                         graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
                     }
                     if (this.flx == 1) {
@@ -969,7 +978,7 @@ public class Plane
                         if (b7 < 0) {
                             b7 = 0;
                         }
-                        graphics2D.setColor(new Color(r4, g4, b7));
+                        graphics2D.setColor(cachedColor(r4, g4, b7));
                         graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
                         this.flx = 2;
                     }
@@ -989,12 +998,12 @@ public class Plane
                         if (b8 < 0) {
                             b8 = 0;
                         }
-                        graphics2D.setColor(new Color(r5, g5, b8));
+                        graphics2D.setColor(cachedColor(r5, g5, b8));
                         graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
                         this.flx = 2;
                     }
                     if (this.flx == 77) {
-                        graphics2D.setColor(new Color(16, 198, 255));
+                        graphics2D.setColor(cachedColor(16, 198, 255));
                         graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
                         this.flx = 0;
                     }
@@ -1013,7 +1022,7 @@ public class Plane
                 if (blue < 0) {
                     blue = 0;
                 }
-                graphics2D.setColor(new Color(red, green, blue));
+                graphics2D.setColor(cachedColor(red, green, blue));
                 graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
             }
             if (this.gr == -10) {
@@ -1042,7 +1051,7 @@ public class Plane
                             b9 = (b9 * this.m.fogd + this.m.cfade[2]) / (this.m.fogd + 1);
                         }
                     }
-                    graphics2D.setColor(new Color(r6, g6, b9));
+                    graphics2D.setColor(cachedColor(r6, g6, b9));
                     graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
                 }
                 else if (this.m.cpflik && this.m.hit == 5000) {
@@ -1068,7 +1077,7 @@ public class Plane
                     if (g7 > 255) {
                         g7 = 255;
                     }
-                    graphics2D.setColor(new Color(r7, g7, b10));
+                    graphics2D.setColor(cachedColor(r7, g7, b10));
                     graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
                 }
             }
@@ -1094,7 +1103,7 @@ public class Plane
                         b11 = (b11 * this.m.fogd + this.m.cfade[2]) / (this.m.fogd + 1);
                     }
                 }
-                graphics2D.setColor(new Color(r8, g8, b11));
+                graphics2D.setColor(cachedColor(r8, g8, b11));
                 graphics2D.drawPolygon(polygon2DX, polygon2DY, this.n);
             }
         }
